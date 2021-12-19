@@ -151,9 +151,14 @@ class WeatherProvider with ChangeNotifier {
           double.parse(todayWeather.tempMin)) >
           (double.parse(_pastWeather[0].tempMax) +
               double.parse(_pastWeather[0].tempMin));
+      final diffMax = double.parse(todayWeather.tempMax) -
+          double.parse(_pastWeather[0].tempMax);
+      final diffMin = double.parse(todayWeather.tempMin) -
+          double.parse(_pastWeather[0].tempMin);
+      final diff = '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at day';
       _compareTodayYesterday = isHotterToday
-          ? 'Today is warmer than yesterday'
-          : 'Today is colder than yesterday';
+          ? 'Today is warmer than yesterday by $diff'
+          : 'Today is colder than yesterday by $diff';
       notifyListeners();
       print('got weather');
     }catch(error)
