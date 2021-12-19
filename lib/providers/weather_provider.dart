@@ -75,6 +75,8 @@ class WeatherProvider with ChangeNotifier {
           mainDescription: presentFutureWeather['daily'][i]['weather'][0]['main'],
           detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
           ['description'],
+          isImageNetwork: true,
+          image: presentFutureWeather['daily'][i]['weather'][0]['icon']
         ));
       }
     }catch(error){
@@ -127,6 +129,7 @@ class WeatherProvider with ChangeNotifier {
             tempMin: hourlyPastTempSorted[0].toString(),
             tempMax:
             hourlyPastTempSorted[hourlyPastTempSorted.length - 1].toString(),
+
           ));
       print('end of api call $daysAgo');
     }catch(error){

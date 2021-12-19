@@ -7,7 +7,6 @@ import 'package:the_weather_app/providers/weather_provider.dart';
 import '../widgets/custom_icons.dart';
 
 class WeatherToday extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final weatherToday = Provider.of<WeatherProvider>(context).todayWeather;
@@ -24,8 +23,19 @@ class WeatherToday extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(weatherToday.mainDescription),
-            Text('${DateFormat('dd MMMM yyyy - hh:mm').format(DateTime.now())}'),
-            Image.asset(CustomIcons.cloudy, width: 150,height: 150, ),
+            Text(
+                '${DateFormat('dd MMMM yyyy - hh:mm').format(DateTime.now())}'),
+            weatherToday.isImageNetwork
+                ? Image.network(
+                    weatherToday.image,
+                    width: 150,
+                    height: 150,
+                  )
+                : Image.asset(
+                    weatherToday.image,
+                    width: 150,
+                    height: 150,
+                  ),
             Text(weatherToday.tempMax),
             Text(weatherToday.tempMin),
           ],

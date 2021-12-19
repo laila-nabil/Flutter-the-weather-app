@@ -90,11 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: screenSize.width * 0.8,
                       height: screenSize.height * 0.55,
                       child: WeatherToday()),
-                  Expanded(child: CompareWeather()),
-                  Container(
-                      width: double.infinity,
-                      height: screenSize.height * 0.32,
-                      child: WeatherList()),
+                  Image.network('http://openweathermap.org/img/wn/10d@2x.png',fit: BoxFit.fitWidth,),
+                  // Expanded(child: CompareWeather()),
+                  // Container(
+                  //     width: double.infinity,
+                  //     height: screenSize.height * 0.32,
+                  //     child: WeatherList()),
                 ],
               ),
       ),

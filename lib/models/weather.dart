@@ -6,6 +6,8 @@ class Weather {
   final DateTime date;
   final String mainDescription;
   final String detailedDescription;
+  final String image;
+  final bool isImageNetwork;
   final String lat;
   final String lon;
   final bool isMetric;
@@ -16,8 +18,12 @@ class Weather {
       DateTime date,
       this.detailedDescription = "",
       this.mainDescription = "",
+      this.image = 'assets/weather_status/clear.png',
+      this.isImageNetwork = false,
       this.lat = "",
       this.lon = "",
       this.isMetric = true})
-      : date = date ?? DateTime.now();// This means date equals to second date, but if second date is null then a equals DateTime.now()
+      : date = date ??
+            DateTime
+                .now(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
 }

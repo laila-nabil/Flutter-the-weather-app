@@ -11,6 +11,9 @@
 // firebase deploy --only hosting
 // fvm flutter build web --dart-define api_key=key
 
+//prev error solved by deleting everything fvm related and dart cache
+//then pub repair cache
+
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
