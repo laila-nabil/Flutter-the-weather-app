@@ -30,10 +30,6 @@ class WeatherProvider with ChangeNotifier {
 
   Future<void> getPresentFutureWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
-    // print('before reading api');
-    // var API_key_ = dotenv.env['API_KEY'];
-    // print('can get api key? $API_key_');
-    // var API_key = _API_KEY;
     var API_key = _API_KEY;
     const lat = '30.0444';
     const lon = '31.2357';
