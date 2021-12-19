@@ -155,7 +155,7 @@ class WeatherProvider with ChangeNotifier {
           double.parse(_pastWeather[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(_pastWeather[0].tempMin);
-      final diff = '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at day';
+      final diff = '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
       _compareTodayYesterday = isHotterToday
           ? 'Today is warmer than yesterday by $diff'
           : 'Today is colder than yesterday by $diff';

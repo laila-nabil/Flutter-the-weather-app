@@ -6,20 +6,18 @@ class CompareWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final compareWeather = Provider.of<WeatherProvider>(context).compareTodayYesterday;
-    return FittedBox(
-      fit: BoxFit.contain,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          compareWeather,
-          softWrap: true,
-          maxLines: 2,
-          style:
-              TextStyle(fontWeight: FontWeight.bold,
-                  // fontSize: 30
-              ),
-          textAlign: TextAlign.center,
-        ),
+    return Container(
+      width: MediaQuery.of(context).size.width  * 0.9,
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        compareWeather,
+        softWrap: true,
+        maxLines: 3,
+        style:
+            TextStyle(fontWeight: FontWeight.bold,
+                // fontSize: 30
+            ),
+        textAlign: TextAlign.center,
       ),
     );
   }
