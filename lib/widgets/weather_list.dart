@@ -1,0 +1,34 @@
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:the_weather_app/widgets/compact_day_weather.dart';
+
+class WeatherList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final weatherList =
+        Provider.of<WeatherProvider>(context, listen: false).allWeather;
+    return Container(
+      // height: 200,
+      // width: double.infinity,
+      child: ScrollablePositionedList.builder(
+        initialScrollIndex: 4,
+        itemBuilder: (ctx, i) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CompactDayWeather(
+              date: weatherList[i].date,
+              day: weatherList[i].date.day.toString(),
+              maxTemp: weatherList[i].tempMax,
+              minTemp: weatherList[i].tempMin,
+            ),
+          );
+        },
+        scrollDirection: Axis.horizontal,
+        itemCount: weatherList.length,
+        padding: const EdgeInsets.all(25.0),
+      ),
+    );
+  }
+}

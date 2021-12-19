@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+
+class Weather {
+  final String tempMax;
+  final String tempMin;
+  final DateTime date;
+  final String mainDescription;
+  final String detailedDescription;
+  final String lat;
+  final String lon;
+  final bool isMetric;
+
+  Weather(
+      {this.tempMax = "0.0",
+      this.tempMin = "0.0",
+      DateTime date,
+      this.detailedDescription = "",
+      this.mainDescription = "",
+      this.lat = "",
+      this.lon = "",
+      this.isMetric = true})
+      : date = date ?? DateTime.now();// This means date equals to second date, but if second date is null then a equals DateTime.now()
+}
