@@ -1,5 +1,7 @@
 // web setup
 // fvm use stable in windows powershell as admin
+// a .fvm folder is added with shortcut
+// get full path of shortcut and add to project as flutter path instead of original path
 // fvm flutter config --enable-web in terminal/windows powershell as admin
 // fvm flutter create .
 // fvm flutter run -d chrome/edge
