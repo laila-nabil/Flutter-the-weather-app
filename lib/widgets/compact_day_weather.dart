@@ -45,11 +45,17 @@ class CompactDayWeather extends StatelessWidget {
             children: [
               Text(day),
               Text(DateFormat('dd MMM').format(date)),
-              Image.asset(
-                CustomIcons.sunny,
-                width: constraints.maxHeight * 0.5,
-                height: constraints.maxHeight * 0.27,
-              ),
+              isImageNetwork
+                  ? Image.network(
+                      image,
+                      width: constraints.maxHeight * 0.5,
+                      height: constraints.maxHeight * 0.27,
+                    )
+                  : Image.asset(
+                      CustomIcons.sunny,
+                      width: constraints.maxHeight * 0.5,
+                      height: constraints.maxHeight * 0.27,
+                    ),
               Text(maxTemp),
               Text(minTemp),
             ],

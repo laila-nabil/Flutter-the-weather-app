@@ -23,6 +23,8 @@ class WeatherList extends StatelessWidget {
               day:  DateFormat('EEE').format(weatherList[i].date),
               maxTemp: weatherList[i].tempMax,
               minTemp: weatherList[i].tempMin,
+              image:weatherList[i].image,
+              isImageNetwork: weatherList[i].isImageNetwork,
             ),
           );
         },

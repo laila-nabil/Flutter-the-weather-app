@@ -50,6 +50,7 @@ class WeatherProvider with ChangeNotifier {
       final date = presentFutureWeather['daily'][0]['dt'] as int;
       print("_todayWeather time $date");
       print("_todayWeather time ${unixSecondsToDate(date)}");
+      final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       _todayWeather = Weather(
         date: unixSecondsToDate(date),
         // date: DateTime.now(),
@@ -60,12 +61,15 @@ class WeatherProvider with ChangeNotifier {
         mainDescription: presentFutureWeather['daily'][0]['weather'][0]['main'],
         detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
         ['description'],
+          isImageNetwork: true,
+          image: 'http://openweathermap.org/img/wn/$icon@4x.png'
       );
       print('1 _futureWeather lenght ${_futureWeather.length}');
       _futureWeather = [];
       print('2 _futureWeather lenght ${_futureWeather.length}');
       for (int i = 1; i < 6; i++) {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
+        final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
         _futureWeather.add(Weather(
           date: unixSecondsToDate(date),
           tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
@@ -76,7 +80,7 @@ class WeatherProvider with ChangeNotifier {
           detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
           ['description'],
           isImageNetwork: true,
-          image: presentFutureWeather['daily'][i]['weather'][0]['icon']
+          image: 'http://openweathermap.org/img/wn/$icon@4x.png'
         ));
       }
     }catch(error){
