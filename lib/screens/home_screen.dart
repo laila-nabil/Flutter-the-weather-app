@@ -23,21 +23,33 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     if (_isInit) {
       _isLoading = true;
-      Provider.of<WeatherProvider>(context).getWeather().then((_) {
-        setState(() {
-          _isLoading = false;
+      try {
+        Provider.of<WeatherProvider>(context).getWeather().then((_) {
+          setState(() {
+            _isLoading = false;
+          });
         });
-      });
+      } catch (error) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('An error occurred!')));
+      }
+
       cron = Cron();
       print('Alarm set');
       //https://crontab.guru/
       cron.schedule(Schedule.parse('01 * * * *'), () async {
         print('01 * * * * ${DateTime.now()}');
-        await Provider.of<WeatherProvider>(context, listen: false)
-            .getWeather()
-            .then((_) {
-          print('in the then');
-        });
+        try {
+          await Provider.of<WeatherProvider>(context, listen: false)
+              .getWeather()
+              .then((_) {
+            print('in the then');
+          });
+        } catch (error) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('An error occurred!')));
+        }
+
         print('Alarm done');
       });
     }
