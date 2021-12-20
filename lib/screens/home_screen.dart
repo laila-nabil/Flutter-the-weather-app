@@ -5,6 +5,7 @@ import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/widgets/compare_weather.dart';
 import 'package:the_weather_app/widgets/weather_list.dart';
 import 'package:the_weather_app/widgets/weather_today.dart';
+import 'package:the_weather_app/models/location.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -24,7 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isInit) {
       _isLoading = true;
       try {
-        Provider.of<WeatherProvider>(context).getWeather().then((_) {
+        Provider.of<WeatherProvider>(context)
+            .getPresentFutureWeatherAPI()
+            .then((_) {
           setState(() {
             _isLoading = false;
           });
@@ -41,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         print('01 * * * * ${DateTime.now()}');
         try {
           await Provider.of<WeatherProvider>(context, listen: false)
-              .getWeather()
+              .getPresentFutureWeatherAPI()
               .then((_) {
             print('in the then');
           });
@@ -90,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: screenSize.width * 0.8,
                       height: screenSize.height * 0.55,
                       child: WeatherToday()),
-                  Expanded(child: CompareWeather()),
+                  // Expanded(child: CompareWeather()),
                   Container(
                       width: double.infinity,
                       height: screenSize.height * 0.32,

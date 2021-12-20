@@ -12,6 +12,7 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
   String _compareTodayYesterday = '';
+  String location = '';
   var _API_KEY =  kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
@@ -61,6 +62,7 @@ class WeatherProvider with ChangeNotifier {
           image: 'https://openweathermap.org/img/wn/$icon@4x.png'
       );
       print('1 _futureWeather lenght ${_futureWeather.length}');
+      await getLocationFromCoordinates();
       _futureWeather = [];
       print('2 _futureWeather lenght ${_futureWeather.length}');
       for (int i = 1; i < 6; i++) {
@@ -187,5 +189,19 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> get pastWeather {
     print('pastWeather length is ${_pastWeather.length}');
     return [..._pastWeather.reversed];
+  }
+
+  Future<Map> getLocationFromCoordinates() async {
+    var url =
+        'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
+    final response = await http.get(Uri.parse(url));
+    final locationDetails = json.decode(response.body);
+    print('locationDetails $locationDetails');
+    if(locationDetails !=null){
+      location = '${locationDetails['city']},${locationDetails['countryName']}';
+    }
+    notifyListeners();
+    return locationDetails;
+
   }
 }
