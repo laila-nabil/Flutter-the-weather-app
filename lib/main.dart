@@ -5,7 +5,6 @@
 // fvm flutter config --enable-web in terminal/windows powershell as admin
 // fvm flutter create .
 // fvm flutter run -d chrome/edge
-// fvm flutter build web
 // firebase init hosting
 // build/web, single web page, not overwrite
 // firebase deploy --only hosting

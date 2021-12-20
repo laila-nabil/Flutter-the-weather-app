@@ -58,7 +58,7 @@ class WeatherProvider with ChangeNotifier {
         detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
         ['description'],
           isImageNetwork: true,
-          image: 'http://openweathermap.org/img/wn/$icon@4x.png'
+          image: 'https://openweathermap.org/img/wn/$icon@4x.png'
       );
       print('1 _futureWeather lenght ${_futureWeather.length}');
       _futureWeather = [];
@@ -76,7 +76,7 @@ class WeatherProvider with ChangeNotifier {
           detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
           ['description'],
           isImageNetwork: true,
-          image: 'http://openweathermap.org/img/wn/$icon@4x.png'
+          image: 'https://openweathermap.org/img/wn/$icon@4x.png'
         ));
       }
     }catch(error){
