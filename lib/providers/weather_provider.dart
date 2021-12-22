@@ -33,6 +33,52 @@ class WeatherProvider with ChangeNotifier {
     return DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
   }
 
+  Future<void> getCurrentWeatherAPI() async {
+    // var API_key = DotEnv.env['API_KEY'];
+    var API_key = _API_KEY;
+    const lat = '30.0444';
+    const lon = '31.2357';
+    // const part = 'minutely,hourly';
+    const excludedPart = 'minutely';
+    var url =
+    'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$API_key';
+    print('CurrentWeather url is $url');
+    try {
+      final response = await http.get(Uri.parse(url));
+      final currentWeather = json.decode(response.body);
+      // print('current');
+      // print('lat $lat');
+      // print('lon $lon');
+      // print('temp ${currentWeather['current']['temp']}');
+      // print('feelsLike ${currentWeather['current']['feels_like']}');
+      // print('feelsLike ${currentWeather['current']['feels_like']}');
+      // print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
+      final iconNow = currentWeather['weather'][0]['icon'];
+      _weatherNow = CurrentWeather(
+        lat: lat,
+        lon: lon,
+        isImageNetwork: true,
+        image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
+        temp: currentWeather['main']['temp'].toString(),
+        feelsLike: currentWeather['main']['feels_like'].toString(),
+        mainDescription: currentWeather['weather'][0]['main'],
+        detailedDescription: currentWeather['weather'][0]['description'],
+        clouds: currentWeather['clouds']['all'].toString(),
+        humidity: currentWeather['main']['humidity'].toString(),
+        pressure: currentWeather['main']['pressure'].toString(),
+        sunrise: currentWeather['sys']['sunrise'].toString(),
+        sunset: currentWeather['sys']['sunset'].toString(),
+        unixTime: currentWeather['sys']['dt'].toString(),
+        windDeg: currentWeather['wind']['deg'].toString(),
+        windSpeed: currentWeather['wind']['speed'].toString(),
+        city: currentWeather['name'],
+        country: currentWeather['sys']['country'],
+      );
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> getPresentFutureWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
@@ -59,28 +105,30 @@ class WeatherProvider with ChangeNotifier {
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
-      _weatherNow = CurrentWeather(
-        lat: lat,
-        lon: lon,
-        isImageNetwork: true,
-        image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
-        temp: presentFutureWeather['current']['temp'].toString(),
-        feelsLike: presentFutureWeather['current']['feels_like'].toString(),
-        mainDescription: presentFutureWeather['current']['weather'][0]
-            ['main'],
-        detailedDescription: presentFutureWeather['current']['weather'][0]
-            ['description'],
-        clouds: presentFutureWeather['current']['clouds'].toString(),
-        humidity: presentFutureWeather['current']['humidity'].toString(),
-        pressure: presentFutureWeather['current']['pressure'].toString(),
-        sunrise: presentFutureWeather['current']['sunrise'].toString(),
-        sunset: presentFutureWeather['current']['sunset'].toString(),
-        unixTime: presentFutureWeather['current']['dt'].toString(),
-        windDeg: presentFutureWeather['current']['wind_deg'].toString(),
-        windSpeed: presentFutureWeather['current']['wind_speed'].toString(),
-        tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
-        tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
-      );
+      // _weatherNow = CurrentWeather(
+      //   lat: lat,
+      //   lon: lon,
+      //   isImageNetwork: true,
+      //   image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
+      //   temp: presentFutureWeather['current']['temp'].toString(),
+      //   feelsLike: presentFutureWeather['current']['feels_like'].toString(),
+      //   mainDescription: presentFutureWeather['current']['weather'][0]
+      //       ['main'],
+      //   detailedDescription: presentFutureWeather['current']['weather'][0]
+      //       ['description'],
+      //   clouds: presentFutureWeather['current']['clouds'].toString(),
+      //   humidity: presentFutureWeather['current']['humidity'].toString(),
+      //   pressure: presentFutureWeather['current']['pressure'].toString(),
+      //   sunrise: presentFutureWeather['current']['sunrise'].toString(),
+      //   sunset: presentFutureWeather['current']['sunset'].toString(),
+      //   unixTime: presentFutureWeather['current']['dt'].toString(),
+      //   windDeg: presentFutureWeather['current']['wind_deg'].toString(),
+      //   windSpeed: presentFutureWeather['current']['wind_speed'].toString(),
+      //   tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
+      //   tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
+      // );
+      _weatherNow.tempMin = presentFutureWeather['daily'][0]['temp']['min'].toString();
+      _weatherNow.tempMax = presentFutureWeather['daily'][0]['temp']['max'].toString();
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       _todayWeather = Weather(
           date: unixSecondsToDate(date),

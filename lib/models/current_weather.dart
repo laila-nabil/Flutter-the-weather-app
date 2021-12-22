@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CurrentWeather {
   final String temp;
   final String feelsLike;
-  final String tempMin;
-  final String tempMax;
+  String tempMin;
+  String tempMax;
   final String pressure;
   final String clouds;
   final String windSpeed;
@@ -18,6 +18,8 @@ class CurrentWeather {
   final bool isImageNetwork;
   final String lat;
   final String lon;
+  final String city;
+  final String country;
   final String unixTime;
   final bool isMetric;
 
@@ -41,5 +43,7 @@ class CurrentWeather {
     this.unixTime = '',
     this.windDeg = '',
     this.windSpeed = '',
+    this.city = '',
+    this.country = '',
   });
 }

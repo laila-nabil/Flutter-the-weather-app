@@ -21,20 +21,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Cron cron;
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async{
     if (_isInit) {
       _isLoading = true;
       try {
-        Provider.of<WeatherProvider>(context)
-            .getPresentFutureWeatherAPI()
-            .then((_) {
-          setState(() {
-            _isLoading = false;
-          });
+        await Provider.of<WeatherProvider>(context,listen: false).getCurrentWeatherAPI();
+        await Provider.of<WeatherProvider>(context,listen: false).getPresentFutureWeatherAPI();
+        setState(() {
+          _isLoading = false;
         });
       } catch (error) {
+        print('error in did change $error');
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('An error occurred!')));
+            .showSnackBar(SnackBar(content: Text('An error occurred! did')));
       }
 
       cron = Cron();
@@ -43,10 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
       cron.schedule(Schedule.parse('01 * * * *'), () async {
         print('01 * * * * ${DateTime.now()}');
         try {
-          await Provider.of<WeatherProvider>(context, listen: false)
-              .getPresentFutureWeatherAPI()
-              .then((_) {
-            print('in the then');
+          await Provider.of<WeatherProvider>(context).getCurrentWeatherAPI();
+          setState(() {
+            _isLoading = true;
           });
         } catch (error) {
           ScaffoldMessenger.of(context)
