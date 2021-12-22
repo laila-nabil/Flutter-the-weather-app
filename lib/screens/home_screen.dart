@@ -94,10 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: screenSize.height * 0.55,
                       child: WeatherToday()),
                   // Expanded(child: CompareWeather()),
-                  Container(
-                      width: double.infinity,
-                      height: screenSize.height * 0.32,
-                      child: WeatherList()),
+                  // Container(
+                  //     width: double.infinity,
+                  //     height: screenSize.height * 0.32,
+                  //     child: WeatherList()),
                 ],
               ),
       ),

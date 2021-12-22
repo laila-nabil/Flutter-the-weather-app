@@ -2,18 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/weather.dart';
+import '../models/current_weather.dart';
 
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
+  CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
-  var _API_KEY =  kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
+  var _API_KEY =
+      kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
     var timeNow = DateTime.now();
@@ -35,11 +39,11 @@ class WeatherProvider with ChangeNotifier {
     const lat = '30.0444';
     const lon = '31.2357';
     // const part = 'minutely,hourly';
-    const part = 'minutely';
+    const excludedPart = 'minutely';
     var url =
-        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$part&units=metric&appid=${API_key}';
+        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
     print('PresentFuture url is $url');
-    try{
+    try {
       final response = await http.get(Uri.parse(url));
       final presentFutureWeather = json.decode(response.body);
       // print("_todayWeather time ${unixSecondsToDate(int.parse(presentFutureWeather['daily'][0]['dt']))}");
@@ -47,20 +51,50 @@ class WeatherProvider with ChangeNotifier {
       final date = presentFutureWeather['daily'][0]['dt'] as int;
       print("_todayWeather time $date");
       print("_todayWeather time ${unixSecondsToDate(date)}");
-      final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
-      _todayWeather = Weather(
-        date: unixSecondsToDate(date),
-        // date: DateTime.now(),
-        tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
-        tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
+      final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
+      print('current');
+      print('lat $lat');
+      print('lon $lon');
+      print('temp ${presentFutureWeather['current']['temp']}');
+      print('feelsLike ${presentFutureWeather['current']['feels_like']}');
+      print('feelsLike ${presentFutureWeather['current']['feels_like']}');
+      print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
+      _weatherNow = CurrentWeather(
         lat: lat,
         lon: lon,
-        mainDescription: presentFutureWeather['daily'][0]['weather'][0]['main'],
-        detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
-        ['description'],
-          isImageNetwork: true,
-          image: 'https://openweathermap.org/img/wn/$icon@4x.png'
+        isImageNetwork: true,
+        image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
+        temp: presentFutureWeather['current']['temp'].toString(),
+        feelsLike: presentFutureWeather['current']['feels_like'].toString(),
+        mainDescription: presentFutureWeather['current']['weather'][0]
+            ['main'],
+        detailedDescription: presentFutureWeather['current']['weather'][0]
+            ['description'],
+        clouds: presentFutureWeather['current']['clouds'].toString(),
+        humidity: presentFutureWeather['current']['humidity'].toString(),
+        pressure: presentFutureWeather['current']['pressure'].toString(),
+        sunrise: presentFutureWeather['current']['sunrise'].toString(),
+        sunset: presentFutureWeather['current']['sunset'].toString(),
+        unixTime: presentFutureWeather['current']['dt'].toString(),
+        windDeg: presentFutureWeather['current']['wind_deg'].toString(),
+        windSpeed: presentFutureWeather['current']['wind_speed'].toString(),
+        tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
+        tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
       );
+      final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
+      _todayWeather = Weather(
+          date: unixSecondsToDate(date),
+          // date: DateTime.now(),
+          tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
+          tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
+          lat: lat,
+          lon: lon,
+          mainDescription: presentFutureWeather['daily'][0]['weather'][0]
+              ['main'],
+          detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
+              ['description'],
+          isImageNetwork: true,
+          image: 'https://openweathermap.org/img/wn/$icon@4x.png');
       print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
       _futureWeather = [];
@@ -69,20 +103,20 @@ class WeatherProvider with ChangeNotifier {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
         final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
         _futureWeather.add(Weather(
-          date: unixSecondsToDate(date),
-          tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
-          tempMin: presentFutureWeather['daily'][i]['temp']['min'].toString(),
-          lat: lat,
-          lon: lon,
-          mainDescription: presentFutureWeather['daily'][i]['weather'][0]['main'],
-          detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
-          ['description'],
-          isImageNetwork: true,
-          image: 'https://openweathermap.org/img/wn/$icon@4x.png'
-        ));
+            date: unixSecondsToDate(date),
+            tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
+            tempMin: presentFutureWeather['daily'][i]['temp']['min'].toString(),
+            lat: lat,
+            lon: lon,
+            mainDescription: presentFutureWeather['daily'][i]['weather'][0]
+                ['main'],
+            detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
+                ['description'],
+            isImageNetwork: true,
+            image: 'https://openweathermap.org/img/wn/$icon@4x.png'));
       }
-    }catch(error){
-      throw(error);
+    } catch (error) {
+      throw (error);
     }
   }
 
@@ -99,7 +133,7 @@ class WeatherProvider with ChangeNotifier {
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
 
     print('history url is $url');
-    try{
+    try {
       final response = await http.get(Uri.parse(url));
       print('daysAgo $daysAgo');
       print('getHistoryWeather ${json.decode(response.body)}');
@@ -129,19 +163,18 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isMetric: true,
             tempMin: hourlyPastTempSorted[0].toString(),
-            tempMax:
-            hourlyPastTempSorted[hourlyPastTempSorted.length - 1].toString(),
-
+            tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
+                .toString(),
           ));
       print('end of api call $daysAgo');
-    }catch(error){
-      throw(error);
+    } catch (error) {
+      throw (error);
     }
   }
 
   Future<void> getWeather() async {
     print('getting weather');
-    try{
+    try {
       await getPresentFutureWeatherAPI();
       _pastWeather = [];
       for (int i = 1; i <= 5; i++) {
@@ -150,22 +183,22 @@ class WeatherProvider with ChangeNotifier {
       }
       _pastWeather = [...(_pastWeather.reversed)];
       final isHotterToday = (double.parse(todayWeather.tempMax) +
-          double.parse(todayWeather.tempMin)) >
+              double.parse(todayWeather.tempMin)) >
           (double.parse(_pastWeather[0].tempMax) +
               double.parse(_pastWeather[0].tempMin));
       final diffMax = double.parse(todayWeather.tempMax) -
           double.parse(_pastWeather[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(_pastWeather[0].tempMin);
-      final diff = '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
+      final diff =
+          '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
       _compareTodayYesterday = isHotterToday
           ? 'Today is warmer than yesterday by $diff'
           : 'Today is colder than yesterday by $diff';
       notifyListeners();
       print('got weather');
-    }catch(error)
-    {
-      throw(error);
+    } catch (error) {
+      throw (error);
     }
   }
 
@@ -186,6 +219,10 @@ class WeatherProvider with ChangeNotifier {
     return [..._futureWeather];
   }
 
+  CurrentWeather get weatherNow {
+    return _weatherNow;
+  }
+
   List<Weather> get pastWeather {
     print('pastWeather length is ${_pastWeather.length}');
     return [..._pastWeather.reversed];
@@ -197,11 +234,10 @@ class WeatherProvider with ChangeNotifier {
     final response = await http.get(Uri.parse(url));
     final locationDetails = json.decode(response.body);
     print('locationDetails $locationDetails');
-    if(locationDetails !=null){
+    if (locationDetails != null) {
       location = '${locationDetails['city']},${locationDetails['countryName']}';
     }
     notifyListeners();
     return locationDetails;
-
   }
 }
