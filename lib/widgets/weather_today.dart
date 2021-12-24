@@ -28,20 +28,6 @@ class WeatherToday extends StatelessWidget {
             Text(weatherToday.mainDescription),
             Row(
               children: [
-                SvgPicture.asset(
-                  'assets/dashboard_icons/rain.svg',
-                  width: 30,
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Rain'),
-                )
-              ],
-            ),
-            // Text('Chances of rain: ${weatherToday}'),
-            Row(
-              children: [
                 weatherToday.isImageNetwork
                     ? Image.network(
                         weatherToday.image,
@@ -59,6 +45,11 @@ class WeatherToday extends StatelessWidget {
                 )
               ],
             ),
+            // Text('Chances of rain: ${weatherToday}'),
+            dashboardWeather(
+              svgIcon: 'assets/dashboard_icons/rain.svg',
+              status: 'Rain',
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -66,6 +57,33 @@ class WeatherToday extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class dashboardWeather extends StatelessWidget {
+  final String svgIcon;
+  final String status;
+
+  dashboardWeather({this.svgIcon, this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            svgIcon,
+            width: 25,
+            height: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(status),
+          )
+        ],
       ),
     );
   }
