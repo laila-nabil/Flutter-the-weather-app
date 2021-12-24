@@ -68,7 +68,7 @@ class WeatherProvider with ChangeNotifier {
         pressure: currentWeather['main']['pressure'].toString(),
         sunrise: currentWeather['sys']['sunrise'].toString(),
         sunset: currentWeather['sys']['sunset'].toString(),
-        unixTime: currentWeather['sys']['dt'].toString(),
+        unixTime: currentWeather['dt'].toString(),
         windDeg: currentWeather['wind']['deg'].toString(),
         windSpeed: currentWeather['wind']['speed'].toString(),
         city: currentWeather['name'],

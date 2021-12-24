@@ -69,7 +69,8 @@ class WeatherToday extends StatelessWidget {
                   children: [
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                      status: '${weatherToday.windSpeed}',
+                      status:
+                          '${weatherToday.windSpeed} m/s ${weatherToday.windDeg}',
                     ),
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/sunset.svg',
@@ -85,6 +86,9 @@ class WeatherToday extends StatelessWidget {
               child: Text(
                   'The high will be ${weatherToday.tempMax}°C, the low will be ${weatherToday.tempMin}°C.'),
             ),
+            if (weatherToday.unixTime != null)
+              Text(
+                  'Last updated at ${DateFormat('dd MMM - kk:mm a').format(unixSecondsToDate(int.parse(weatherToday.unixTime)))}',style: TextStyle(fontSize: 11),)
           ],
         ),
       ),
