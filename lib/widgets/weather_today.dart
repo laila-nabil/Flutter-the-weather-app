@@ -87,9 +87,6 @@ class WeatherToday extends StatelessWidget {
               child: Text(
                   'The high will be ${weatherToday.tempMax}°C, the low will be ${weatherToday.tempMin}°C.'),
             ),
-            if (weatherToday.unixTime != null)
-              Text(
-                  'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',style: TextStyle(fontSize: 11),)
           ],
         ),
       ),

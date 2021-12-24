@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cron/cron.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/widgets/compare_weather.dart';
@@ -29,6 +30,9 @@ class _MyHomePageState extends State<MyHomePage> {
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
             .getPresentFutureWeatherAPI();
+        await Provider.of<WeatherProvider>(context, listen: false)
+            .getAllHistoryWeather();
+
         setState(() {
           _isLoading = false;
         });
@@ -46,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
         print('01,30 * * * * ${DateTime.now()}');
         try {
-          await Provider.of<WeatherProvider>(context,listen: false).getCurrentWeatherAPI();
+          await Provider.of<WeatherProvider>(context, listen: false)
+              .getCurrentWeatherAPI();
           setState(() {
             print('update');
           });
@@ -59,8 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
       cron.schedule(Schedule.parse('01 0 * * *'), () async {
         print('01 0 * * * ${DateTime.now()}');
         try {
-          await Provider.of<WeatherProvider>(context,listen: false).getPresentFutureWeatherAPI();
-          await Provider.of<WeatherProvider>(context,listen: false).getAllHistoryWeather();
+          await Provider.of<WeatherProvider>(context, listen: false)
+              .getPresentFutureWeatherAPI();
+          await Provider.of<WeatherProvider>(context, listen: false)
+              .getAllHistoryWeather();
           setState(() {
             print('update');
           });
@@ -118,17 +125,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   )
                 : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                           width: screenSize.width * 0.8,
                           height: screenSize.height * 0.55,
                           child: WeatherToday()),
-                      // Expanded(child: CompareWeather()),
-                      // Container(
-                      //     width: double.infinity,
-                      //     height: screenSize.height * 0.32,
-                      //     child: WeatherList()),
+                      CompareWeather(),
+                      Container(
+                          width: double.infinity,
+                          height: screenSize.height * 0.32,
+                          child: WeatherList()),
+                      Text(
+                        'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                        style: TextStyle(fontSize: 11, color: Colors.black45),
+                      )
                     ],
                   ),
           ),
