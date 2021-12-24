@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Container(
                           width: screenSize.width * 0.8,
-                          height: screenSize.height * 0.55,
+                          height: screenSize.height * 0.58,
                           child: WeatherToday()),
                       CompareWeather(),
                       Container(

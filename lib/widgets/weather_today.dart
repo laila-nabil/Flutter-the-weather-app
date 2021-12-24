@@ -26,8 +26,13 @@ class WeatherToday extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(city),
-            Text(weatherToday.mainDescription),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.location_on),
+                Text(city),
+              ],
+            ),
             Row(
               children: [
                 weatherToday.isImageNetwork
@@ -47,7 +52,17 @@ class WeatherToday extends StatelessWidget {
                 )
               ],
             ),
-            // Text('Chances of rain: ${weatherToday}'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Feels like ${weatherToday.feelsLike}°C, ',
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                ),
+                Text(weatherToday.detailedDescription),
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -108,8 +123,8 @@ class dashboardWeather extends StatelessWidget {
         children: [
           SvgPicture.asset(
             svgIcon,
-            width: 25,
-            height: 25,
+            width: 22,
+            height: 22,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
