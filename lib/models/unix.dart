@@ -6,5 +6,5 @@ DateTime unixSecondsToDate(int unixTimeStamp) {
 
 String unixSecondsToDateFormat(int unixTimeStamp) {
   final date = DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
-  return DateFormat('kk:mm a').format(date);
+  return DateFormat('hh:mm a').format(date);
 }

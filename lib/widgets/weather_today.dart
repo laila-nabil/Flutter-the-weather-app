@@ -89,7 +89,7 @@ class WeatherToday extends StatelessWidget {
             ),
             if (weatherToday.unixTime != null)
               Text(
-                  'Last updated at ${DateFormat('dd MMM - kk:mm a').format(unixSecondsToDate(int.parse(weatherToday.unixTime)))}',style: TextStyle(fontSize: 11),)
+                  'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',style: TextStyle(fontSize: 11),)
           ],
         ),
       ),
