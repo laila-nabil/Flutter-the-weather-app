@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:the_weather_app/models/unix.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
 import '../widgets/custom_icons.dart';
@@ -49,26 +50,33 @@ class WeatherToday extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                dashboardWeather(
-                  svgIcon: 'assets/dashboard_icons/rain.svg',
-                  status: 'Rain',
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    dashboardWeather(
+                      svgIcon: 'assets/dashboard_icons/rain.svg',
+                      status: 'Rain',
+                    ),
+                    dashboardWeather(
+                      svgIcon: 'assets/dashboard_icons/sunrise.svg',
+                      status:
+                          '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
+                    ),
+                  ],
                 ),
-                dashboardWeather(
-                  svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                  status: '${weatherToday.windSpeed}',
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                dashboardWeather(
-                  svgIcon: 'assets/dashboard_icons/sunrise.svg',
-                  status: '${weatherToday.sunrise}',
-                ),
-                dashboardWeather(
-                  svgIcon: 'assets/dashboard_icons/sunset.svg',
-                  status: '${weatherToday.sunset}',
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    dashboardWeather(
+                      svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                      status: '${weatherToday.windSpeed}',
+                    ),
+                    dashboardWeather(
+                      svgIcon: 'assets/dashboard_icons/sunset.svg',
+                      status:
+                          '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                    ),
+                  ],
                 ),
               ],
             ),
