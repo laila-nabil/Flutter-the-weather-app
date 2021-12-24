@@ -9,7 +9,7 @@ class WeatherTabs extends StatelessWidget {
           children: <Widget>[
             DefaultTabController(
                 length: 8, // length of tabs
-                initialIndex: 0,
+                initialIndex: 5,
                 child: Column(
                     crossAxisAlignment:
                     CrossAxisAlignment.stretch,
