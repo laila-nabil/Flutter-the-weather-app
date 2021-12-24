@@ -46,9 +46,18 @@ class WeatherToday extends StatelessWidget {
               ],
             ),
             // Text('Chances of rain: ${weatherToday}'),
-            dashboardWeather(
-              svgIcon: 'assets/dashboard_icons/rain.svg',
-              status: 'Rain',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/rain.svg',
+                  status: 'Rain',
+                ),
+                dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                  status: '${weatherToday.windSpeed}',
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
