@@ -21,12 +21,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Cron cron;
 
   @override
-  Future<void> didChangeDependencies() async{
+  Future<void> didChangeDependencies() async {
     if (_isInit) {
       _isLoading = true;
       try {
-        await Provider.of<WeatherProvider>(context,listen: false).getCurrentWeatherAPI();
-        await Provider.of<WeatherProvider>(context,listen: false).getPresentFutureWeatherAPI();
+        await Provider.of<WeatherProvider>(context, listen: false)
+            .getCurrentWeatherAPI();
+        await Provider.of<WeatherProvider>(context, listen: false)
+            .getPresentFutureWeatherAPI();
         setState(() {
           _isLoading = false;
         });
@@ -73,31 +75,49 @@ class _MyHomePageState extends State<MyHomePage> {
       //         .getWeather();
       //   },
       // ),
-      body: Center(
-        child: _isLoading
-            ? Center(
-                // child: Text('Loading .. .'),
-                child: Column(
-                  children: [
-                    Text('Loading ...'),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: screenSize.width * 0.8,
-                      height: screenSize.height * 0.55,
-                      child: WeatherToday()),
-                  // Expanded(child: CompareWeather()),
-                  // Container(
-                  //     width: double.infinity,
-                  //     height: screenSize.height * 0.32,
-                  //     child: WeatherList()),
-                ],
-              ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          try {
+            await Provider.of<WeatherProvider>(context, listen: false)
+                .getCurrentWeatherAPI();
+            await Provider.of<WeatherProvider>(context, listen: false)
+                .getPresentFutureWeatherAPI();
+          } catch (error) {
+            print('error in did change $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('An error occurred! did')));
+          }
+        },
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(18.0),
+          child: Center(
+            child: _isLoading
+                ? Center(
+                    // child: Text('Loading .. .'),
+                    child: Column(
+                      children: [
+                        Text('Loading ...'),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: screenSize.width * 0.8,
+                          height: screenSize.height * 0.55,
+                          child: WeatherToday()),
+                      // Expanded(child: CompareWeather()),
+                      // Container(
+                      //     width: double.infinity,
+                      //     height: screenSize.height * 0.32,
+                      //     child: WeatherList()),
+                    ],
+                  ),
+          ),
+        ),
       ),
     );
   }
