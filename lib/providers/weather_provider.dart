@@ -228,6 +228,34 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getAllHistoryWeather() async {
+    print('getting weather');
+    try {
+      _pastWeather = [];
+      for (int i = 1; i <= 5; i++) {
+        print('i $i');
+        await getHistoryWeatherAPI(i);
+      }
+      _pastWeather = [...(_pastWeather.reversed)];
+      final isHotterToday = (double.parse(todayWeather.tempMax) +
+          double.parse(todayWeather.tempMin)) >
+          (double.parse(_pastWeather[0].tempMax) +
+              double.parse(_pastWeather[0].tempMin));
+      final diffMax = double.parse(todayWeather.tempMax) -
+          double.parse(_pastWeather[0].tempMax);
+      final diffMin = double.parse(todayWeather.tempMin) -
+          double.parse(_pastWeather[0].tempMin);
+      final diff =
+          '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
+      _compareTodayYesterday = isHotterToday
+          ? 'Today is warmer than yesterday by $diff'
+          : 'Today is colder than yesterday by $diff';
+      notifyListeners();
+      print('got weather');
+    } catch (error) {
+      throw (error);
+    }
+  }
   String get compareTodayYesterday {
     return _compareTodayYesterday;
   }
