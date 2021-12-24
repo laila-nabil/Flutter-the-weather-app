@@ -2,8 +2,9 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:the_weather_app/providers/weather_provider.dart';
 import '../widgets/custom_icons.dart';
 
 class WeatherToday extends StatelessWidget {
@@ -25,27 +26,43 @@ class WeatherToday extends StatelessWidget {
           children: [
             Text(city),
             Text(weatherToday.mainDescription),
-            Text(
-                '${DateFormat('dd MMMM yyyy - hh:mm').format(DateTime.now())}'),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/dashboard_icons/rain.svg',
+                  width: 30,
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Rain'),
+                )
+              ],
+            ),
+            // Text('Chances of rain: ${weatherToday}'),
             Row(
               children: [
                 weatherToday.isImageNetwork
                     ? Image.network(
-                  weatherToday.image,
-                  width: 150,
-                  height: 150,
-                )
+                        weatherToday.image,
+                        width: 150,
+                        height: 150,
+                      )
                     : Image.asset(
-                  weatherToday.image,
-                  width: 150,
-                  height: 150,
-                ),
-                Text('${weatherToday.temp} °C' , style: TextStyle(fontSize: 25),)
+                        weatherToday.image,
+                        width: 150,
+                        height: 150,
+                      ),
+                Text(
+                  '${weatherToday.temp} °C',
+                  style: TextStyle(fontSize: 25),
+                )
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('The high will be ${weatherToday.tempMax}°C, the low will be ${weatherToday.tempMin}°C.'),
+              child: Text(
+                  'The high will be ${weatherToday.tempMax}°C, the low will be ${weatherToday.tempMin}°C.'),
             ),
           ],
         ),

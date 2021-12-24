@@ -34,6 +34,7 @@ dependencies:
   intl: ^0.17.0
   scrollable_positioned_list: ^0.2.3
   cron: ^0.4.0
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,11 @@ flutter:
     - assets/weather_status/mostly_cloudy_night.png
     - assets/weather_status/rain.png
     - assets/weather_status/windy.png
+    - assets/dashboard_icons/rain.svg
+    - assets/dashboard_icons/sunrise.svg
+    - assets/dashboard_icons/sunset.svg
+    - assets/dashboard_icons/wind.svg
+    - assets/dashboard_icons/wind_2.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

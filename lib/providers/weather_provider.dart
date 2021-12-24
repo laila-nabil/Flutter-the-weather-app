@@ -105,28 +105,6 @@ class WeatherProvider with ChangeNotifier {
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
-      // _weatherNow = CurrentWeather(
-      //   lat: lat,
-      //   lon: lon,
-      //   isImageNetwork: true,
-      //   image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
-      //   temp: presentFutureWeather['current']['temp'].toString(),
-      //   feelsLike: presentFutureWeather['current']['feels_like'].toString(),
-      //   mainDescription: presentFutureWeather['current']['weather'][0]
-      //       ['main'],
-      //   detailedDescription: presentFutureWeather['current']['weather'][0]
-      //       ['description'],
-      //   clouds: presentFutureWeather['current']['clouds'].toString(),
-      //   humidity: presentFutureWeather['current']['humidity'].toString(),
-      //   pressure: presentFutureWeather['current']['pressure'].toString(),
-      //   sunrise: presentFutureWeather['current']['sunrise'].toString(),
-      //   sunset: presentFutureWeather['current']['sunset'].toString(),
-      //   unixTime: presentFutureWeather['current']['dt'].toString(),
-      //   windDeg: presentFutureWeather['current']['wind_deg'].toString(),
-      //   windSpeed: presentFutureWeather['current']['wind_speed'].toString(),
-      //   tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
-      //   tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
-      // );
       _weatherNow.tempMin = presentFutureWeather['daily'][0]['temp']['min'].toString();
       _weatherNow.tempMax = presentFutureWeather['daily'][0]['temp']['max'].toString();
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
