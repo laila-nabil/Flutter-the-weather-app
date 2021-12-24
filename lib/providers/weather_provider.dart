@@ -162,7 +162,8 @@ class WeatherProvider with ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(url));
       print('daysAgo $daysAgo');
-      print('getHistoryWeather ${json.decode(response.body)}');
+      final historyWeather = json.decode(response.body);
+      print('historyWeather $historyWeather');
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       print(
           'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
@@ -180,7 +181,7 @@ class WeatherProvider with ChangeNotifier {
       hourlyPastTempSorted.sort();
       print(
           'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
-
+      // final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
       _pastWeather.insert(
           daysAgo - 1,
           Weather(
