@@ -59,6 +59,19 @@ class WeatherToday extends StatelessWidget {
                 ),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/sunrise.svg',
+                  status: '${weatherToday.sunrise}',
+                ),
+                dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/sunset.svg',
+                  status: '${weatherToday.sunset}',
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
