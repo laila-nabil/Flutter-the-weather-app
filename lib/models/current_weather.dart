@@ -21,6 +21,7 @@ class CurrentWeather {
   final String city;
   final String country;
   final String unixTime;
+  String rain;
   final bool isMetric;
 
   CurrentWeather({
@@ -44,6 +45,7 @@ class CurrentWeather {
     this.windDeg = '',
     this.windSpeed = '',
     this.city = '',
+    this.rain = '0',
     this.country = '',
   });
 }
