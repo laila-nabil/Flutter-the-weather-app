@@ -51,7 +51,7 @@ class WeatherToday extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/rain.svg',
@@ -65,7 +65,7 @@ class WeatherToday extends StatelessWidget {
                   ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/wind_2.svg',
