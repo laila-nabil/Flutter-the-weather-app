@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_weather_app/models/unix.dart';
+import 'package:the_weather_app/models/wind_direction.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
 import '../widgets/custom_icons.dart';
@@ -70,7 +71,7 @@ class WeatherToday extends StatelessWidget {
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/wind_2.svg',
                       status:
-                          '${weatherToday.windSpeed} m/s ${weatherToday.windDeg}',
+                          '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
                     ),
                     dashboardWeather(
                       svgIcon: 'assets/dashboard_icons/sunset.svg',

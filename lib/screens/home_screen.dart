@@ -41,19 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
       cron = Cron();
       print('Alarm set');
       //https://crontab.guru/
-      cron.schedule(Schedule.parse('01 * * * *'), () async {
+      cron.schedule(Schedule.parse('30 * * * *'), () async {
         print('01 * * * * ${DateTime.now()}');
         try {
           await Provider.of<WeatherProvider>(context).getCurrentWeatherAPI();
-          setState(() {
-            _isLoading = true;
-          });
         } catch (error) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('An error occurred!')));
         }
-
-        print('Alarm done');
       });
     }
     _isInit = false;
