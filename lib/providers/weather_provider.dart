@@ -339,13 +339,13 @@ class WeatherProvider with ChangeNotifier {
     final List<Weather> daily = [];
     for (int i = -5;i<11;i++){
       _hourlyPresentFutureWeather
-          .where((element) => element.date.difference(DateTime.now()).inDays == i)
-          .forEach((element) {
-        daily.add(element);
-        print('element ${element.date} added to $i');
+          .where((element) => element.date.difference(DateTime.now()).inHours == i)
+          .forEach((hour) {
+        daily.add(hour);
+        print('element ${hour.date} added to $i');
       });
       print('daily length ${daily.length}');
-      _weatherTabs.add(daily);
+      _weatherTabs.insert(i+5, daily);
       print('_weatherTabs.add(daily); ${_weatherTabs.length}');
     }
     // allWeather.forEach((element) {
