@@ -134,6 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: screenSize.height * 0.58,
                           child: WeatherToday()),
                       CompareWeather(),
+                      // WeatherList(),
                       WeatherTabs(),
                       Text(
                         'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
