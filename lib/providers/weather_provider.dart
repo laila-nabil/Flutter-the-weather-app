@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/intl.dart';
 
 import '../models/weather.dart';
 import '../models/current_weather.dart';
@@ -13,8 +14,10 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
-  List<Weather>  _hourlyPastWeather = [];
+  List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
+  List<List<Weather>> _weatherTabs =
+      List.filled(0, List.filled(0, Weather(), growable: true), growable: true);
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
@@ -43,7 +46,7 @@ class WeatherProvider with ChangeNotifier {
     // const part = 'minutely,hourly';
     const excludedPart = 'minutely';
     var url =
-    'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$API_key';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$API_key';
     print('CurrentWeather url is $url');
     try {
       final response = await http.get(Uri.parse(url));
@@ -107,15 +110,17 @@ class WeatherProvider with ChangeNotifier {
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
-      _weatherNow.tempMin = presentFutureWeather['daily'][0]['temp']['min'].toString();
-      _weatherNow.tempMax = presentFutureWeather['daily'][0]['temp']['max'].toString();
+      _weatherNow.tempMin =
+          presentFutureWeather['daily'][0]['temp']['min'].toString();
+      _weatherNow.tempMax =
+          presentFutureWeather['daily'][0]['temp']['max'].toString();
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
       print('***hourly');
       hourly.forEach((element) {
         print('for element');
         print(element['weather'][0]['main']);
-        print(unixSecondsToDate(element['dt']) );
+        print(unixSecondsToDate(element['dt']));
         _hourlyPresentFutureWeather.add(Weather(
           lat: lat,
           lon: lon,
@@ -268,7 +273,7 @@ class WeatherProvider with ChangeNotifier {
       }
       _pastWeather = [...(_pastWeather.reversed)];
       final isHotterToday = (double.parse(todayWeather.tempMax) +
-          double.parse(todayWeather.tempMin)) >
+              double.parse(todayWeather.tempMin)) >
           (double.parse(_pastWeather[0].tempMax) +
               double.parse(_pastWeather[0].tempMin));
       final diffMax = double.parse(todayWeather.tempMax) -
@@ -286,6 +291,7 @@ class WeatherProvider with ChangeNotifier {
       throw (error);
     }
   }
+
   String get compareTodayYesterday {
     return _compareTodayYesterday;
   }
@@ -297,7 +303,8 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> get allWeather {
     return [..._pastWeather] + [_todayWeather] + [..._futureWeather];
   }
-  List<Weather>  get hourlyWeather {
+
+  List<Weather> get hourlyWeather {
     return [..._hourlyPastWeather] + [..._hourlyPresentFutureWeather];
   }
 
@@ -326,5 +333,45 @@ class WeatherProvider with ChangeNotifier {
     }
     notifyListeners();
     return locationDetails;
+  }
+
+  List<List<Weather>> get weatherTabs {
+    final List<Weather> daily = [];
+    for (int i = -5;i<11;i++){
+      _hourlyPresentFutureWeather
+          .where((element) => element.date.difference(DateTime.now()).inDays == i)
+          .forEach((element) {
+        daily.add(element);
+        print('element ${element.date} added to $i');
+      });
+      print('daily length ${daily.length}');
+      _weatherTabs.add(daily);
+    }
+    // allWeather.forEach((element) {
+    //   int i = -5;
+    //   if(element.date.difference(DateTime.now()).inDays == i)
+    //     {
+    //       daily
+    //     }
+    //   i++;
+    // });
+    return _weatherTabs;
+    // Map<String, List<Weather>> weatherTabs = {};
+    // // List<Weather> weatherTabs= weatherList;
+    // _hourlyPresentFutureWeather.forEach((weatherByHour) {
+    //   // weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
+    //   if (weatherTabs
+    //       .containsKey(DateFormat('dd mm').format(weatherByHour.date))) {
+    //     weatherTabs[weatherTabs
+    //         .containsKey(DateFormat('dd mm').format(weatherByHour.date))]
+    //         .add(weatherByHour);
+    //   } else {
+    //     weatherTabs.addAll({
+    //       DateFormat('dd mm').format(weatherByHour.date): [weatherByHour]
+    //     });
+    //   }
+    //   print('weatherTabs');
+    //   print('${weatherByHour.date}');
+    // });
   }
 }
