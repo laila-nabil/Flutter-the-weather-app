@@ -13,6 +13,8 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
+  List<Weather>  _hourlyPastWeather = [];
+  List<Weather> _hourlyPresentFutureWeather = [];
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
@@ -108,6 +110,21 @@ class WeatherProvider with ChangeNotifier {
       _weatherNow.tempMin = presentFutureWeather['daily'][0]['temp']['min'].toString();
       _weatherNow.tempMax = presentFutureWeather['daily'][0]['temp']['max'].toString();
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
+      final List hourly = presentFutureWeather['hourly'];
+      print('***hourly');
+      hourly.forEach((element) {
+        print('for element');
+        print(element['weather'][0]['main']);
+        print(unixSecondsToDate(element['dt']) );
+        _hourlyPresentFutureWeather.add(Weather(
+          lat: lat,
+          lon: lon,
+          image: element['weather'][0]['icon'],
+          mainDescription: element['weather'][0]['main'],
+          detailedDescription: element['weather'][0]['description'],
+          date: unixSecondsToDate(element['dt']),
+        ));
+      });
       _todayWeather = Weather(
           date: unixSecondsToDate(date),
           // date: DateTime.now(),
@@ -152,7 +169,7 @@ class WeatherProvider with ChangeNotifier {
     var API_key = _API_KEY;
     const lat = '30.0444';
     const lon = '31.2357';
-    const part = 'minutely,hourly';
+    const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(daysAgo, 0);
     print('nightTime $unixTimestamp');
     var url =
@@ -267,6 +284,9 @@ class WeatherProvider with ChangeNotifier {
 
   List<Weather> get allWeather {
     return [..._pastWeather] + [_todayWeather] + [..._futureWeather];
+  }
+  List<Weather>  get hourlyWeather {
+    return [..._hourlyPastWeather] + [..._hourlyPresentFutureWeather];
   }
 
   List<Weather> get futureWeather {
