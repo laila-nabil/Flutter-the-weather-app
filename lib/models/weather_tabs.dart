@@ -7,8 +7,17 @@ class WeatherTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherList = Provider.of<WeatherProvider>(context).hourlyWeather;
-    List<Weather> weatherTabs= weatherList;
-
+    List<List<Weather>> weatherTabs= List.filled(15, List.filled(24, Weather(),growable: true),growable: true);
+    // List<Weather> weatherTabs= weatherList;
+    weatherList.forEach((weatherByHour) {
+      // weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
+      weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
+      print('weatherTabs');
+      print('${weatherByHour.date}');
+      print('weatherTabs.length ${weatherTabs.length}');
+      print('diff is ${weatherByHour.date.difference(DateTime.now()).inDays}');
+      print('weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length ${weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length}');
+    });
     return Container(
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,7 +34,7 @@ class WeatherTabs extends StatelessWidget {
                           labelColor: Colors.green,
                           unselectedLabelColor: Colors.black,
                           tabs: [
-                              ...weatherTabs.map((e) => Tab(text: e.date.toString(),)).toList()
+                              ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
                           ],
                         ),
                       ),
@@ -39,7 +48,7 @@ class WeatherTabs extends StatelessWidget {
                             ...weatherTabs
                                 .map((e) => Container(
                                         child: Center(
-                                      child: Text(e.date.toString(),
+                                      child: Text(e[0].date.toString(),
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold)),

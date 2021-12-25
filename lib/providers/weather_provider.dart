@@ -125,6 +125,18 @@ class WeatherProvider with ChangeNotifier {
           date: unixSecondsToDate(element['dt']),
         ));
       });
+      // List<List<Weather>> weatherTabs= [[],[],[]];
+      // List<List<Weather>> weatherTabs= List.filled(15, List.filled(24, Weather(),growable: true),growable: true);
+      // // List<Weather> weatherTabs= weatherList;
+      // _hourlyPresentFutureWeather.forEach((weatherByHour) {
+      //   print('diff is ${weatherByHour.date.difference(DateTime.now()).inDays}');
+      //   weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
+      //   print('weatherTabs');
+      //   print('weatherTabs.length ${weatherTabs.length}');
+      //   print('weatherByHour.date.difference(DateTime.now()).inDays ${weatherByHour.date.difference(DateTime.now()).inDays}');
+      //   print('weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length ${weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length}');
+      // });
+
       _todayWeather = Weather(
           date: unixSecondsToDate(date),
           // date: DateTime.now(),
