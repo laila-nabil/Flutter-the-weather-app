@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_weather_app/providers/weather_provider.dart';
 
 class WeatherTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final weatherList =
+        Provider.of<WeatherProvider>(context).allWeather;
     return Container(
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
