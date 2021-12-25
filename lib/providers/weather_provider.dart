@@ -346,6 +346,7 @@ class WeatherProvider with ChangeNotifier {
       });
       print('daily length ${daily.length}');
       _weatherTabs.add(daily);
+      print('_weatherTabs.add(daily); ${_weatherTabs.length}');
     }
     // allWeather.forEach((element) {
     //   int i = -5;
