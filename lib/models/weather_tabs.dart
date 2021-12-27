@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:the_weather_app/widgets/weather_list.dart';
 
 class WeatherTabs extends StatelessWidget {
   @override
@@ -31,7 +32,7 @@ class WeatherTabs extends StatelessWidget {
                         ),
                       ),
                       Container(
-                          height: 100, //height of TabBarView
+                          height: 200, //height of TabBarView
                           decoration: BoxDecoration(
                               border: Border(
                                   top: BorderSide(
@@ -39,14 +40,17 @@ class WeatherTabs extends StatelessWidget {
                           child: TabBarView(
                               children: <Widget>[
                             ...weatherTabs.values
-                                .map((e) => Container(
-                                        child: Center(
-                                      // child: Text(e.length.toString(),
-                                      child: Text(e[0].date.toString(),
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold)),
-                                    )))
+                                .map((e) =>
+                                WeatherList(e)
+                                // Container(
+                                //         child: Center(
+                                //       // child: Text(e.length.toString(),
+                                //       child: Text(e[0].date.toString(),
+                                //           style: TextStyle(
+                                //               fontSize: 22,
+                                //               fontWeight: FontWeight.bold)),
+                                //     ))
+                            )
                                 .toList()
                           ]))
                     ])),

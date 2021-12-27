@@ -10,16 +10,18 @@ class CompactDayWeather extends StatelessWidget {
   final String day;
   final String maxTemp;
   final String minTemp;
+  final String temp;
   final String image;
   final bool isImageNetwork;
 
   CompactDayWeather({
     @required this.date,
     @required this.day,
-    @required this.maxTemp,
+    this.maxTemp,
     @required this.isImageNetwork,
     @required this.image,
-    @required this.minTemp,
+    this.minTemp,
+    this.temp,
   });
 
   bool isToday(DateTime date) {
@@ -39,12 +41,12 @@ class CompactDayWeather extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Container(
-          padding: EdgeInsets.all(constraints.minHeight * 0.1),
+          padding: EdgeInsets.all(constraints.minHeight * 0.07),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(day),
-              Text(DateFormat('dd MMM').format(date)),
+              // Text(day),
+              Text(DateFormat('kk:mm a').format(date)),
               isImageNetwork
                   ? Image.network(
                       image,
@@ -58,6 +60,7 @@ class CompactDayWeather extends StatelessWidget {
                     ),
               Text(maxTemp),
               Text(minTemp),
+              // Text(temp),
             ],
           ),
         ),

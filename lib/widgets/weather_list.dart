@@ -15,7 +15,7 @@ class WeatherList extends StatelessWidget {
     // final weatherList =
     //     Provider.of<WeatherProvider>(context).allWeather;
     return Container(
-      height: 180,
+      height: 150,
       // width: double.infinity,
       child: ScrollablePositionedList.builder(
         initialScrollIndex: 4,
@@ -29,6 +29,8 @@ class WeatherList extends StatelessWidget {
               minTemp: weatherList[i].tempMin,
               image:weatherList[i].image,
               isImageNetwork: weatherList[i].isImageNetwork,
+              // temp: weatherList[i].tempMax,
+
             ),
           );
         },
