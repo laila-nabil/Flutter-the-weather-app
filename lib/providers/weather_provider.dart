@@ -201,6 +201,21 @@ class WeatherProvider with ChangeNotifier {
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       print(
           'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
+      print('***hourly');
+      hourlyPast.forEach((element) {
+        print('for element');
+        print(element['weather'][0]['main']);
+        print(unixSecondsToDate(element['dt']));
+        _hourlyPastWeather.add(Weather(
+            lat: lat,
+            lon: lon,
+            image: element['weather'][0]['icon'],
+            mainDescription: element['weather'][0]['main'],
+            detailedDescription: element['weather'][0]['description'],
+            date: unixSecondsToDate(element['dt']),
+            tempCurrent: element['temp'].toString()
+        ));
+      });
       List<double> hourlyPastTemp = [];
       List<double> hourlyPastTempSorted = [];
       hourlyPast.forEach((value) {
@@ -305,7 +320,7 @@ class WeatherProvider with ChangeNotifier {
   }
 
   List<Weather> get hourlyWeather {
-    return [..._hourlyPastWeather] + [..._hourlyPresentFutureWeather];
+    return [..._hourlyPastWeather.reversed] + [..._hourlyPresentFutureWeather];
   }
 
   List<Weather> get futureWeather {
@@ -338,7 +353,7 @@ class WeatherProvider with ChangeNotifier {
   Map<String,List<Weather>> get weatherTabs {
     print("===before");
     _weatherTabs = {};
-    _hourlyPresentFutureWeather.forEach((hourWeather) {
+    hourlyWeather.forEach((hourWeather) {
       final key = DateFormat.MMMEd().format(hourWeather.date);
       print("${hourWeather.date} ${hourWeather.tempCurrent}");
       _weatherTabs.containsKey(key)? _weatherTabs.update(key ,
