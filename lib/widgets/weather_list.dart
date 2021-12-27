@@ -18,7 +18,7 @@ class WeatherList extends StatelessWidget {
       height: 150,
       // width: double.infinity,
       child: ScrollablePositionedList.builder(
-        initialScrollIndex: 4,
+        // initialScrollIndex: 4,
         itemBuilder: (ctx, i) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -29,7 +29,7 @@ class WeatherList extends StatelessWidget {
               minTemp: weatherList[i].tempMin,
               image:weatherList[i].image,
               isImageNetwork: weatherList[i].isImageNetwork,
-              // temp: weatherList[i].tempMax,
+              temp: weatherList[i].tempCurrent,
 
             ),
           );

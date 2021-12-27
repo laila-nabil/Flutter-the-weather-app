@@ -14,7 +14,6 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
-  List<Weather> _hourlyWeather = [];
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
   Map<String,List<Weather>> _weatherTabs = {};
@@ -128,6 +127,7 @@ class WeatherProvider with ChangeNotifier {
           mainDescription: element['weather'][0]['main'],
           detailedDescription: element['weather'][0]['description'],
           date: unixSecondsToDate(element['dt']),
+          tempCurrent: element['temp'].toString()
         ));
       });
       // List<List<Weather>> weatherTabs= [[],[],[]];
@@ -339,15 +339,12 @@ class WeatherProvider with ChangeNotifier {
     print("===before");
     _hourlyPresentFutureWeather.forEach((hourWeather) {
       final key = DateFormat.yMMMMEEEEd().format(hourWeather.date);
-      print(key);
+      print("${hourWeather.date} ${hourWeather.tempCurrent}");
       _weatherTabs.containsKey(key)? _weatherTabs.update(key ,
               (value){
-            print("value before is $value");
             value.add(hourWeather);
-            print("value after is $value");
             return value;
           }) : _weatherTabs[key] = [hourWeather];
-      print("_weatherTabs now is $_weatherTabs");
     });
     _weatherTabs.forEach((key, value) {print("$key : $value");});
     print("===after");

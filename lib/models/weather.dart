@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Weather {
   final String tempMax;
   final String tempMin;
+  final String tempCurrent;
   final DateTime date;
   final String mainDescription;
   final String detailedDescription;
@@ -11,11 +12,11 @@ class Weather {
   final String lat;
   final String lon;
   final bool isMetric;
-  List<Weather> weatherTimeline;
 
   Weather(
       {this.tempMax = "0.0",
       this.tempMin = "0.0",
+      this.tempCurrent = "0.0",
       DateTime date,
       this.detailedDescription = "",
       this.mainDescription = "",
@@ -23,7 +24,6 @@ class Weather {
       this.isImageNetwork = false,
       this.lat = "",
       this.lon = "",
-      this.weatherTimeline ,
       this.isMetric = true})
       : date = date ??
             DateTime

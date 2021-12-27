@@ -37,7 +37,7 @@ class CompactDayWeather extends StatelessWidget {
       // print('Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
       // print('Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
       return Card(
-        color: isToday(date) ? Colors.lightBlue : Colors.white60,
+        // color: isToday(date) ? Colors.lightBlue : Colors.white60,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Container(
@@ -58,9 +58,9 @@ class CompactDayWeather extends StatelessWidget {
                       width: constraints.maxHeight * 0.5,
                       height: constraints.maxHeight * 0.27,
                     ),
-              Text(maxTemp),
-              Text(minTemp),
-              // Text(temp),
+              // Text(maxTemp),
+              // Text(minTemp),
+              Text(temp),
             ],
           ),
         ),
