@@ -339,7 +339,7 @@ class WeatherProvider with ChangeNotifier {
     print("===before");
     _weatherTabs = {};
     _hourlyPresentFutureWeather.forEach((hourWeather) {
-      final key = DateFormat.yMMMMEEEEd().format(hourWeather.date);
+      final key = DateFormat.MMMEd().format(hourWeather.date);
       print("${hourWeather.date} ${hourWeather.tempCurrent}");
       _weatherTabs.containsKey(key)? _weatherTabs.update(key ,
               (value){

@@ -42,14 +42,6 @@ class WeatherTabs extends StatelessWidget {
                             ...weatherTabs.values
                                 .map((e) =>
                                 WeatherList(e)
-                                // Container(
-                                //         child: Center(
-                                //       // child: Text(e.length.toString(),
-                                //       child: Text(e[0].date.toString(),
-                                //           style: TextStyle(
-                                //               fontSize: 22,
-                                //               fontWeight: FontWeight.bold)),
-                                //     ))
                             )
                                 .toList()
                           ]))
