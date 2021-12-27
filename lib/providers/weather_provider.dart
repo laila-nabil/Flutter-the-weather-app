@@ -337,6 +337,7 @@ class WeatherProvider with ChangeNotifier {
 
   Map<String,List<Weather>> get weatherTabs {
     print("===before");
+    _weatherTabs = {};
     _hourlyPresentFutureWeather.forEach((hourWeather) {
       final key = DateFormat.yMMMMEEEEd().format(hourWeather.date);
       print("${hourWeather.date} ${hourWeather.tempCurrent}");
