@@ -25,7 +25,8 @@ class WeatherTabs extends StatelessWidget {
                           labelColor: Colors.green,
                           unselectedLabelColor: Colors.black,
                           tabs: [
-                              ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
+                              // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
+                              ...weatherTabs.keys.map((e) => Tab(text: e.toString(),)).toList()
                           ],
                         ),
                       ),
@@ -35,10 +36,12 @@ class WeatherTabs extends StatelessWidget {
                               border: Border(
                                   top: BorderSide(
                                       color: Colors.grey, width: 0.5))),
-                          child: TabBarView(children: <Widget>[
-                            ...weatherTabs
+                          child: TabBarView(
+                              children: <Widget>[
+                            ...weatherTabs.values
                                 .map((e) => Container(
                                         child: Center(
+                                      // child: Text(e.length.toString(),
                                       child: Text(e[0].date.toString(),
                                           style: TextStyle(
                                               fontSize: 22,

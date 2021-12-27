@@ -14,10 +14,10 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
   Weather _todayWeather;
+  List<Weather> _hourlyWeather = [];
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
-  List<List<Weather>> _weatherTabs =
-      List.filled(0, List.filled(0, Weather(), growable: true), growable: true);
+  Map<String,List<Weather>> _weatherTabs = {};
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
@@ -335,44 +335,23 @@ class WeatherProvider with ChangeNotifier {
     return locationDetails;
   }
 
-  List<List<Weather>> get weatherTabs {
-    final List<Weather> daily = [];
-    for (int i = -5;i<11;i++){
-      _hourlyPresentFutureWeather
-          .where((element) => element.date.difference(DateTime.now()).inHours == i)
-          .forEach((hour) {
-        daily.add(hour);
-        print('element ${hour.date} added to $i');
-      });
-      print('daily length ${daily.length}');
-      _weatherTabs.insert(i+5, daily);
-      print('_weatherTabs.add(daily); ${_weatherTabs.length}');
-    }
-    // allWeather.forEach((element) {
-    //   int i = -5;
-    //   if(element.date.difference(DateTime.now()).inDays == i)
-    //     {
-    //       daily
-    //     }
-    //   i++;
-    // });
+  Map<String,List<Weather>> get weatherTabs {
+    print("===before");
+    _hourlyPresentFutureWeather.forEach((hourWeather) {
+      final key = DateFormat.yMMMMEEEEd().format(hourWeather.date);
+      print(key);
+      _weatherTabs.containsKey(key)? _weatherTabs.update(key ,
+              (value){
+            print("value before is $value");
+            value.add(hourWeather);
+            print("value after is $value");
+            return value;
+          }) : _weatherTabs[key] = [hourWeather];
+      print("_weatherTabs now is $_weatherTabs");
+    });
+    _weatherTabs.forEach((key, value) {print("$key : $value");});
+    print("===after");
+
     return _weatherTabs;
-    // Map<String, List<Weather>> weatherTabs = {};
-    // // List<Weather> weatherTabs= weatherList;
-    // _hourlyPresentFutureWeather.forEach((weatherByHour) {
-    //   // weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
-    //   if (weatherTabs
-    //       .containsKey(DateFormat('dd mm').format(weatherByHour.date))) {
-    //     weatherTabs[weatherTabs
-    //         .containsKey(DateFormat('dd mm').format(weatherByHour.date))]
-    //         .add(weatherByHour);
-    //   } else {
-    //     weatherTabs.addAll({
-    //       DateFormat('dd mm').format(weatherByHour.date): [weatherByHour]
-    //     });
-    //   }
-    //   print('weatherTabs');
-    //   print('${weatherByHour.date}');
-    // });
   }
 }
