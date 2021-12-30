@@ -18,7 +18,7 @@ class WeatherTabs extends StatelessWidget {
                 length: weatherTabs.length, // length of tabs
                 initialIndex: 5,
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Container(
                         child: TabBar(
@@ -32,7 +32,8 @@ class WeatherTabs extends StatelessWidget {
                         ),
                       ),
                       Container(
-                          height: 200, //height of TabBarView
+                          height: 150, //height of TabBarView
+                          alignment: Alignment.topRight,
                           decoration: BoxDecoration(
                               border: Border(
                                   top: BorderSide(
