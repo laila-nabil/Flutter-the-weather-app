@@ -12,6 +12,7 @@ class Weather {
   final String lat;
   final String lon;
   final bool isMetric;
+  final List<Weather> weatherTimeline;
 
   Weather(
       {this.tempMax = "0.0",
@@ -24,7 +25,10 @@ class Weather {
       this.isImageNetwork = false,
       this.lat = "",
       this.lon = "",
-      this.isMetric = true})
+      this.isMetric = true,
+      this.weatherTimeline ,
+
+      })
       : date = date ??
             DateTime
                 .now(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
