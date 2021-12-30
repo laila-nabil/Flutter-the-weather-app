@@ -27,7 +27,25 @@ class WeatherTabs extends StatelessWidget {
                           unselectedLabelColor: Colors.black,
                           tabs: [
                               // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
-                              ...weatherTabs.keys.map((e) => Tab(text: e.toString(),)).toList()
+                              // ...weatherTabs.keys.map((e) => Tab(
+                              //   // text: e.toString(),
+                              //   child: Column(
+                              //     children: [
+                              //       Text(e.toString()),
+                              //       Text("this")
+                              //     ],
+                              //   ),
+                              //   )
+                              // )
+                            ...weatherTabs.keys.map((e) => Tab(
+                              child: Column(
+                                children: [
+                                  Text(e.toString()),
+                                ],
+                              ),
+                              )
+                            )
+
                           ],
                         ),
                       ),
