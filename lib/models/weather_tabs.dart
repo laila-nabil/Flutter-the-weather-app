@@ -41,8 +41,11 @@ class WeatherTabs extends StatelessWidget {
                           child: TabBarView(
                               children: <Widget>[
                             ...weatherTabs.values
-                                .map((e) =>
-                                WeatherList(e)
+                                .map((e) {
+                                print("e[0].is network");
+                                  print(e[0].isImageNetwork);
+                                  return  WeatherList(e);
+                              }
                             )
                                 .toList()
                           ]))

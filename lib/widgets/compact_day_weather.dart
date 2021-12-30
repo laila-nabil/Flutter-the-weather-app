@@ -50,7 +50,7 @@ class CompactDayWeather extends StatelessWidget {
                     height: constraints.maxHeight * 0.27,
                   )
                 : Image.asset(
-                    CustomIcons.sunny,
+                    CustomIcons.cloudy,
                     width: constraints.maxHeight * 0.5,
                     height: constraints.maxHeight * 0.27,
                   ),

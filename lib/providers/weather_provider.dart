@@ -123,7 +123,8 @@ class WeatherProvider with ChangeNotifier {
         _hourlyPresentFutureWeather.add(Weather(
           lat: lat,
           lon: lon,
-          image: element['weather'][0]['icon'],
+          isImageNetwork: true,
+            image: 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@2x.png',
           mainDescription: element['weather'][0]['main'],
           detailedDescription: element['weather'][0]['description'],
           date: unixSecondsToDate(element['dt']),
@@ -209,7 +210,9 @@ class WeatherProvider with ChangeNotifier {
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
-            image: element['weather'][0]['icon'],
+            isImageNetwork: true,
+            // image: element['weather'][0]['icon'],
+            image: 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),
