@@ -10,6 +10,10 @@
 // firebase deploy --only hosting
 // fvm flutter build web --dart-define api_key=key
 
+//to reupload
+// fvm flutter build web --dart-define api_key=key
+// firebase deploy --only hosting
+
 //prev error solved by deleting everything fvm related and dart cache
 //then pub repair cache
 
