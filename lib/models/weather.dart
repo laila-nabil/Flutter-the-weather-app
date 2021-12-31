@@ -10,6 +10,7 @@ class Weather {
   final String lat;
   final String lon;
   final String rain;
+  final String feelsLike;
   final bool isMetric;
   final List<Weather> weatherTimeline;
 
@@ -25,6 +26,7 @@ class Weather {
       this.lat = "",
       this.lon = "",
       this.rain = "",
+      this.feelsLike = "",
       this.isMetric = true,
       this.weatherTimeline ,
 

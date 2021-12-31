@@ -16,39 +16,35 @@ class WeatherDetailed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+      ),
       // height: 300,
-      margin: const EdgeInsets.all(18.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              weatherDay.isImageNetwork
-                  ? Image.network(
-                weatherDay.image,
-                      width: 150,
-                      height: 150,
-                    )
-                  : Image.asset(
-                weatherDay.image,
-                      width: 150,
-                      height: 150,
-                    ),
-              // Text(
-              //   '${weatherDay.temp} °C',
-              //   style: TextStyle(fontSize: 25),
-              // )
-            ],
+          weatherDay.isImageNetwork
+              ? Image.network(
+            weatherDay.image,
+            width: 150,
+            height: 150,
+            fit: BoxFit.fitHeight,
+          )
+              : Image.asset(
+            weatherDay.image,
+            // width: 150,
+            // height: 150,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Text(
-              //   'Feels like ${weatherDay.feelsLike}°C, ',
-              //   style:
-              //   TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
-              // ),
+              Text(
+                'Feels like ${weatherDay.feelsLike}°C, ',
+                style:
+                TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+              ),
               Text(weatherDay.detailedDescription),
             ],
           ),
@@ -60,7 +56,7 @@ class WeatherDetailed extends StatelessWidget {
                 children: [
                   dashboardWeather(
                     svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${double.parse(weatherDay.rain)*100.0}%',
+                    status: '${double.parse(weatherDay.rain) * 100.0}%',
                   ),
                   // dashboardWeather(
                   //   svgIcon: 'assets/dashboard_icons/sunrise.svg',
@@ -85,11 +81,6 @@ class WeatherDetailed extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                'The high will be ${weatherDay.tempMax}°C, the low will be ${weatherDay.tempMin}°C.'),
           ),
         ],
       ),

@@ -50,6 +50,16 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class DummyScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text("this is a dummy screen"),),
+    );
+  }
+}
+
 // void cronSchedule(
 //     {Function function,
 //     String minute = '*',

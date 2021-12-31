@@ -124,6 +124,7 @@ class WeatherProvider with ChangeNotifier {
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),
             rain: element['pop'].toString(),
+            feelsLike: element['feels_like'].toString(),
             tempCurrent: element['temp'].toString()));
       });
       final todayHourly = _hourlyPresentFutureWeather.where((element) {

@@ -30,13 +30,13 @@ class WeatherToday extends StatelessWidget {
               weatherToday.isImageNetwork
                   ? Image.network(
                       weatherToday.image,
-                      width: 150,
-                      height: 150,
+                      width: 180,
+                      fit: BoxFit.fitWidth,
                     )
                   : Image.asset(
                       weatherToday.image,
-                      width: 150,
-                      height: 150,
+                      width: 180,
+                      fit: BoxFit.fitWidth,
                     ),
               Text(
                 '${weatherToday.temp} °C',
@@ -49,8 +49,8 @@ class WeatherToday extends StatelessWidget {
             children: [
               Text(
                 'Feels like ${weatherToday.feelsLike}°C, ',
-                style:
-                TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black87),
               ),
               Text(weatherToday.detailedDescription),
             ],
@@ -63,7 +63,7 @@ class WeatherToday extends StatelessWidget {
                 children: [
                   dashboardWeather(
                     svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${double.parse(weatherToday.rain)*100.0}%',
+                    status: '${double.parse(weatherToday.rain) * 100.0}%',
                   ),
                   dashboardWeather(
                     svgIcon: 'assets/dashboard_icons/sunrise.svg',
