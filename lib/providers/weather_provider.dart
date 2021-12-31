@@ -77,6 +77,7 @@ class WeatherProvider with ChangeNotifier {
         windSpeed: currentWeather['wind']['speed'].toString(),
         city: currentWeather['name'],
         country: currentWeather['sys']['country'],
+        // rain:
       );
     } catch (error) {
       throw (error);
@@ -171,6 +172,7 @@ class WeatherProvider with ChangeNotifier {
                   .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
               0).toList(),
           image: 'https://openweathermap.org/img/wn/$icon@4x.png');
+      _weatherNow.rain = "";
       print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
       _futureWeather = [];

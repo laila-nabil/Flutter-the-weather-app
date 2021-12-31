@@ -11,6 +11,7 @@ class Weather {
   final bool isImageNetwork;
   final String lat;
   final String lon;
+  final String rain;
   final bool isMetric;
   final List<Weather> weatherTimeline;
 
@@ -25,6 +26,7 @@ class Weather {
       this.isImageNetwork = false,
       this.lat = "",
       this.lon = "",
+      this.rain = "",
       this.isMetric = true,
       this.weatherTimeline ,
 

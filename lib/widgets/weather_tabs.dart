@@ -11,72 +11,71 @@ class WeatherTabs extends StatelessWidget {
     final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
     print('weatherTabs.length, ${weatherTabs.length}');
     return Container(
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DefaultTabController(
-                length: weatherTabs.length, // length of tabs
-                initialIndex: 5,
-                child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Container(
-                        child: TabBar(
-                          isScrollable: true,
-                          labelColor: Colors.green,
-                          unselectedLabelColor: Colors.black,
-                          tabs: [
-                            // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
-                            // ...weatherTabs.keys.map((e) => Tab(
-                            //   // text: e.toString(),
-                            //   child: Column(
-                            //     children: [
-                            //       Text(e.toString()),
-                            //       Text("this")
-                            //     ],
-                            //   ),
-                            //   )
-                            // )
-                            ...weatherTabs.map((e) => Tab(
-                                  child: Row(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
+          Widget>[
+        DefaultTabController(
+            length: weatherTabs.length, // length of tabs
+            initialIndex: 5,
+            child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    child: TabBar(
+                      isScrollable: true,
+                      labelColor: Colors.green,
+                      unselectedLabelColor: Colors.black,
+                      tabs: [
+                        // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
+                        // ...weatherTabs.keys.map((e) => Tab(
+                        //   // text: e.toString(),
+                        //   child: Column(
+                        //     children: [
+                        //       Text(e.toString()),
+                        //       Text("this")
+                        //     ],
+                        //   ),
+                        //   )
+                        // )
+                        ...weatherTabs.map((e) => Tab(
+                              child: Row(
+                                children: [
+                                  if (e.isImageNetwork && e.image != null)
+                                    Image.network(
+                                      e.image,
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  if (!e.isImageNetwork && e.image != null)
+                                    Image.asset(
+                                      e.image,
+                                      width: 10,
+                                      height: 10,
+                                    ),
+                                  Column(
                                     children: [
-                                      e.isImageNetwork
-                                          ? Image.network(
-                                        e.image,
-                                        width: 50,
-                                        height: 50,
-                                      )
-                                          : Image.asset(
-                                        e.image,
-                                        width: 10,
-                                        height: 10,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(DateFormat.MMMEd().format(e.date)),
-                                          Text("${e.tempMax} ${e.tempMin}"),
-                                        ],
-                                      ),
+                                      Text(DateFormat.MMMEd().format(e.date)),
+                                      Text("${e.tempMax} ${e.tempMin}"),
                                     ],
                                   ),
-                                ))
-                          ],
-                        ),
-                      ),
-                      Container(
-                          height: 150, //height of TabBarView
-                          alignment: Alignment.topRight,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  top: BorderSide(
-                                      color: Colors.grey, width: 0.5))),
-                          child: TabBarView(children: <Widget>[
-                            ...weatherTabs
-                                .map((e) => WeatherList(e.weatherTimeline))
-                                .toList()
-                          ]))
-                    ])),
-          ]),
+                                ],
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                      height: 150, //height of TabBarView
+                      alignment: Alignment.topRight,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(color: Colors.grey, width: 0.5))),
+                      child: TabBarView(children: <Widget>[
+                        ...weatherTabs
+                            .map((e) => WeatherList(e.weatherTimeline))
+                            .toList()
+                      ]))
+                ])),
+      ]),
     );
   }
 }
