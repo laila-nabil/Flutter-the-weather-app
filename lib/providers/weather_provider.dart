@@ -378,24 +378,24 @@ class WeatherProvider with ChangeNotifier {
     return locationDetails;
   }
 
-  Map<String, List<Weather>> get weatherTabs {
-    print("===before");
-    _weatherTabs = {};
-    hourlyWeather.forEach((hourWeather) {
-      final key = DateFormat.MMMEd().format(hourWeather.date);
-      print("${hourWeather.date} ${hourWeather.tempCurrent}");
-      _weatherTabs.containsKey(key)
-          ? _weatherTabs.update(key, (value) {
-              value.add(hourWeather);
-              return value;
-            })
-          : _weatherTabs[key] = [hourWeather];
-    });
-    _weatherTabs.forEach((key, value) {
-      print("$key : $value");
-    });
-    print("===after");
-
-    return _weatherTabs;
-  }
+  // Map<String, List<Weather>> get weatherTabs {
+  //   print("===before");
+  //   _weatherTabs = {};
+  //   hourlyWeather.forEach((hourWeather) {
+  //     final key = DateFormat.MMMEd().format(hourWeather.date);
+  //     print("${hourWeather.date} ${hourWeather.tempCurrent}");
+  //     _weatherTabs.containsKey(key)
+  //         ? _weatherTabs.update(key, (value) {
+  //             value.add(hourWeather);
+  //             return value;
+  //           })
+  //         : _weatherTabs[key] = [hourWeather];
+  //   });
+  //   _weatherTabs.forEach((key, value) {
+  //     print("$key : $value");
+  //   });
+  //   print("===after");
+  //
+  //   return _weatherTabs;
+  // }
 }
