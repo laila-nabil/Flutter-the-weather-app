@@ -16,7 +16,7 @@ class WeatherProvider with ChangeNotifier {
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
-  Map<String,List<Weather>> _weatherTabs = {};
+  Map<String, List<Weather>> _weatherTabs = {};
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
@@ -117,20 +117,30 @@ class WeatherProvider with ChangeNotifier {
       final List hourly = presentFutureWeather['hourly'];
       print('***hourly');
       hourly.forEach((element) {
-        print('for element');
+        print('=>for element');
         print(element['weather'][0]['main']);
-        print(unixSecondsToDate(element['dt']));
+        print("day : ${unixSecondsToDate(element['dt'])}");
         _hourlyPresentFutureWeather.add(Weather(
-          lat: lat,
-          lon: lon,
-          isImageNetwork: true,
-            image: 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@2x.png',
-          mainDescription: element['weather'][0]['main'],
-          detailedDescription: element['weather'][0]['description'],
-          date: unixSecondsToDate(element['dt']),
-          tempCurrent: element['temp'].toString()
-        ));
+            lat: lat,
+            lon: lon,
+            isImageNetwork: true,
+            image:
+                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@2x.png',
+            mainDescription: element['weather'][0]['main'],
+            detailedDescription: element['weather'][0]['description'],
+            date: unixSecondsToDate(element['dt']),
+            tempCurrent: element['temp'].toString()));
       });
+      final todayHourly = _hourlyPresentFutureWeather.where((element) {
+        int compare = DateFormat('MMM d yyyy')
+            .format(DateTime.now())
+            .compareTo(DateFormat('MMM d yyyy').format(element.date));
+        if (compare == 0) {
+          return true;
+        }
+        return false;
+      });
+      print("todayHourly ${todayHourly.length} ${todayHourly}");
       // List<List<Weather>> weatherTabs= [[],[],[]];
       // List<List<Weather>> weatherTabs= List.filled(15, List.filled(24, Weather(),growable: true),growable: true);
       // // List<Weather> weatherTabs= weatherList;
@@ -155,6 +165,11 @@ class WeatherProvider with ChangeNotifier {
           detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
               ['description'],
           isImageNetwork: true,
+          weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
+              DateFormat('yyyy-MM-dd')
+                  .format(DateTime.now())
+                  .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+              0).toList(),
           image: 'https://openweathermap.org/img/wn/$icon@4x.png');
       print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
@@ -174,6 +189,11 @@ class WeatherProvider with ChangeNotifier {
             detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
                 ['description'],
             isImageNetwork: true,
+            weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
+            DateFormat('yyyy-MM-dd')
+                .format(element.date)
+                .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+                0).toList(),
             image: 'https://openweathermap.org/img/wn/$icon@4x.png'));
       }
     } catch (error) {
@@ -212,12 +232,12 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isImageNetwork: true,
             // image: element['weather'][0]['icon'],
-            image: 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            image:
+                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),
-            tempCurrent: element['temp'].toString()
-        ));
+            tempCurrent: element['temp'].toString()));
       });
       List<double> hourlyPastTemp = [];
       List<double> hourlyPastTempSorted = [];
@@ -244,6 +264,11 @@ class WeatherProvider with ChangeNotifier {
             tempMin: hourlyPastTempSorted[0].toString(),
             tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
                 .toString(),
+            weatherTimeline: _hourlyPastWeather.where((element) =>
+            DateFormat('yyyy-MM-dd')
+                .format(element.date)
+                .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+                0).toList(),
           ));
       print('end of api call $daysAgo');
     } catch (error) {
@@ -353,19 +378,22 @@ class WeatherProvider with ChangeNotifier {
     return locationDetails;
   }
 
-  Map<String,List<Weather>> get weatherTabs {
+  Map<String, List<Weather>> get weatherTabs {
     print("===before");
     _weatherTabs = {};
     hourlyWeather.forEach((hourWeather) {
       final key = DateFormat.MMMEd().format(hourWeather.date);
       print("${hourWeather.date} ${hourWeather.tempCurrent}");
-      _weatherTabs.containsKey(key)? _weatherTabs.update(key ,
-              (value){
-            value.add(hourWeather);
-            return value;
-          }) : _weatherTabs[key] = [hourWeather];
+      _weatherTabs.containsKey(key)
+          ? _weatherTabs.update(key, (value) {
+              value.add(hourWeather);
+              return value;
+            })
+          : _weatherTabs[key] = [hourWeather];
     });
-    _weatherTabs.forEach((key, value) {print("$key : $value");});
+    _weatherTabs.forEach((key, value) {
+      print("$key : $value");
+    });
     print("===after");
 
     return _weatherTabs;
