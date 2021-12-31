@@ -8,7 +8,7 @@ import 'package:the_weather_app/widgets/weather_list.dart';
 class WeatherTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final weatherTabs = Provider.of<WeatherProvider>(context).weatherTabs;
+    final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
     print('weatherTabs.length, ${weatherTabs.length}');
     return Container(
       child: Column(
@@ -37,10 +37,10 @@ class WeatherTabs extends StatelessWidget {
                               //   ),
                               //   )
                               // )
-                            ...weatherTabs.keys.map((e) => Tab(
+                            ...weatherTabs.map((e) => Tab(
                               child: Column(
                                 children: [
-                                  Text(e.toString()),
+                                  Text(DateFormat.MMMEd().format(e.date)),
                                 ],
                               ),
                               )
@@ -58,11 +58,9 @@ class WeatherTabs extends StatelessWidget {
                                       color: Colors.grey, width: 0.5))),
                           child: TabBarView(
                               children: <Widget>[
-                            ...weatherTabs.values
+                            ...weatherTabs
                                 .map((e) {
-                                print("e[0].is network");
-                                  print(e[0].isImageNetwork);
-                                  return  WeatherList(e);
+                                  return  WeatherList(e.weatherTimeline);
                               }
                             )
                                 .toList()
