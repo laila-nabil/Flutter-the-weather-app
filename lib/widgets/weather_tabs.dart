@@ -26,26 +26,40 @@ class WeatherTabs extends StatelessWidget {
                           labelColor: Colors.green,
                           unselectedLabelColor: Colors.black,
                           tabs: [
-                              // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
-                              // ...weatherTabs.keys.map((e) => Tab(
-                              //   // text: e.toString(),
-                              //   child: Column(
-                              //     children: [
-                              //       Text(e.toString()),
-                              //       Text("this")
-                              //     ],
-                              //   ),
-                              //   )
-                              // )
+                            // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
+                            // ...weatherTabs.keys.map((e) => Tab(
+                            //   // text: e.toString(),
+                            //   child: Column(
+                            //     children: [
+                            //       Text(e.toString()),
+                            //       Text("this")
+                            //     ],
+                            //   ),
+                            //   )
+                            // )
                             ...weatherTabs.map((e) => Tab(
-                              child: Column(
-                                children: [
-                                  Text(DateFormat.MMMEd().format(e.date)),
-                                ],
-                              ),
-                              )
-                            )
-
+                                  child: Row(
+                                    children: [
+                                      e.isImageNetwork
+                                          ? Image.network(
+                                        e.image,
+                                        width: 50,
+                                        height: 50,
+                                      )
+                                          : Image.asset(
+                                        e.image,
+                                        width: 10,
+                                        height: 10,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(DateFormat.MMMEd().format(e.date)),
+                                          Text("${e.tempMax} ${e.tempMin}"),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ))
                           ],
                         ),
                       ),
@@ -56,13 +70,9 @@ class WeatherTabs extends StatelessWidget {
                               border: Border(
                                   top: BorderSide(
                                       color: Colors.grey, width: 0.5))),
-                          child: TabBarView(
-                              children: <Widget>[
+                          child: TabBarView(children: <Widget>[
                             ...weatherTabs
-                                .map((e) {
-                                  return  WeatherList(e.weatherTimeline);
-                              }
-                            )
+                                .map((e) => WeatherList(e.weatherTimeline))
                                 .toList()
                           ]))
                     ])),

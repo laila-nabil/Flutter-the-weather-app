@@ -261,6 +261,7 @@ class WeatherProvider with ChangeNotifier {
             lat: lat,
             lon: lon,
             isMetric: true,
+            isImageNetwork: false,
             tempMin: hourlyPastTempSorted[0].toString(),
             tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
                 .toString(),

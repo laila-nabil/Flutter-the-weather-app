@@ -3,7 +3,7 @@ import 'package:cron/cron.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:the_weather_app/models/weather_tabs.dart';
+import '../widgets/weather_tabs.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/widgets/compare_weather.dart';
 import 'package:the_weather_app/widgets/weather_list.dart';
