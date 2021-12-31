@@ -170,11 +170,22 @@ class WeatherProvider with ChangeNotifier {
             detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
                 ['description'],
             isImageNetwork: true,
-            weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
-            DateFormat('yyyy-MM-dd')
-                .format(element.date)
-                .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
-                0).toList(),
+            // weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
+            // DateFormat('yyyy-MM-dd')
+            //     .format(element.date)
+            //     .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+            //     0).toList(),
+            weatherTimeline: _hourlyPresentFutureWeather.where((element) {
+              print("weather Timeline ${element.date}");
+              print("weather Timeline ${DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) }");
+              return DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
+                  0;
+            }
+            ).toList(),
             image: 'https://openweathermap.org/img/wn/$icon@4x.png'));
       }
     } catch (error) {
