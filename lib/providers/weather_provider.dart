@@ -114,6 +114,8 @@ class WeatherProvider with ChangeNotifier {
           presentFutureWeather['daily'][0]['temp']['min'].toString();
       _weatherNow.tempMax =
           presentFutureWeather['daily'][0]['temp']['max'].toString();
+      _weatherNow.rain =
+          presentFutureWeather['daily'][0]['pop'].toString();
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
       print('***hourly');
@@ -130,6 +132,7 @@ class WeatherProvider with ChangeNotifier {
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),
+            rain: element['pop'].toString(),
             tempCurrent: element['temp'].toString()));
       });
       final todayHourly = _hourlyPresentFutureWeather.where((element) {
@@ -172,7 +175,6 @@ class WeatherProvider with ChangeNotifier {
                   .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
               0).toList(),
           image: 'https://openweathermap.org/img/wn/$icon@4x.png');
-      _weatherNow.rain = "";
       print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
       _futureWeather = [];
