@@ -32,7 +32,7 @@ class WeatherTabs extends StatelessWidget {
                                       width: 50,
                                       height: 50,
                                     ),
-                                  if (!e.isImageNetwork && e.image != null)
+                                  if (e.isImageNetwork && e.image == null)
                                     Image.asset(
                                       e.image,
                                       width: 10,
