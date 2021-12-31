@@ -19,13 +19,14 @@ class WeatherList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: CompactDayWeather(
-              date: weatherList[i].date,
-              day:  DateFormat('EEE').format(weatherList[i].date),
-              maxTemp: weatherList[i].tempMax,
-              minTemp: weatherList[i].tempMin,
-              image:weatherList[i].image,
-              isImageNetwork: weatherList[i].isImageNetwork,
-              temp: weatherList[i].tempCurrent,
+              // date: weatherList[i].date,
+              // day:  DateFormat('EEE').format(weatherList[i].date),
+              // maxTemp: weatherList[i].tempMax,
+              // minTemp: weatherList[i].tempMin,
+              // image:weatherList[i].image,
+              // isImageNetwork: weatherList[i].isImageNetwork,
+              // temp: weatherList[i].tempCurrent,
+                weatherList[i]
 
             ),
           );

@@ -20,11 +20,14 @@ class WeatherTabs extends StatelessWidget {
                   Container(
                     child: TabBar(
                       isScrollable: true,
-                      labelColor: Colors.green,
+                      // labelColor: Colors.green,
+                      labelColor: Colors.black,
+                      // indicatorColor: Colors.purple,
                       unselectedLabelColor: Colors.black,
                       tabs: [
                         ...weatherTabs.map((e) => Tab(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   if (e.isImageNetwork && e.image != null)
                                     Image.network(
@@ -44,12 +47,14 @@ class WeatherTabs extends StatelessWidget {
                                       RichText(
                                         text: TextSpan(children: [
                                           TextSpan(
-                                              text: "${e.tempMax}°C ",
+                                              text:
+                                                  "${double.parse(e.tempMax).toStringAsFixed(1)} ",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black)),
                                           TextSpan(
-                                              text: "${e.tempMin}°C",
+                                              text:
+                                                  "${double.parse(e.tempMin).toStringAsFixed(1)} ",
                                               style: TextStyle(
                                                   color: Colors.black)),
                                         ]),
@@ -70,7 +75,12 @@ class WeatherTabs extends StatelessWidget {
                               top: BorderSide(color: Colors.grey, width: 0.5))),
                       child: TabBarView(children: <Widget>[
                         ...weatherTabs
-                            .map((e) => WeatherList(e.weatherTimeline))
+                            // .map((e) => WeatherList(e.weatherTimeline))
+                            .map((e){
+                              print("e.date ${e.date}");
+                              print("e.weatherTimeline ${e.weatherTimeline.length}");
+                              return WeatherList(e.weatherTimeline);
+                        })
                             .toList()
                       ]))
                 ])),
