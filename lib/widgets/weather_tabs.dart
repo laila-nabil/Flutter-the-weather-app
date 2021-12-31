@@ -10,13 +10,13 @@ class WeatherTabs extends StatelessWidget {
     final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
     print('weatherTabs.length, ${weatherTabs.length}');
     return Container(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
-          Widget>[
-        DefaultTabController(
-            length: weatherTabs.length, // length of tabs
-            initialIndex: 5,
-            child: Column(
-                children: <Widget>[
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            DefaultTabController(
+                length: weatherTabs.length, // length of tabs
+                initialIndex: 5,
+                child: Column(children: <Widget>[
                   Container(
                     child: TabBar(
                       isScrollable: true,
@@ -41,7 +41,19 @@ class WeatherTabs extends StatelessWidget {
                                   Column(
                                     children: [
                                       Text(DateFormat.MMMEd().format(e.date)),
-                                      Text("${e.tempMax} ${e.tempMin}"),
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "${e.tempMax}°C ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black)),
+                                          TextSpan(
+                                              text: "${e.tempMin}°C",
+                                              style: TextStyle(
+                                                  color: Colors.black)),
+                                        ]),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -62,7 +74,7 @@ class WeatherTabs extends StatelessWidget {
                             .toList()
                       ]))
                 ])),
-      ]),
+          ]),
     );
   }
 }
