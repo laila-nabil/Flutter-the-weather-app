@@ -258,7 +258,7 @@ class WeatherProvider with ChangeNotifier {
             weatherTimeline: _hourlyPastWeather.where((element) =>
             DateFormat('yyyy-MM-dd')
                 .format(element.date)
-                .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+                .compareTo(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: daysAgo)))) ==
                 0).toList(),
           ));
       print('end of api call $daysAgo');
