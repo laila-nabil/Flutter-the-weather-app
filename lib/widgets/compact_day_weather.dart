@@ -54,8 +54,6 @@ class CompactDayWeather extends StatelessWidget {
                     width: constraints.maxHeight * 0.5,
                     height: constraints.maxHeight * 0.27,
                   ),
-            // Text(maxTemp),
-            // Text(minTemp),
             Text(temp),
           ],
         ),

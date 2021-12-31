@@ -17,7 +17,6 @@ class WeatherTabs extends StatelessWidget {
             length: weatherTabs.length, // length of tabs
             initialIndex: 5,
             child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
                     child: TabBar(
@@ -25,17 +24,6 @@ class WeatherTabs extends StatelessWidget {
                       labelColor: Colors.green,
                       unselectedLabelColor: Colors.black,
                       tabs: [
-                        // ...weatherTabs.map((e) => Tab(text: e[0].date.toString()),).toList()
-                        // ...weatherTabs.keys.map((e) => Tab(
-                        //   // text: e.toString(),
-                        //   child: Column(
-                        //     children: [
-                        //       Text(e.toString()),
-                        //       Text("this")
-                        //     ],
-                        //   ),
-                        //   )
-                        // )
                         ...weatherTabs.map((e) => Tab(
                               child: Row(
                                 children: [

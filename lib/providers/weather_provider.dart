@@ -50,13 +50,6 @@ class WeatherProvider with ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(url));
       final currentWeather = json.decode(response.body);
-      // print('current');
-      // print('lat $lat');
-      // print('lon $lon');
-      // print('temp ${currentWeather['current']['temp']}');
-      // print('feelsLike ${currentWeather['current']['feels_like']}');
-      // print('feelsLike ${currentWeather['current']['feels_like']}');
-      // print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
       final iconNow = currentWeather['weather'][0]['icon'];
       _weatherNow = CurrentWeather(
         lat: lat,
@@ -89,7 +82,6 @@ class WeatherProvider with ChangeNotifier {
     var API_key = _API_KEY;
     const lat = '30.0444';
     const lon = '31.2357';
-    // const part = 'minutely,hourly';
     const excludedPart = 'minutely';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
@@ -97,7 +89,6 @@ class WeatherProvider with ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(url));
       final presentFutureWeather = json.decode(response.body);
-      // print("_todayWeather time ${unixSecondsToDate(int.parse(presentFutureWeather['daily'][0]['dt']))}");
       print("_todayWeather time ${presentFutureWeather['daily'][0]['dt']}");
       final date = presentFutureWeather['daily'][0]['dt'] as int;
       print("_todayWeather time $date");
@@ -145,21 +136,8 @@ class WeatherProvider with ChangeNotifier {
         return false;
       });
       print("todayHourly ${todayHourly.length} ${todayHourly}");
-      // List<List<Weather>> weatherTabs= [[],[],[]];
-      // List<List<Weather>> weatherTabs= List.filled(15, List.filled(24, Weather(),growable: true),growable: true);
-      // // List<Weather> weatherTabs= weatherList;
-      // _hourlyPresentFutureWeather.forEach((weatherByHour) {
-      //   print('diff is ${weatherByHour.date.difference(DateTime.now()).inDays}');
-      //   weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].add(weatherByHour);
-      //   print('weatherTabs');
-      //   print('weatherTabs.length ${weatherTabs.length}');
-      //   print('weatherByHour.date.difference(DateTime.now()).inDays ${weatherByHour.date.difference(DateTime.now()).inDays}');
-      //   print('weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length ${weatherTabs[weatherByHour.date.difference(DateTime.now()).inDays].length}');
-      // });
-
-      _todayWeather = Weather(
+            _todayWeather = Weather(
           date: unixSecondsToDate(date),
-          // date: DateTime.now(),
           tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
           tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
           lat: lat,
@@ -235,7 +213,6 @@ class WeatherProvider with ChangeNotifier {
             lat: lat,
             lon: lon,
             isImageNetwork: true,
-            // image: element['weather'][0]['icon'],
             image:
                 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
@@ -257,7 +234,6 @@ class WeatherProvider with ChangeNotifier {
       hourlyPastTempSorted.sort();
       print(
           'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
-      // final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
       _pastWeather.insert(
           daysAgo - 1,
           Weather(
@@ -382,25 +358,4 @@ class WeatherProvider with ChangeNotifier {
     notifyListeners();
     return locationDetails;
   }
-
-  // Map<String, List<Weather>> get weatherTabs {
-  //   print("===before");
-  //   _weatherTabs = {};
-  //   hourlyWeather.forEach((hourWeather) {
-  //     final key = DateFormat.MMMEd().format(hourWeather.date);
-  //     print("${hourWeather.date} ${hourWeather.tempCurrent}");
-  //     _weatherTabs.containsKey(key)
-  //         ? _weatherTabs.update(key, (value) {
-  //             value.add(hourWeather);
-  //             return value;
-  //           })
-  //         : _weatherTabs[key] = [hourWeather];
-  //   });
-  //   _weatherTabs.forEach((key, value) {
-  //     print("$key : $value");
-  //   });
-  //   print("===after");
-  //
-  //   return _weatherTabs;
-  // }
 }

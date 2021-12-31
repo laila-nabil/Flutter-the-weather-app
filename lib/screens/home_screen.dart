@@ -87,18 +87,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print('>>>> in the build');
-    // newRefresh(
-    //     repeatedAction:
-    //         Provider.of<WeatherProvider>(context, listen: false).getWeather());
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.refresh),
-      //   onPressed: () async {
-      //     await Provider.of<WeatherProvider>(context, listen: false)
-      //         .getWeather();
-      //   },
-      // ),
       body: RefreshIndicator(
         onRefresh: () async {
           try {
@@ -118,10 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Center(
             child: _isLoading
                 ? Center(
-                    // child: Text('Loading .. .'),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Loading ...'),
                         CircularProgressIndicator(),
                       ],
                     ),
