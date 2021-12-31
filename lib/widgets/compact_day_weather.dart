@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:the_weather_app/providers/weather_provider.dart';
 import '../widgets/custom_icons.dart';
 
 class CompactDayWeather extends StatelessWidget {
@@ -59,6 +57,6 @@ class CompactDayWeather extends StatelessWidget {
         ),
       );
     });
-    ;
+
   }
 }

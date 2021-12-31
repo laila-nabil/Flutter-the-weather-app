@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class CustomIcons {
   static const String sunny = 'assets/weather_status/sunny.png';

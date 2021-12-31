@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Weather {
   final String tempMax;
   final String tempMin;

@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather_app/models/weather.dart';
-import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:the_weather_app/widgets/compact_day_weather.dart';
 
@@ -16,9 +14,7 @@ class WeatherList extends StatelessWidget {
     //     Provider.of<WeatherProvider>(context).allWeather;
     return Container(
       height: 150,
-      // width: double.infinity,
       child: ScrollablePositionedList.builder(
-        // initialScrollIndex: 4,
         itemBuilder: (ctx, i) {
           return Padding(
             padding: const EdgeInsets.all(8.0),

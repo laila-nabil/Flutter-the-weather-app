@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +5,6 @@ import 'package:the_weather_app/models/unix.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
-import '../widgets/custom_icons.dart';
 
 class WeatherToday extends StatelessWidget {
   @override

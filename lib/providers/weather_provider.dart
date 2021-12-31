@@ -16,7 +16,6 @@ class WeatherProvider with ChangeNotifier {
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
-  Map<String, List<Weather>> _weatherTabs = {};
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
