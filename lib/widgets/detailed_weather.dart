@@ -14,22 +14,14 @@ class WeatherDetailed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
-    final city = Provider.of<WeatherProvider>(context).location;
     return Container(
       width: double.infinity,
+      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       // height: 300,
       margin: const EdgeInsets.all(18.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.location_on),
-              Text(city),
-            ],
-          ),
           Row(
             children: [
               weatherDay.isImageNetwork
@@ -68,7 +60,7 @@ class WeatherDetailed extends StatelessWidget {
                 children: [
                   dashboardWeather(
                     svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${weatherDay.rain}%',
+                    status: '${double.parse(weatherDay.rain)*100.0}%',
                   ),
                   // dashboardWeather(
                   //   svgIcon: 'assets/dashboard_icons/sunrise.svg',
