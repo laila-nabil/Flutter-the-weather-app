@@ -325,7 +325,7 @@ class WeatherProvider with ChangeNotifier {
           double.parse(pastWeatherData[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
-      _compareTodayYesterday = 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} at day and is $diffNight by ${diffMin.toStringAsFixed(2)} at night';
+      _compareTodayYesterday = 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
       notifyListeners();
       print('got weather');
     } catch (error) {
