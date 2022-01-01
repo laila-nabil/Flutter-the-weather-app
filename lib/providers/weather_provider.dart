@@ -19,6 +19,7 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
+  static bool isImage3D = false;
   var _API_KEY =
       kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
 
@@ -53,8 +54,8 @@ class WeatherProvider with ChangeNotifier {
       _weatherNow = CurrentWeather(
         lat: lat,
         lon: lon,
-        isImageNetwork: true,
-        image: 'https://openweathermap.org/img/wn/$iconNow@4x.png',
+        isImageNetwork: !isImage3D,
+        image: isImage3D ? 'assets/3d/$iconNow.png': 'https://openweathermap.org/img/wn/$iconNow@4x.png',
         temp: currentWeather['main']['temp'].toString(),
         feelsLike: currentWeather['main']['feels_like'].toString(),
         mainDescription: currentWeather['weather'][0]['main'],
@@ -117,9 +118,8 @@ class WeatherProvider with ChangeNotifier {
         _hourlyPresentFutureWeather.add(Weather(
             lat: lat,
             lon: lon,
-            isImageNetwork: true,
-            image:
-                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            isImageNetwork: !isImage3D,
+            image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),
@@ -149,13 +149,14 @@ class WeatherProvider with ChangeNotifier {
               ['main'],
           detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
               ['description'],
-          isImageNetwork: true,
+                isImageNetwork: !isImage3D,
+                image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
           weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
               DateFormat('yyyy-MM-dd')
                   .format(DateTime.now())
                   .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
               0).toList(),
-          image: 'https://openweathermap.org/img/wn/$icon@4x.png');
+            );
       print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
       _futureWeather = [];
@@ -173,7 +174,8 @@ class WeatherProvider with ChangeNotifier {
                 ['main'],
             detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
                 ['description'],
-            isImageNetwork: true,
+            isImageNetwork: !isImage3D,
+            image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
             // weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
             // DateFormat('yyyy-MM-dd')
             //     .format(element.date)
@@ -190,7 +192,7 @@ class WeatherProvider with ChangeNotifier {
                   0;
             }
             ).toList(),
-            image: 'https://openweathermap.org/img/wn/$icon@4x.png'));
+        ));
       }
     } catch (error) {
       throw (error);
@@ -226,9 +228,8 @@ class WeatherProvider with ChangeNotifier {
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
-            isImageNetwork: true,
-            image:
-                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            isImageNetwork: !isImage3D,
+            image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
             detailedDescription: element['weather'][0]['description'].toString(),
             date: unixSecondsToDate(element['dt']),
