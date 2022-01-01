@@ -17,6 +17,17 @@
 //prev error solved by deleting everything fvm related and dart cache
 //then pub repair cache
 
+
+//TODO adjust UI
+//TODO add settings screen
+//TODO in settings screen: change city
+//TODO in settings screen: add multiple cities
+//TODO in settings screen: add multiple cities + local store them
+//TODO in settings screen: change language + localization
+//TODO in settings screen: change unit
+
+
+
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 
