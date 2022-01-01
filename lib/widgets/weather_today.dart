@@ -14,13 +14,14 @@ class WeatherToday extends StatelessWidget {
     return Container(
       width: double.infinity,
       // height: 300,
-      margin: const EdgeInsets.all(18.0),
+      margin: const EdgeInsets.only(top: 18.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.location_on),
               Text(city),
@@ -31,13 +32,13 @@ class WeatherToday extends StatelessWidget {
               weatherToday.isImageNetwork
                   ? Image.network(
                       weatherToday.image,
-                      width: 180,
-                      fit: BoxFit.fitWidth,
+                      height: 180,
+                      fit: BoxFit.fitHeight,
                     )
                   : Image.asset(
                       weatherToday.image,
-                      width: 180,
-                      fit: BoxFit.fitWidth,
+                      height: 180,
+                      fit: BoxFit.fitHeight,
                     ),
               Text(
                 '${weatherToday.temp} °C',
