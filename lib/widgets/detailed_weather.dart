@@ -37,6 +37,10 @@ class WeatherDetailed extends StatelessWidget {
             // width: 150,
             // height: 150,
           ),
+          Text(
+            '${weatherDay.tempCurrent} °C',
+            style: TextStyle(fontSize: 25),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -51,34 +55,14 @@ class WeatherDetailed extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  dashboardWeather(
-                    svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${double.parse(weatherDay.rain) * 100.0}%',
-                  ),
-                  // dashboardWeather(
-                  //   svgIcon: 'assets/dashboard_icons/sunrise.svg',
-                  //   status:
-                  //       '${unixSecondsToDateFormat(int.parse(weatherDay.sunrise))}',
-                  // ),
-                ],
+              dashboardWeather(
+                svgIcon: 'assets/dashboard_icons/rain.svg',
+                status: '${double.parse(weatherDay.rain) * 100.0}%',
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // dashboardWeather(
-                  //   svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                  //   status:
-                  //       '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
-                  // ),
-                  // dashboardWeather(
-                  //   svgIcon: 'assets/dashboard_icons/sunset.svg',
-                  //   status:
-                  //       '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
-                  // ),
-                ],
+              dashboardWeather(
+                svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                status:
+                    '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
               ),
             ],
           ),
