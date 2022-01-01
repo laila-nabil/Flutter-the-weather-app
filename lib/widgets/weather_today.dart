@@ -23,8 +23,8 @@ class WeatherToday extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.location_on),
-              Text(city),
+              Icon(Icons.location_on,color: Colors.white,),
+              Text(city,style: TextStyle(fontWeight: FontWeight.bold,),),
             ],
           ),
           Row(
@@ -52,7 +52,7 @@ class WeatherToday extends StatelessWidget {
               Text(
                 'Feels like ${weatherToday.feelsLike}°C, ',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black87),
+                    fontWeight: FontWeight.bold,),
               ),
               Text(weatherToday.detailedDescription),
             ],
