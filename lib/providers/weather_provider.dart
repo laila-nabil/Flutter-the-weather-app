@@ -229,9 +229,10 @@ class WeatherProvider with ChangeNotifier {
             isImageNetwork: true,
             image:
                 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
-            mainDescription: element['weather'][0]['main'],
-            detailedDescription: element['weather'][0]['description'],
+            mainDescription: element['weather'][0]['main'].toString(),
+            detailedDescription: element['weather'][0]['description'].toString(),
             date: unixSecondsToDate(element['dt']),
+            rain: "0.0",
             tempCurrent: element['temp'].toString()));
       });
       List<double> hourlyPastTemp = [];
@@ -259,12 +260,16 @@ class WeatherProvider with ChangeNotifier {
             tempMin: hourlyPastTempSorted[0].toString(),
             tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
                 .toString(),
-            weatherTimeline: _hourlyPastWeather.where((element) =>
-            DateFormat('yyyy-MM-dd')
-                .format(element.date)
-                .compareTo(DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: daysAgo)))) ==
-                0).toList(),
+            weatherTimeline: _hourlyPastWeather.where((element) {
+              print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().subtract(Duration(days: daysAgo))))==0}");
+              return (DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().subtract(Duration(days: daysAgo))))  == 0);
+            }).toList(),
           ));
+      print("<==>for ${_pastWeather[daysAgo-1].date} ${_pastWeather[daysAgo-1].weatherTimeline[0].tempCurrent}");
       print('end of api call $daysAgo');
     } catch (error) {
       throw (error);
@@ -309,15 +314,16 @@ class WeatherProvider with ChangeNotifier {
         print('i $i');
         await getHistoryWeatherAPI(i);
       }
+      final pastWeatherData = _pastWeather;
       _pastWeather = [...(_pastWeather.reversed)];
       final isHotterToday = (double.parse(todayWeather.tempMax) +
               double.parse(todayWeather.tempMin)) >
-          (double.parse(_pastWeather[0].tempMax) +
-              double.parse(_pastWeather[0].tempMin));
+          (double.parse(pastWeatherData[0].tempMax) +
+              double.parse(pastWeatherData[0].tempMin));
       final diffMax = double.parse(todayWeather.tempMax) -
-          double.parse(_pastWeather[0].tempMax);
+          double.parse(pastWeatherData[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
-          double.parse(_pastWeather[0].tempMin);
+          double.parse(pastWeatherData[0].tempMin);
       final diff =
           '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
       _compareTodayYesterday = isHotterToday

@@ -44,7 +44,8 @@ class WeatherDetailed extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              if(weatherDay.feelsLike!=null && weatherDay.feelsLike!="")
+                Text(
                 'Feels like ${weatherDay.feelsLike}°C, ',
                 style:
                 TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
@@ -55,10 +56,12 @@ class WeatherDetailed extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              if(weatherDay.rain!=null && weatherDay.rain!="")
               dashboardWeather(
                 svgIcon: 'assets/dashboard_icons/rain.svg',
                 status: '${double.parse(weatherDay.rain) * 100.0}%',
               ),
+              if(weatherDay.windSpeed!=null && weatherDay.windSpeed!="")
               dashboardWeather(
                 svgIcon: 'assets/dashboard_icons/wind_2.svg',
                 status:

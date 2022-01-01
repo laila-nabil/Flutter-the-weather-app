@@ -6,6 +6,7 @@ import 'package:the_weather_app/widgets/compact_day_weather.dart';
 
 class WeatherList extends StatelessWidget {
   final List<Weather> weatherList;
+
   WeatherList(this.weatherList);
 
   @override
@@ -14,23 +15,22 @@ class WeatherList extends StatelessWidget {
     //     Provider.of<WeatherProvider>(context).allWeather;
     return Container(
       height: 150,
+      width: double.infinity,
       child: ScrollablePositionedList.builder(
         itemBuilder: (ctx, i) {
-          return CompactDayWeather(
-            // date: weatherList[i].date,
-            // day:  DateFormat('EEE').format(weatherList[i].date),
-            // maxTemp: weatherList[i].tempMax,
-            // minTemp: weatherList[i].tempMin,
-            // image:weatherList[i].image,
-            // isImageNetwork: weatherList[i].isImageNetwork,
-            // temp: weatherList[i].tempCurrent,
-              weatherList[i]
-
-          );
+          return CompactDayWeather(weatherList[i]);
+          return weatherList[i].date.isAfter(DateTime.now())
+              ? CompactDayWeather(weatherList[i])
+              : Center(
+                  child: Column(
+                  children: [
+                    // Text("${weatherList[i].date}"),
+                    Text("${weatherList[i].weatherTimeline}"),
+                  ],
+                ));
         },
         scrollDirection: Axis.horizontal,
         itemCount: weatherList.length,
-        // padding: const EdgeInsets.all(25.0),
       ),
     );
   }

@@ -32,8 +32,9 @@ class CompactDayWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
-      // print('Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
-      // print('Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
+      print('Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
+      print('Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
+
       return InkWell(
         onTap: () {
           showModalBottomSheet(
@@ -63,6 +64,7 @@ class CompactDayWeather extends StatelessWidget {
                       height: constraints.maxHeight * 0.27,
                     ),
               Text("${detailedWeather.tempCurrent}°C"),
+              if(detailedWeather.rain!=null && detailedWeather.rain!="")
               dashboardWeather(
                 svgIcon: 'assets/dashboard_icons/rain.svg',
                 status: '${double.parse(detailedWeather.rain) * 100.0}%',
