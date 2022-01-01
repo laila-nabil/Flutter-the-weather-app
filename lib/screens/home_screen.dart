@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print('>>>> in the build');
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: Colors.blue.shade400,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: RefreshIndicator(
         onRefresh: () async {
           try {

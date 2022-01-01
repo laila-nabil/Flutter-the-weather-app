@@ -17,7 +17,6 @@
 //prev error solved by deleting everything fvm related and dart cache
 //then pub repair cache
 
-
 //TODO adjust UI
 //TODO add settings screen
 //TODO in settings screen: change city
@@ -25,8 +24,6 @@
 //TODO in settings screen: add multiple cities + local store them
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
-
-
 
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +51,11 @@ class MyApp extends StatelessWidget {
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
         title: 'Weather app',
-        theme: ThemeData(backgroundColor: Colors.blue),
+        theme: ThemeData(
+          backgroundColor: Color(0xff060D26),
+          primaryTextTheme: Typography().white,
+          textTheme: Typography().white,
+        ),
         home: MyHomePage(),
         // home: DummyScreen(),
       ),
@@ -66,7 +67,9 @@ class DummyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("this is a dummy screen"),),
+      body: Center(
+        child: Text("this is a dummy screen"),
+      ),
     );
   }
 }

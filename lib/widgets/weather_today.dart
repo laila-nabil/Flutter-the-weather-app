@@ -117,6 +117,7 @@ class dashboardWeather extends StatelessWidget {
             svgIcon,
             width: 22,
             height: 22,
+            color: Colors.white,
           ),
           if(title!= null)Text(title),
           Padding(

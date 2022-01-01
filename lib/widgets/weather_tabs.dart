@@ -50,20 +50,25 @@ class WeatherTabs extends StatelessWidget {
                                 ),
                               Column(
                                 children: [
-                                  Text(DateFormat.MMMEd().format(e.date)),
+                                  Text(
+                                    DateFormat.MMMEd().format(e.date),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                   RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
                                           text:
                                               "${double.parse(e.tempMax).toStringAsFixed(1)} ",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black)),
+                                            fontWeight: FontWeight.bold,
+                                            // color: Colors.black
+                                          )),
                                       TextSpan(
-                                          text:
-                                              "${double.parse(e.tempMin).toStringAsFixed(1)} ",
-                                          style:
-                                              TextStyle(color: Colors.black)),
+                                        text:
+                                            "${double.parse(e.tempMin).toStringAsFixed(1)} ",
+                                        // style:
+                                        // TextStyle(color: Colors.black)
+                                      ),
                                     ]),
                                   ),
                                 ],

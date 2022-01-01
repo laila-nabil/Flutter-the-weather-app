@@ -49,9 +49,7 @@ class CompactDayWeather extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // Text(day),
-              Card(
-
-                  child: Text(DateFormat('hh:mm a').format(detailedWeather.date))),
+              Text(DateFormat('hh:mm a').format(detailedWeather.date)),
               detailedWeather.isImageNetwork
                   ? Image.network(
                       detailedWeather.image,
