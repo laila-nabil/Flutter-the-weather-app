@@ -60,8 +60,8 @@ class CompactDayWeather extends StatelessWidget {
                     )
                   : Image.asset(
                 detailedWeather.image,
-                      width: constraints.maxHeight * 0.5,
-                      height: constraints.maxHeight * 0.27,
+                      width: constraints.maxHeight * 0.4,
+                      height: constraints.maxHeight * 0.2,
                     ),
               Text("${detailedWeather.tempCurrent}°C"),
               if(detailedWeather.rain!=null && detailedWeather.rain!="")

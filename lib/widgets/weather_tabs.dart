@@ -26,19 +26,27 @@ class WeatherTabs extends StatelessWidget {
                   tabs: [
                     ...weatherTabs.map((e) => Tab(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              if (e.isImageNetwork && e.image != null)
+                              if (e.isImageNetwork &&
+                                  (e.image != null &&
+                                      e.image != "" &&
+                                      e.image !=
+                                          'assets/weather_status/clear.png'))
                                 Image.network(
                                   e.image,
                                   width: 50,
                                   height: 50,
                                 ),
-                              if (e.isImageNetwork && e.image == null)
+                              if (!e.isImageNetwork &&
+                                  (e.image != null &&
+                                      e.image != "" &&
+                                      e.image !=
+                                          'assets/weather_status/clear.png'))
                                 Image.asset(
                                   e.image,
-                                  width: 10,
-                                  height: 10,
+                                  width: 35,
+                                  height: 35,
                                 ),
                               Column(
                                 children: [

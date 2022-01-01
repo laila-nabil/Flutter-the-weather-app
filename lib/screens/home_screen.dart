@@ -139,7 +139,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
 List<Widget> weatherTodayOverview = [
   Container(child: WeatherToday()),
-  CompareWeather(),
+  Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: CompareWeather(),
+  ),
 ];
 
 void cronSchedule(

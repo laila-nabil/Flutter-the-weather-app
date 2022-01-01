@@ -37,7 +37,7 @@ class WeatherToday extends StatelessWidget {
                     )
                   : Image.asset(
                       weatherToday.image,
-                      height: 180,
+                      height: 170,
                       fit: BoxFit.fitHeight,
                     ),
               Text(
