@@ -317,19 +317,15 @@ class WeatherProvider with ChangeNotifier {
       }
       final pastWeatherData = _pastWeather;
       _pastWeather = [...(_pastWeather.reversed)];
-      final isHotterToday = (double.parse(todayWeather.tempMax) +
-              double.parse(todayWeather.tempMin)) >
-          (double.parse(pastWeatherData[0].tempMax) +
-              double.parse(pastWeatherData[0].tempMin));
+      final diffDay = double.parse(todayWeather.tempMax)  >
+          double.parse(pastWeatherData[0].tempMax) ? "warmer" : "colder";
+      final diffNight = double.parse(todayWeather.tempMin)  >
+          double.parse(pastWeatherData[0].tempMin) ? "warmer" : "colder";
       final diffMax = double.parse(todayWeather.tempMax) -
           double.parse(pastWeatherData[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
-      final diff =
-          '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
-      _compareTodayYesterday = isHotterToday
-          ? 'Today is warmer than yesterday by $diff'
-          : 'Today is colder than yesterday by $diff';
+      _compareTodayYesterday = 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} at day and is $diffNight by ${diffMin.toStringAsFixed(2)} at night';
       notifyListeners();
       print('got weather');
     } catch (error) {
