@@ -71,6 +71,7 @@ class WeatherToday extends StatelessWidget {
                     status:
                         '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
                   ),
+                  dashboardWeather(title: "Max",status: "${weatherToday.tempMax}°C",)
                 ],
               ),
               Column(
@@ -86,14 +87,10 @@ class WeatherToday extends StatelessWidget {
                     status:
                         '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
                   ),
+                  dashboardWeather(title: "Min",status: "${weatherToday.tempMin}°C",)
                 ],
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                'The high will be ${weatherToday.tempMax}°C, the low will be ${weatherToday.tempMin}°C.'),
           ),
         ],
       ),
@@ -103,9 +100,10 @@ class WeatherToday extends StatelessWidget {
 
 class dashboardWeather extends StatelessWidget {
   final String svgIcon;
+  final String title;
   final String status;
 
-  dashboardWeather({this.svgIcon, this.status});
+  dashboardWeather({this.svgIcon,this.title, this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -113,11 +111,13 @@ class dashboardWeather extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
+          if(svgIcon!= null)
           SvgPicture.asset(
             svgIcon,
             width: 22,
             height: 22,
           ),
+          if(title!= null)Text(title),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(status),
