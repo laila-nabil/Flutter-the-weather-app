@@ -116,12 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                          width: screenSize.width * 0.8,
-                          height: screenSize.height * 0.58,
-                          child: WeatherToday()),
-                      CompareWeather(),
-                      // WeatherList(),
+                      ...weatherTodayOverview,
                       WeatherTabs(),
                       Text(
                         'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
@@ -135,6 +130,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+List<Widget> weatherTodayOverview= [
+  Container(
+    child: WeatherToday()),
+  CompareWeather(),];
 
 void cronSchedule(
     {dynamic repeatedAction,
