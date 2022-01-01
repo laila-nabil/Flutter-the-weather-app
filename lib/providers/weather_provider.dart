@@ -54,7 +54,7 @@ class WeatherProvider with ChangeNotifier {
         lat: lat,
         lon: lon,
         isImageNetwork: true,
-        image: 'https://openweathermap.org/img/wn/$iconNow@2x.png',
+        image: 'https://openweathermap.org/img/wn/$iconNow@4x.png',
         temp: currentWeather['main']['temp'].toString(),
         feelsLike: currentWeather['main']['feels_like'].toString(),
         mainDescription: currentWeather['weather'][0]['main'],
@@ -99,7 +99,7 @@ class WeatherProvider with ChangeNotifier {
       print('temp ${presentFutureWeather['current']['temp']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
-      print('image https://openweathermap.org/img/wn/$iconNow@2x.png');
+      print('image https://openweathermap.org/img/wn/$iconNow@4x.png');
       _weatherNow.tempMin =
           presentFutureWeather['daily'][0]['temp']['min'].toString();
       _weatherNow.tempMax =
@@ -119,7 +119,7 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isImageNetwork: true,
             image:
-                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@2x.png',
+                'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             date: unixSecondsToDate(element['dt']),

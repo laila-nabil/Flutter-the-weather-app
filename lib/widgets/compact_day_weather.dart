@@ -48,7 +48,9 @@ class CompactDayWeather extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // Text(day),
-              Text(DateFormat('hh:mm a').format(detailedWeather.date)),
+              Card(
+
+                  child: Text(DateFormat('hh:mm a').format(detailedWeather.date))),
               detailedWeather.isImageNetwork
                   ? Image.network(
                       detailedWeather.image,
@@ -56,11 +58,15 @@ class CompactDayWeather extends StatelessWidget {
                       height: constraints.maxHeight * 0.27,
                     )
                   : Image.asset(
-                      CustomIcons.cloudy,
+                detailedWeather.image,
                       width: constraints.maxHeight * 0.5,
                       height: constraints.maxHeight * 0.27,
                     ),
-              Text(detailedWeather.tempCurrent),
+              Text("${detailedWeather.tempCurrent}°C"),
+              dashboardWeather(
+                svgIcon: 'assets/dashboard_icons/rain.svg',
+                status: '${double.parse(detailedWeather.rain) * 100.0}%',
+              ),
             ],
           ),
         ),
