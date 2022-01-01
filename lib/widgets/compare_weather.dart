@@ -9,16 +9,23 @@ class CompareWeather extends StatelessWidget {
   Widget build(BuildContext context) {
     final compareWeather =
         Provider.of<WeatherProvider>(context).compareTodayYesterday;
-    return Container(
-      height: 100,
-      width: MediaQuery.of(context).size.width * 0.8,
+    return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(
-        compareWeather,
-        // softWrap: true,
-        maxLines: 3,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        textAlign: TextAlign.center,
+      child: Card(
+        color: Color(0xff272F3A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Container(
+          height: 80,
+          width: MediaQuery.of(context).size.width * 0.8,
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            compareWeather,
+            // softWrap: true,
+            maxLines: 3,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
     );
   }
