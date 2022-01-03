@@ -87,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final orientation = mediaQuery.orientation;
+    final isPortrait = screenSize.width < screenSize.height;
     print("screenSize $screenSize");
     print("orientation $orientation");
     return Scaffold(
@@ -122,16 +123,40 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(flex: 7, child: WeatherToday()),
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CompareWeather(),
+                        // todayOverview(screenSize.width < screenSize.height),
+                        if (isPortrait)
+                          Expanded(flex: 7, child: WeatherToday()),
+                        if (screenSize.width < screenSize.height)
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CompareWeather(),
+                            ),
                           ),
-                        ),
+                        if(!isPortrait)
+                          Expanded(
+                            flex: 6,
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: screenSize.width * 0.6,
+                                    // height: screenSize.height * 0.5,
+                                    child: WeatherToday()),
+                                Container(
+                                  width: screenSize.width * 0.4,
+                                  // height: screenSize.height * 0.5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CompareWeather(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         Expanded(
-                            flex: 4,
+                            // flex: isPortrait ? 4 : 5,
+                          flex: 4,
                             child: WeatherTabs()),
                         Expanded(
                           flex: 1,
@@ -147,6 +172,40 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+}
+
+class todayOverview extends StatelessWidget {
+  final bool portrait;
+
+  todayOverview(this.portrait);
+
+  @override
+  Widget build(BuildContext context) {
+    return !portrait
+        ? Row(
+            children: [
+              SizedBox.expand(child: WeatherToday()),
+              SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CompareWeather(),
+                ),
+              ),
+            ],
+          )
+        : Column(
+            children: [
+              Expanded(flex: 7, child: WeatherToday()),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CompareWeather(),
+                ),
+              ),
+            ],
+          );
   }
 }
 

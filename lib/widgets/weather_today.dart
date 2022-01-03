@@ -6,7 +6,6 @@ import 'package:the_weather_app/models/unix.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
-import 'package:the_weather_app/widgets/custom_grid.dart';
 
 class WeatherToday extends StatelessWidget {
   @override
@@ -72,7 +71,7 @@ class WeatherToday extends StatelessWidget {
               ),
               Container(
                 width: constraints.maxWidth * 0.65,
-                height: constraints.maxHeight * 0.06,
+                 height: constraints.maxHeight * 0.06 ,
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Row(

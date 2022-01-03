@@ -17,6 +17,7 @@ class WeatherTabs extends StatelessWidget {
           child: Column(children: <Widget>[
             Container(
               child: TabBar(
+
                 isScrollable: true,
                 // labelColor: Colors.green,
                 labelColor: Colors.white,
