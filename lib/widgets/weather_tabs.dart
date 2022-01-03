@@ -20,9 +20,9 @@ class WeatherTabs extends StatelessWidget {
                 child: TabBar(
                   isScrollable: true,
                   // labelColor: Colors.green,
-                  labelColor: Colors.black,
+                  labelColor: Colors.white,
                   // indicatorColor: Colors.purple,
-                  unselectedLabelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
                   tabs: [
                     ...weatherTabs.map((e) => Tab(
                           child: Row(

@@ -17,10 +17,12 @@ class WeatherDetailed extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30)),
+        color: Theme.of(context).backgroundColor,
+
       ),
       // height: 300,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,8 +30,6 @@ class WeatherDetailed extends StatelessWidget {
           weatherDay.isImageNetwork
               ? Image.network(
             weatherDay.image,
-            width: 150,
-            height: 150,
             fit: BoxFit.fitHeight,
           )
               : Image.asset(
@@ -48,7 +48,7 @@ class WeatherDetailed extends StatelessWidget {
                 Text(
                 'Feels like ${weatherDay.feelsLike}°C, ',
                 style:
-                TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Text(weatherDay.detailedDescription),
             ],

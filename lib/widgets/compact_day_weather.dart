@@ -28,16 +28,18 @@ class CompactDayWeather extends StatelessWidget {
   //   this.temp,
   // });
 
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
-      print('Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
-      print('Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
+      print(
+          'Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
+      print(
+          'Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
 
       return InkWell(
         onTap: () {
           showModalBottomSheet(
+              backgroundColor: Colors.transparent,
               context: context,
               builder: (_) {
                 return WeatherDetailed(detailedWeather);
@@ -57,16 +59,16 @@ class CompactDayWeather extends StatelessWidget {
                       height: constraints.maxHeight * 0.27,
                     )
                   : Image.asset(
-                detailedWeather.image,
+                      detailedWeather.image,
                       width: constraints.maxHeight * 0.4,
                       height: constraints.maxHeight * 0.2,
                     ),
               Text("${detailedWeather.tempCurrent}°C"),
-              if(detailedWeather.rain!=null && detailedWeather.rain!="")
-              dashboardWeather(
-                svgIcon: 'assets/dashboard_icons/rain.svg',
-                status: '${double.parse(detailedWeather.rain) * 100.0}%',
-              ),
+              if (detailedWeather.rain != null && detailedWeather.rain != "")
+                dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/rain.svg',
+                  status: '${double.parse(detailedWeather.rain) * 100.0}%',
+                ),
             ],
           ),
         ),
