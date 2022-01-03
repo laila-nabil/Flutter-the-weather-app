@@ -89,10 +89,10 @@ class WeatherToday extends StatelessWidget {
                   ),
                 ),
               ),
-              // Container(
-              //     width: constraints.maxWidth * 0.8,
-              //     height: constraints.maxHeight * 0.3,
-              //     child: todayDetails(weatherToday: weatherToday)),
+              Container(
+                  width: constraints.maxWidth * 0.8,
+                  height: constraints.maxHeight * 0.3,
+                  child: todayDetails(weatherToday: weatherToday)),
             ],
           ),
         );
@@ -200,28 +200,22 @@ class dashboardWeather extends StatelessWidget {
       return Row(
         children: [
           if (svgIcon != null)
-            Container(
-              width: constraints.maxWidth * 0.4,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: SvgPicture.asset(
-                  svgIcon,
-                  // width: 22,
-                  // height: 22,
-                  color: Colors.white,
-                ),
+            Expanded(
+              child: SvgPicture.asset(
+                svgIcon,
+                // width: 22,
+                // height: 22,
+                color: Colors.white,
               ),
             ),
           if (title != null)
-            FittedBox(
-                fit: BoxFit.contain,
-                child: Container(
-                    width: constraints.maxWidth * 0.4,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                    ))),
-          FittedBox(fit: BoxFit.contain, child: Text(status))
+            Expanded(
+              child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                  ),
+            ),
+          Expanded(child: Text(status))
         ],
       );
     });

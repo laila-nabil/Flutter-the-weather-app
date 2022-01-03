@@ -130,14 +130,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: CompareWeather(),
                           ),
                         ),
-                        // Expanded(flex: 4, child: WeatherTabs()),
-                        // Expanded(
-                        //   flex: 1,
-                        //   child: Text(
-                        //     'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                        //     style: TextStyle(fontSize: 11, color: Colors.white),
-                        //   ),
-                        // )
+                        Expanded(flex: 4, child: WeatherTabs()),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                            style: TextStyle(fontSize: 11, color: Colors.white),
+                          ),
+                        )
                       ],
                     ),
                   ),
