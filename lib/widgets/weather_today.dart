@@ -12,8 +12,11 @@ class WeatherToday extends StatelessWidget {
   Widget build(BuildContext context) {
     final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
     final city = Provider.of<WeatherProvider>(context).location;
+    final screenSize = MediaQuery.of(context).size;
+    final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
       builder: (ctx, constraints) {
+        print("constraints here is $constraints");
         return Container(
           // width: constraints.maxWidth,
           // height: constraints.maxHeight,
@@ -49,14 +52,14 @@ class WeatherToday extends StatelessWidget {
                       ? Image.network(
                           weatherToday.image,
                           width: constraints.maxWidth * 0.5,
-                          height: constraints.maxHeight * 0.5,
-                          fit: BoxFit.contain,
+                          height: isPortrait ? constraints.maxHeight * 0.5 : constraints.maxHeight * 0.4,
+                          fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                         )
                       : Image.asset(
                           weatherToday.image,
                           width: constraints.maxWidth * 0.65,
-                          height: constraints.maxHeight * 0.5,
-                          fit: BoxFit.contain,
+                          height: isPortrait ? constraints.maxHeight * 0.5 : constraints.maxHeight * 0.4,
+                          fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                         ),
                   Container(
                     width: constraints.maxWidth * 0.25,

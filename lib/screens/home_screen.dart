@@ -158,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             // flex: isPortrait ? 4 : 5,
                           flex: 4,
                             child: WeatherTabs()),
+                        if(screenSize.width < screenSize.height)
                         Expanded(
                           flex: 1,
                           child: Text(
