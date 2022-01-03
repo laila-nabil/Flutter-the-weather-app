@@ -30,10 +30,13 @@ class WeatherDetailed extends StatelessWidget {
           weatherDay.isImageNetwork
               ? Image.network(
             weatherDay.image,
-            fit: BoxFit.fitHeight,
+            width: MediaQuery.of(context).size.width * 0.7,
+            fit: BoxFit.fitWidth,
           )
               : Image.asset(
             weatherDay.image,
+            width: MediaQuery.of(context).size.width * 0.7,
+            fit: BoxFit.fitWidth,
             // width: 150,
             // height: 150,
           ),
