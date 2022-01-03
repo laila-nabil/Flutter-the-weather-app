@@ -89,11 +89,10 @@ class WeatherToday extends StatelessWidget {
                   ),
                 ),
               ),
-              // Expanded(
-              Container(
-                  width: constraints.maxWidth * 0.8,
-                  height: constraints.maxHeight * 0.3,
-                  child: todayDetails(weatherToday: weatherToday)),
+              // Container(
+              //     width: constraints.maxWidth * 0.8,
+              //     height: constraints.maxHeight * 0.3,
+              //     child: todayDetails(weatherToday: weatherToday)),
             ],
           ),
         );
@@ -120,6 +119,7 @@ class todayDetails extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 width: constraints.maxWidth * 0.4,
@@ -150,6 +150,7 @@ class todayDetails extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 width: constraints.maxWidth * 0.4,
