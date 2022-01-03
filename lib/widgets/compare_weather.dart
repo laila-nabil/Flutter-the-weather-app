@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,24 +10,27 @@ class CompareWeather extends StatelessWidget {
   Widget build(BuildContext context) {
     final compareWeather =
         Provider.of<WeatherProvider>(context).compareTodayYesterday;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
+    return LayoutBuilder(builder: (ctx, constraints) {
+      return Card(
         color: Color(0xff272F3A),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
-          height: 80,
-          width: MediaQuery.of(context).size.width * 0.8,
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
+          height: constraints.maxHeight * 0.9,
+          width: constraints.maxWidth * 0.9,
+          padding: const EdgeInsets.all(12.0),
+          child: AutoSizeText(
             compareWeather,
+            minFontSize: 10,
             // softWrap: true,
             maxLines: 3,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 40
+            ),
             textAlign: TextAlign.center,
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

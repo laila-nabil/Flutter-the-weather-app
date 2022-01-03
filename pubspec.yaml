@@ -35,6 +35,7 @@ dependencies:
   scrollable_positioned_list: ^0.2.3
   cron: ^0.4.0
   flutter_svg: ^1.0.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -124,20 +124,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Expanded(flex: 7, child: WeatherToday()),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CompareWeather(),
                           ),
                         ),
-                        // Expanded(flex: 4, child: WeatherTabs()),
-                        // Expanded(
-                        //   flex: 1,
-                        //   child: Text(
-                        //     'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                        //     style: TextStyle(fontSize: 11, color: Colors.white),
-                        //   ),
-                        // )
+                        Expanded(flex: 4, child: WeatherTabs()),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                            style: TextStyle(fontSize: 11, color: Colors.white),
+                          ),
+                        )
                       ],
                     ),
                   ),
