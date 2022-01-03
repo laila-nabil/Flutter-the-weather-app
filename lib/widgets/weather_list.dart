@@ -14,7 +14,7 @@ class WeatherList extends StatelessWidget {
     // final weatherList =
     //     Provider.of<WeatherProvider>(context).allWeather;
     return Container(
-      height: 150,
+      // height: 150,
       width: double.infinity,
       child: ScrollablePositionedList.builder(
         itemBuilder: (ctx, i) {
