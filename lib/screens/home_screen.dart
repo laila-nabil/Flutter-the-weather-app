@@ -84,7 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print('>>>> in the build');
-    final screenSize = MediaQuery.of(context).size;
+    final mediaQuery = MediaQuery.of(context);
+    final screenSize = mediaQuery.size;
+    final orientation = mediaQuery.orientation;
+    print("screenSize $screenSize");
+    print("orientation $orientation");
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: RefreshIndicator(
@@ -126,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       WeatherTabs(),
                       Text(
                         'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                        style: TextStyle(fontSize: 11, color: Colors.black45),
+                        style: TextStyle(fontSize: 11, color: Colors.white),
                       )
                     ],
                   ),
