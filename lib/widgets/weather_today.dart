@@ -93,7 +93,7 @@ class WeatherToday extends StatelessWidget {
               Container(
                   width: constraints.maxWidth * 0.8,
                   height: constraints.maxHeight * 0.3,
-                  child: NewWidget(weatherToday: weatherToday)),
+                  child: todayDetails(weatherToday: weatherToday)),
             ],
           ),
         );
@@ -102,8 +102,8 @@ class WeatherToday extends StatelessWidget {
   }
 }
 
-class NewWidget extends StatelessWidget {
-  const NewWidget({
+class todayDetails extends StatelessWidget {
+  const todayDetails({
     Key key,
     @required this.weatherToday,
   }) : super(key: key);
@@ -112,7 +112,7 @@ class NewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (ctx,constraints){
+    return LayoutBuilder(builder: (ctx, constraints) {
       print("new widget constraints $constraints");
       // return Container(color: Colors.lightBlue,);
       return Row(
@@ -121,37 +121,61 @@ class NewWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              dashboardWeather(
-                svgIcon: 'assets/dashboard_icons/rain.svg',
-                status: '${double.parse(weatherToday.rain) * 100.0}%',
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/rain.svg',
+                  status: '${double.parse(weatherToday.rain) * 100.0}%',
+                ),
               ),
-              dashboardWeather(
-                svgIcon: 'assets/dashboard_icons/sunrise.svg',
-                status:
-                '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/sunrise.svg',
+                  status:
+                      '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
+                ),
               ),
-              dashboardWeather(
-                title: "Max",
-                status: "${weatherToday.tempMax}°C",
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  title: "Max",
+                  status: "${weatherToday.tempMax}°C",
+                ),
               ),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              dashboardWeather(
-                svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                status:
-                '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                  status:
+                      '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
+                ),
               ),
-              dashboardWeather(
-                svgIcon: 'assets/dashboard_icons/sunset.svg',
-                status:
-                '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  svgIcon: 'assets/dashboard_icons/sunset.svg',
+                  status:
+                      '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                ),
               ),
-              dashboardWeather(
-                title: "Min",
-                status: "${weatherToday.tempMin}°C",
+              Container(
+                width: constraints.maxWidth * 0.4,
+                height: constraints.maxHeight * 0.25,
+                child: dashboardWeather(
+                  title: "Min",
+                  status: "${weatherToday.tempMin}°C",
+                ),
               )
             ],
           ),
@@ -175,14 +199,28 @@ class dashboardWeather extends StatelessWidget {
       return Row(
         children: [
           if (svgIcon != null)
-            SvgPicture.asset(
-              svgIcon,
-              // width: 22,
-              // height: 22,
-              color: Colors.white,
+            Container(
+              width: constraints.maxWidth * 0.4,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: SvgPicture.asset(
+                  svgIcon,
+                  // width: 22,
+                  // height: 22,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          if (title != null) Text(title),
-          Text(status)
+          if (title != null)
+            FittedBox(
+                fit: BoxFit.contain,
+                child: Container(
+                    width: constraints.maxWidth * 0.4,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                    ))),
+          FittedBox(fit: BoxFit.contain, child: Text(status))
         ],
       );
     });
