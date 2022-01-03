@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(18.0),
+          // padding: const EdgeInsets.all(18.0),
           child: Center(
             child: _isLoading
                 ? Center(
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   )
                 : Container(
-                    height: screenSize.height - MediaQuery.of(context).viewPadding.vertical - MediaQuery.of(context).padding.vertical,
+                    height: screenSize.height,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -130,7 +130,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: CompareWeather(),
                           ),
                         ),
-                        Expanded(flex: 4, child: WeatherTabs()),
+                        Expanded(
+                            flex: 4,
+                            child: WeatherTabs()),
                         Expanded(
                           flex: 1,
                           child: Text(
