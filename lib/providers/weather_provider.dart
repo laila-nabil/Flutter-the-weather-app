@@ -19,7 +19,7 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
-  static bool isImage3D = false;
+  static bool isImage3D = true;
   var _API_KEY =
       kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
 

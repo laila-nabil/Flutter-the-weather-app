@@ -24,7 +24,7 @@ class WeatherToday extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.location_on,color: Colors.white,),
-              Text(city,style: TextStyle(fontWeight: FontWeight.bold,),),
+              Text(city,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
             ],
           ),
           Row(
