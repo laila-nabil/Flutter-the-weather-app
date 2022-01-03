@@ -25,7 +25,6 @@
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
 
-import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -62,39 +61,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class DummyScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("this is a dummy screen"),
-      ),
-    );
-  }
-}
-
-// void cronSchedule(
-//     {Function function,
-//     String minute = '*',
-//     String hour = '*',
-//     String day = '*',
-//     String month = '*',
-//     String dayWeek = '*'}) {
-//   //https://crontab.guru/#01_00_*_*_*
-//   final cron = Cron();
-//   final time = '$minute $hour $day $month $dayWeek';
-//   print('time is >$time>');
-//   print('Alarm set');
-//   function();
-//   cron.schedule(Schedule.parse(time), () async {
-//     print(
-//         '$minute minutes,$hour hours,$day days,$month month,$dayWeek day week ${DateTime.now()}');
-//     function();
-//     print('Alarm done');
-//   });
-// }
-//
-// void newDayRefresh(Function function) {
-//   cronSchedule(function: function, minute: '*/16');
-// }

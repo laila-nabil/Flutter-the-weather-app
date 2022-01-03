@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       } catch (error) {
         print('error in did change $error');
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('An error occurred! did')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('An error occurred! did $error')));
       }
 
       cron = Cron();
@@ -117,22 +117,29 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      screenSize.height < screenSize.width
-                          ? Row(
-                              children: weatherTodayOverview,
-                            )
-                          : Column(
-                              children: weatherTodayOverview,
-                            ),
-                      WeatherTabs(),
-                      Text(
-                        'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                        style: TextStyle(fontSize: 11, color: Colors.white),
-                      )
-                    ],
+                : Container(
+                    height: screenSize.height,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(flex: 7, child: WeatherToday()),
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CompareWeather(),
+                          ),
+                        ),
+                        // Expanded(flex: 4, child: WeatherTabs()),
+                        // Expanded(
+                        //   flex: 1,
+                        //   child: Text(
+                        //     'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                        //     style: TextStyle(fontSize: 11, color: Colors.white),
+                        //   ),
+                        // )
+                      ],
+                    ),
                   ),
           ),
         ),

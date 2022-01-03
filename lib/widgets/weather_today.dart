@@ -11,90 +11,121 @@ class WeatherToday extends StatelessWidget {
   Widget build(BuildContext context) {
     final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
     final city = Provider.of<WeatherProvider>(context).location;
-    return Container(
-      width: double.infinity,
-      // height: 300,
-      margin: const EdgeInsets.only(top: 18.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (ctx , constraints){
+        return Container(
+          // width: constraints.maxWidth,
+          // height: constraints.maxHeight,
+          margin: const EdgeInsets.only(top: 18.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.location_on,color: Colors.white,),
-              Text(city,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-            ],
-          ),
-          Row(
-            children: [
-              weatherToday.isImageNetwork
-                  ? Image.network(
-                      weatherToday.image,
-                      height: 180,
-                      fit: BoxFit.fitHeight,
-                    )
-                  : Image.asset(
-                      weatherToday.image,
-                      height: 170,
-                      fit: BoxFit.fitHeight,
+              Container(
+                height: constraints.maxHeight * 0.07,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.location_on,color: Colors.white,),
+                      Text(city,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  weatherToday.isImageNetwork
+                      ? Image.network(
+                    weatherToday.image,
+                    width: constraints.maxWidth * 0.5,
+                    height: constraints.maxHeight * 0.5,
+                    fit: BoxFit.contain,
+                  )
+                      : Image.asset(
+                    weatherToday.image,
+                    width: constraints.maxWidth * 0.65,
+                    height: constraints.maxHeight * 0.5,
+                    fit: BoxFit.contain,
+                  ),
+                  Container(
+                    width: constraints.maxWidth * 0.25,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        '${weatherToday.temp} °C',
+                      ),
                     ),
-              Text(
-                '${weatherToday.temp} °C',
-                style: TextStyle(fontSize: 25),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Feels like ${weatherToday.feelsLike}°C, ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,),
-              ),
-              Text(weatherToday.detailedDescription),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  dashboardWeather(
-                    svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${double.parse(weatherToday.rain) * 100.0}%',
-                  ),
-                  dashboardWeather(
-                    svgIcon: 'assets/dashboard_icons/sunrise.svg',
-                    status:
-                        '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
-                  ),
-                  dashboardWeather(title: "Max",status: "${weatherToday.tempMax}°C",)
+                  )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  dashboardWeather(
-                    svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                    status:
-                        '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
+              Container(
+                width: constraints.maxWidth * 0.65,
+                height: constraints.maxHeight * 0.06,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Feels like ${weatherToday.feelsLike}°C, ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,),
+                      ),
+                      Text(weatherToday.detailedDescription),
+                    ],
                   ),
-                  dashboardWeather(
-                    svgIcon: 'assets/dashboard_icons/sunset.svg',
-                    status:
-                        '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                ),
+              ),
+              Container(
+                width: constraints.maxWidth * 0.65,
+                height: constraints.maxHeight * 0.3,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          dashboardWeather(
+                            svgIcon: 'assets/dashboard_icons/rain.svg',
+                            status: '${double.parse(weatherToday.rain) * 100.0}%',
+                          ),
+                          dashboardWeather(
+                            svgIcon: 'assets/dashboard_icons/sunrise.svg',
+                            status:
+                            '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
+                          ),
+                          dashboardWeather(title: "Max",status: "${weatherToday.tempMax}°C",)
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          dashboardWeather(
+                            svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                            status:
+                            '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
+                          ),
+                          dashboardWeather(
+                            svgIcon: 'assets/dashboard_icons/sunset.svg',
+                            status:
+                            '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                          ),
+                          dashboardWeather(title: "Min",status: "${weatherToday.tempMin}°C",)
+                        ],
+                      ),
+                    ],
                   ),
-                  dashboardWeather(title: "Min",status: "${weatherToday.tempMin}°C",)
-                ],
+                ),
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -115,8 +146,8 @@ class dashboardWeather extends StatelessWidget {
           if(svgIcon!= null)
           SvgPicture.asset(
             svgIcon,
-            width: 22,
-            height: 22,
+            // width: 22,
+            // height: 22,
             color: Colors.white,
           ),
           if(title!= null)Text(title),

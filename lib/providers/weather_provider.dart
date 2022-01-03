@@ -88,6 +88,7 @@ class WeatherProvider with ChangeNotifier {
     print('PresentFuture url is $url');
     try {
       final response = await http.get(Uri.parse(url));
+      
       final presentFutureWeather = json.decode(response.body);
       print("_todayWeather time ${presentFutureWeather['daily'][0]['dt']}");
       final date = presentFutureWeather['daily'][0]['dt'] as int;
@@ -214,6 +215,7 @@ class WeatherProvider with ChangeNotifier {
     print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
+      
       print('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
       print('historyWeather $historyWeather');
@@ -367,6 +369,7 @@ class WeatherProvider with ChangeNotifier {
     var url =
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
     final response = await http.get(Uri.parse(url));
+    
     final locationDetails = json.decode(response.body);
     print('locationDetails $locationDetails');
     if (locationDetails != null) {
