@@ -29,6 +29,7 @@
 //TODO in settings screen: change unit
 //TODO is timing correct or not?
 //TODO max &min sometimes disappear==> fix bug
+//TODO maybe make all weather one class or use inheritance
 
 import 'package:flutter/material.dart';
 
