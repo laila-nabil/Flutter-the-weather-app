@@ -30,6 +30,7 @@
 //TODO is timing correct or not?
 //TODO max &min sometimes disappear==> fix bug
 //TODO maybe make all weather one class or use inheritance
+//TODO add shimmer instead of loading circle
 
 import 'package:flutter/material.dart';
 
