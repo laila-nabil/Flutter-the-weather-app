@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,12 +26,17 @@ class dashboardWeather extends StatelessWidget {
             ),
           if (title != null)
             Expanded(
-              child: Text(
+              child: AutoSizeText(
                 title,
+                maxLines: 2,
                 textAlign: TextAlign.center,
               ),
             ),
-          Expanded(child: Text(status))
+          Expanded(
+              child: AutoSizeText(
+            status,
+            maxLines: 2,
+          ))
         ],
       );
     });
