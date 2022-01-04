@@ -35,7 +35,7 @@ class CompactDayWeather extends StatelessWidget {
           'Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
       print(
           'Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
-
+      final width = MediaQuery.of(context).size.width * 0.2;
       return InkWell(
         onTap: () {
           showModalBottomSheet(
@@ -46,28 +46,48 @@ class CompactDayWeather extends StatelessWidget {
               });
         },
         child: Container(
-          padding: EdgeInsets.all(constraints.minHeight * 0.07),
+          padding: EdgeInsets.all(constraints.maxHeight * 0.07),
+          width: width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // Text(day),
-              Text(DateFormat('hh:mm a').format(detailedWeather.date)),
+              Container(
+                  height: constraints.maxHeight * 0.2,
+                  width: width,
+                  child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                          DateFormat('hh:mm a').format(detailedWeather.date)))),
               detailedWeather.isImageNetwork
                   ? Image.network(
                       detailedWeather.image,
-                      width: constraints.maxHeight * 0.5,
+                      // width: constraints.maxHeight * 0.5,
                       height: constraints.maxHeight * 0.27,
+                      width: width,
+                      fit: BoxFit.contain,
                     )
                   : Image.asset(
                       detailedWeather.image,
-                      width: constraints.maxHeight * 0.4,
+                      // width: constraints.maxHeight * 0.4,
                       height: constraints.maxHeight * 0.2,
+                      width: width,
+                      fit: BoxFit.contain,
                     ),
-              Text("${detailedWeather.tempCurrent}°C"),
+              Container(
+                  height: constraints.maxHeight * 0.2,
+                  width: width * 0.8,
+                  child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text("${detailedWeather.tempCurrent}°C"))),
               if (detailedWeather.rain != null && detailedWeather.rain != "")
-                dashboardWeather(
-                  svgIcon: 'assets/dashboard_icons/rain.svg',
-                  status: '${double.parse(detailedWeather.rain) * 100.0}%',
+                Container(
+                  height: constraints.maxHeight * 0.2,
+                  width: width,
+                  child: dashboardWeather(
+                    svgIcon: 'assets/dashboard_icons/rain.svg',
+                    status: '${double.parse(detailedWeather.rain) * 100.0}%',
+                  ),
                 ),
             ],
           ),

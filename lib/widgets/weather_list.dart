@@ -13,26 +13,24 @@ class WeatherList extends StatelessWidget {
   Widget build(BuildContext context) {
     // final weatherList =
     //     Provider.of<WeatherProvider>(context).allWeather;
-    return Expanded(
-      child: Container(
-        // height: 150,
-        width: double.infinity,
-        child: ScrollablePositionedList.builder(
-          itemBuilder: (ctx, i) {
-            return CompactDayWeather(weatherList[i]);
-            return weatherList[i].date.isAfter(DateTime.now())
-                ? CompactDayWeather(weatherList[i])
-                : Center(
-                    child: Column(
-                    children: [
-                      // Text("${weatherList[i].date}"),
-                      Text("${weatherList[i].weatherTimeline}"),
-                    ],
-                  ));
-          },
-          scrollDirection: Axis.horizontal,
-          itemCount: weatherList.length,
-        ),
+    return Container(
+      // height: 150,
+      width: double.infinity,
+      child: ScrollablePositionedList.builder(
+        itemBuilder: (ctx, i) {
+          return CompactDayWeather(weatherList[i]);
+          return weatherList[i].date.isAfter(DateTime.now())
+              ? CompactDayWeather(weatherList[i])
+              : Center(
+                  child: Column(
+                  children: [
+                    // Text("${weatherList[i].date}"),
+                    Text("${weatherList[i].weatherTimeline}"),
+                  ],
+                ));
+        },
+        scrollDirection: Axis.horizontal,
+        itemCount: weatherList.length,
       ),
     );
   }
