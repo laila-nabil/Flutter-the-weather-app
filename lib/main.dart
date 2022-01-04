@@ -10,6 +10,9 @@
 // firebase deploy --only hosting
 // fvm flutter build web --dart-define api_key=key
 
+//to run on web
+// fvm flutter run -d edge --dart-define api_key=key
+
 //to reupload
 // fvm flutter build web --dart-define api_key=key
 // firebase deploy --only hosting
@@ -24,6 +27,7 @@
 //TODO in settings screen: add multiple cities + local store them
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
+//TODO is timing correct or not?
 
 import 'package:flutter/material.dart';
 

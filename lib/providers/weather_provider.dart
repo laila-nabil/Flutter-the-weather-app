@@ -20,8 +20,9 @@ class WeatherProvider with ChangeNotifier {
   String _compareTodayYesterday = '';
   String location = '';
   static bool isImage3D = true;
+  static const terminalApi = String.fromEnvironment("api_key");
   var _API_KEY =
-      kIsWeb ? String.fromEnvironment("api_key") : dotenv.env['API_KEY'];
+      kIsWeb ? terminalApi : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
     var timeNow = DateTime.now();
@@ -40,6 +41,7 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getCurrentWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
+    // print("_API_KEY $_API_KEY and kIsWeb $kIsWeb");
     const lat = '30.0444';
     const lon = '31.2357';
     // const part = 'minutely,hourly';
