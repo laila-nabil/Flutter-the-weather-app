@@ -76,7 +76,7 @@ class CompactDayWeather extends StatelessWidget {
                     ),
               Container(
                   height: constraints.maxHeight * 0.2,
-                  width: width * 0.8,
+                  width: width * 0.6,
                   child: FittedBox(
                       fit: BoxFit.contain,
                       child: Text("${detailedWeather.tempCurrent}°C"))),
