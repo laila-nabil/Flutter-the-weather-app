@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/widgets/detailed_weather.dart';
 
-import '../widgets/custom_icons.dart';
+import 'dashboard_weather.dart';
 
 class CompactDayWeather extends StatelessWidget {
   final Weather detailedWeather;

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:the_weather_app/models/unix.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
-
-import 'package:the_weather_app/providers/weather_provider.dart';
+import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {
   final Weather weatherDay;
@@ -83,65 +79,3 @@ class WeatherDetailed extends StatelessWidget {
     });
   }
 }
-class dashboardWeather extends StatelessWidget {
-  final String svgIcon;
-  final String title;
-  final String status;
-
-  dashboardWeather({this.svgIcon, this.title, this.status});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (ctx, constraints) {
-      print("dashboardWeather constraints $constraints");
-      return Row(
-        children: [
-          if (svgIcon != null)
-            Expanded(
-              child: SvgPicture.asset(
-                svgIcon,
-                // width: 22,
-                // height: 22,
-                color: Colors.white,
-              ),
-            ),
-          if (title != null)
-            Expanded(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          Expanded(child: Text(status))
-        ],
-      );
-    });
-  }
-}
-// class dashboardWeather extends StatelessWidget {
-//   final String svgIcon;
-//   final String status;
-//
-//   dashboardWeather({this.svgIcon, this.status});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Row(
-//         children: [
-//           SvgPicture.asset(
-//             svgIcon,
-//             width: 22,
-//             height: 22,
-//             color: Colors.white,
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.only(left: 8.0),
-//             child: Text(status),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
