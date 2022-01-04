@@ -35,7 +35,9 @@ class CompactDayWeather extends StatelessWidget {
           'Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
       print(
           'Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
-      final width = MediaQuery.of(context).size.width * 0.2;
+      final mediaQuery = MediaQuery.of(context);
+      final isPortrait = mediaQuery.size.width < mediaQuery.size.height;
+      final width = isPortrait ? mediaQuery.size.width * 0.2 : mediaQuery.size.width * 0.12;
       return InkWell(
         onTap: () {
           showModalBottomSheet(
