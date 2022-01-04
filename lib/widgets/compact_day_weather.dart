@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather_app/models/weather.dart';
@@ -9,24 +10,6 @@ class CompactDayWeather extends StatelessWidget {
   final Weather detailedWeather;
 
   CompactDayWeather(this.detailedWeather);
-
-  // final DateTime date;
-  // final String day;
-  // final String maxTemp;
-  // final String minTemp;
-  // final String temp;
-  // final String image;
-  // final bool isImageNetwork;
-  //
-  // CompactDayWeather({
-  //   @required this.date,
-  //   @required this.day,
-  //   this.maxTemp,
-  //   @required this.isImageNetwork,
-  //   @required this.image,
-  //   this.minTemp,
-  //   this.temp,
-  // });
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +42,8 @@ class CompactDayWeather extends StatelessWidget {
                   width: width,
                   child: FittedBox(
                       fit: BoxFit.contain,
-                      child: Text(
-                          DateFormat('hh:mm a').format(detailedWeather.date)))),
+                      child: AutoSizeText(
+                          DateFormat('hh:mm a').format(detailedWeather.date),maxFontSize: 30))),
               detailedWeather.isImageNetwork
                   ? Image.network(
                       detailedWeather.image,
@@ -81,7 +64,7 @@ class CompactDayWeather extends StatelessWidget {
                   width: width * 0.6,
                   child: FittedBox(
                       fit: BoxFit.contain,
-                      child: Text("${detailedWeather.tempCurrent}°C"))),
+                      child: AutoSizeText("${detailedWeather.tempCurrent}°C",maxFontSize: 30,))),
               if (detailedWeather.rain != null && detailedWeather.rain != "")
                 Container(
                   height: constraints.maxHeight * 0.2,
