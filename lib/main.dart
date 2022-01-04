@@ -28,6 +28,7 @@
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
 //TODO is timing correct or not?
+//TODO max &min sometimes disappear==> fix bug
 
 import 'package:flutter/material.dart';
 
