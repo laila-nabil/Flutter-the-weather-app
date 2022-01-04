@@ -20,7 +20,9 @@ class CompactDayWeather extends StatelessWidget {
           'Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
       final mediaQuery = MediaQuery.of(context);
       final isPortrait = mediaQuery.size.width < mediaQuery.size.height;
-      final width = isPortrait ? mediaQuery.size.width * 0.2 : mediaQuery.size.width * 0.12;
+      final width = isPortrait
+          ? mediaQuery.size.width * 0.2
+          : mediaQuery.size.width * 0.12;
       return InkWell(
         onTap: () {
           showModalBottomSheet(
@@ -34,16 +36,18 @@ class CompactDayWeather extends StatelessWidget {
           padding: EdgeInsets.all(constraints.maxHeight * 0.07),
           width: width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Text(day),
               Container(
                   height: constraints.maxHeight * 0.2,
                   width: width,
-                  child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: AutoSizeText(
-                          DateFormat('hh:mm a').format(detailedWeather.date),maxFontSize: 30))),
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                      DateFormat('hh:mm a').format(detailedWeather.date),
+                      style: TextStyle(fontSize: 20 , ),
+                      maxFontSize: 25)),
               detailedWeather.isImageNetwork
                   ? Image.network(
                       detailedWeather.image,
@@ -62,14 +66,19 @@ class CompactDayWeather extends StatelessWidget {
               Container(
                   height: constraints.maxHeight * 0.2,
                   width: width * 0.6,
-                  child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: AutoSizeText("${detailedWeather.tempCurrent}°C",maxFontSize: 30,))),
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    "${detailedWeather.tempCurrent}°C",
+                      style: TextStyle(fontSize: 20),
+                      maxFontSize: 25
+                  )),
               if (detailedWeather.rain != null && detailedWeather.rain != "")
                 Container(
-                  height: constraints.maxHeight * 0.2,
-                  width: width,
+                  height: constraints.maxHeight * 0.12,
+                  width: isPortrait ? mediaQuery.size.width * 0.2: mediaQuery.size.width * 0.05,
+                  alignment: Alignment.center,
                   child: dashboardWeather(
+                    isStatusCentered: true,
                     svgIcon: 'assets/dashboard_icons/rain.svg',
                     status: '${double.parse(detailedWeather.rain) * 100.0}%',
                   ),

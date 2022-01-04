@@ -20,7 +20,7 @@ class CompareWeather extends StatelessWidget {
           child: AutoSizeText(
             compareWeather,
             minFontSize: 15,
-            maxFontSize: 45,
+            maxFontSize: 35,
             // softWrap: true,
             // maxLines: 3,
             style: TextStyle(

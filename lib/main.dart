@@ -17,6 +17,12 @@
 // fvm flutter build web --dart-define api_key=key
 // firebase deploy --only hosting
 
+//to add arguments but to android studio
+//from main.dart menu
+//edit configuration
+//which is better than terminal
+//for web
+
 //prev error solved by deleting everything fvm related and dart cache
 //then pub repair cache
 
@@ -31,6 +37,9 @@
 //TODO max &min sometimes disappear==> fix bug
 //TODO maybe make all weather one class or use inheritance
 //TODO add shimmer instead of loading circle
+//TODO(next level) splash screen
+//TODO(next level) icon
+//TODO(next level) on play store
 
 import 'package:flutter/material.dart';
 

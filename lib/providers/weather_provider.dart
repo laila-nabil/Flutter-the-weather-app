@@ -103,10 +103,12 @@ class WeatherProvider with ChangeNotifier {
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('feelsLike ${presentFutureWeather['current']['feels_like']}');
       print('image https://openweathermap.org/img/wn/$iconNow@4x.png');
-      _weatherNow.tempMin =
-          presentFutureWeather['daily'][0]['temp']['min'].toString();
-      _weatherNow.tempMax =
-          presentFutureWeather['daily'][0]['temp']['max'].toString();
+      // _weatherNow.tempMin =
+      //     presentFutureWeather['daily'][0]['temp']['min'].toString();
+      _weatherNow.setTempMin(presentFutureWeather['daily'][0]['temp']['min'].toString());
+      // _weatherNow.tempMax =
+      //     presentFutureWeather['daily'][0]['temp']['max'].toString();
+      _weatherNow.setTempMax(presentFutureWeather['daily'][0]['temp']['max'].toString());
       _weatherNow.rain =
           presentFutureWeather['daily'][0]['pop'].toString();
       print("_weatherNow.rain ${_weatherNow.rain}");

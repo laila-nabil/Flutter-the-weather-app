@@ -128,6 +128,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/rain.svg',
                   status: '${double.parse(weatherToday.rain) * 100.0}%',
                 ),
@@ -136,6 +137,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/sunrise.svg',
                   status:
                       '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
@@ -145,6 +147,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   title: "Max",
                   status: "${weatherToday.tempMax}°C",
                 ),
@@ -159,6 +162,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/wind_2.svg',
                   status:
                       '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
@@ -168,6 +172,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/sunset.svg',
                   status:
                       '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
@@ -177,6 +182,7 @@ class todayDetails extends StatelessWidget {
                 width: constraints.maxWidth * 0.4,
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
+                  isStatusCentered: false,
                   title: "Min",
                   status: "${weatherToday.tempMin}°C",
                 ),

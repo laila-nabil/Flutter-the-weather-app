@@ -47,4 +47,17 @@ class CurrentWeather {
     this.rain = '0',
     this.country = '',
   });
+
+  //idk why but it solves the problem of suddenly the values being not there
+  void setTempMin(String newTempMin){
+    tempMin = newTempMin;
+  }
+  void setTempMax(String newTempMax){
+    tempMax = newTempMax;
+  }
+
+  void setRain(String newRain){
+    rain = newRain;
+  }
 }
+
