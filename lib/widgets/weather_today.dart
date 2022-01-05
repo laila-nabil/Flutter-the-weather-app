@@ -12,8 +12,10 @@ class WeatherToday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
-    final weatherTodayNotDetailed =Provider.of<WeatherProvider>(context).todayWeather;
-    print("weatherTodayNotDetailed ${weatherTodayNotDetailed.tempMax} ${weatherTodayNotDetailed.tempMin} ${weatherTodayNotDetailed.rain}");
+    final weatherTodayNotDetailed =
+        Provider.of<WeatherProvider>(context).todayWeather;
+    print(
+        "weatherTodayNotDetailed ${weatherTodayNotDetailed.tempMax} ${weatherTodayNotDetailed.tempMin} ${weatherTodayNotDetailed.rain}");
     final city = Provider.of<WeatherProvider>(context).location;
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
@@ -49,35 +51,42 @@ class WeatherToday extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  weatherToday.isImageNetwork
-                      ? Image.network(
-                          weatherToday.image,
-                          width: constraints.maxWidth * 0.5,
-                          height: isPortrait
-                              ? constraints.maxHeight * 0.5
-                              : constraints.maxHeight * 0.4,
-                          fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
-                        )
-                      : Image.asset(
-                          weatherToday.image,
-                          width: constraints.maxWidth * 0.65,
-                          height: isPortrait
-                              ? constraints.maxHeight * 0.5
-                              : constraints.maxHeight * 0.4,
-                          fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: isPortrait
+                      ? constraints.maxHeight * 0.015
+                      : constraints.maxHeight * 0.017,
+                ),
+                child: Row(
+                  children: [
+                    weatherToday.isImageNetwork
+                        ? Image.network(
+                            weatherToday.image,
+                            width: constraints.maxWidth * 0.5,
+                            height: isPortrait
+                                ? constraints.maxHeight * 0.5
+                                : constraints.maxHeight * 0.4,
+                            fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
+                          )
+                        : Image.asset(
+                            weatherToday.image,
+                            width: constraints.maxWidth * 0.65,
+                            height: isPortrait
+                                ? constraints.maxHeight * 0.5
+                                : constraints.maxHeight * 0.4,
+                            fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
+                          ),
+                    Container(
+                      width: constraints.maxWidth * 0.25,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          '${weatherToday.temp} °C',
                         ),
-                  Container(
-                    width: constraints.maxWidth * 0.25,
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        '${weatherToday.temp} °C',
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
               Container(
                 width: constraints.maxWidth * 0.65,
