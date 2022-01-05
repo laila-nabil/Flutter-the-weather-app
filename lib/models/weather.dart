@@ -29,7 +29,7 @@ class Weather {
     this.lon = "",
     this.windDeg = '',
     this.windSpeed = '',
-    this.rain = "",
+    this.rain = "0.0",
     this.feelsLike = "",
     this.isMetric = true,
     this.weatherTimeline,

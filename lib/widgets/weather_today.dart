@@ -12,6 +12,8 @@ class WeatherToday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
+    final weatherTodayNotDetailed =Provider.of<WeatherProvider>(context).todayWeather;
+    print("weatherTodayNotDetailed ${weatherTodayNotDetailed.tempMax} ${weatherTodayNotDetailed.tempMin} ${weatherTodayNotDetailed.rain}");
     final city = Provider.of<WeatherProvider>(context).location;
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
@@ -53,13 +55,17 @@ class WeatherToday extends StatelessWidget {
                       ? Image.network(
                           weatherToday.image,
                           width: constraints.maxWidth * 0.5,
-                          height: isPortrait ? constraints.maxHeight * 0.5 : constraints.maxHeight * 0.4,
+                          height: isPortrait
+                              ? constraints.maxHeight * 0.5
+                              : constraints.maxHeight * 0.4,
                           fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                         )
                       : Image.asset(
                           weatherToday.image,
                           width: constraints.maxWidth * 0.65,
-                          height: isPortrait ? constraints.maxHeight * 0.5 : constraints.maxHeight * 0.4,
+                          height: isPortrait
+                              ? constraints.maxHeight * 0.5
+                              : constraints.maxHeight * 0.4,
                           fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                         ),
                   Container(
@@ -75,7 +81,7 @@ class WeatherToday extends StatelessWidget {
               ),
               Container(
                 width: constraints.maxWidth * 0.65,
-                 height: constraints.maxHeight * 0.06 ,
+                height: constraints.maxHeight * 0.06,
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Row(
@@ -95,7 +101,12 @@ class WeatherToday extends StatelessWidget {
               Container(
                   width: constraints.maxWidth * 0.8,
                   height: constraints.maxHeight * 0.3,
-                  child: todayDetails(weatherToday: weatherToday)),
+                  child: todayDetails(
+                    weatherToday: weatherToday,
+                    weatherTodayRain: weatherTodayNotDetailed.rain,
+                    weatherTodayTempMax: weatherTodayNotDetailed.tempMax,
+                    weatherTodayTempMin: weatherTodayNotDetailed.tempMin,
+                  )),
             ],
           ),
         );
@@ -105,12 +116,18 @@ class WeatherToday extends StatelessWidget {
 }
 
 class todayDetails extends StatelessWidget {
-  const todayDetails({
-    Key key,
-    @required this.weatherToday,
-  }) : super(key: key);
+  const todayDetails(
+      {Key key,
+      @required this.weatherToday,
+      this.weatherTodayRain,
+      this.weatherTodayTempMax,
+      this.weatherTodayTempMin})
+      : super(key: key);
 
   final CurrentWeather weatherToday;
+  final String weatherTodayTempMax;
+  final String weatherTodayTempMin;
+  final String weatherTodayRain;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +147,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/rain.svg',
-                  status: '${double.parse(weatherToday.rain) * 100.0}%',
+                  status: '${double.parse(weatherTodayRain) * 100.0}%',
                 ),
               ),
               Container(
@@ -149,7 +166,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: "Max",
-                  status: "${weatherToday.tempMax}°C",
+                  status: "${weatherTodayTempMax}°C",
                 ),
               ),
             ],
@@ -184,7 +201,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: "Min",
-                  status: "${weatherToday.tempMin}°C",
+                  status: "${weatherTodayTempMin}°C",
                 ),
               )
             ],
