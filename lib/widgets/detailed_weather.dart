@@ -76,7 +76,9 @@ class WeatherDetailed extends StatelessWidget {
           color: Theme.of(context).backgroundColor,
         ),
         // height: 300,
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.symmetric(
+            vertical: constraints.maxHeight * 0.06,
+            horizontal: constraints.maxWidth * 0.08),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,28 +88,50 @@ class WeatherDetailed extends StatelessWidget {
                 weatherDay.isImageNetwork
                     ? Image.network(
                         weatherDay.image,
-                        width:isPortrait? constraints.maxWidth * 0.6 :  constraints.maxWidth * 0.3,
+                        width: isPortrait
+                            ? constraints.maxWidth * 0.5
+                            : constraints.maxWidth * 0.3,
                         height: constraints.maxHeight * 0.4,
                         fit: BoxFit.contain,
                       )
                     : Image.asset(
                         weatherDay.image,
-                        width:isPortrait? constraints.maxWidth * 0.6 :  constraints.maxWidth * 0.3,
+                        width: isPortrait
+                            ? constraints.maxWidth * 0.5
+                            : constraints.maxWidth * 0.3,
                         height: constraints.maxHeight * 0.4,
                         fit: BoxFit.contain,
                         // width: 150,
                         // height: 150,
                       ),
-                AutoSizeText(
-                  '${weatherDay.tempCurrent} °C',
-                  style: TextStyle(fontSize: 25),
+                Container(
+                  width: isPortrait
+                      ? constraints.maxWidth * 0.3
+                      : constraints.maxWidth * 0.1,
+                  height: constraints.maxHeight * 0.4,
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    '${weatherDay.tempCurrent} °C',
+                    style: TextStyle(fontSize: 22),
+                    maxLines: 1,
+                    minFontSize: 15,
+                    maxFontSize: 22,
+                  ),
                 ),
-                if(!isPortrait)
-                  feelsLike(constraints: constraints,weatherDay: weatherDay,isPortrait: isPortrait,),
+                if (!isPortrait)
+                  feelsLike(
+                    constraints: constraints,
+                    weatherDay: weatherDay,
+                    isPortrait: isPortrait,
+                  ),
               ],
             ),
-            if(isPortrait)
-              feelsLike(constraints: constraints,weatherDay: weatherDay,isPortrait: isPortrait,),
+            if (isPortrait)
+              feelsLike(
+                constraints: constraints,
+                weatherDay: weatherDay,
+                isPortrait: isPortrait,
+              ),
             GoogleGrid(
               // children: dashboard,
               children: newDashboard,
@@ -126,7 +150,7 @@ class feelsLike extends StatelessWidget {
   final Weather weatherDay;
   final bool isPortrait;
 
-  feelsLike({this.constraints,this.weatherDay,this.isPortrait});
+  feelsLike({this.constraints, this.weatherDay, this.isPortrait});
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +160,11 @@ class feelsLike extends StatelessWidget {
         if (weatherDay.feelsLike != null && weatherDay.feelsLike != "")
           Container(
             alignment: Alignment.center,
-            height: isPortrait ? constraints.maxHeight * 0.1 : constraints.maxHeight * 0.2,
-            padding: EdgeInsets.all(constraints.maxHeight * 0.02),
+            height: isPortrait
+                ? constraints.maxHeight * 0.1
+                : constraints.maxHeight * 0.2,
+            padding:
+                EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.02),
             child: Row(
               children: [
                 AutoSizeText(
@@ -155,7 +182,6 @@ class feelsLike extends StatelessWidget {
               ],
             ),
           ),
-
       ],
     );
   }

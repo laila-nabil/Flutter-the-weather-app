@@ -45,8 +45,11 @@ class CompactDayWeather extends StatelessWidget {
                   width: width,
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                      DateFormat('hh:mm a').format(detailedWeather.date),
-                      style: TextStyle(fontSize: 20 , ),
+                      DateFormat('hh a').format(detailedWeather.date),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                      minFontSize: 12,
                       maxFontSize: 25)),
               detailedWeather.isImageNetwork
                   ? Image.network(
@@ -68,14 +71,18 @@ class CompactDayWeather extends StatelessWidget {
                   width: width * 0.6,
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "${detailedWeather.tempCurrent}°C",
-                      style: TextStyle(fontSize: 20),
-                      maxFontSize: 25
+                    "${double.parse(detailedWeather.tempCurrent).toStringAsFixed(1)}°C",
+                    style: TextStyle(fontSize: 18),
+                    minFontSize: 10,
+                    maxFontSize: 18,
+                    maxLines: 1,
                   )),
               if (detailedWeather.rain != null && detailedWeather.rain != "")
                 Container(
                   height: constraints.maxHeight * 0.12,
-                  width: isPortrait ? mediaQuery.size.width * 0.2: mediaQuery.size.width * 0.05,
+                  width: isPortrait
+                      ? mediaQuery.size.width * 0.2
+                      : mediaQuery.size.width * 0.05,
                   alignment: Alignment.center,
                   child: dashboardWeather(
                     isStatusCentered: true,
