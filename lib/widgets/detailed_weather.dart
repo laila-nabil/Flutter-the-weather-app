@@ -16,70 +16,57 @@ class WeatherDetailed extends StatelessWidget {
 
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            svgIcon: 'assets/dashboard_icons/rain.svg',
-            status: '${double.parse(weatherDay.rain) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          svgIcon: 'assets/dashboard_icons/rain.svg',
+          status: '${double.parse(weatherDay.rain) * 100.0}%',
         ),
-        Container(
-            width: constraints.maxWidth * 0.25,
-            height: constraints.maxHeight * 0.1,
-            child: dashboardWeather(
-              isStatusCentered: false,
-              svgIcon: 'assets/dashboard_icons/wind_2.svg',
-              status:
-                  '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
-            )),
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            title: 'Pressure',
-            status: '${double.parse(weatherDay.pressure) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          svgIcon: 'assets/dashboard_icons/wind_2.svg',
+          status:
+              '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
         ),
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            title: 'Clouds',
-            status: '${double.parse(weatherDay.clouds) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          title: 'Pressure',
+          status: '${double.parse(weatherDay.pressure)}  hPa',
         ),
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            title: 'Uvi',
-            status: '${double.parse(weatherDay.uvi) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          title: 'Clouds',
+          status: '${double.parse(weatherDay.clouds)}%',
         ),
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            title: 'Clouds',
-            status: '${double.parse(weatherDay.clouds) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          title: 'Uvi',
+          status: '${double.parse(weatherDay.uvi)}',
         ),
-        Container(
-          width: constraints.maxWidth * 0.25,
-          height: constraints.maxHeight * 0.1,
-          child: dashboardWeather(
-            isStatusCentered: false,
-            title: 'Clouds',
-            status: '${double.parse(weatherDay.clouds) * 100.0}%',
-          ),
+        dashboardWeather(
+          isStatusCentered: false,
+          title: 'Humidity',
+          status: '${double.parse(weatherDay.humidity)}%',
+        ),
+        dashboardWeather(
+          isStatusCentered: false,
+          title: 'Visibility',
+          status: double.parse(weatherDay.visibility) > 1000
+              ? '${(double.parse(weatherDay.visibility) / 1000).toStringAsFixed(1)} km'
+              : '${double.parse(weatherDay.visibility)} m',
         ),
       ];
+      final cols = 2;
+      final rows = (dashboard.length / cols).round();
+      final containerHeight = (constraints.maxHeight * (0.2)) / rows;
+      print(
+          "constraints.maxHeight ${constraints.maxHeight} containerHeight $containerHeight for rows $rows and cols $cols");
+      final List<Widget> newDashboard = [];
+      dashboard.forEach((element) {
+        newDashboard.add(Container(
+          height: containerHeight,
+          child: element,
+        ));
+      });
       print("for detailed,$constraints");
       return Container(
         width: double.infinity,
@@ -94,30 +81,35 @@ class WeatherDetailed extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            weatherDay.isImageNetwork
-                ? Image.network(
-                    weatherDay.image,
-                    width: constraints.maxWidth * 0.8,
-                    height: constraints.maxHeight * 0.4,
-                    fit: BoxFit.contain,
-                  )
-                : Image.asset(
-                    weatherDay.image,
-                    width: constraints.maxWidth * 0.8,
-                    height: constraints.maxHeight * 0.4,
-                    fit: BoxFit.contain,
-                    // width: 150,
-                    // height: 150,
-                  ),
-            Text(
-              '${weatherDay.tempCurrent} °C',
-              style: TextStyle(fontSize: 25),
+            Row(
+              children: [
+                weatherDay.isImageNetwork
+                    ? Image.network(
+                        weatherDay.image,
+                        width: constraints.maxWidth * 0.6,
+                        height: constraints.maxHeight * 0.4,
+                        fit: BoxFit.contain,
+                      )
+                    : Image.asset(
+                        weatherDay.image,
+                        width: constraints.maxWidth * 0.6,
+                        height: constraints.maxHeight * 0.4,
+                        fit: BoxFit.contain,
+                        // width: 150,
+                        // height: 150,
+                      ),
+                AutoSizeText(
+                  '${weatherDay.tempCurrent} °C',
+                  style: TextStyle(fontSize: 25),
+                )
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (weatherDay.feelsLike != null && weatherDay.feelsLike != "")
-                  Padding(
+                  Container(
+                    height: constraints.maxHeight * 0.1,
                     padding: EdgeInsets.all(constraints.maxHeight * 0.02),
                     child: AutoSizeText(
                       'Feels like ${weatherDay.feelsLike}°C, ',
@@ -134,7 +126,12 @@ class WeatherDetailed extends StatelessWidget {
                 ),
               ],
             ),
-            GoogleGrid(children: dashboard)
+            GoogleGrid(
+              // children: dashboard,
+              children: newDashboard,
+              columnCount: cols,
+              gap: containerHeight * 0.5,
+            )
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
