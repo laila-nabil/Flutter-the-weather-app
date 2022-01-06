@@ -9,24 +9,30 @@ class Location extends StatelessWidget {
     final city = Provider.of<WeatherProvider>(context).location;
     return LayoutBuilder(builder: (ctx,constraints){
       print("location constraints $constraints");
-      return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight *0.1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            IconButton(onPressed: (){}, icon:  Icon(Icons.location_on , color: Colors.white,size: constraints.maxHeight * 0.8,)),
-            AutoSizeText(
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Padding(
+            padding: EdgeInsets.all( constraints.maxHeight *0.1),
+            child: IconButton(onPressed: (){}, icon:  Icon(Icons.location_on , color: Colors.white,size: constraints.maxHeight * 0.8,)),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: constraints.maxHeight *0.1),
+            child: AutoSizeText(
               city,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 18),
+                  fontWeight: FontWeight.bold, fontSize: 20),
               minFontSize: 10.0,
-              maxFontSize: 18.0,
+              maxFontSize: 20.0,
               textAlign: TextAlign.center,
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.all( constraints.maxHeight *0.1),
+            child: IconButton(onPressed: (){}, icon:  Icon(Icons.search , color: Colors.white,size: constraints.maxHeight * 0.8,)),
+          ),
+        ],
       );
     });
   }
