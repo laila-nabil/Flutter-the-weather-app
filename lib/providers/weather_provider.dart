@@ -92,18 +92,8 @@ class WeatherProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(url));
       
       final presentFutureWeather = json.decode(response.body);
-      print("_todayWeather time ${presentFutureWeather['daily'][0]['dt']}");
       final date = presentFutureWeather['daily'][0]['dt'] as int;
-      print("_todayWeather time $date");
-      print("_todayWeather time ${unixSecondsToDate(date)}");
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
-      print('current');
-      print('lat $lat');
-      print('lon $lon');
-      print('temp ${presentFutureWeather['current']['temp']}');
-      print('feelsLike ${presentFutureWeather['current']['feels_like']}');
-      print('feelsLike ${presentFutureWeather['current']['feels_like']}');
-      print('image https://openweathermap.org/img/wn/$iconNow@4x.png');
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
       print('***hourly');
@@ -123,6 +113,11 @@ class WeatherProvider with ChangeNotifier {
             feelsLike: element['feels_like'].toString(),
             windSpeed: element['wind_speed'].toString(),
             windDeg: element['wind_deg'].toString(),
+            humidity: element['humidity'].toString(),
+            uvi: element['uvi'].toString(),
+            clouds: element['clouds'].toString(),
+            visibility: element['visibility'].toString(),
+            pressure: element['pressure'].toString(),
             tempCurrent: element['temp'].toString()));
       });
       final todayHourly = _hourlyPresentFutureWeather.where((element) {
@@ -153,10 +148,8 @@ class WeatherProvider with ChangeNotifier {
                   .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
               0).toList(),
             );
-      print('1 _futureWeather lenght ${_futureWeather.length}');
       await getLocationFromCoordinates();
       _futureWeather = [];
-      print('2 _futureWeather lenght ${_futureWeather.length}');
       for (int i = 1; i < 6; i++) {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
         final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
@@ -172,11 +165,6 @@ class WeatherProvider with ChangeNotifier {
                 ['description'],
             isImageNetwork: !isImage3D,
             image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
-            // weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
-            // DateFormat('yyyy-MM-dd')
-            //     .format(element.date)
-            //     .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
-            //     0).toList(),
             weatherTimeline: _hourlyPresentFutureWeather.where((element) {
               print("weather Timeline ${element.date}");
               print("weather Timeline ${DateFormat('yyyy-MM-dd')

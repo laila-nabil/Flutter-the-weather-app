@@ -15,6 +15,11 @@ class Weather {
   final String feelsLike;
   final bool isMetric;
   final List<Weather> weatherTimeline;
+  final String humidity;
+  final String pressure;
+  final String uvi;
+  final String visibility;
+  final String clouds;
 
   Weather({
     this.tempMax = "0.0",
@@ -30,6 +35,11 @@ class Weather {
     this.windDeg = '',
     this.windSpeed = '',
     this.rain = "0.0",
+    this.humidity = "0.0",
+    this.visibility = "0.0",
+    this.uvi = "0.0",
+    this.pressure = "0.0",
+    this.clouds = "0.0",
     this.feelsLike = "",
     this.isMetric = true,
     this.weatherTimeline,
