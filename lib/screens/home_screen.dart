@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: CompareWeather(),
                             ),
                           ),
-                        if (isPortrait && !minimalView)
+                        if (!isPortrait )
                           Expanded(
                             flex: 6,
                             child: Row(
