@@ -135,10 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Expanded(
                               flex: 1,
-                              child: Padding(
-                                padding:isPortrait ?const EdgeInsets.all(8.0): const EdgeInsets.all(4.0),
-                                child: Location(),
-                              )),
+                              child: Location()),
                           if (isPortrait && minimalView)
                             Expanded(
                                 flex: 9,
