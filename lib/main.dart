@@ -66,14 +66,106 @@ class MyApp extends StatelessWidget {
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
         title: 'Weather app',
-        theme: ThemeData(
-          backgroundColor: Color(0xff060D26),
-          primaryTextTheme: Typography().white,
-          textTheme: Typography().white,
-        ),
-        home: MyHomePage(),
+        // theme: ThemeData(
+        //   backgroundColor: Color(0xff060D26),
+          // primaryTextTheme: Typography().white,
+          // textTheme: Typography().white,
+        // ),
+        // home: MyHomePage(),
+        home: testPage(),
         // home: DummyScreen(),
       ),
     );
+  }
+}
+
+class testPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theList = [
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.red,
+        child: Text("1"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.blueAccent,
+        child: Text("2"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.black54,
+        child: Text("3"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.yellow,
+        child: Text("4"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.green,
+        child: Text("5"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.grey,
+        child: Text("6"),
+      ),
+      Container(
+        height: 50,
+        width: 50,
+        color: Colors.purple,
+        child: Text("7"),
+      ),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(title: Text("ok"),),
+      body: Center(child: customGrid(items: theList,)),
+    );
+  }
+}
+
+class customGrid extends StatelessWidget {
+  final List<Widget> items;
+  final int NumCols;
+
+  customGrid({ this.items, this.NumCols});
+
+  @override
+  Widget build(BuildContext context) {
+
+    //take first(order) three items(numberItems)
+    List<Widget> partList(List<Widget> list ,int order,int numberItems){
+      int number = (list.length ~/ numberItems);
+      final partialList = list.reversed.take((number - order) * numberItems).toList();
+      return [...partialList.reversed.take(numberItems)];
+    }
+
+    List<Widget> newList;
+    // newList = [...items.reversed.take(3)];
+    newList = partList(items,1,3);
+    // List<List<Widget>>colsLists = [];
+    // int i = 0;
+    //
+    // items.forEach((element) {
+    //   if(i + 1- NumCols == 0){
+    //     colsLists[NumCols-1].add(element);
+    //   }
+    //   i++;
+    // });
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: newList,
+    );
+
   }
 }
