@@ -3,6 +3,7 @@ import 'package:cron/cron.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:the_weather_app/widgets/location.dart';
 import '../widgets/weather_tabs.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/widgets/compare_weather.dart';
@@ -92,102 +93,116 @@ class _MyHomePageState extends State<MyHomePage> {
     final minimalView = true;
     print("screenSize $screenSize");
     print("orientation $orientation");
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: RefreshIndicator(
-        onRefresh: () async {
-          try {
-            await Provider.of<WeatherProvider>(context, listen: false)
-                .getCurrentWeatherAPI();
-            await Provider.of<WeatherProvider>(context, listen: false)
-                .getPresentFutureWeatherAPI();
-          } catch (error) {
-            print('error in did change $error');
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('An error occurred! did')));
-          }
-        },
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          // padding: const EdgeInsets.all(18.0),
-          child: Center(
-            child: _isLoading
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircularProgressIndicator(),
-                      ],
-                    ),
-                  )
-                : Container(
-                    height: screenSize.height,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        if (isPortrait && minimalView)
+    return SafeArea(
+      bottom: true,
+      left: true,
+      top: true,
+      right: true,
+      maintainBottomViewPadding: true,
+      minimum: EdgeInsets.zero,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            try {
+              await Provider.of<WeatherProvider>(context, listen: false)
+                  .getCurrentWeatherAPI();
+              await Provider.of<WeatherProvider>(context, listen: false)
+                  .getPresentFutureWeatherAPI();
+            } catch (error) {
+              print('error in did change $error');
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('An error occurred! did')));
+            }
+          },
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            // padding: const EdgeInsets.all(18.0),
+            child: Center(
+              child: _isLoading
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: screenSize.height,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
                           Expanded(
-                              flex: 9,
-                              child: LayoutBuilder(builder: (ctx, constraints) {
-                                return CarouselSlider(
-                                    items: [WeatherToday(), CompareWeather()],
-                                    options: CarouselOptions(
-                                      height: constraints.maxHeight - 0.1,
-                                      autoPlayInterval: Duration(seconds: 10),
-                                      initialPage: 0,
-                                      autoPlay: true,
-                                      viewportFraction: 1,
-                                    ));
-                              })),
-                        if (isPortrait && !minimalView)
-                          Expanded(flex: 7, child: WeatherToday()),
-                        if (isPortrait && !minimalView)
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CompareWeather(),
+                              flex: 1,
+                              child: Padding(
+                                padding:isPortrait ?const EdgeInsets.all(8.0): const EdgeInsets.all(4.0),
+                                child: Location(),
+                              )),
+                          if (isPortrait && minimalView)
+                            Expanded(
+                                flex: 9,
+                                child: LayoutBuilder(builder: (ctx, constraints) {
+                                  return CarouselSlider(
+                                      items: [WeatherToday(), CompareWeather()],
+                                      options: CarouselOptions(
+                                        height: constraints.maxHeight - 0.1,
+                                        autoPlayInterval: Duration(seconds: 10),
+                                        initialPage: 0,
+                                        autoPlay: true,
+                                        viewportFraction: 1,
+                                      ));
+                                })),
+                          if (isPortrait && !minimalView)
+                            Expanded(flex: 7, child: WeatherToday()),
+                          if (isPortrait && !minimalView)
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CompareWeather(),
+                              ),
                             ),
-                          ),
-                        if (!isPortrait )
-                          Expanded(
-                            flex: 6,
-                            child: Row(
-                              children: [
-                                Container(
-                                    width: screenSize.width * 0.6,
+                          if (!isPortrait)
+                            Expanded(
+                              flex: 6,
+                              child: Row(
+                                children: [
+                                  Container(
+                                      width: screenSize.width * 0.6,
+                                      // height: screenSize.height * 0.5,
+                                      child: WeatherToday()),
+                                  Container(
+                                    width: screenSize.width * 0.4,
                                     // height: screenSize.height * 0.5,
-                                    child: WeatherToday()),
-                                Container(
-                                  width: screenSize.width * 0.4,
-                                  // height: screenSize.height * 0.5,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CompareWeather(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CompareWeather(),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        Expanded(
-                            // flex: isPortrait ? 4 : 5,
-                            flex: 4,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: WeatherTabs(),
-                            )),
-                        if (screenSize.width < screenSize.height)
                           Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                              style:
-                                  TextStyle(fontSize: 11, color: Colors.white),
-                            ),
-                          )
-                      ],
+                              // flex: isPortrait ? 4 : 5,
+                              flex: 4,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: WeatherTabs(),
+                              )),
+                          if (screenSize.width < screenSize.height)
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                                style:
+                                    TextStyle(fontSize: 11, color: Colors.white),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
-                  ),
+            ),
           ),
         ),
       ),

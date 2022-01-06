@@ -16,7 +16,7 @@ class WeatherToday extends StatelessWidget {
         Provider.of<WeatherProvider>(context).todayWeather;
     print(
         "weatherTodayNotDetailed ${weatherTodayNotDetailed.tempMax} ${weatherTodayNotDetailed.tempMin} ${weatherTodayNotDetailed.rain}");
-    final city = Provider.of<WeatherProvider>(context).location;
+    // final city = Provider.of<WeatherProvider>(context).location;
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
@@ -30,27 +30,27 @@ class WeatherToday extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: constraints.maxHeight * 0.07,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        city,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: constraints.maxHeight * 0.07,
+              //   child: FittedBox(
+              //     fit: BoxFit.contain,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Icon(
+              //           Icons.location_on,
+              //           color: Colors.white,
+              //         ),
+              //         Text(
+              //           city,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold, fontSize: 18),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                   bottom: isPortrait
