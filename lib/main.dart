@@ -47,6 +47,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:the_weather_app/screens/location_screen.dart';
 
 import './screens/home_screen.dart';
 
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(),
         // home: testPage(),
         // home: DummyScreen(),
+        routes: { LocationScreen.routeName: (ctx)=>LocationScreen()},
       ),
     );
   }

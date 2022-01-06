@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: ^1.0.0
   auto_size_text: ^3.0.0
   carousel_slider: ^4.0.0
+  mapbox_search: ^3.0.1+2
 
 dev_dependencies:
   flutter_test:

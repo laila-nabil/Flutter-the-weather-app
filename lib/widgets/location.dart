@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:the_weather_app/screens/location_screen.dart';
 
 class Location extends StatelessWidget {
   @override
@@ -15,7 +16,9 @@ class Location extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all( constraints.maxHeight *0.1),
-            child: IconButton(onPressed: (){}, icon:  Icon(Icons.location_on , color: Colors.white,size: constraints.maxHeight * 0.8,)),
+            child: IconButton(onPressed: (){
+              Navigator.of(context).pushNamed(LocationScreen.routeName);
+            }, icon:  Icon(Icons.location_on , color: Colors.white,size: constraints.maxHeight * 0.8,)),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: constraints.maxHeight *0.1),
