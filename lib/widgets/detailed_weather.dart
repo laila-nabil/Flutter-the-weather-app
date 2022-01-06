@@ -162,24 +162,24 @@ class feelsLike extends StatelessWidget {
             alignment: Alignment.center,
             height: isPortrait
                 ? constraints.maxHeight * 0.1
-                : constraints.maxHeight * 0.2,
+                : constraints.maxHeight * 0.3,
+            width: isPortrait? constraints.maxWidth * 0.7 : constraints.maxWidth * 0.4,
             padding:
                 EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.02),
-            child: Row(
-              children: [
-                AutoSizeText(
-                  'Feels like ${weatherDay.feelsLike}°C, ',
-                  minFontSize: 18,
-                  maxFontSize: 37,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                AutoSizeText(
-                  weatherDay.detailedDescription,
-                  minFontSize: 20,
-                  maxFontSize: 37,
-                ),
-              ],
+            child: AutoSizeText.rich(
+              TextSpan(text: 'Feels like ', children: [
+                TextSpan(text: '${weatherDay.feelsLike}°C , '),
+                TextSpan(
+                    text: '${weatherDay.detailedDescription}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ))
+              ]),
+              // 'Feels like ${weatherDay.feelsLike}°C, ${weatherDay.detailedDescription}'
+              minFontSize: 12,
+              maxFontSize: 37,
+              style: TextStyle(fontSize: 25, color: Colors.white),
+              softWrap: true,
             ),
           ),
       ],
