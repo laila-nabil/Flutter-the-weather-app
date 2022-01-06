@@ -13,7 +13,7 @@ class WeatherDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-
+    final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
         dashboardWeather(
@@ -55,7 +55,7 @@ class WeatherDetailed extends StatelessWidget {
               : '${double.parse(weatherDay.visibility)} m',
         ),
       ];
-      final cols = 2;
+      final cols = isPortrait ? 2 : 4;
       final rows = (dashboard.length / cols).round();
       final containerHeight = (constraints.maxHeight * (0.2)) / rows;
       print(
@@ -86,13 +86,13 @@ class WeatherDetailed extends StatelessWidget {
                 weatherDay.isImageNetwork
                     ? Image.network(
                         weatherDay.image,
-                        width: constraints.maxWidth * 0.6,
+                        width:isPortrait? constraints.maxWidth * 0.6 :  constraints.maxWidth * 0.3,
                         height: constraints.maxHeight * 0.4,
                         fit: BoxFit.contain,
                       )
                     : Image.asset(
                         weatherDay.image,
-                        width: constraints.maxWidth * 0.6,
+                        width:isPortrait? constraints.maxWidth * 0.6 :  constraints.maxWidth * 0.3,
                         height: constraints.maxHeight * 0.4,
                         fit: BoxFit.contain,
                         // width: 150,
@@ -101,24 +101,52 @@ class WeatherDetailed extends StatelessWidget {
                 AutoSizeText(
                   '${weatherDay.tempCurrent} °C',
                   style: TextStyle(fontSize: 25),
-                )
+                ),
+                if(!isPortrait)
+                  feelsLike(constraints: constraints,weatherDay: weatherDay,isPortrait: isPortrait,),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            if(isPortrait)
+              feelsLike(constraints: constraints,weatherDay: weatherDay,isPortrait: isPortrait,),
+            GoogleGrid(
+              // children: dashboard,
+              children: newDashboard,
+              columnCount: cols,
+              // gap: containerHeight * 0.5,
+            )
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class feelsLike extends StatelessWidget {
+  final BoxConstraints constraints;
+  final Weather weatherDay;
+  final bool isPortrait;
+
+  feelsLike({this.constraints,this.weatherDay,this.isPortrait});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (weatherDay.feelsLike != null && weatherDay.feelsLike != "")
+          Container(
+            alignment: Alignment.center,
+            height: isPortrait ? constraints.maxHeight * 0.1 : constraints.maxHeight * 0.2,
+            padding: EdgeInsets.all(constraints.maxHeight * 0.02),
+            child: Row(
               children: [
-                if (weatherDay.feelsLike != null && weatherDay.feelsLike != "")
-                  Container(
-                    height: constraints.maxHeight * 0.1,
-                    padding: EdgeInsets.all(constraints.maxHeight * 0.02),
-                    child: AutoSizeText(
-                      'Feels like ${weatherDay.feelsLike}°C, ',
-                      minFontSize: 20,
-                      maxFontSize: 37,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  ),
+                AutoSizeText(
+                  'Feels like ${weatherDay.feelsLike}°C, ',
+                  minFontSize: 18,
+                  maxFontSize: 37,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
                 AutoSizeText(
                   weatherDay.detailedDescription,
                   minFontSize: 20,
@@ -126,15 +154,9 @@ class WeatherDetailed extends StatelessWidget {
                 ),
               ],
             ),
-            GoogleGrid(
-              // children: dashboard,
-              children: newDashboard,
-              columnCount: cols,
-              gap: containerHeight * 0.5,
-            )
-          ],
-        ),
-      );
-    });
+          ),
+
+      ],
+    );
   }
 }
