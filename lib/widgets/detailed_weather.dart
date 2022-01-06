@@ -132,32 +132,6 @@ class WeatherDetailed extends StatelessWidget {
               columnCount: cols,
               gap: containerHeight * 0.5,
             )
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     if (weatherDay.rain != null && weatherDay.rain != "")
-            //       Container(
-            //         width: constraints.maxWidth * 0.25,
-            //         height: constraints.maxHeight * 0.1,
-            //         child: dashboardWeather(
-            //           isStatusCentered: false,
-            //           svgIcon: 'assets/dashboard_icons/rain.svg',
-            //           status: '${double.parse(weatherDay.rain) * 100.0}%',
-            //         ),
-            //       ),
-            //     if (weatherDay.windSpeed != null && weatherDay.windSpeed != "")
-            //       Container(
-            //         width: constraints.maxWidth * 0.25,
-            //         height: constraints.maxHeight * 0.1,
-            //         child: dashboardWeather(
-            //           isStatusCentered: false,
-            //           svgIcon: 'assets/dashboard_icons/wind_2.svg',
-            //           status:
-            //               '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
-            //         ),
-            //       ),
-            //   ],
-            // ),
           ],
         ),
       );
