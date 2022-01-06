@@ -2,8 +2,6 @@
 class CurrentWeather {
   final String temp;
   final String feelsLike;
-  String tempMin;
-  String tempMax;
   final String pressure;
   final String clouds;
   final String windSpeed;
@@ -20,7 +18,6 @@ class CurrentWeather {
   final String city;
   final String country;
   final String unixTime;
-  String rain;
   final bool isMetric;
 
   CurrentWeather({
@@ -32,8 +29,6 @@ class CurrentWeather {
     this.temp = '',
     this.clouds = '',
     this.feelsLike = '',
-    this.tempMin = '',
-    this.tempMax = '',
     this.humidity = '',
     this.mainDescription = '',
     this.detailedDescription = '',
@@ -44,20 +39,8 @@ class CurrentWeather {
     this.windDeg = '',
     this.windSpeed = '',
     this.city = '',
-    this.rain = '0',
     this.country = '',
   });
 
-  //idk why but it solves the problem of suddenly the values being not there
-  void setTempMin(String newTempMin){
-    tempMin = newTempMin;
-  }
-  void setTempMax(String newTempMax){
-    tempMax = newTempMax;
-  }
-
-  void setRain(String newRain){
-    rain = newRain;
-  }
 }
 
