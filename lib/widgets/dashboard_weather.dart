@@ -8,7 +8,8 @@ class dashboardWeather extends StatelessWidget {
   final String status;
   final bool isStatusCentered;
 
-  dashboardWeather({this.svgIcon, this.title,@required this.status,this.isStatusCentered});
+  dashboardWeather(
+      {this.svgIcon, this.title, @required this.status, this.isStatusCentered});
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +32,15 @@ class dashboardWeather extends StatelessWidget {
                 title,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-
+                style: TextStyle(
+                    fontWeight: FontWeight.w800, fontStyle: FontStyle.italic),
               ),
             ),
           Expanded(
               child: AutoSizeText(
             status,
-                textAlign:isStatusCentered? TextAlign.center:TextAlign.left,
-
-                maxLines: 2,
+            textAlign: isStatusCentered ? TextAlign.center : TextAlign.left,
+            maxLines: 2,
           ))
         ],
       );

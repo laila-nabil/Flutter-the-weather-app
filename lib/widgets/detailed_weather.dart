@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
+import 'package:the_weather_app/widgets/custom_grid.dart';
 import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {
@@ -12,7 +13,73 @@ class WeatherDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
     return LayoutBuilder(builder: (ctx, constraints) {
+      final dashboard = [
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            svgIcon: 'assets/dashboard_icons/rain.svg',
+            status: '${double.parse(weatherDay.rain) * 100.0}%',
+          ),
+        ),
+        Container(
+            width: constraints.maxWidth * 0.25,
+            height: constraints.maxHeight * 0.1,
+            child: dashboardWeather(
+              isStatusCentered: false,
+              svgIcon: 'assets/dashboard_icons/wind_2.svg',
+              status:
+                  '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
+            )),
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            title: 'Pressure',
+            status: '${double.parse(weatherDay.pressure) * 100.0}%',
+          ),
+        ),
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            title: 'Clouds',
+            status: '${double.parse(weatherDay.clouds) * 100.0}%',
+          ),
+        ),
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            title: 'Uvi',
+            status: '${double.parse(weatherDay.uvi) * 100.0}%',
+          ),
+        ),
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            title: 'Clouds',
+            status: '${double.parse(weatherDay.clouds) * 100.0}%',
+          ),
+        ),
+        Container(
+          width: constraints.maxWidth * 0.25,
+          height: constraints.maxHeight * 0.1,
+          child: dashboardWeather(
+            isStatusCentered: false,
+            title: 'Clouds',
+            status: '${double.parse(weatherDay.clouds) * 100.0}%',
+          ),
+        ),
+      ];
       print("for detailed,$constraints");
       return Container(
         width: double.infinity,
@@ -67,32 +134,33 @@ class WeatherDetailed extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (weatherDay.rain != null && weatherDay.rain != "")
-                  Container(
-                    width: constraints.maxWidth * 0.25,
-                    height: constraints.maxHeight * 0.1,
-                    child: dashboardWeather(
-                      isStatusCentered: false,
-                      svgIcon: 'assets/dashboard_icons/rain.svg',
-                      status: '${double.parse(weatherDay.rain) * 100.0}%',
-                    ),
-                  ),
-                if (weatherDay.windSpeed != null && weatherDay.windSpeed != "")
-                  Container(
-                    width: constraints.maxWidth * 0.25,
-                    height: constraints.maxHeight * 0.1,
-                    child: dashboardWeather(
-                      isStatusCentered: false,
-                      svgIcon: 'assets/dashboard_icons/wind_2.svg',
-                      status:
-                          '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
-                    ),
-                  ),
-              ],
-            ),
+            GoogleGrid(children: dashboard)
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     if (weatherDay.rain != null && weatherDay.rain != "")
+            //       Container(
+            //         width: constraints.maxWidth * 0.25,
+            //         height: constraints.maxHeight * 0.1,
+            //         child: dashboardWeather(
+            //           isStatusCentered: false,
+            //           svgIcon: 'assets/dashboard_icons/rain.svg',
+            //           status: '${double.parse(weatherDay.rain) * 100.0}%',
+            //         ),
+            //       ),
+            //     if (weatherDay.windSpeed != null && weatherDay.windSpeed != "")
+            //       Container(
+            //         width: constraints.maxWidth * 0.25,
+            //         height: constraints.maxHeight * 0.1,
+            //         child: dashboardWeather(
+            //           isStatusCentered: false,
+            //           svgIcon: 'assets/dashboard_icons/wind_2.svg',
+            //           status:
+            //               '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
+            //         ),
+            //       ),
+            //   ],
+            // ),
           ],
         ),
       );
