@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cron/cron.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import '../widgets/weather_tabs.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/widgets/compare_weather.dart';
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final screenSize = mediaQuery.size;
     final orientation = mediaQuery.orientation;
     final isPortrait = screenSize.width < screenSize.height;
+    final minimalView = true;
     print("screenSize $screenSize");
     print("orientation $orientation");
     return Scaffold(
@@ -112,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _isLoading
                 ? Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         CircularProgressIndicator(),
                       ],
@@ -123,10 +125,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        // todayOverview(screenSize.width < screenSize.height),
-                        if (isPortrait)
+                        if (isPortrait && minimalView)
+                          Expanded(
+                              flex: 9,
+                              child: LayoutBuilder(builder: (ctx, constraints) {
+                                return CarouselSlider(
+                                    items: [WeatherToday(), CompareWeather()],
+                                    options: CarouselOptions(
+                                      height: constraints.maxHeight - 0.1,
+                                      autoPlayInterval: Duration(seconds: 10),
+                                      initialPage: 0,
+                                      autoPlay: true,
+                                      viewportFraction: 1,
+                                    ));
+                              })),
+                        if (isPortrait && !minimalView)
                           Expanded(flex: 7, child: WeatherToday()),
-                        if (screenSize.width < screenSize.height)
+                        if (isPortrait && !minimalView)
                           Expanded(
                             flex: 2,
                             child: Padding(
@@ -134,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: CompareWeather(),
                             ),
                           ),
-                        if(!isPortrait)
+                        if (isPortrait && !minimalView)
                           Expanded(
                             flex: 6,
                             child: Row(
@@ -156,19 +171,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         Expanded(
                             // flex: isPortrait ? 4 : 5,
-                          flex: 4,
+                            flex: 4,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: WeatherTabs(),
                             )),
-                        if(screenSize.width < screenSize.height)
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
-                            style: TextStyle(fontSize: 11, color: Colors.white),
-                          ),
-                        )
+                        if (screenSize.width < screenSize.height)
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                              style:
+                                  TextStyle(fontSize: 11, color: Colors.white),
+                            ),
+                          )
                       ],
                     ),
                   ),

@@ -10,7 +10,8 @@ class CompareWeather extends StatelessWidget {
         Provider.of<WeatherProvider>(context).compareTodayYesterday;
     return LayoutBuilder(builder: (ctx, constraints) {
       return Card(
-        color: Color(0xff272F3A),
+        // color: Color(0xff272F3A),
+        color: Theme.of(context).backgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
           height: constraints.maxHeight * 0.9,
