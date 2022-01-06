@@ -35,6 +35,7 @@ class WeatherProvider with ChangeNotifier {
   }
 
   DateTime unixSecondsToDate(int unixTimeStamp) {
+    //If [isUtc] is false then the date is in the local time zone.
     return DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
   }
 

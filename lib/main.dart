@@ -33,7 +33,7 @@
 //TODO in settings screen: add multiple cities + local store them
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
-//TODO is timing correct or not?
+//TODO is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
 //TODO max &min sometimes disappear==> fix bug
 //TODO maybe make all weather one class or use inheritance
 //TODO add shimmer instead of loading circle
