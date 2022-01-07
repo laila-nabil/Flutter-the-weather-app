@@ -351,24 +351,25 @@ class WeatherProvider with ChangeNotifier {
     return [..._pastWeather.reversed];
   }
 
-  Future<bool> setLocationLatLon()
+  Future<void> setLocationLatLon()
   async{
     Position result;
     try{
       result = await _determinePosition();
+      _lat = result.latitude.toString();
+      _lon = result.longitude.toString();
+      print("location : getting location $_lat $_lon");
+      await getLocationFromCoordinates();
+      await getCurrentWeatherAPI();
+      await getPresentFutureWeatherAPI();
+      await getAllHistoryWeather();
+      notifyListeners();
     }catch(error){
       print('location : error $error');
       notifyListeners();
-      return false;
+      return Future.error(error);
     }
-    _lat = result.latitude.toString();
-    _lon = result.longitude.toString();
-    print("location : getting location $_lat $_lon");
-    await getCurrentWeatherAPI();
-    await getPresentFutureWeatherAPI();
-    await getAllHistoryWeather();
-    notifyListeners();
-    return true;
+
   }
 
   String get lat{

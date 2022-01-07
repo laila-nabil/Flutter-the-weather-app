@@ -20,11 +20,13 @@ class Location extends StatelessWidget {
             child: IconButton(
                 onPressed: () async {
                   print('location :start');
-                  final result = await Provider.of<WeatherProvider>(context,listen: false)
-                      .setLocationLatLon();
-                  if (!result) {
+                  try{
+                    await Provider.of<WeatherProvider>(context,listen: false)
+                        .setLocationLatLon();
+                  }catch(Error){
+                    print('location :error catched');
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Couldn\'t get current location')));
+                        content: Text(Error.toString())));
                   }
                   print('location :end');
                 },
