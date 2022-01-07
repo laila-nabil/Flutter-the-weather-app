@@ -10,7 +10,6 @@ class Location extends StatelessWidget {
   Widget build(BuildContext context) {
     final city = Provider.of<WeatherProvider>(context,listen: true).location;
     return LayoutBuilder(builder: (ctx, constraints) {
-      print("location constraints $constraints");
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,

@@ -14,10 +14,6 @@ class CompactDayWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
-      print(
-          'Height constraints are ${constraints.minHeight} ${constraints.maxHeight}');
-      print(
-          'Width constraints are ${constraints.minWidth} ${constraints.maxWidth}');
       final mediaQuery = MediaQuery.of(context);
       final isPortrait = mediaQuery.size.width < mediaQuery.size.height;
       final width = isPortrait

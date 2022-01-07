@@ -58,8 +58,6 @@ class WeatherDetailed extends StatelessWidget {
       final cols = isPortrait ? 2 : 4;
       final rows = (dashboard.length / cols).round();
       final containerHeight = (constraints.maxHeight * (0.2)) / rows;
-      print(
-          "constraints.maxHeight ${constraints.maxHeight} containerHeight $containerHeight for rows $rows and cols $cols");
       final List<Widget> newDashboard = [];
       dashboard.forEach((element) {
         newDashboard.add(Container(
@@ -67,7 +65,6 @@ class WeatherDetailed extends StatelessWidget {
           child: element,
         ));
       });
-      print("for detailed,$constraints");
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -132,6 +129,8 @@ class WeatherDetailed extends StatelessWidget {
                 weatherDay: weatherDay,
                 isPortrait: isPortrait,
               ),
+            Expanded(child: Text(weatherDay.date.toString())),
+            Expanded(child: Text('lat ${weatherDay.lat}, lon ${weatherDay.lon}')),
             GoogleGrid(
               // children: dashboard,
               children: newDashboard,

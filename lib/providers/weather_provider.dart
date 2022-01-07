@@ -103,6 +103,7 @@ class WeatherProvider with ChangeNotifier {
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
     print('PresentFuture url is $url');
     try {
+      _hourlyPresentFutureWeather = [];
       final response = await http.get(Uri.parse(url));
       final presentFutureWeather = json.decode(response.body);
       final date = presentFutureWeather['daily'][0]['dt'] as int;
@@ -162,7 +163,7 @@ class WeatherProvider with ChangeNotifier {
           weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
               DateFormat('yyyy-MM-dd')
                   .format(DateTime.now().toUtc())
-                  .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
+                  .compareTo(DateFormat('yyyy-MM-dd').format(element.date.toUtc())) ==
               0).toList(),
             );
       await getLocationFromCoordinates();
@@ -184,10 +185,10 @@ class WeatherProvider with ChangeNotifier {
             isImageNetwork: !isImage3D,
             image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
             weatherTimeline: _hourlyPresentFutureWeather.where((element) {
-              print("weather Timeline ${element.date}");
+              print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
               print("weather Timeline ${DateFormat('yyyy-MM-dd')
                   .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) }");
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
               return DateFormat('yyyy-MM-dd')
                   .format(element.date)
                   // .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
@@ -216,8 +217,9 @@ class WeatherProvider with ChangeNotifier {
 
     print('history url is $url');
     try {
+      _hourlyPastWeather = [];
+      _pastWeather = [];
       final response = await http.get(Uri.parse(url));
-      
       print('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
       print('historyWeather $historyWeather');
@@ -316,7 +318,6 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getAllHistoryWeather() async {
     print('getting weather');
     try {
-      _pastWeather = [];
       for (int i = 1; i <= 5; i++) {
         print('i $i');
         await getHistoryWeatherAPI(i);

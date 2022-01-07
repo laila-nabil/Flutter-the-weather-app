@@ -21,7 +21,6 @@ class WeatherToday extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        print("constraints here is $constraints");
         return Container(
           // width: constraints.maxWidth,
           // height: constraints.maxHeight,
@@ -141,7 +140,6 @@ class todayDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
-      print("new widget constraints $constraints");
       // return Container(color: Colors.lightBlue,);
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

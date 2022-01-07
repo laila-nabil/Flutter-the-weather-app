@@ -11,7 +11,6 @@ class WeatherTabs extends StatelessWidget {
     print('weatherTabs.length, ${weatherTabs.length}');
     double tabBarContainerHeight = 0;
     return LayoutBuilder(builder: (ctx,constraints){
-      print("weatherTabs constraints $constraints");
       return DefaultTabController(
           length: weatherTabs.length, // length of tabs
           initialIndex: 5,

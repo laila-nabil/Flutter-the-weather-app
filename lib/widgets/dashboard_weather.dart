@@ -14,7 +14,6 @@ class dashboardWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
-      print("dashboardWeather constraints $constraints");
       return Row(
         children: [
           if (svgIcon != null)
