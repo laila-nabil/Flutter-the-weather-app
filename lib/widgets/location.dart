@@ -1,13 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/screens/location_screen.dart';
 
 class Location extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final city = Provider.of<WeatherProvider>(context).location;
+    final city = Provider.of<WeatherProvider>(context,listen: true).location;
     return LayoutBuilder(builder: (ctx, constraints) {
       print("location constraints $constraints");
       return Row(
@@ -17,14 +18,24 @@ class Location extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(constraints.maxHeight * 0.1),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print('location :start');
+                  final result = await Provider.of<WeatherProvider>(context,listen: false)
+                      .setLocationLatLon();
+                  if (!result) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Couldn\'t get current location')));
+                  }
+                  print('location :end');
+                },
                 icon: Icon(
                   Icons.location_on,
                   color: Colors.white,
                   size: constraints.maxHeight * 0.8,
                 )),
           ),
-          Padding(
+          Container(
+            width: constraints.maxWidth * 0.4,
             padding:
                 EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.1),
             child: AutoSizeText(

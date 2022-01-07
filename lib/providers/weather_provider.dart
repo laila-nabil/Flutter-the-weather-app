@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:geolocator/geolocator.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +13,8 @@ import '../models/current_weather.dart';
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
+  String _lat = '30.0444';//cairo's latitude
+  String _lon = '31.2357';//cairo's longitude
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
@@ -42,8 +44,8 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getCurrentWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
-    const lat = '30.0444';
-    const lon = '31.2357';
+    // const lat = '30.0444';
+    // const lon = '31.2357';
     // const part = 'minutely,hourly';
     const excludedPart = 'minutely';
     var url =
@@ -82,8 +84,8 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getPresentFutureWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
-    const lat = '30.0444';
-    const lon = '31.2357';
+    // const lat = '30.0444';
+    // const lon = '31.2357';
     const excludedPart = 'minutely';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
@@ -187,8 +189,8 @@ class WeatherProvider with ChangeNotifier {
     // var API_key = DotEnv.env['API_KEY'];
     // var API_key = dotenv.env['API_KEY'];
     var API_key = _API_KEY;
-    const lat = '30.0444';
-    const lon = '31.2357';
+    // const lat = '30.0444';
+    // const lon = '31.2357';
     const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(daysAgo, 0);
     print('nightTime $unixTimestamp');
@@ -349,6 +351,34 @@ class WeatherProvider with ChangeNotifier {
     return [..._pastWeather.reversed];
   }
 
+  Future<bool> setLocationLatLon()
+  async{
+    Position result;
+    try{
+      result = await _determinePosition();
+    }catch(error){
+      print('location : error $error');
+      notifyListeners();
+      return false;
+    }
+    _lat = result.latitude.toString();
+    _lon = result.longitude.toString();
+    print("location : getting location $_lat $_lon");
+    await getCurrentWeatherAPI();
+    await getPresentFutureWeatherAPI();
+    await getAllHistoryWeather();
+    notifyListeners();
+    return true;
+  }
+
+  String get lat{
+    return _lat;
+  }
+
+  String get lon{
+    return _lon;
+  }
+
   Future<Map> getLocationFromCoordinates() async {
     var url =
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
@@ -357,9 +387,55 @@ class WeatherProvider with ChangeNotifier {
     final locationDetails = json.decode(response.body);
     print('locationDetails $locationDetails');
     if (locationDetails != null) {
-      location = '${locationDetails['city']},${locationDetails['countryName']}';
+      location = '${locationDetails['city']},${locationDetails['countryCode']}';
     }
     notifyListeners();
     return locationDetails;
+  }
+
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      print("location : error('Location services are disabled.')");
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        print("location : error('Location permissions are denied'')");
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      print("location : error('Location permissions are permanently denied')");
+
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    print("location : getting location");
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
   }
 }
