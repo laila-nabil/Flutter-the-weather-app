@@ -45,5 +45,5 @@ class Weather {
     this.weatherTimeline,
   }) : date = date ??
             DateTime
-                .now(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
+                .now().toUtc(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
 }

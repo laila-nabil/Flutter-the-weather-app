@@ -27,7 +27,8 @@ class WeatherProvider with ChangeNotifier {
       kIsWeb ? terminalApi : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
-    var timeNow = DateTime.now();
+    // var timeNow = DateTime.now();
+    var timeNow = DateTime.now().toUtc();
     var unixTime = ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
                 .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
                 .millisecondsSinceEpoch) /
@@ -39,6 +40,17 @@ class WeatherProvider with ChangeNotifier {
   DateTime unixSecondsToDate(int unixTimeStamp) {
     //If [isUtc] is false then the date is in the local time zone.
     return DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
+  }
+  DateTime unixSecondsToDateTimezone(int unixTimeStamp , int timezoneOffset) {
+    //If [isUtc] is false then the date is in the local time zone.
+    // print('unixSecondsToDateTimezone for $unixTimeStamp and offset $timezoneSeconds');
+    // print('${DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneSeconds) * 1000,isUtc: false)}');
+    // print('${DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000)}');
+    return DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneOffset) * 1000,isUtc: true);
+  }
+
+  DateTime dateTimeTimezone(DateTime date , int timezoneOffset){
+    return date.add(Duration(seconds: timezoneOffset));
   }
 
   Future<void> getCurrentWeatherAPI() async {
@@ -92,7 +104,6 @@ class WeatherProvider with ChangeNotifier {
     print('PresentFuture url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      
       final presentFutureWeather = json.decode(response.body);
       final date = presentFutureWeather['daily'][0]['dt'] as int;
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
@@ -102,7 +113,7 @@ class WeatherProvider with ChangeNotifier {
       hourly.forEach((element) {
         print('=>for element');
         print(element['weather'][0]['main']);
-        print("day : ${unixSecondsToDate(element['dt'])}");
+        print("day : ${unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset'])}");
         _hourlyPresentFutureWeather.add(Weather(
             lat: lat,
             lon: lon,
@@ -110,7 +121,8 @@ class WeatherProvider with ChangeNotifier {
             image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
-            date: unixSecondsToDate(element['dt']),
+            // date: unixSecondsToDate(element['dt']),
+            date: unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset']),
             rain: element['pop'].toString(),
             feelsLike: element['feels_like'].toString(),
             windSpeed: element['wind_speed'].toString(),
@@ -123,9 +135,11 @@ class WeatherProvider with ChangeNotifier {
             tempCurrent: element['temp'].toString()));
       });
       final todayHourly = _hourlyPresentFutureWeather.where((element) {
+
         int compare = DateFormat('MMM d yyyy')
-            .format(DateTime.now())
-            .compareTo(DateFormat('MMM d yyyy').format(element.date));
+            .format(DateTime.now().toUtc())
+            .compareTo(DateFormat('MMM d yyyy').format(element.date.toUtc()));
+        print('todayHourly for element ${element.date} $compare');
         if (compare == 0) {
           return true;
         }
@@ -133,7 +147,8 @@ class WeatherProvider with ChangeNotifier {
       });
       print("todayHourly ${todayHourly.length} ${todayHourly}");
             _todayWeather = Weather(
-          date: unixSecondsToDate(date),
+          // date: unixSecondsToDate(date),
+          date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
           tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
           tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
           lat: lat,
@@ -146,7 +161,7 @@ class WeatherProvider with ChangeNotifier {
                 image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
           weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
               DateFormat('yyyy-MM-dd')
-                  .format(DateTime.now())
+                  .format(DateTime.now().toUtc())
                   .compareTo(DateFormat('yyyy-MM-dd').format(element.date)) ==
               0).toList(),
             );
@@ -156,8 +171,9 @@ class WeatherProvider with ChangeNotifier {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
         final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
         _futureWeather.add(Weather(
-            date: unixSecondsToDate(date),
-            tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
+            // date: unixSecondsToDate(date),
+          date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
+          tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
             tempMin: presentFutureWeather['daily'][i]['temp']['min'].toString(),
             lat: lat,
             lon: lon,
@@ -174,7 +190,8 @@ class WeatherProvider with ChangeNotifier {
                   .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) }");
               return DateFormat('yyyy-MM-dd')
                   .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
+                  // .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) ==
                   0;
             }
             ).toList(),
@@ -211,7 +228,7 @@ class WeatherProvider with ChangeNotifier {
       hourlyPast.forEach((element) {
         print('for element');
         print(element['weather'][0]['main']);
-        print(unixSecondsToDate(element['dt']));
+        print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
@@ -219,7 +236,8 @@ class WeatherProvider with ChangeNotifier {
             image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
             detailedDescription: element['weather'][0]['description'].toString(),
-            date: unixSecondsToDate(element['dt']),
+            // date: unixSecondsToDate(element['dt']),
+            date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
             rain: "0.0",
             tempCurrent: element['temp'].toString()));
       });
@@ -240,7 +258,8 @@ class WeatherProvider with ChangeNotifier {
       _pastWeather.insert(
           daysAgo - 1,
           Weather(
-            date: DateTime.now().subtract(Duration(days: daysAgo)),
+            // date: DateTime.now().subtract(Duration(days: daysAgo)),
+            date: DateTime.now().toUtc().subtract(Duration(days: daysAgo)),
             lat: lat,
             lon: lon,
             isMetric: true,
@@ -251,10 +270,10 @@ class WeatherProvider with ChangeNotifier {
             weatherTimeline: _hourlyPastWeather.where((element) {
               print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
                   .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().subtract(Duration(days: daysAgo))))==0}");
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
               return (DateFormat('yyyy-MM-dd')
                   .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().subtract(Duration(days: daysAgo))))  == 0);
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))  == 0);
             }).toList(),
           ));
       print("<==>for ${_pastWeather[daysAgo-1].date} ${_pastWeather[daysAgo-1].weatherTimeline[0].tempCurrent}");
