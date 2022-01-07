@@ -28,14 +28,15 @@
 
 //TODO adjust UI: responsiveness
 //TODO add settings screen
-//TODO in settings screen: change city
+//TODO in settings screen: change city by location search with autocomplete
+//TODO in settings screen: change city by finding user current location
 //TODO in settings screen: add multiple cities
-//TODO in settings screen: add multiple cities + local store them
+//TODO in settings screen: add multiple cities + locally store them
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
 //NOTTODO is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
-//TODO max &min sometimes disappear==> fix bug
-//TODO maybe make all weather one class or use inheritance
+//NOTTODO max &min sometimes disappear==> fixed
+//NOTTODO maybe make all weather one class or use inheritance
 //TODO add shimmer instead of loading circle
 //TODO(next level) splash screen
 //TODO(next level) icon
