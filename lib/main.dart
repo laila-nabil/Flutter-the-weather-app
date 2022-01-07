@@ -29,7 +29,7 @@
 //TODO adjust UI: responsiveness
 //TODO add settings screen
 //TODO in settings screen: change city by location search with autocomplete
-//TODO in settings screen: change city by finding user current location
+//TODO in settings screen: change city by finding user current location (geolocator)
 //TODO in settings screen: add multiple cities
 //TODO in settings screen: add multiple cities + locally store them
 //TODO in settings screen: change language + localization
