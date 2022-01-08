@@ -20,7 +20,7 @@ class WeatherDetailed extends StatelessWidget {
         dashboardWeather(
           isStatusCentered: false,
           svgIcon: 'assets/dashboard_icons/rain.svg',
-          status: '${double.parse(weatherDay.rain) * 100.0}%',
+          status: '${double.tryParse(weatherDay.rain) * 100.0}%',
         ),
         dashboardWeather(
           isStatusCentered: false,
@@ -31,29 +31,29 @@ class WeatherDetailed extends StatelessWidget {
         dashboardWeather(
           isStatusCentered: false,
           title: 'Pressure',
-          status: '${double.parse(weatherDay.pressure)}  hPa',
+          status: '${double.tryParse(weatherDay.pressure)}  hPa',
         ),
         dashboardWeather(
           isStatusCentered: false,
           title: 'Clouds',
-          status: '${double.parse(weatherDay.clouds)}%',
+          status: '${double.tryParse(weatherDay.clouds)}%',
         ),
         dashboardWeather(
           isStatusCentered: false,
           title: 'Uvi',
-          status: '${double.parse(weatherDay.uvi)}',
+          status: '${double.tryParse(weatherDay.uvi)}',
         ),
         dashboardWeather(
           isStatusCentered: false,
           title: 'Humidity',
-          status: '${double.parse(weatherDay.humidity)}%',
+          status: '${double.tryParse(weatherDay.humidity)}%',
         ),
         dashboardWeather(
           isStatusCentered: false,
           title: 'Visibility',
-          status: double.parse(weatherDay.visibility) > 1000
-              ? '${(double.parse(weatherDay.visibility) / 1000).toStringAsFixed(1)} km'
-              : '${double.parse(weatherDay.visibility)} m',
+          status: double.tryParse(weatherDay.visibility) > 1000
+              ? '${(double.tryParse(weatherDay.visibility) / 1000).toStringAsFixed(1)} km'
+              : '${double.tryParse(weatherDay.visibility)} m',
         ),
       ];
       final cols = isPortrait ? 2 : 4;
@@ -77,7 +77,8 @@ class WeatherDetailed extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: constraints.maxHeight * 0.06,
             horizontal: constraints.maxWidth * 0.08),
-        child: Column(
+        child:
+        Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

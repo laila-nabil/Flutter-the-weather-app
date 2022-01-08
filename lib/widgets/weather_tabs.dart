@@ -58,14 +58,14 @@ class WeatherTabs extends StatelessWidget {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text:
-                                      "${double.parse(e.tempMax).toStringAsFixed(1)} ",
+                                      "${double.tryParse(e.tempMax).toStringAsFixed(1)} ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white
                                       )),
                                   TextSpan(
                                       text:
-                                      "${double.parse(e.tempMin).toStringAsFixed(1)} ",
+                                      "${double.tryParse(e.tempMin).toStringAsFixed(1)} ",
                                       style:
                                       TextStyle(color: Colors.white)
                                   ),
@@ -111,14 +111,14 @@ class WeatherTabs extends StatelessWidget {
                                   text: TextSpan(children: [
                                     TextSpan(
                                         text:
-                                        "${double.parse(e.tempMax).toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.tempMax).toStringAsFixed(1)} ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white
                                         )),
                                     TextSpan(
                                         text:
-                                        "${double.parse(e.tempMin).toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.tempMin).toStringAsFixed(1)} ",
                                         style:
                                         TextStyle(color: Colors.white)
                                     ),

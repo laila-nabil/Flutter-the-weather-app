@@ -324,14 +324,14 @@ class WeatherProvider with ChangeNotifier {
         await getHistoryWeatherAPI(i);
       }
       _pastWeather = [...(_pastWeather.reversed)];
-      final isHotterToday = (double.parse(todayWeather.tempMax) +
-              double.parse(todayWeather.tempMin)) >
-          (double.parse(_pastWeather[0].tempMax) +
-              double.parse(_pastWeather[0].tempMin));
-      final diffMax = double.parse(todayWeather.tempMax) -
-          double.parse(_pastWeather[0].tempMax);
-      final diffMin = double.parse(todayWeather.tempMin) -
-          double.parse(_pastWeather[0].tempMin);
+      final isHotterToday = (double.tryParse(todayWeather.tempMax) +
+              double.tryParse(todayWeather.tempMin)) >
+          (double.tryParse(_pastWeather[0].tempMax) +
+              double.tryParse(_pastWeather[0].tempMin));
+      final diffMax = double.tryParse(todayWeather.tempMax) -
+          double.tryParse(_pastWeather[0].tempMax);
+      final diffMin = double.tryParse(todayWeather.tempMin) -
+          double.tryParse(_pastWeather[0].tempMin);
       final diff =
           '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
       _compareTodayYesterday = isHotterToday
@@ -356,18 +356,18 @@ class WeatherProvider with ChangeNotifier {
       }
       final pastWeatherData = _pastWeather;
       _pastWeather = [...(_pastWeather.reversed)];
-      final diffDay = double.parse(todayWeather.tempMax) >
-              double.parse(pastWeatherData[0].tempMax)
+      final diffDay = double.tryParse(todayWeather.tempMax) >
+              double.tryParse(pastWeatherData[0].tempMax)
           ? "warmer"
           : "colder";
-      final diffNight = double.parse(todayWeather.tempMin) >
-              double.parse(pastWeatherData[0].tempMin)
+      final diffNight = double.tryParse(todayWeather.tempMin) >
+              double.tryParse(pastWeatherData[0].tempMin)
           ? "warmer"
           : "colder";
-      final diffMax = double.parse(todayWeather.tempMax) -
-          double.parse(pastWeatherData[0].tempMax);
-      final diffMin = double.parse(todayWeather.tempMin) -
-          double.parse(pastWeatherData[0].tempMin);
+      final diffMax = double.tryParse(todayWeather.tempMax) -
+          double.tryParse(pastWeatherData[0].tempMax);
+      final diffMin = double.tryParse(todayWeather.tempMin) -
+          double.tryParse(pastWeatherData[0].tempMin);
       _compareTodayYesterday =
           'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
       print('got weather');

@@ -67,7 +67,7 @@ class CompactDayWeather extends StatelessWidget {
                   width: width * 0.6,
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "${double.parse(detailedWeather.tempCurrent).toStringAsFixed(1)}°C",
+                    "${double.tryParse(detailedWeather.tempCurrent).toStringAsFixed(1)}°C",
                     style: TextStyle(fontSize: 18),
                     minFontSize: 10,
                     maxFontSize: 18,
@@ -83,7 +83,7 @@ class CompactDayWeather extends StatelessWidget {
                   child: dashboardWeather(
                     isStatusCentered: true,
                     svgIcon: 'assets/dashboard_icons/rain.svg',
-                    status: '${double.parse(detailedWeather.rain) * 100.0}%',
+                    status: '${double.tryParse(detailedWeather.rain) * 100.0}%',
                   ),
                 ),
             ],

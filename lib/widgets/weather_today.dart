@@ -154,7 +154,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/rain.svg',
-                  status: '${double.parse(weatherTodayRain) * 100.0}%',
+                  status: '${double.tryParse(weatherTodayRain) * 100.0}%',
                 ),
               ),
               Container(
