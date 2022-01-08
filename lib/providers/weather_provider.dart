@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
-
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -14,8 +13,8 @@ import '../models/current_weather.dart';
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
-  String _lat = '30.0444'; //cairo's latitude
-  String _lon = '31.2357'; //cairo's longitude
+  String _lat = '30.0444';//cairo's latitude
+  String _lon = '31.2357';//cairo's longitude
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   List<Weather> _hourlyPresentFutureWeather = [];
@@ -25,7 +24,8 @@ class WeatherProvider with ChangeNotifier {
   static bool isImage3D = true;
   bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
-  var _API_KEY = kIsWeb ? terminalApi : dotenv.env['API_KEY'];
+  var _API_KEY =
+      kIsWeb ? terminalApi : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
     // var timeNow = DateTime.now();
@@ -42,18 +42,15 @@ class WeatherProvider with ChangeNotifier {
     //If [isUtc] is false then the date is in the local time zone.
     return DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
   }
-
-  DateTime unixSecondsToDateTimezone(int unixTimeStamp, int timezoneOffset) {
+  DateTime unixSecondsToDateTimezone(int unixTimeStamp , int timezoneOffset) {
     //If [isUtc] is false then the date is in the local time zone.
     // print('unixSecondsToDateTimezone for $unixTimeStamp and offset $timezoneSeconds');
     // print('${DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneSeconds) * 1000,isUtc: false)}');
     // print('${DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000)}');
-    return DateTime.fromMillisecondsSinceEpoch(
-        (unixTimeStamp + timezoneOffset) * 1000,
-        isUtc: true);
+    return DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneOffset) * 1000,isUtc: true);
   }
 
-  DateTime dateTimeTimezone(DateTime date, int timezoneOffset) {
+  DateTime dateTimeTimezone(DateTime date , int timezoneOffset){
     return date.add(Duration(seconds: timezoneOffset));
   }
 
@@ -76,9 +73,7 @@ class WeatherProvider with ChangeNotifier {
         lat: lat,
         lon: lon,
         isImageNetwork: !isImage3D,
-        image: isImage3D
-            ? 'assets/3d/$iconNow.png'
-            : 'https://openweathermap.org/img/wn/$iconNow@4x.png',
+        image: isImage3D ? 'assets/3d/$iconNow.png': 'https://openweathermap.org/img/wn/$iconNow@4x.png',
         temp: currentWeather['main']['temp'].toString(),
         feelsLike: currentWeather['main']['feels_like'].toString(),
         mainDescription: currentWeather['weather'][0]['main'],
@@ -99,6 +94,7 @@ class WeatherProvider with ChangeNotifier {
       throw (error);
     }
     isLoading = false;
+
   }
 
   Future<void> getPresentFutureWeatherAPI() async {
@@ -123,20 +119,16 @@ class WeatherProvider with ChangeNotifier {
       hourly.forEach((element) {
         print('=>for element');
         print(element['weather'][0]['main']);
-        print(
-            "day : ${unixSecondsToDateTimezone(element['dt'], presentFutureWeather['timezone_offset'])}");
+        print("day : ${unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset'])}");
         _hourlyPresentFutureWeather.add(Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
-            image: isImage3D
-                ? 'assets/3d/${element['weather'][0]['icon']}.png'
-                : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
             // date: unixSecondsToDate(element['dt']),
-            date: unixSecondsToDateTimezone(
-                element['dt'], presentFutureWeather['timezone_offset']),
+            date: unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset']),
             rain: element['pop'].toString(),
             feelsLike: element['feels_like'].toString(),
             windSpeed: element['wind_speed'].toString(),
@@ -149,6 +141,7 @@ class WeatherProvider with ChangeNotifier {
             tempCurrent: element['temp'].toString()));
       });
       final todayHourly = _hourlyPresentFutureWeather.where((element) {
+
         int compare = DateFormat('MMM d yyyy')
             .format(DateTime.now().toUtc())
             .compareTo(DateFormat('MMM d yyyy').format(element.date.toUtc()));
@@ -159,70 +152,62 @@ class WeatherProvider with ChangeNotifier {
         return false;
       });
       print("todayHourly ${todayHourly.length} ${todayHourly}");
-      _todayWeather = Weather(
-        // date: unixSecondsToDate(date),
-        date: unixSecondsToDateTimezone(
-            date, presentFutureWeather['timezone_offset']),
-        tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
-        tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
-        lat: lat,
-        lon: lon,
-        mainDescription: presentFutureWeather['daily'][0]['weather'][0]['main'],
-        detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
-            ['description'],
-        isImageNetwork: !isImage3D,
-        image: isImage3D
-            ? 'assets/3d/$icon.png'
-            : 'https://openweathermap.org/img/wn/$icon@4x.png',
-        weatherTimeline: _hourlyPresentFutureWeather
-            .where((element) =>
-                DateFormat('yyyy-MM-dd')
-                    .format(DateTime.now().toUtc())
-                    .compareTo(DateFormat('yyyy-MM-dd')
-                        .format(element.date.toUtc())) ==
-                0)
-            .toList(),
-      );
+            _todayWeather = Weather(
+          // date: unixSecondsToDate(date),
+          date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
+          tempMax: presentFutureWeather['daily'][0]['temp']['max'].toString(),
+          tempMin: presentFutureWeather['daily'][0]['temp']['min'].toString(),
+          lat: lat,
+          lon: lon,
+          mainDescription: presentFutureWeather['daily'][0]['weather'][0]
+              ['main'],
+          detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
+              ['description'],
+                isImageNetwork: !isImage3D,
+                image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
+          weatherTimeline: _hourlyPresentFutureWeather.where((element) =>
+              DateFormat('yyyy-MM-dd')
+                  .format(DateTime.now().toUtc())
+                  .compareTo(DateFormat('yyyy-MM-dd').format(element.date.toUtc())) ==
+              0).toList(),
+            );
       await getLocationFromCoordinates();
       _futureWeather = [];
       for (int i = 1; i < 6; i++) {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
         final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
         _futureWeather.add(Weather(
-          // date: unixSecondsToDate(date),
-          date: unixSecondsToDateTimezone(
-              date, presentFutureWeather['timezone_offset']),
+            // date: unixSecondsToDate(date),
+          date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
           tempMax: presentFutureWeather['daily'][i]['temp']['max'].toString(),
-          tempMin: presentFutureWeather['daily'][i]['temp']['min'].toString(),
-          lat: lat,
-          lon: lon,
-          mainDescription: presentFutureWeather['daily'][i]['weather'][0]
-              ['main'],
-          detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
-              ['description'],
-          isImageNetwork: !isImage3D,
-          image: isImage3D
-              ? 'assets/3d/$icon.png'
-              : 'https://openweathermap.org/img/wn/$icon@4x.png',
-          weatherTimeline: _hourlyPresentFutureWeather.where((element) {
-            print(
-                "weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
-            print(
-                "weather Timeline ${DateFormat('yyyy-MM-dd').format(element.date).compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])))}");
-            return DateFormat('yyyy-MM-dd')
-                    .format(element.date)
-                    // .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
-                    .compareTo(DateFormat('yyyy-MM-dd').format(
-                        unixSecondsToDateTimezone(
-                            date, presentFutureWeather['timezone_offset']))) ==
-                0;
-          }).toList(),
+            tempMin: presentFutureWeather['daily'][i]['temp']['min'].toString(),
+            lat: lat,
+            lon: lon,
+            mainDescription: presentFutureWeather['daily'][i]['weather'][0]
+                ['main'],
+            detailedDescription: presentFutureWeather['daily'][i]['weather'][0]
+                ['description'],
+            isImageNetwork: !isImage3D,
+            image: isImage3D ? 'assets/3d/$icon.png': 'https://openweathermap.org/img/wn/$icon@4x.png',
+            weatherTimeline: _hourlyPresentFutureWeather.where((element) {
+              print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
+              print("weather Timeline ${DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
+              return DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  // .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date))) ==
+                  .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) ==
+                  0;
+            }
+            ).toList(),
         ));
       }
     } catch (error) {
       throw (error);
     }
     isLoading = false;
+
   }
 
   Future<void> getHistoryWeatherAPI(int daysAgo) async {
@@ -232,7 +217,6 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     const part = 'current,minutely';
-    // var unixTimestamp = dateToUnixSeconds(daysAgo, 0);
     var unixTimestamp = dateToUnixSeconds(daysAgo, 0);
     print('nightTime $unixTimestamp');
     var url =
@@ -251,21 +235,16 @@ class WeatherProvider with ChangeNotifier {
       hourlyPast.forEach((element) {
         print('for element');
         print(element['weather'][0]['main']);
-        print(unixSecondsToDateTimezone(
-            element['dt'], historyWeather['timezone_offset']));
+        print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
-            image: isImage3D
-                ? 'assets/3d/${element['weather'][0]['icon']}.png'
-                : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            image: isImage3D ? 'assets/3d/${element['weather'][0]['icon']}.png': 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
-            detailedDescription:
-                element['weather'][0]['description'].toString(),
+            detailedDescription: element['weather'][0]['description'].toString(),
             // date: unixSecondsToDate(element['dt']),
-            date: unixSecondsToDateTimezone(
-                element['dt'], historyWeather['timezone_offset']),
+            date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
             rain: "0.0",
             tempCurrent: element['temp'].toString()));
       });
@@ -296,17 +275,15 @@ class WeatherProvider with ChangeNotifier {
             tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
                 .toString(),
             weatherTimeline: _hourlyPastWeather.where((element) {
-              print(
-                  "weather Timeline past ${DateFormat('yyyy-MM-dd').format(element.date).compareTo(DateFormat('yyyy-MM-dd').format(DateTime.now().toUtc().subtract(Duration(days: daysAgo)))) == 0} ${element.date} is ${daysAgo} days ago ?");
-              return (DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                      DateFormat('yyyy-MM-dd').format(DateTime.now()
-                          .toUtc()
-                          .subtract(Duration(days: daysAgo)))) ==
-                  0);
+              print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
+              return (DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))  == 0);
             }).toList(),
           ));
-      print(
-          "<==>for ${_pastWeather[daysAgo - 1].date} ${_pastWeather[daysAgo - 1].weatherTimeline[0].tempCurrent}");
+      print("<==>for ${_pastWeather[daysAgo-1].date} ${_pastWeather[daysAgo-1].weatherTimeline[0].tempCurrent}");
       print('end of api call $daysAgo');
     } catch (error) {
       throw (error);
@@ -324,14 +301,14 @@ class WeatherProvider with ChangeNotifier {
         await getHistoryWeatherAPI(i);
       }
       _pastWeather = [...(_pastWeather.reversed)];
-      final isHotterToday = (double.tryParse(todayWeather.tempMax) +
-              double.tryParse(todayWeather.tempMin)) >
-          (double.tryParse(_pastWeather[0].tempMax) +
-              double.tryParse(_pastWeather[0].tempMin));
-      final diffMax = double.tryParse(todayWeather.tempMax) -
-          double.tryParse(_pastWeather[0].tempMax);
-      final diffMin = double.tryParse(todayWeather.tempMin) -
-          double.tryParse(_pastWeather[0].tempMin);
+      final isHotterToday = (double.parse(todayWeather.tempMax) +
+              double.parse(todayWeather.tempMin)) >
+          (double.parse(_pastWeather[0].tempMax) +
+              double.parse(_pastWeather[0].tempMin));
+      final diffMax = double.parse(todayWeather.tempMax) -
+          double.parse(_pastWeather[0].tempMax);
+      final diffMin = double.parse(todayWeather.tempMin) -
+          double.parse(_pastWeather[0].tempMin);
       final diff =
           '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
       _compareTodayYesterday = isHotterToday
@@ -356,26 +333,21 @@ class WeatherProvider with ChangeNotifier {
       }
       final pastWeatherData = _pastWeather;
       _pastWeather = [...(_pastWeather.reversed)];
-      final diffDay = double.tryParse(todayWeather.tempMax) >
-              double.tryParse(pastWeatherData[0].tempMax)
-          ? "warmer"
-          : "colder";
-      final diffNight = double.tryParse(todayWeather.tempMin) >
-              double.tryParse(pastWeatherData[0].tempMin)
-          ? "warmer"
-          : "colder";
-      final diffMax = double.tryParse(todayWeather.tempMax) -
-          double.tryParse(pastWeatherData[0].tempMax);
-      final diffMin = double.tryParse(todayWeather.tempMin) -
-          double.tryParse(pastWeatherData[0].tempMin);
-      _compareTodayYesterday =
-          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
+      final diffDay = double.parse(todayWeather.tempMax)  >
+          double.parse(pastWeatherData[0].tempMax) ? "warmer" : "colder";
+      final diffNight = double.parse(todayWeather.tempMin)  >
+          double.parse(pastWeatherData[0].tempMin) ? "warmer" : "colder";
+      final diffMax = double.parse(todayWeather.tempMax) -
+          double.parse(pastWeatherData[0].tempMax);
+      final diffMin = double.parse(todayWeather.tempMin) -
+          double.parse(pastWeatherData[0].tempMin);
+      _compareTodayYesterday = 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
+      notifyListeners();
       print('got weather');
     } catch (error) {
       throw (error);
     }
     isLoading = false;
-    notifyListeners();
   }
 
   String get compareTodayYesterday {
@@ -399,6 +371,7 @@ class WeatherProvider with ChangeNotifier {
     return [..._futureWeather];
   }
 
+
   CurrentWeather get weatherNow {
     return _weatherNow;
   }
@@ -408,9 +381,10 @@ class WeatherProvider with ChangeNotifier {
     return [..._pastWeather.reversed];
   }
 
-  Future<void> setLocationLatLon() async {
+  Future<void> setLocationLatLon()
+  async{
     Position result;
-    try {
+    try{
       result = await _determinePosition();
       _lat = result.latitude.toString();
       _lon = result.longitude.toString();
@@ -420,33 +394,31 @@ class WeatherProvider with ChangeNotifier {
       await getPresentFutureWeatherAPI();
       await getAllHistoryWeather();
       notifyListeners();
-    } catch (error) {
+    }catch(error){
       print('location : error $error');
       notifyListeners();
       return Future.error(error);
     }
+
   }
 
-  String get lat {
+  String get lat{
     return _lat;
   }
 
-  String get lon {
+  String get lon{
     return _lon;
   }
 
   Future<Map> getLocationFromCoordinates() async {
     var url =
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
-    print('location url $url');
     final response = await http.get(Uri.parse(url));
-
+    
     final locationDetails = json.decode(response.body);
     print('locationDetails $locationDetails');
     if (locationDetails != null) {
-      location = locationDetails['city'].toString().isNotEmpty
-          ? '${locationDetails['city']},${locationDetails['countryCode']}'
-          : '${locationDetails['principalSubdivision']},${locationDetails['countryCode']}';
+      location = '${locationDetails['city']},${locationDetails['countryCode']}';
     }
     notifyListeners();
     return locationDetails;
