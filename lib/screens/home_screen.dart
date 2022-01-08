@@ -18,14 +18,14 @@ class _MyHomePageState extends State<MyHomePage> {
   var todayWeather = {};
   var historyWeatherDay = {};
   var historyWeatherNight = {};
-  bool _isLoading = false;
+  // bool _isLoading = false;
   bool _isInit = true;
   Cron cron;
 
   @override
   Future<void> didChangeDependencies() async {
     if (_isInit) {
-      _isLoading = true;
+      // _isLoading = true;
       try {
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .getAllHistoryWeather();
 
         setState(() {
-          _isLoading = false;
+          // _isLoading = false;
         });
       } catch (error) {
         print('error in did change $error');
@@ -119,7 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
             physics: AlwaysScrollableScrollPhysics(),
             // padding: const EdgeInsets.all(18.0),
             child: Center(
-              child: _isLoading
+              // child: _isLoading
+              child: Provider.of<WeatherProvider>(context).isLoading
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

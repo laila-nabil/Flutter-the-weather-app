@@ -22,6 +22,7 @@ class WeatherProvider with ChangeNotifier {
   String _compareTodayYesterday = '';
   String location = '';
   static bool isImage3D = true;
+  bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
   var _API_KEY =
       kIsWeb ? terminalApi : dotenv.env['API_KEY'];
@@ -56,6 +57,7 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getCurrentWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
+    isLoading = true;
     // const lat = '30.0444';
     // const lon = '31.2357';
     // const part = 'minutely,hourly';
@@ -91,11 +93,14 @@ class WeatherProvider with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
+    isLoading = false;
+
   }
 
   Future<void> getPresentFutureWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
+    isLoading = true;
     // const lat = '30.0444';
     // const lon = '31.2357';
     const excludedPart = 'minutely';
@@ -201,6 +206,8 @@ class WeatherProvider with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
+    isLoading = false;
+
   }
 
   Future<void> getHistoryWeatherAPI(int daysAgo) async {
@@ -316,7 +323,10 @@ class WeatherProvider with ChangeNotifier {
 
   Future<void> getAllHistoryWeather() async {
     print('getting weather');
+    isLoading = true;
     try {
+      _pastWeather = [];
+      _hourlyPastWeather = [];
       for (int i = 1; i <= 5; i++) {
         print('i $i');
         await getHistoryWeatherAPI(i);
@@ -337,6 +347,7 @@ class WeatherProvider with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
+    isLoading = false;
   }
 
   String get compareTodayYesterday {
