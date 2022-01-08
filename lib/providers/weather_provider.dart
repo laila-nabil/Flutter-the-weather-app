@@ -217,8 +217,6 @@ class WeatherProvider with ChangeNotifier {
 
     print('history url is $url');
     try {
-      _hourlyPastWeather = [];
-      _pastWeather = [];
       final response = await http.get(Uri.parse(url));
       print('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
@@ -290,6 +288,7 @@ class WeatherProvider with ChangeNotifier {
     try {
       await getPresentFutureWeatherAPI();
       _pastWeather = [];
+      _hourlyPastWeather = [];
       for (int i = 1; i <= 5; i++) {
         print('i $i');
         await getHistoryWeatherAPI(i);
