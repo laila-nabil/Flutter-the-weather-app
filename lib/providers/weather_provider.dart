@@ -232,6 +232,7 @@ class WeatherProvider with ChangeNotifier {
       print(
           'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
       print('***hourly');
+      //FIXME
       hourlyPast.forEach((element) {
         print('for element');
         print(element['weather'][0]['main']);
