@@ -2,6 +2,7 @@ class Weather {
   final String tempMax;
   final String tempMin;
   final String tempCurrent;
+  final String dt;
   final DateTime date;
   final String mainDescription;
   final String detailedDescription;
@@ -23,6 +24,7 @@ class Weather {
 
   Weather({
     this.tempMax = "0.0",
+    this.dt = "0",
     this.tempMin = "0.0",
     this.tempCurrent = "0.0",
     DateTime date,

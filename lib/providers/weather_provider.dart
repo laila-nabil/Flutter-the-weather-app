@@ -43,10 +43,6 @@ class WeatherProvider with ChangeNotifier {
     var timeNowUtc = timeNow.toUtc();
     var timezoneOffset = timeNow.timeZoneOffset;
     var timeNowDiff = timeNow.isAfter(timeNowUtc);
-    print('DateTime.now() $timeNow');
-    print('timeNow.toUtc() $timeNowUtc');
-    print('timeNowDiff $timeNowDiff');
-    print('timezoneOffset $timezoneOffset');
     var unixTime = timeNowDiff
         ? ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
                     .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
@@ -73,6 +69,7 @@ class WeatherProvider with ChangeNotifier {
     return DateTime.fromMillisecondsSinceEpoch(
         (unixTimeStamp + timezoneOffset) * 1000,
         isUtc: true);
+
   }
 
   DateTime dateTimeTimezone(DateTime date, int timezoneOffset) {
@@ -157,6 +154,7 @@ class WeatherProvider with ChangeNotifier {
             detailedDescription: element['weather'][0]['description'],
             // date: unixSecondsToDate(element['dt']),
             // date: unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset']),
+            dt: element['dt'].toString(),
             date: localTime
                 ? unixSecondsToDate(element['dt'])
                 : unixSecondsToDateTimezone(
@@ -189,6 +187,7 @@ class WeatherProvider with ChangeNotifier {
       _todayWeather = Weather(
         // date: unixSecondsToDate(date),
         // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
+        dt: date.toString(),
         date: localTime
             ? unixSecondsToDate(date)
             : unixSecondsToDateTimezone(
@@ -204,17 +203,31 @@ class WeatherProvider with ChangeNotifier {
         image: isImage3D
             ? 'assets/3d/$icon.png'
             : 'https://openweathermap.org/img/wn/$icon@4x.png',
-        weatherTimeline: _hourlyPresentFutureWeather
-            .where((element) => localTime
-                ? DateFormat('yyyy-MM-dd')
-                    .format(DateTime.now())
-                    .compareTo(DateFormat('yyyy-MM-dd').format(element.date))
-                : DateFormat('yyyy-MM-dd')
-                        .format(DateTime.now().toUtc())
-                        .compareTo(DateFormat('yyyy-MM-dd')
-                            .format(element.date.toUtc())) ==
-                    0)
-            .toList(),
+        // weatherTimeline: _hourlyPresentFutureWeather
+        //     .where((element) => localTime
+        //         ? DateFormat('yyyy-MM-dd')
+        //             .format(DateTime.now())
+        //             .compareTo(DateFormat('yyyy-MM-dd').format(element.date))
+        //         : DateFormat('yyyy-MM-dd')
+        //                 .format(DateTime.now().toUtc())
+        //                 .compareTo(DateFormat('yyyy-MM-dd')
+        //                     .format(element.date.toUtc())) ==
+        //             0)
+        //     .toList(),
+        weatherTimeline: _hourlyPresentFutureWeather.where((element) {
+          // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
+          // print("weather Timeline ${DateFormat('yyyy-MM-dd')
+          //     .format(element.date)
+          //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
+          return localTime
+              ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+              DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
+              : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+              DateFormat('yyyy-MM-dd').format(
+                  unixSecondsToDateTimezone(date,
+                      presentFutureWeather['timezone_offset']))) ==
+              0;
+        }).toList(),
       );
       await getLocationFromCoordinates();
       _futureWeather = [];
@@ -224,6 +237,7 @@ class WeatherProvider with ChangeNotifier {
         _futureWeather.add(Weather(
           // date: unixSecondsToDate(date),
           // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
+          dt: date.toString(),
           date: localTime
               ? unixSecondsToDate(date)
               : unixSecondsToDateTimezone(
@@ -256,6 +270,7 @@ class WeatherProvider with ChangeNotifier {
           }).toList(),
         ));
       }
+      print('present done');
     } catch (error) {
       throw (error);
     }
@@ -283,7 +298,6 @@ class WeatherProvider with ChangeNotifier {
       // print(
       //     'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
       // print('***hourly history');
-      //FIXME
       hourlyPast.forEach((element) {
         // print('for element');
         // print(element['weather'][0]['main']);
@@ -308,6 +322,7 @@ class WeatherProvider with ChangeNotifier {
             visibility: element['visibility'].toString(),
             // date: unixSecondsToDate(element['dt']),
             // date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
+            dt: element['dt'].toString(),
             date: localTime
                 ? unixSecondsToDate(element['dt'])
                 : unixSecondsToDateTimezone(
