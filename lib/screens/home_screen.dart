@@ -27,14 +27,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isInit) {
       // _isLoading = true;
       try {
-        // await Provider.of<WeatherProvider>(context, listen: false)
-        //     .getCurrentWeatherAPI();
-        // await Provider.of<WeatherProvider>(context, listen: false)
-        //     .getPresentFutureWeatherAPI();
+        await Provider.of<WeatherProvider>(context, listen: false)
+            .getCurrentWeatherAPI();
+        await Provider.of<WeatherProvider>(context, listen: false)
+            .getPresentFutureWeatherAPI();
         // await Provider.of<WeatherProvider>(context, listen: false)
         //     .getAllHistoryWeather();
-        await Provider.of<WeatherProvider>(context, listen: false)
-            .getWeather();
+        // await Provider.of<WeatherProvider>(context, listen: false)
+        //     .getWeather();
 
         setState(() {
           // _isLoading = false;
