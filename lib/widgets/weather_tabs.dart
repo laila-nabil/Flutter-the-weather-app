@@ -8,7 +8,7 @@ class WeatherTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
-    print('weatherTabs.length, ${weatherTabs.length}');
+    // print('weatherTabs.length, ${weatherTabs.length}');
     double tabBarContainerHeight = 0;
     return LayoutBuilder(builder: (ctx,constraints){
       return DefaultTabController(
@@ -146,8 +146,8 @@ class WeatherTabs extends StatelessWidget {
                   ...weatherTabs
                   // .map((e) => WeatherList(e.weatherTimeline))
                       .map((e) {
-                    print("e.date ${e.date}");
-                    print("e.weatherTimeline ${e.weatherTimeline.length}");
+                    // print("e.date ${e.date}");
+                    // print("e.weatherTimeline ${e.weatherTimeline.length}");
                     return WeatherList(e.weatherTimeline);
                   }).toList()
                 ]))

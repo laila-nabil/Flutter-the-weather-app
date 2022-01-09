@@ -27,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isInit) {
       // _isLoading = true;
       try {
+        print('didChangeDependencies');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)

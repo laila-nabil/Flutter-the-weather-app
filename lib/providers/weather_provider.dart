@@ -143,7 +143,6 @@ class WeatherProvider with ChangeNotifier {
             // .format(DateTime.now().toUtc())
             // .compareTo(DateFormat('MMM d yyyy').format(element.date.toUtc()));
             .compareTo(DateFormat('MMM d yyyy').format(element.date));
-        print('todayHourly for element ${element.date} $compare');
         if (compare == 0) {
           return true;
         }
@@ -226,16 +225,16 @@ class WeatherProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(url));
       print('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
-      print('historyWeather $historyWeather');
+      // print('historyWeather $historyWeather');
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
-      print(
-          'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
-      print('***hourly history');
+      // print(
+      //     'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
+      // print('***hourly history');
       //FIXME
       hourlyPast.forEach((element) {
-        print('for element');
-        print(element['weather'][0]['main']);
-        print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
+        // print('for element');
+        // print(element['weather'][0]['main']);
+        // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
@@ -260,16 +259,16 @@ class WeatherProvider with ChangeNotifier {
       List<double> hourlyPastTempSorted = [];
       hourlyPast.forEach((value) {
         {
-          print('adding > $value ${value.runtimeType}');
+          // print('adding > $value ${value.runtimeType}');
           double valueDouble = value['temp'] + 0.0;
-          print('value[temp] ${value['temp']} ${value['temp'].runtimeType}');
+          // print('value[temp] ${value['temp']} ${value['temp'].runtimeType}');
           hourlyPastTemp.add(valueDouble);
         }
       });
       hourlyPastTempSorted = hourlyPastTemp;
       hourlyPastTempSorted.sort();
-      print(
-          'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
+      // print(
+      //     'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
       _pastWeather.insert(
           daysAgo - 1,
           Weather(
@@ -283,9 +282,10 @@ class WeatherProvider with ChangeNotifier {
             tempMax: hourlyPastTempSorted[hourlyPastTempSorted.length - 1]
                 .toString(),
             weatherTimeline: _hourlyPastWeather.where((element) {
-              print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
-                  .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
+              // print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
+              //     .format(element.date)
+              //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
+              //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
               return (DateFormat('yyyy-MM-dd')
                   .format(element.date)
                   .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))  == 0);
@@ -294,12 +294,13 @@ class WeatherProvider with ChangeNotifier {
       print("<==>for ${_pastWeather[daysAgo-1].date} ${_pastWeather[daysAgo-1].weatherTimeline[0].tempCurrent}");
       print('end of api call $daysAgo');
     } catch (error) {
+      print('error getHistoryWeatherAPI daysAgo $daysAgo $error');
       throw (error);
     }
   }
 
   Future<void> getWeather() async {
-    print('getWeather');
+    print('getWeather()');
     try {
       await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
@@ -375,6 +376,7 @@ class WeatherProvider with ChangeNotifier {
   async{
     Position result;
     try{
+      print('setLocationLatLon');
       result = await _determinePosition();
       _lat = result.latitude.toString();
       _lon = result.longitude.toString();
@@ -406,7 +408,6 @@ class WeatherProvider with ChangeNotifier {
     final response = await http.get(Uri.parse(url));
     
     final locationDetails = json.decode(response.body);
-    print('locationDetails $locationDetails');
     if (locationDetails != null) {
       location = '${locationDetails['city']},${locationDetails['countryCode']}';
     }

@@ -14,7 +14,7 @@ class WeatherDetailed extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
-    print("detailed weather for ${weatherDay.date} ${weatherDay.lat} ${weatherDay.lon}");
+    // print("detailed weather for ${weatherDay.date} ${weatherDay.lat} ${weatherDay.lon}");
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
         dashboardWeather(

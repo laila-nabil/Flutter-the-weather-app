@@ -13,7 +13,7 @@ class location{
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=$lat&longitude=$lon&localityLanguage=en';
     final response = await http.get(Uri.parse(url));
     final locationDetails = json.decode(response.body);
-    print('locationDetails $locationDetails');
+    // print('locationDetails $locationDetails');
     city = locationDetails['city'];
     return locationDetails;
 
