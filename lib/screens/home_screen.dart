@@ -32,12 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
             .getPresentFutureWeatherAPI();
-        print('did change before get history');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getAllHistoryWeather();
-        print('did change after get history');
-        // await Provider.of<WeatherProvider>(context, listen: false)
-        //     .getWeather();
 
         setState(() {
           _isLoading = false;
