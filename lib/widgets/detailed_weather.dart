@@ -22,11 +22,12 @@ class WeatherDetailed extends StatelessWidget {
           svgIcon: 'assets/dashboard_icons/rain.svg',
           status: '${double.tryParse(weatherDay.rain) * 100.0}%',
         ),
+
         dashboardWeather(
           isStatusCentered: false,
           svgIcon: 'assets/dashboard_icons/wind_2.svg',
           status:
-              '${weatherDay.windSpeed} m/s ${windDirection(int.parse(weatherDay.windDeg))}',
+      weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} m/s ${windDirection(int.tryParse(weatherDay.windDeg))}' : '_',
         ),
         dashboardWeather(
           isStatusCentered: false,
