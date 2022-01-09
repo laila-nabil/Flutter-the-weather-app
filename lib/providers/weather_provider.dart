@@ -22,6 +22,7 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
+  static const int historyDays = 5;
   static bool isImage3D = true;
   bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
@@ -228,7 +229,6 @@ class WeatherProvider with ChangeNotifier {
     print('nightTime $unixTimestamp');
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
-
     print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
@@ -318,6 +318,7 @@ class WeatherProvider with ChangeNotifier {
   Future<void> getWeather() async {
     print('getWeather()');
     try {
+      print('in getWeather()');
       await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
       await getAllHistoryWeather();
@@ -334,9 +335,11 @@ class WeatherProvider with ChangeNotifier {
     try {
       _pastWeather = [];
       _hourlyPastWeather = [];
-      for (int i = 1; i <= 5; i++) {
-        print('i $i');
+      print('reset _pastWeather _hourlyPastWeather');
+      for (int i = 1; i <= historyDays; i++){
+        print('i before $i');
         await getHistoryWeatherAPI(i);
+        print('i after $i');
       }
       final pastWeatherData = _pastWeather;
       _pastWeather = [...(_pastWeather.reversed)];
@@ -355,7 +358,7 @@ class WeatherProvider with ChangeNotifier {
       _compareTodayYesterday =
           'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
       notifyListeners();
-      print('got weather');
+      print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
     }

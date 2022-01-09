@@ -18,27 +18,30 @@ class _MyHomePageState extends State<MyHomePage> {
   var todayWeather = {};
   var historyWeatherDay = {};
   var historyWeatherNight = {};
-  // bool _isLoading = false;
+  bool _isLoading = false;
   bool _isInit = true;
   Cron cron;
 
   @override
   Future<void> didChangeDependencies() async {
     if (_isInit) {
-      // _isLoading = true;
+      _isLoading = true;
       try {
         print('didChangeDependencies');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
             .getPresentFutureWeatherAPI();
+        print('did change before get history');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getAllHistoryWeather();
+        print('did change after get history');
         // await Provider.of<WeatherProvider>(context, listen: false)
         //     .getWeather();
 
         setState(() {
-          // _isLoading = false;
+          _isLoading = false;
+          _isInit = false;
         });
       } catch (error) {
         print('error in did change $error');
@@ -54,8 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
         print('01,30 * * * * ${DateTime.now()}');
         try {
-          await Provider.of<WeatherProvider>(context, listen: false)
-              .getCurrentWeatherAPI();
+          if(Provider.of<WeatherProvider>(context,listen: false).isLoading){
+            print('cron can\'t since isLoading in true');
+          }else{
+            await Provider.of<WeatherProvider>(context, listen: false)
+                .getCurrentWeatherAPI();
+          }
+
+
           setState(() {
             print('update');
           });
@@ -82,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
     }
-    _isInit = false;
     super.didChangeDependencies();
   }
 
@@ -112,17 +120,17 @@ class _MyHomePageState extends State<MyHomePage> {
               await Provider.of<WeatherProvider>(context, listen: false)
                   .getPresentFutureWeatherAPI();
             } catch (error) {
-              print('error in did change $error');
+              print('error in RefreshIndicator $error');
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('An error occurred! did')));
+                  SnackBar(content: Text('An error occurred!')));
             }
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             // padding: const EdgeInsets.all(18.0),
             child: Center(
-              // child: _isLoading
-              child: Provider.of<WeatherProvider>(context).isLoading
+              child: _isLoading
+              // child: Provider.of<WeatherProvider>(context).isLoading
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
