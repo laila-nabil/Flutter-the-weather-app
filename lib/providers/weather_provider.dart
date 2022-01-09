@@ -14,6 +14,7 @@ import '../models/current_weather.dart';
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
+
   // String _lat = '30.0444'; //cairo's latitude
   // String _lon = '31.2357'; //cairo's longitude
   String _lat = '37.5665'; //seoul's latitude
@@ -32,12 +33,33 @@ class WeatherProvider with ChangeNotifier {
   var _API_KEY = kIsWeb ? terminalApi : dotenv.env['API_KEY'];
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
-    var timeNow = DateTime.now().toUtc();
-    var unixTime = ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
-                .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-                .millisecondsSinceEpoch) /
-            1000)
-        .round();
+    // var timeNow = DateTime.now().toUtc();
+    // var unixTime = ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
+    //             .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
+    //             .millisecondsSinceEpoch) /
+    //         1000)
+    //     .round();
+    var timeNow = DateTime.now();
+    var timeNowUtc = timeNow.toUtc();
+    var timezoneOffset = timeNow.timeZoneOffset;
+    var timeNowDiff = timeNow.isAfter(timeNowUtc);
+    print('DateTime.now() $timeNow');
+    print('timeNow.toUtc() $timeNowUtc');
+    print('timeNowDiff $timeNowDiff');
+    print('timezoneOffset $timezoneOffset');
+    var unixTime = timeNowDiff
+        ? ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
+                    .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
+                    .add(timezoneOffset)
+                    .millisecondsSinceEpoch) /
+                1000)
+            .round()
+        : ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
+                    .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
+                    .subtract(timezoneOffset)
+                    .millisecondsSinceEpoch) /
+                1000)
+            .round();
     return unixTime;
   }
 
@@ -286,7 +308,10 @@ class WeatherProvider with ChangeNotifier {
             visibility: element['visibility'].toString(),
             // date: unixSecondsToDate(element['dt']),
             // date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
-            date:localTime ? unixSecondsToDate(element['dt']) : unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
+            date: localTime
+                ? unixSecondsToDate(element['dt'])
+                : unixSecondsToDateTimezone(
+                    element['dt'], historyWeather['timezone_offset']),
             rain: "0.0",
             tempCurrent: element['temp'].toString()));
       });
@@ -324,7 +349,8 @@ class WeatherProvider with ChangeNotifier {
           //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
           //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
           return (DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                  DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: daysAgo)))) ==
+                  DateFormat('yyyy-MM-dd').format(
+                      DateTime.now().subtract(Duration(days: daysAgo)))) ==
               0);
         }).toList(),
       ));
@@ -451,7 +477,9 @@ class WeatherProvider with ChangeNotifier {
     final locationDetails = json.decode(response.body);
     print('locationDetails $locationDetails');
     if (locationDetails != null) {
-      location = locationDetails['city'].toString().isNotEmpty?'${locationDetails['city']},${locationDetails['countryCode']}':'${locationDetails['principalSubdivision']},${locationDetails['countryCode']}';
+      location = locationDetails['city'].toString().isNotEmpty
+          ? '${locationDetails['city']},${locationDetails['countryCode']}'
+          : '${locationDetails['principalSubdivision']},${locationDetails['countryCode']}';
     }
     notifyListeners();
     return locationDetails;
