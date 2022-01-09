@@ -27,12 +27,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isInit) {
       // _isLoading = true;
       try {
+        // await Provider.of<WeatherProvider>(context, listen: false)
+        //     .getCurrentWeatherAPI();
+        // await Provider.of<WeatherProvider>(context, listen: false)
+        //     .getPresentFutureWeatherAPI();
+        // await Provider.of<WeatherProvider>(context, listen: false)
+        //     .getAllHistoryWeather();
         await Provider.of<WeatherProvider>(context, listen: false)
-            .getCurrentWeatherAPI();
-        await Provider.of<WeatherProvider>(context, listen: false)
-            .getPresentFutureWeatherAPI();
-        await Provider.of<WeatherProvider>(context, listen: false)
-            .getAllHistoryWeather();
+            .getWeather();
 
         setState(() {
           // _isLoading = false;
@@ -85,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('>>>> in the build');
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final orientation = mediaQuery.orientation;

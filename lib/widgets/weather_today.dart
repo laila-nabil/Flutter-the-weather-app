@@ -14,8 +14,6 @@ class WeatherToday extends StatelessWidget {
     final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
     final weatherTodayNotDetailed =
         Provider.of<WeatherProvider>(context).todayWeather;
-    print(
-        "weatherTodayNotDetailed ${weatherTodayNotDetailed.tempMax} ${weatherTodayNotDetailed.tempMin} ${weatherTodayNotDetailed.rain}");
     // final city = Provider.of<WeatherProvider>(context).location;
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;

@@ -44,9 +44,6 @@ class WeatherProvider with ChangeNotifier {
   }
   DateTime unixSecondsToDateTimezone(int unixTimeStamp , int timezoneOffset) {
     //If [isUtc] is false then the date is in the local time zone.
-    // print('unixSecondsToDateTimezone for $unixTimeStamp and offset $timezoneSeconds');
-    // print('${DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneSeconds) * 1000,isUtc: false)}');
-    // print('${DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000)}');
     return DateTime.fromMillisecondsSinceEpoch((unixTimeStamp+timezoneOffset) * 1000,isUtc: true);
   }
 
@@ -115,7 +112,7 @@ class WeatherProvider with ChangeNotifier {
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
-      print('***hourly');
+      print('***hourly _hourlyPresentFutureWeather');
       hourly.forEach((element) {
         print('=>for element');
         print(element['weather'][0]['main']);
@@ -231,7 +228,7 @@ class WeatherProvider with ChangeNotifier {
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       print(
           'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
-      print('***hourly');
+      print('***hourly history');
       //FIXME
       hourlyPast.forEach((element) {
         print('for element');
@@ -292,38 +289,20 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<void> getWeather() async {
-    print('getting weather');
+    print('getWeather');
     try {
+      await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
-      _pastWeather = [];
-      _hourlyPastWeather = [];
-      for (int i = 1; i <= 5; i++) {
-        print('i $i');
-        await getHistoryWeatherAPI(i);
-      }
-      _pastWeather = [...(_pastWeather.reversed)];
-      final isHotterToday = (double.parse(todayWeather.tempMax) +
-              double.parse(todayWeather.tempMin)) >
-          (double.parse(_pastWeather[0].tempMax) +
-              double.parse(_pastWeather[0].tempMin));
-      final diffMax = double.parse(todayWeather.tempMax) -
-          double.parse(_pastWeather[0].tempMax);
-      final diffMin = double.parse(todayWeather.tempMin) -
-          double.parse(_pastWeather[0].tempMin);
-      final diff =
-          '${diffMax.toStringAsFixed(2)} at day and ${diffMin.toStringAsFixed(2)} at night';
-      _compareTodayYesterday = isHotterToday
-          ? 'Today is warmer than yesterday by $diff'
-          : 'Today is colder than yesterday by $diff';
-      notifyListeners();
+      await getAllHistoryWeather();
       print('got weather');
+      notifyListeners();
     } catch (error) {
       throw (error);
     }
   }
 
   Future<void> getAllHistoryWeather() async {
-    print('getting weather');
+    print('getAllHistoryWeather');
     isLoading = true;
     try {
       _pastWeather = [];
