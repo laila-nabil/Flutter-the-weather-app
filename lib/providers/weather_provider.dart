@@ -25,7 +25,7 @@ class WeatherProvider with ChangeNotifier {
   String _compareTodayYesterday = '';
   String location = '';
   static const localTime = false;
-  static const int historyDays = 5;
+  static const int historyDays = 4;
   static bool isImage3D = true;
   bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
@@ -418,6 +418,7 @@ class WeatherProvider with ChangeNotifier {
       _compareTodayYesterday =
           'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
       notifyListeners();
+      
       print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
