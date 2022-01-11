@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,7 @@ class WeatherProvider with ChangeNotifier {
   String _lon = '126.977'; //seoul's longitude
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
+  Map<String,Weather> _hourlyPastWeatherMap = {};
   List<Weather> _hourlyPresentFutureWeather = [];
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
@@ -354,20 +356,19 @@ class WeatherProvider with ChangeNotifier {
       for (int j = 1; j <= historyDays; j++) {
         List<Weather> weatherTimeline = [];
         List<Weather> weatherTimelineSorted = [];
-        List<Weather> weatherTimelineSortedByDate = [];
-        _hourlyPastWeather.forEach((element) {
-          final isDay = DateFormat('yyyy-MM-dd')
-                  .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-              0;
-          int counter = 0;
-          if (isDay) {
-            print('history day ${element.dt} ${element.date} is $j days ago');
-            // weatherTimeline.add(element);
-            weatherTimeline.insert(counter, element);
-            counter++;
-          }
+        List<Weather> weatherTimelineNoDup = [];
+        weatherTimeline = _hourlyPastWeather.where((element) =>
+        DateFormat('yyyy-MM-dd')
+            .format(element.date)
+            .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
+            0).toList()..sort(Weather().sortByDate);
+        final weatherTimelineSet = Set<Weather>();
+        weatherTimeline.forEach((element) {
+          print('element.date.hour ${element.date.hour}');
+          weatherTimelineNoDup.insert(element.date.hour, element);
         });
+        print('original weatherTimeline ${weatherTimeline.length}');
+        print('no dup weatherTimeline ${weatherTimelineNoDup.length}');
         weatherTimelineSorted = weatherTimeline;
         weatherTimelineSorted.sort((a, b) =>
             double.parse(b.tempCurrent).round() -
@@ -378,12 +379,16 @@ class WeatherProvider with ChangeNotifier {
           lon: lon,
           isMetric: true,
           isImageNetwork: false,
-          // weatherTimeline: weatherTimeline,
+          // weatherTimeline: _hourlyPastWeather.where((element) =>
+          //     DateFormat('yyyy-MM-dd')
+          //         .format(element.date)
+          //         .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
+          //     0).toList()..sort(Weather().sortByDate),
           weatherTimeline: _hourlyPastWeather.where((element) =>
-              DateFormat('yyyy-MM-dd')
-                  .format(element.date)
-                  .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-              0).toList()..sort(Weather().sortByDate)..toSet().toList(),
+          DateFormat('yyyy-MM-dd')
+              .format(element.date)
+              .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
+              0).toList()..sort(Weather().sortByDate),
           tempMax: weatherTimelineSorted.first.tempCurrent,
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
