@@ -51,42 +51,23 @@ class WeatherProvider with ChangeNotifier {
     return date;
   }
 
-  int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
-    // var timeNow = DateTime.now().toUtc();
-    // var unixTime = ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
-    //             .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-    //             .millisecondsSinceEpoch) /
-    //         1000)
-    //     .round();
+  int dateToUnixSeconds({bool byDay, int duration}) {
     var timeNow = DateTime.now();
     var timeNowUtc = timeNow.toUtc();
-    var TimezoneOffset = timeNow.timeZoneOffset;
-    var timeNowDiff = timeNow.isAfter(timeNowUtc);
-    var unixTime = timeNowDiff
-        ? ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
-                    .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-                    .add(TimezoneOffset)
+    var durationDiff = byDay ? Duration(days: duration,) : Duration(hours: duration,);
+    var unixTime = !timezoneOffset.sign.isNegative
+        ? ((timeNowUtc
+                    .subtract(durationDiff)
+                    .add(Duration(seconds: timezoneOffset))
                     .millisecondsSinceEpoch) /
                 1000)
             .round()
-        : ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
-                    .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-                    .subtract(TimezoneOffset)
+        : ((timeNowUtc
+                    .subtract(durationDiff)
+                    .subtract(Duration(seconds: timezoneOffset))
                     .millisecondsSinceEpoch) /
                 1000)
             .round();
-    return unixTime;
-  }
-
-  int dateToUnixSecondsNow(int daysAgo) {
-    var timeNow = DateTime.now();
-    var unixTime = ((timeNow
-                .subtract(Duration(
-                  days: daysAgo,
-                ))
-                .millisecondsSinceEpoch) /
-            1000)
-        .round();
     return unixTime;
   }
 
@@ -303,19 +284,19 @@ class WeatherProvider with ChangeNotifier {
     isLoading = false;
   }
 
-  Future<void> getHistoryDataAPIUTC(int daysAgo) async {
+  Future<void> getHistoryDataAPIUTC({bool byDay, int duration}) async {
     // var API_key = DotEnv.env['API_KEY'];
     // var API_key = dotenv.env['API_KEY'];
     var API_key = _API_KEY;
     const part = 'current,minutely';
-    var unixTimestamp = dateToUnixSecondsNow(daysAgo);
+    var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
     print('nightTime $unixTimestamp');
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
     print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      print('daysAgo $daysAgo');
+      print('daysAgo $duration');
       final historyWeather = json.decode(response.body);
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       hourlyPast.forEach((element) {
@@ -351,7 +332,7 @@ class WeatherProvider with ChangeNotifier {
             tempCurrent: element['temp'].toString()));
       });
     } catch (error) {
-      print('error getHistoryDataAPIUTC daysAgo $daysAgo $error');
+      print('error getHistoryDataAPIUTC daysAgo $duration $error');
       throw (error);
     }
   }
@@ -363,10 +344,11 @@ class WeatherProvider with ChangeNotifier {
       _pastWeather = [];
       _hourlyPastWeather = [];
       print('reset _pastWeather _hourlyPastWeather');
+      await getHistoryDataAPIUTC(duration: 15,byDay: false);
       for (int i = 1; i <= historyDaysUTC; i++) {
       // for (int i = historyDaysUTC; i >= 1; i--) {
         print('i before $i');
-        await getHistoryDataAPIUTC(i);
+        await getHistoryDataAPIUTC(duration: i,byDay: true);
         print('i after $i');
       }
       for (int j = 1; j <= historyDays; j++) {
@@ -401,7 +383,7 @@ class WeatherProvider with ChangeNotifier {
               DateFormat('yyyy-MM-dd')
                   .format(element.date)
                   .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-              0).toList()..sort(Weather().sortByDate),
+              0).toList()..sort(Weather().sortByDate)..toSet().toList(),
           tempMax: weatherTimelineSorted.first.tempCurrent,
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
@@ -443,7 +425,7 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     const part = 'current,minutely';
-    var unixTimestamp = dateToUnixSeconds(daysAgo, 0);
+    var unixTimestamp = dateToUnixSeconds(duration: daysAgo, byDay:true);
     print('nightTime $unixTimestamp');
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
