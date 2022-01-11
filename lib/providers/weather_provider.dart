@@ -305,7 +305,34 @@ class WeatherProvider with ChangeNotifier {
         // print('for element');
         // print(element['weather'][0]['main']);
         // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
-        _hourlyPastWeather.add(Weather(
+        // _hourlyPastWeather.add(Weather(
+        //     lat: lat,
+        //     lon: lon,
+        //     isImageNetwork: !isImage3D,
+        //     image: isImage3D
+        //         ? 'assets/3d/${element['weather'][0]['icon']}.png'
+        //         : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+        //     mainDescription: element['weather'][0]['main'].toString(),
+        //     detailedDescription:
+        //         element['weather'][0]['description'].toString(),
+        //     humidity: element['humidity'].toString(),
+        //     feelsLike: element['feels_like'].toString(),
+        //     uvi: element['uvi'].toString(),
+        //     clouds: element['clouds'].toString(),
+        //     windDeg: element['wind_deg'].toString(),
+        //     windSpeed: element['wind_speed'].toString(),
+        //     pressure: element['pressure'].toString(),
+        //     visibility: element['visibility'].toString(),
+        //     // date: unixSecondsToDate(element['dt']),
+        //     // date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
+        //     dt: element['dt'].toString(),
+        //     date: localTime
+        //         ? unixSecondsToDate(element['dt'])
+        //         : unixSecondsToDateTimezone(
+        //             element['dt'], historyWeather['timezone_offset']),
+        //     rain: "0.0",
+        //     tempCurrent: element['temp'].toString()));
+        _hourlyPastWeatherMap[element['dt'].toString()]=Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
@@ -314,7 +341,7 @@ class WeatherProvider with ChangeNotifier {
                 : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
             detailedDescription:
-                element['weather'][0]['description'].toString(),
+            element['weather'][0]['description'].toString(),
             humidity: element['humidity'].toString(),
             feelsLike: element['feels_like'].toString(),
             uvi: element['uvi'].toString(),
@@ -329,9 +356,9 @@ class WeatherProvider with ChangeNotifier {
             date: localTime
                 ? unixSecondsToDate(element['dt'])
                 : unixSecondsToDateTimezone(
-                    element['dt'], historyWeather['timezone_offset']),
+                element['dt'], historyWeather['timezone_offset']),
             rain: "0.0",
-            tempCurrent: element['temp'].toString()));
+            tempCurrent: element['temp'].toString());
       });
     } catch (error) {
       print('error getHistoryDataAPIUTC daysAgo $duration $error');
@@ -357,7 +384,7 @@ class WeatherProvider with ChangeNotifier {
         List<Weather> weatherTimeline = [];
         List<Weather> weatherTimelineSorted = [];
         List<Weather> weatherTimelineNoDup = [];
-        weatherTimeline = _hourlyPastWeather.where((element) =>
+        weatherTimeline = _hourlyPastWeatherMap.values.where((element) =>
         DateFormat('yyyy-MM-dd')
             .format(element.date)
             .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
@@ -384,7 +411,7 @@ class WeatherProvider with ChangeNotifier {
           //         .format(element.date)
           //         .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
           //     0).toList()..sort(Weather().sortByDate),
-          weatherTimeline: _hourlyPastWeather.where((element) =>
+          weatherTimeline: _hourlyPastWeatherMap.values.where((element) =>
           DateFormat('yyyy-MM-dd')
               .format(element.date)
               .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
