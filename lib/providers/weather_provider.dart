@@ -15,12 +15,12 @@ import '../models/current_weather.dart';
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
   List<Weather> _futureWeather = [];
-  // String _lat = '30.0444'; //cairo's latitude
-  // String _lon = '31.2357'; //cairo's longitude
+  String _lat = '30.0444'; //cairo's latitude
+  String _lon = '31.2357'; //cairo's longitude
   int timezoneOffset = 7200;
 
-  String _lat = '37.5665'; //seoul's latitude
-  String _lon = '126.977'; //seoul's longitude
+  // String _lat = '37.5665'; //seoul's latitude
+  // String _lon = '126.977'; //seoul's longitude
   Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   Map<String,Weather> _hourlyPastWeatherMap = {};
