@@ -386,16 +386,7 @@ class WeatherProvider with ChangeNotifier {
             counter++;
           }
         });
-        // print('weatherTimeline here');
-        // weatherTimeline.forEach((element) {print(element.date);});
         weatherTimelineSorted = weatherTimeline;
-        // weatherTimelineSortedByDate = weatherTimeline;
-        // weatherTimelineSortedByDate.sort(Weather().sortByDate);
-        // final weatherList = weatherTimelineSortedByDate;
-        // print('weatherTimelineSortedByDate here');
-        // weatherTimelineSortedByDate.forEach((element) {print(element.date);});
-        // weatherTimeline.sort((a, b) => a.date.difference(b.date).inSeconds);
-        // weatherTimeline.sort((a, b) => -int.tryParse(a.dt) + int.tryParse(b.dt));
         weatherTimelineSorted.sort((a, b) =>
             double.parse(b.tempCurrent).round() -
             double.parse(a.tempCurrent).round());
