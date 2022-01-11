@@ -48,4 +48,8 @@ class Weather {
   }) : date = date ??
             DateTime
                 .now().toUtc(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
+
+Comparator<Weather> sortByDt = (a,b) => double.tryParse(a.dt).round()-double.tryParse(b.dt).round();
+Comparator<Weather> sortByDate = (a,b) => a.date.difference(b.date).inSeconds;
+Comparator<Weather> sortByTemp = (a,b) => double.tryParse(a.tempCurrent).round()-double.tryParse(b.tempCurrent).round();
 }

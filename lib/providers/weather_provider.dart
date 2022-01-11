@@ -16,6 +16,8 @@ class WeatherProvider with ChangeNotifier {
   List<Weather> _futureWeather = [];
   String _lat = '30.0444'; //cairo's latitude
   String _lon = '31.2357'; //cairo's longitude
+  int timezoneOffset = 7200;
+
   // String _lat = '37.5665'; //seoul's latitude
   // String _lon = '126.977'; //seoul's longitude
   Weather _todayWeather;
@@ -26,10 +28,28 @@ class WeatherProvider with ChangeNotifier {
   String location = '';
   static const localTime = false;
   static const int historyDays = 4;
+  static const int historyDaysUTC = 5;
   static bool isImage3D = true;
   bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
   var _API_KEY = kIsWeb ? terminalApi : dotenv.env['API_KEY'];
+
+  DateTime daysFromNow(int daysAgo) {
+    var timeNow = DateTime.now();
+    var timeNowUtc = timeNow.toUtc();
+    var date = !timezoneOffset.sign.isNegative
+        ? timeNowUtc
+            .subtract(Duration(
+              days: daysAgo,
+            ))
+            .add(Duration(seconds: timezoneOffset.abs()))
+        : timeNowUtc
+            .subtract(Duration(
+              days: daysAgo,
+            ))
+            .subtract(Duration(seconds: timezoneOffset.abs()));
+    return date;
+  }
 
   int dateToUnixSeconds(int daysAgo, int hoursFromNextDay) {
     // var timeNow = DateTime.now().toUtc();
@@ -40,21 +60,33 @@ class WeatherProvider with ChangeNotifier {
     //     .round();
     var timeNow = DateTime.now();
     var timeNowUtc = timeNow.toUtc();
-    var timezoneOffset = timeNow.timeZoneOffset;
+    var TimezoneOffset = timeNow.timeZoneOffset;
     var timeNowDiff = timeNow.isAfter(timeNowUtc);
     var unixTime = timeNowDiff
         ? ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
                     .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-                    .add(timezoneOffset)
+                    .add(TimezoneOffset)
                     .millisecondsSinceEpoch) /
                 1000)
             .round()
         : ((DateTime.utc(timeNow.year, timeNow.month, timeNow.day)
                     .subtract(Duration(days: daysAgo, hours: hoursFromNextDay))
-                    .subtract(timezoneOffset)
+                    .subtract(TimezoneOffset)
                     .millisecondsSinceEpoch) /
                 1000)
             .round();
+    return unixTime;
+  }
+
+  int dateToUnixSecondsNow(int daysAgo) {
+    var timeNow = DateTime.now();
+    var unixTime = ((timeNow
+                .subtract(Duration(
+                  days: daysAgo,
+                ))
+                .millisecondsSinceEpoch) /
+            1000)
+        .round();
     return unixTime;
   }
 
@@ -68,11 +100,6 @@ class WeatherProvider with ChangeNotifier {
     return DateTime.fromMillisecondsSinceEpoch(
         (unixTimeStamp + timezoneOffset) * 1000,
         isUtc: true);
-
-  }
-
-  DateTime dateTimeTimezone(DateTime date, int timezoneOffset) {
-    return date.add(Duration(seconds: timezoneOffset));
   }
 
   Future<void> getCurrentWeatherAPI() async {
@@ -133,6 +160,7 @@ class WeatherProvider with ChangeNotifier {
       _hourlyPresentFutureWeather = [];
       final response = await http.get(Uri.parse(url));
       final presentFutureWeather = json.decode(response.body);
+      timezoneOffset = presentFutureWeather['timezone_offset'];
       final date = presentFutureWeather['daily'][0]['dt'] as int;
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
@@ -220,12 +248,11 @@ class WeatherProvider with ChangeNotifier {
           //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
           return localTime
               ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-              DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
+                  DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
               : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-              DateFormat('yyyy-MM-dd').format(
-                  unixSecondsToDateTimezone(date,
-                      presentFutureWeather['timezone_offset']))) ==
-              0;
+                      DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(
+                          date, presentFutureWeather['timezone_offset']))) ==
+                  0;
         }).toList(),
       );
       await getLocationFromCoordinates();
@@ -270,6 +297,148 @@ class WeatherProvider with ChangeNotifier {
         ));
       }
       print('present done');
+    } catch (error) {
+      throw (error);
+    }
+    isLoading = false;
+  }
+
+  Future<void> getHistoryDataAPIUTC(int daysAgo) async {
+    // var API_key = DotEnv.env['API_KEY'];
+    // var API_key = dotenv.env['API_KEY'];
+    var API_key = _API_KEY;
+    const part = 'current,minutely';
+    var unixTimestamp = dateToUnixSecondsNow(daysAgo);
+    print('nightTime $unixTimestamp');
+    var url =
+        'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
+    print('history url is $url');
+    try {
+      final response = await http.get(Uri.parse(url));
+      print('daysAgo $daysAgo');
+      final historyWeather = json.decode(response.body);
+      List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
+      hourlyPast.forEach((element) {
+        // print('for element');
+        // print(element['weather'][0]['main']);
+        // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
+        _hourlyPastWeather.add(Weather(
+            lat: lat,
+            lon: lon,
+            isImageNetwork: !isImage3D,
+            image: isImage3D
+                ? 'assets/3d/${element['weather'][0]['icon']}.png'
+                : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
+            mainDescription: element['weather'][0]['main'].toString(),
+            detailedDescription:
+                element['weather'][0]['description'].toString(),
+            humidity: element['humidity'].toString(),
+            feelsLike: element['feels_like'].toString(),
+            uvi: element['uvi'].toString(),
+            clouds: element['clouds'].toString(),
+            windDeg: element['wind_deg'].toString(),
+            windSpeed: element['wind_speed'].toString(),
+            pressure: element['pressure'].toString(),
+            visibility: element['visibility'].toString(),
+            // date: unixSecondsToDate(element['dt']),
+            // date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
+            dt: element['dt'].toString(),
+            date: localTime
+                ? unixSecondsToDate(element['dt'])
+                : unixSecondsToDateTimezone(
+                    element['dt'], historyWeather['timezone_offset']),
+            rain: "0.0",
+            tempCurrent: element['temp'].toString()));
+      });
+    } catch (error) {
+      print('error getHistoryDataAPIUTC daysAgo $daysAgo $error');
+      throw (error);
+    }
+  }
+
+  Future<void> getAllHistoryWeatherUTC() async {
+    print('getAllHistoryWeather');
+    isLoading = true;
+    try {
+      _pastWeather = [];
+      _hourlyPastWeather = [];
+      print('reset _pastWeather _hourlyPastWeather');
+      // for (int i = 1; i <= historyDaysUTC; i++) {
+      for (int i = historyDaysUTC; i >= 1; i--) {
+        print('i before $i');
+        await getHistoryDataAPIUTC(i);
+        print('i after $i');
+      }
+      for (int j = 1; j <= historyDays; j++) {
+        List<Weather> weatherTimeline = [];
+        List<Weather> weatherTimelineSorted = [];
+        List<Weather> weatherTimelineSortedByDate = [];
+        _hourlyPastWeather.forEach((element) {
+          final isDay = DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
+              0;
+          int counter = 0;
+          if (isDay) {
+            print('history day ${element.dt} ${element.date} is $j days ago');
+            // weatherTimeline.add(element);
+            weatherTimeline.insert(counter, element);
+            counter++;
+          }
+        });
+        // print('weatherTimeline here');
+        // weatherTimeline.forEach((element) {print(element.date);});
+        weatherTimelineSorted = weatherTimeline;
+        // weatherTimelineSortedByDate = weatherTimeline;
+        // weatherTimelineSortedByDate.sort(Weather().sortByDate);
+        // final weatherList = weatherTimelineSortedByDate;
+        // print('weatherTimelineSortedByDate here');
+        // weatherTimelineSortedByDate.forEach((element) {print(element.date);});
+        // weatherTimeline.sort((a, b) => a.date.difference(b.date).inSeconds);
+        // weatherTimeline.sort((a, b) => -int.tryParse(a.dt) + int.tryParse(b.dt));
+        weatherTimelineSorted.sort((a, b) =>
+            double.parse(b.tempCurrent).round() -
+            double.parse(a.tempCurrent).round());
+        var theWeather = Weather(
+          date: daysFromNow(j),
+          lat: lat,
+          lon: lon,
+          isMetric: true,
+          isImageNetwork: false,
+          // weatherTimeline: weatherTimeline,
+          weatherTimeline: _hourlyPastWeather.where((element) =>
+              DateFormat('yyyy-MM-dd')
+                  .format(element.date)
+                  .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
+              0).toList(),
+          tempMax: weatherTimelineSorted.first.tempCurrent,
+          tempMin: weatherTimelineSorted.last.tempCurrent,
+        );
+        _pastWeather.add(theWeather);
+        print('_pastWeather.last.weatherTimeline here');
+        _pastWeather.last.weatherTimeline.forEach((element) {
+          print(element.date);
+        });
+      }
+      final pastWeatherData = _pastWeather;
+      _pastWeather = [...(_pastWeather.reversed)];
+      final diffDay = double.parse(todayWeather.tempMax) >
+              double.parse(pastWeatherData[0].tempMax)
+          ? "warmer"
+          : "colder";
+      final diffNight = double.parse(todayWeather.tempMin) >
+              double.parse(pastWeatherData[0].tempMin)
+          ? "warmer"
+          : "colder";
+      final diffMax = double.parse(todayWeather.tempMax) -
+          double.parse(pastWeatherData[0].tempMax);
+      final diffMin = double.parse(todayWeather.tempMin) -
+          double.parse(pastWeatherData[0].tempMin);
+      _compareTodayYesterday =
+          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
+      notifyListeners();
+
+      print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
     }
@@ -381,7 +550,8 @@ class WeatherProvider with ChangeNotifier {
       print('in getWeather()');
       await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
-      await getAllHistoryWeather();
+      // await getAllHistoryWeather();
+      await getAllHistoryWeatherUTC();
       print('got weather');
       notifyListeners();
     } catch (error) {
@@ -396,13 +566,18 @@ class WeatherProvider with ChangeNotifier {
       _pastWeather = [];
       _hourlyPastWeather = [];
       print('reset _pastWeather _hourlyPastWeather');
-      for (int i = 1; i <= historyDays; i++) {
+      // for (int i = 1; i <= historyDays; i++) {
+      //   print('i before $i');
+      //   await getHistoryWeatherAPI(i);
+      //   print('i after $i');
+      // }
+      for (int i = historyDays; i >= 1; i--) {
         print('i before $i');
         await getHistoryWeatherAPI(i);
         print('i after $i');
       }
       final pastWeatherData = _pastWeather;
-      _pastWeather = [...(_pastWeather.reversed)];
+      // _pastWeather = [...(_pastWeather.reversed)];
       final diffDay = double.parse(todayWeather.tempMax) >
               double.parse(pastWeatherData[0].tempMax)
           ? "warmer"
@@ -418,7 +593,7 @@ class WeatherProvider with ChangeNotifier {
       _compareTodayYesterday =
           'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
       notifyListeners();
-      
+
       print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);

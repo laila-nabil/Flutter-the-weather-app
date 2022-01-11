@@ -13,7 +13,7 @@ class WeatherTabs extends StatelessWidget {
     return LayoutBuilder(builder: (ctx,constraints){
       return DefaultTabController(
           length: weatherTabs.length, // length of tabs
-          initialIndex: 5,
+          initialIndex: 4,
           child: Column(children: <Widget>[
             Container(
               child: TabBar(
