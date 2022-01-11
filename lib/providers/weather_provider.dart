@@ -363,8 +363,8 @@ class WeatherProvider with ChangeNotifier {
       _pastWeather = [];
       _hourlyPastWeather = [];
       print('reset _pastWeather _hourlyPastWeather');
-      // for (int i = 1; i <= historyDaysUTC; i++) {
-      for (int i = historyDaysUTC; i >= 1; i--) {
+      for (int i = 1; i <= historyDaysUTC; i++) {
+      // for (int i = historyDaysUTC; i >= 1; i--) {
         print('i before $i');
         await getHistoryDataAPIUTC(i);
         print('i after $i');
@@ -401,7 +401,7 @@ class WeatherProvider with ChangeNotifier {
               DateFormat('yyyy-MM-dd')
                   .format(element.date)
                   .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-              0).toList(),
+              0).toList()..sort(Weather().sortByDate),
           tempMax: weatherTimelineSorted.first.tempCurrent,
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
