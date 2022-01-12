@@ -41,6 +41,7 @@
 //TODO(next level) icon
 //TODO(next level) on play store
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
+        scrollBehavior: MyCustomScrollBehavior(),
         title: 'Weather app',
         theme: ThemeData(
           backgroundColor: Color(0xff060D26),
@@ -77,4 +79,16 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  // ScrollBehaviors now allow or disallow drag scrolling from
+  // specified PointerDeviceKinds. ScrollBehavior.dragDevices, by default,
+  // allows scrolling widgets to be dragged by all PointerDeviceKinds except for PointerDeviceKind.mouse.
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+  };
 }
