@@ -16,7 +16,6 @@ class WeatherList extends StatelessWidget {
       // height: 150,
       width: double.infinity,
       child: ScrollablePositionedList.builder(
-        //FIXME not scrolling in web
         physics: AlwaysScrollableScrollPhysics(),
 
         itemBuilder: (ctx, i) {
