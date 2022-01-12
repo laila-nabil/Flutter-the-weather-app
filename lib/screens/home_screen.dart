@@ -123,10 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   SnackBar(content: Text('An error occurred!')));
             }
           },
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+          //TODO is SingleChildScrollView causing error with weather_list
+          // child:
+          // SingleChildScrollView(
+            // physics: AlwaysScrollableScrollPhysics(),
+            // physics: ,
             // padding: const EdgeInsets.all(18.0),
-            child: Center(
+            child:
+          Center(
               child: _isLoading
               // child: Provider.of<WeatherProvider>(context).isLoading
                   ? Center(
@@ -209,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
             ),
-          ),
+          // ),
         ),
       ),
     );
