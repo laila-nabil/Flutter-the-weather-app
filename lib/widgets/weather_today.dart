@@ -21,8 +21,6 @@ class WeatherToday extends StatelessWidget {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Container(
-          // width: constraints.maxWidth,
-          // height: constraints.maxHeight,
           margin: const EdgeInsets.only(top: 18.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,11 +33,13 @@ class WeatherToday extends StatelessWidget {
                       : constraints.maxHeight * 0.017,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     weatherToday.isImageNetwork
                         ? Image.network(
                             weatherToday.image,
-                            width: constraints.maxWidth * 0.5,
+                            // width: constraints.maxWidth * 0.5,
+                            width: constraints.maxWidth * 0.325,
                             height: isPortrait
                                 ? constraints.maxHeight * 0.5
                                 : constraints.maxHeight * 0.4,
@@ -47,14 +47,16 @@ class WeatherToday extends StatelessWidget {
                           )
                         : Image.asset(
                             weatherToday.image,
-                            width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
+                            // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
+                            width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth *0.325 ,
                             height: isPortrait
                                 ? constraints.maxHeight * 0.5
                                 : constraints.maxHeight * 0.4,
                             fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                           ),
                     Container(
-                      width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
+                      // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
+                      width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.325,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(18.0),
                       child: FittedBox(
