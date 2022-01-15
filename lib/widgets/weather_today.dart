@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/models/current_weather.dart';
@@ -27,27 +28,6 @@ class WeatherToday extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Container(
-              //   height: constraints.maxHeight * 0.07,
-              //   child: FittedBox(
-              //     fit: BoxFit.contain,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: [
-              //         Icon(
-              //           Icons.location_on,
-              //           color: Colors.white,
-              //         ),
-              //         Text(
-              //           city,
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.bold, fontSize: 18),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: EdgeInsets.only(
                   bottom: isPortrait
@@ -67,18 +47,22 @@ class WeatherToday extends StatelessWidget {
                           )
                         : Image.asset(
                             weatherToday.image,
-                            width: constraints.maxWidth * 0.65,
+                            width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
                             height: isPortrait
                                 ? constraints.maxHeight * 0.5
                                 : constraints.maxHeight * 0.4,
                             fit: isPortrait ? BoxFit.contain : BoxFit.fitHeight,
                           ),
                     Container(
-                      width: constraints.maxWidth * 0.25,
+                      width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(18.0),
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
-                        child: Text(
+                        child: AutoSizeText(
                           '${weatherToday.temp} °C',
+                          style: TextStyle(fontSize: 40),
+                          maxFontSize: 55,
                         ),
                       ),
                     )

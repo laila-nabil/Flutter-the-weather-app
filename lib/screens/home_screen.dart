@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_isInit) {
       _isLoading = true;
       try {
-        print('didChangeDependencies');
+        debugPrint('debugPrint didChangeDependencies');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           if (!isPortrait)
                             Expanded(
-                              flex: 6,
+                              flex: 7,
                               child: Row(
                                 children: [
                                   Container(
@@ -194,12 +194,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           Expanded(
                               // flex: isPortrait ? 4 : 5,
-                              flex: 4,
+                              flex: isPortrait ? 4 : 5,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: isPortrait ? const EdgeInsets.only(top: 8.0) : const EdgeInsets.only(top: 16.0),
                                 child: WeatherTabs(),
                               )),
-                          if (screenSize.width < screenSize.height)
+                          if (isPortrait)
                             Expanded(
                               flex: 1,
                               child: Text(
