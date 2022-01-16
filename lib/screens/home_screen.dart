@@ -152,15 +152,18 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                                 flex: 9,
                                 child: LayoutBuilder(builder: (ctx, constraints) {
-                                  return CarouselSlider(
-                                      items: [WeatherToday(), CompareWeather()],
-                                      options: CarouselOptions(
-                                        height: constraints.maxHeight - 0.1,
-                                        autoPlayInterval: Duration(seconds: 10),
-                                        initialPage: 0,
-                                        autoPlay: true,
-                                        viewportFraction: 1,
-                                      ));
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CarouselSlider(
+                                        items: [WeatherToday(), CompareWeather()],
+                                        options: CarouselOptions(
+                                          height: constraints.maxHeight - 0.1,
+                                          autoPlayInterval: Duration(seconds: 10),
+                                          initialPage: 0,
+                                          autoPlay: true,
+                                          viewportFraction: 1,
+                                        )),
+                                  );
                                 })),
                           if (isPortrait && !minimalView)
                             Expanded(flex: 7, child: WeatherToday()),
