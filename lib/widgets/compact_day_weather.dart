@@ -124,7 +124,7 @@ class _CompactDay extends StatelessWidget {
               child: dashboardWeather(
                 isStatusCentered: true,
                 svgIcon: 'assets/dashboard_icons/rain.svg',
-                status: '${double.tryParse(detailedWeather.rain) * 100.0}%',
+                status: '${(double.tryParse(detailedWeather.rain) * 100).toStringAsFixed(2)}%',
               ),
             ),
         ],
