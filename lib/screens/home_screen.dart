@@ -179,13 +179,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Row(
                                   children: [
-                                    Container(
-                                        width: (screenSize.width - 40) * 0.6,
-                                        // height: screenSize.height * 0.5,
+                                    Expanded(
+                                        flex: 1,
                                         child: WeatherToday()),
-                                    Container(
-                                      width: (screenSize.width - 40) * 0.4,
-                                      // height: screenSize.height * 0.5,
+                                    Expanded(
+                                      flex: 1,
                                       child: CompareWeather(),
                                     ),
                                   ],

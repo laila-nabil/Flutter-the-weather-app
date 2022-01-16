@@ -17,17 +17,16 @@ class CompareWeather extends StatelessWidget {
           height: constraints.maxHeight * 0.9,
           width: constraints.maxWidth * 0.9,
           alignment: Alignment.center,
-          padding:  EdgeInsets.symmetric(horizontal: constraints.maxWidth * 0.05,vertical: constraints.maxHeight*0.05),
+          padding: EdgeInsets.symmetric(
+              horizontal: constraints.maxWidth * 0.05,
+              vertical: constraints.maxHeight * 0.05),
           child: AutoSizeText(
             compareWeather,
             minFontSize: 15,
             maxFontSize: 35,
             // softWrap: true,
             // maxLines: 3,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 40
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
             textAlign: TextAlign.center,
           ),
         ),
