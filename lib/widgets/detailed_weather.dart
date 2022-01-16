@@ -132,7 +132,6 @@ class WeatherDetailed extends StatelessWidget {
                 weatherDay: weatherDay,
                 isPortrait: isPortrait,
               ),
-            Expanded(child: Text(weatherDay.dt.toString())),
             // Expanded(child: Text('lat ${weatherDay.lat}, lon ${weatherDay.lon}')),
             GoogleGrid(
               // children: dashboard,

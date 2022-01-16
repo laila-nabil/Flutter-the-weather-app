@@ -1,11 +1,15 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/models/current_weather.dart';
 import 'package:the_weather_app/models/unix.dart';
+import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:the_weather_app/widgets/FrostedGlassEffectCard.dart';
 
 import 'dashboard_weather.dart';
 
@@ -20,97 +24,129 @@ class WeatherToday extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                weatherToday.isImageNetwork
-                    ? Expanded(
-                        flex: 1,
-                        child: Image.network(
-                          weatherToday.image,
-                          // width: constraints.maxWidth * 0.5,
-                          // width: constraints.maxWidth * 0.325,
-                          height: isPortrait
-                              ? constraints.maxHeight * 0.5
-                              : constraints.maxHeight * 0.4,
-                          fit: isPortrait
-                              ? BoxFit.contain
-                              : BoxFit.fitHeight,
-                          alignment: isPortrait ? Alignment.center : Alignment.centerLeft,
-                        ),
-                      )
-                    : Expanded(
-                        flex: 1,
-                        child: Image.asset(
-                          weatherToday.image,
-                          // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
-                          // width: isPortrait
-                          //     ? constraints.maxWidth * 0.65
-                          //     : constraints.maxWidth * 0.325,
-                          height: isPortrait
-                              ? constraints.maxHeight * 0.5
-                              : constraints.maxHeight * 0.4,
-                          fit: isPortrait
-                              ? BoxFit.contain
-                              : BoxFit.fitHeight,
-                          alignment: isPortrait ? Alignment.center : Alignment.centerLeft,
-
-                        ),
-                      ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
-                    // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.325,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(18.0),
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        '${weatherToday.temp} °C',
-                        style: TextStyle(fontSize: 40),
-                        maxFontSize: 55,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              // width: constraints.maxWidth * 0.65,
-              height: constraints.maxHeight * 0.06,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Feels like ${weatherToday.feelsLike}°C, ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(weatherToday.detailedDescription),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-                // width: constraints.maxWidth * 0.8,
-                height: constraints.maxHeight * 0.3,
-                child: todayDetails(
-                  weatherToday: weatherToday,
-                  weatherTodayRain: weatherTodayNotDetailed.rain,
-                  weatherTodayTempMax: weatherTodayNotDetailed.tempMax,
-                  weatherTodayTempMin: weatherTodayNotDetailed.tempMin,
-                )),
-          ],
+        return isPortrait ? _WeatherToday(
+          weatherToday: weatherToday,
+          isPortrait: isPortrait,
+          weatherTodayNotDetailed: weatherTodayNotDetailed,
+          constraints: constraints,
+        ) : frostedGlassEffect(
+          context: context,
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          widget: _WeatherToday(
+            weatherToday: weatherToday,
+            isPortrait: isPortrait,
+            weatherTodayNotDetailed: weatherTodayNotDetailed,
+            constraints: constraints,
+          ),
         );
       },
+    );
+  }
+}
+
+class _WeatherToday extends StatelessWidget {
+  const _WeatherToday(
+      {Key key,
+      @required this.weatherToday,
+      @required this.isPortrait,
+      @required this.weatherTodayNotDetailed,
+      this.constraints})
+      : super(key: key);
+
+  final CurrentWeather weatherToday;
+  final bool isPortrait;
+  final Weather weatherTodayNotDetailed;
+  final BoxConstraints constraints;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            weatherToday.isImageNetwork
+                ? Expanded(
+                    flex: 1,
+                    child: Image.network(
+                      weatherToday.image,
+                      // width: constraints.maxWidth * 0.5,
+                      // width: constraints.maxWidth * 0.325,
+                      height: isPortrait
+                          ? constraints.maxHeight * 0.5
+                          : constraints.maxHeight * 0.4,
+                      fit: BoxFit.contain,
+                      alignment:
+                          isPortrait ? Alignment.center : Alignment.centerLeft,
+                    ),
+                  )
+                : Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      weatherToday.image,
+                      // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
+                      // width: isPortrait
+                      //     ? constraints.maxWidth * 0.65
+                      //     : constraints.maxWidth * 0.325,
+                      height: isPortrait
+                          ? constraints.maxHeight * 0.5
+                          : constraints.maxHeight * 0.4,
+                      fit: BoxFit.contain,
+                      alignment:
+                          isPortrait ? Alignment.center : Alignment.centerLeft,
+                    ),
+                  ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
+                // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.325,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(18.0),
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: AutoSizeText(
+                    '${weatherToday.temp} °C',
+                    style: TextStyle(fontSize: 40),
+                    maxFontSize: 55,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        Container(
+          // width: constraints.maxWidth * 0.65,
+          height: constraints.maxHeight * 0.06,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Feels like ${weatherToday.feelsLike}°C, ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(weatherToday.detailedDescription),
+              ],
+            ),
+          ),
+        ),
+        Container(
+            // width: constraints.maxWidth * 0.8,
+            height: constraints.maxHeight * 0.3,
+            child: todayDetails(
+              weatherToday: weatherToday,
+              weatherTodayRain: weatherTodayNotDetailed.rain,
+              weatherTodayTempMax: weatherTodayNotDetailed.tempMax,
+              weatherTodayTempMin: weatherTodayNotDetailed.tempMin,
+            )),
+      ],
     );
   }
 }

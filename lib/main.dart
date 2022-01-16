@@ -49,6 +49,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/screens/location_screen.dart';
+import 'package:the_weather_app/widgets/FrostedGlassEffectCard.dart';
 
 import './screens/home_screen.dart';
 
@@ -70,13 +71,13 @@ class MyApp extends StatelessWidget {
         title: 'Weather app',
         theme: ThemeData(
           backgroundColor: Color(0xff060D26),
-        primaryTextTheme: Typography().white,
-        textTheme: Typography().white,
+          primaryTextTheme: Typography().white,
+          textTheme: Typography().white,
         ),
         home: MyHomePage(),
         // home: testPage(),
-        // home: DummyScreen(),
-        routes: { LocationScreen.routeName: (ctx)=>LocationScreen()},
+        // home: dummyScreen(),
+        routes: {LocationScreen.routeName: (ctx) => LocationScreen()},
       ),
     );
   }
@@ -89,7 +90,32 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // allows scrolling widgets to be dragged by all PointerDeviceKinds except for PointerDeviceKind.mouse.
   @override
   Set<PointerDeviceKind> get dragDevices => {
-    PointerDeviceKind.touch,
-    PointerDeviceKind.mouse,
-  };
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
+}
+
+class dummyScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: frostedGlassEffect(
+        context: context,
+        widget: Column(
+          children: [Text('hi'), Text('hi')],
+        ) ,
+        width: 360,
+        height: 360,
+      ),
+    );
+  }
+}
+
+class dummyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [Text('hi'), Text('hi')],
+    );
+  }
 }
