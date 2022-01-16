@@ -137,6 +137,7 @@ class _WeatherToday extends StatelessWidget {
             ),
           ),
         ),
+        Divider(),
         Container(
             // width: constraints.maxWidth * 0.8,
             height: constraints.maxHeight * 0.3,
