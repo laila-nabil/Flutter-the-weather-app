@@ -94,28 +94,3 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.mouse,
       };
 }
-
-class dummyScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: frostedGlassEffect(
-        context: context,
-        widget: Column(
-          children: [Text('hi'), Text('hi')],
-        ) ,
-        width: 360,
-        height: 360,
-      ),
-    );
-  }
-}
-
-class dummyWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [Text('hi'), Text('hi')],
-    );
-  }
-}
