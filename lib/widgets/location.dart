@@ -11,9 +11,9 @@ class Location extends StatelessWidget {
     final city = Provider.of<WeatherProvider>(context,listen: true).location;
     return LayoutBuilder(builder: (ctx, constraints) {
       return Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
             // vertical: constraints.maxHeight * 0.2,
-            horizontal: constraints.maxWidth*0.1
+            horizontal: 8
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,16 +38,16 @@ class Location extends StatelessWidget {
                   color: Colors.white,
                   // size: constraints.maxHeight * 0.7,
                 )),
-            Container(
-              width: constraints.maxWidth *0.4,
-              height:constraints.maxHeight * 0.6 ,
-              alignment: Alignment.center,
+            Expanded(
+              // width: constraints.maxWidth *0.4,
+              // height:constraints.maxHeight * 0.6 ,
+              // alignment: Alignment.center,
               child: AutoSizeText(
                 city,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 minFontSize: 10.0,
                 maxFontSize: 20.0,
-                textAlign: TextAlign.end,
+                textAlign: TextAlign.center,
               ),
             ),
             IconButton(

@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
+        debugShowCheckedModeBanner: false,
         title: 'Weather app',
         theme: ThemeData(
           backgroundColor: Color(0xff060D26),
