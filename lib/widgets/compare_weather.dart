@@ -18,7 +18,7 @@ class CompareWeather extends StatelessWidget {
           width: constraints.maxWidth * 0.9,
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(
-              horizontal: constraints.maxWidth * 0.05,
+              // horizontal: constraints.maxWidth * 0.05,
               vertical: constraints.maxHeight * 0.05),
           child: AutoSizeText(
             compareWeather,
