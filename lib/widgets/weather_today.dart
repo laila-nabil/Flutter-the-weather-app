@@ -21,7 +21,8 @@ class WeatherToday extends StatelessWidget {
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return Container(
-          margin: const EdgeInsets.only(top: 18.0),
+          // margin: const EdgeInsets.only(top: 18.0),
+          alignment: Alignment.centerLeft,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -175,21 +175,21 @@ class _MyHomePageState extends State<MyHomePage> {
                           if (!isPortrait)
                             Expanded(
                               flex: 7,
-                              child: Row(
-                                children: [
-                                  Container(
-                                      width: screenSize.width * 0.6,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                        width: (screenSize.width - 40) * 0.6,
+                                        // height: screenSize.height * 0.5,
+                                        child: WeatherToday()),
+                                    Container(
+                                      width: (screenSize.width - 40) * 0.4,
                                       // height: screenSize.height * 0.5,
-                                      child: WeatherToday()),
-                                  Container(
-                                    width: screenSize.width * 0.4,
-                                    // height: screenSize.height * 0.5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
                                       child: CompareWeather(),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           Expanded(

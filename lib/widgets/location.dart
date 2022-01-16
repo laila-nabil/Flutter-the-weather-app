@@ -10,13 +10,16 @@ class Location extends StatelessWidget {
   Widget build(BuildContext context) {
     final city = Provider.of<WeatherProvider>(context,listen: true).location;
     return LayoutBuilder(builder: (ctx, constraints) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(constraints.maxHeight * 0.1),
-            child: IconButton(
+      return Padding(
+        padding: EdgeInsets.symmetric(
+            // vertical: constraints.maxHeight * 0.2,
+            horizontal: constraints.maxWidth*0.1
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
                 onPressed: () async {
                   print('location :start');
                   try{
@@ -29,37 +32,42 @@ class Location extends StatelessWidget {
                   }
                   print('location :end');
                 },
+                iconSize: constraints.maxHeight*0.7 > 20 ? constraints.maxHeight*0.7 : 20,
                 icon: Icon(
                   Icons.location_on,
                   color: Colors.white,
-                  size: constraints.maxHeight * 0.8,
+                  // size: constraints.maxHeight * 0.7,
                 )),
-          ),
-          Container(
-            width: constraints.maxWidth * 0.4,
-            padding:
-                EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.1),
-            child: AutoSizeText(
-              city,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              minFontSize: 10.0,
-              maxFontSize: 20.0,
-              textAlign: TextAlign.center,
+            Container(
+              width: constraints.maxWidth *0.4,
+              height:constraints.maxHeight * 0.6 ,
+              alignment: Alignment.center,
+              child: AutoSizeText(
+                city,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                minFontSize: 10.0,
+                maxFontSize: 20.0,
+                textAlign: TextAlign.end,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(constraints.maxHeight * 0.1),
-            child: IconButton(
+            IconButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(LocationScreen.routeName);
                 },
+                iconSize: constraints.maxHeight*0.7 > 20 ? constraints.maxHeight*0.7 : 20,
+                alignment: Alignment.center,
+                constraints: const BoxConstraints(
+                  minWidth: kMinInteractiveDimension,
+                  minHeight: kMinInteractiveDimension,
+                ),
                 icon: Icon(
                   Icons.search,
                   color: Colors.white,
-                  size: constraints.maxHeight * 0.8,
+
+                  // size: constraints.maxHeight * 0.7,
                 )),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
