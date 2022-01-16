@@ -180,11 +180,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        flex: 1,
+                                      flex:1,
+                                      child: Container(),
+                                    ),
+                                    Expanded(
+                                        flex: 6,
                                         child: WeatherToday()),
                                     Expanded(
-                                      flex: 1,
+                                      flex: 6,
                                       child: CompareWeather(),
+                                    ),
+                                    Expanded(
+                                      flex:1,
+                                      child: Container(),
                                     ),
                                   ],
                                 ),

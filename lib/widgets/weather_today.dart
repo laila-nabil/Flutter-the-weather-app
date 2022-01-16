@@ -40,6 +40,7 @@ class WeatherToday extends StatelessWidget {
                           fit: isPortrait
                               ? BoxFit.contain
                               : BoxFit.fitHeight,
+                          alignment: isPortrait ? Alignment.center : Alignment.centerLeft,
                         ),
                       )
                     : Expanded(
@@ -56,6 +57,8 @@ class WeatherToday extends StatelessWidget {
                           fit: isPortrait
                               ? BoxFit.contain
                               : BoxFit.fitHeight,
+                          alignment: isPortrait ? Alignment.center : Alignment.centerLeft,
+
                         ),
                       ),
                 Expanded(
