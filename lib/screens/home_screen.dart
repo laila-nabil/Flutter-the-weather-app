@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final orientation = mediaQuery.orientation;
     final isPortrait = screenSize.width < screenSize.height;
     final minimalView = true;
+
     print("screenSize $screenSize");
     print("orientation $orientation");
     return SafeArea(
