@@ -10,8 +10,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  List<String> autoCompleteList = [];
-  List<String> dummyList = ['a' , 'b' , 'c'];
+  List<Map<String,String>> autoCompleteList = [];
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -59,6 +58,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               .autoCompleteSearchLocation(input);
                         }else{
                           autoCompleteList = [];
+
                         }
                         setState(() {
                           print('autoCompleteList $autoCompleteList');
@@ -87,7 +87,12 @@ class _LocationScreenState extends State<LocationScreen> {
                     width: screenSize.width * 0.9,
                     height: screenSize.height * 0.3,
                     child: ListView.builder(itemBuilder: (ctx,i){
-                      return Text(autoCompleteList[i]);
+                      return InkWell(
+                        onTap: ()async{
+                          await Provider.of<WeatherProvider>(context,listen: false)
+                              .setLocationLatLon(byCurrentLocation: false,selectedLat: '${autoCompleteList[i]['lat']}',selectedLon: '${autoCompleteList[i]['lon']}');
+                        },
+                          child: Text('${autoCompleteList[i]['city']}, ${autoCompleteList[i]['country']}'));
                     },itemCount: autoCompleteList.length,),
                   )
                 ],

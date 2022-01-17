@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:the_weather_app/models/location.dart' as locationModel;
 
 import '../models/weather.dart';
 import '../models/current_weather.dart';
@@ -636,13 +637,20 @@ class WeatherProvider with ChangeNotifier {
     return [..._pastWeather.reversed];
   }
 
-  Future<void> setLocationLatLon() async {
+  Future<void> setLocationLatLon(
+      {@required bool byCurrentLocation, String selectedLat,String selectedLon}) async {
     Position result;
     try {
       print('setLocationLatLon');
-      result = await _determinePosition();
-      _lat = result.latitude.toString();
-      _lon = result.longitude.toString();
+      if(byCurrentLocation){
+        result = await _determinePosition();
+        _lat = result.latitude.toString();
+        _lon = result.longitude.toString();
+      }else{
+        _lat = selectedLat;
+        _lon = selectedLon;
+      }
+
       print("location : getting location $_lat $_lon");
       await getLocationFromCoordinates();
       await getCurrentWeatherAPI();
@@ -664,8 +672,8 @@ class WeatherProvider with ChangeNotifier {
     return _lon;
   }
 
-  Future<List<String>> autoCompleteSearchLocation(String input) async{
-    List<String> result = [];
+  Future<List<Map<String,String>>> autoCompleteSearchLocation(String input) async{
+    List<Map<String,String>> result = [];
     var url =
         'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
     final response = await http.get(Uri.parse(url));
@@ -673,8 +681,8 @@ class WeatherProvider with ChangeNotifier {
     print('autoCompleteSearchLocation $body');
     final List listResults = body['features'];
     listResults.forEach((element) {
-      print('?? ${element['properties']['city']}');
-      result.add('${element['properties']['city']}, ${element['properties']['country']}');
+      // result.add({'${element['properties']['city']}, ${element['properties']['country']}' : });
+      result.add({'city': '${element['properties']['city']}','country': '${element['properties']['country']}','lat': '${element['properties']['lat']}','lon': '${element['properties']['lon']}'},);
     });
     return result;
   }

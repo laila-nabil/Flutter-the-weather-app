@@ -24,7 +24,7 @@ class Location extends StatelessWidget {
                   print('location :start');
                   try{
                     await Provider.of<WeatherProvider>(context,listen: false)
-                        .setLocationLatLon();
+                        .setLocationLatLon(byCurrentLocation: true);
                   }catch(Error){
                     print('location :error catched');
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
