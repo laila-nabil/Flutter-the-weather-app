@@ -664,6 +664,15 @@ class WeatherProvider with ChangeNotifier {
     return _lon;
   }
 
+  Future<List<String>> autoCompleteSearchLocation(String input) async{
+    var url =
+        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&apiKey=2c66c649cf9042658a69266136c59284';
+    final response = await http.get(Uri.parse(url));
+    final body = json.decode(response.body);
+    print('autoCompleteSearchLocation $body');
+    return ['1' , '2'];
+  }
+
   Future<Map> getLocationFromCoordinates() async {
     var url =
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
