@@ -103,7 +103,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                '${autoCompleteList[i]['city']}, ${autoCompleteList[i]['country']}',
+                                '${autoCompleteList[i]['city']}${autoCompleteList[i]['country']}',
                                 style: TextStyle(fontSize: 20),
                               ),
                             ));

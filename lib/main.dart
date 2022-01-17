@@ -49,7 +49,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/screens/location_screen.dart';
-import 'package:the_weather_app/widgets/FrostedGlassEffectCard.dart';
+
 
 import './screens/home_screen.dart';
 

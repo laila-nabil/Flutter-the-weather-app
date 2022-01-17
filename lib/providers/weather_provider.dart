@@ -682,7 +682,9 @@ class WeatherProvider with ChangeNotifier {
     final List listResults = body['features'];
     listResults.forEach((element) {
       // result.add({'${element['properties']['city']}, ${element['properties']['country']}' : });
-      result.add({'city': '${element['properties']['city']}','country': '${element['properties']['country']}','lat': '${element['properties']['lat']}','lon': '${element['properties']['lon']}'},);
+      final city = element['properties']['city']!=null ? '${element['properties']['city']} ,':'';
+      final country = element['properties']['country']!=null ? '${element['properties']['country']}':'';
+      result.add({'city': city,'country': country,'lat': '${element['properties']['lat']}','lon': '${element['properties']['lon']}'},);
     });
     return result;
   }
