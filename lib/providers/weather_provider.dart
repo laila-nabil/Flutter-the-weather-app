@@ -665,12 +665,18 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<List<String>> autoCompleteSearchLocation(String input) async{
+    List<String> result = [];
     var url =
-        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&apiKey=2c66c649cf9042658a69266136c59284';
+        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     print('autoCompleteSearchLocation $body');
-    return ['1' , '2'];
+    final List listResults = body['features'];
+    listResults.forEach((element) {
+      print('?? ${element['properties']['city']}');
+      result.add('${element['properties']['city']}, ${element['properties']['country']}');
+    });
+    return result;
   }
 
   Future<Map> getLocationFromCoordinates() async {
