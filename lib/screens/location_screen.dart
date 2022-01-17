@@ -10,7 +10,8 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  List<Map<String,String>> autoCompleteList = [];
+  List<Map<String, String>> autoCompleteList = [];
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -56,9 +57,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                   context,
                                   listen: false)
                               .autoCompleteSearchLocation(input);
-                        }else{
+                        } else {
                           autoCompleteList = [];
-
                         }
                         setState(() {
                           print('autoCompleteList $autoCompleteList');
@@ -86,14 +86,30 @@ class _LocationScreenState extends State<LocationScreen> {
                   Container(
                     width: screenSize.width * 0.9,
                     height: screenSize.height * 0.3,
-                    child: ListView.builder(itemBuilder: (ctx,i){
-                      return InkWell(
-                        onTap: ()async{
-                          await Provider.of<WeatherProvider>(context,listen: false)
-                              .setLocationLatLon(byCurrentLocation: false,selectedLat: '${autoCompleteList[i]['lat']}',selectedLon: '${autoCompleteList[i]['lon']}');
-                        },
-                          child: Text('${autoCompleteList[i]['city']}, ${autoCompleteList[i]['country']}'));
-                    },itemCount: autoCompleteList.length,),
+                    child: ListView.builder(
+                      itemBuilder: (ctx, i) {
+                        return InkWell(
+                            onTap: () async {
+                              await Provider.of<WeatherProvider>(context,
+                                      listen: false)
+                                  .setLocationLatLon(
+                                      byCurrentLocation: false,
+                                      selectedLat:
+                                          '${autoCompleteList[i]['lat']}',
+                                      selectedLon:
+                                          '${autoCompleteList[i]['lon']}');
+                              Navigator.of(context).pop();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${autoCompleteList[i]['city']}, ${autoCompleteList[i]['country']}',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ));
+                      },
+                      itemCount: autoCompleteList.length,
+                    ),
                   )
                 ],
               ),
