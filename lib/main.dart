@@ -33,12 +33,12 @@
 //TODO in settings screen: add multiple cities + locally store them
 //TODO in settings screen: change language + localization
 //TODO in settings screen: change unit
-//NOTTODO is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
-//NOTTODO max &min sometimes disappear==> fixed
-//NOTTODO maybe make all weather one class or use inheritance
+//DONE is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
+//DONE max &min sometimes disappear==> fixed
+//DONE maybe make all weather one class or use inheritance
 //TODO add shimmer instead of loading circle
 //TODO(next level) splash screen
-//TODO(next level) icon
+//DONE(next level) icon
 //TODO(next level) on play store
 
 import 'package:flutter/gestures.dart';
