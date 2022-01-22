@@ -550,7 +550,8 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getWeather() async {
+  Future<bool> getWeather() async {
+    bool result = false;
     print('getWeather()');
     try {
       print('in getWeather()');
@@ -559,10 +560,12 @@ class WeatherProvider with ChangeNotifier {
       // await getAllHistoryWeather();
       await getAllHistoryWeatherUTC();
       print('got weather');
+      result = true;
       notifyListeners();
     } catch (error) {
       throw (error);
     }
+    return result;
   }
 
   Future<void> getAllHistoryWeather() async {
