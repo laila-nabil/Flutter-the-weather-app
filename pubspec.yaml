@@ -40,6 +40,7 @@ dependencies:
 #  mapbox_search: ^3.0.1+2
   geolocator: ^8.0.1
   flutter_mapbox_autocomplete: ^2.0.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
