@@ -163,7 +163,7 @@ class LoadingContent extends StatelessWidget {
             height: screenSize.height * 0.05,
             child: Shimmer.fromColors(
               child: Container(
-                color: Colors.white.withOpacity(0.4),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color:Colors.white.withOpacity(0.37) ),
               ),
               baseColor: Colors.grey[300],
               highlightColor: Colors.grey[100],
@@ -176,7 +176,7 @@ class LoadingContent extends StatelessWidget {
             height: screenSize.height * 0.6,
             child: Shimmer.fromColors(
               child: Container(
-                color: Colors.white.withOpacity(0.4),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color:Colors.white.withOpacity(0.37) ),
               ),
               baseColor: Colors.grey[300],
               highlightColor: Colors.grey[100],
