@@ -20,7 +20,7 @@
 //to add arguments but to android studio
 //from main.dart menu
 //edit configuration
-//which is better than terminal
+//which is better than tercminal
 //for web
 
 //prev error solved by deleting everything fvm related and dart cache
