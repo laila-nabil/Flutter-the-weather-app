@@ -10,6 +10,7 @@ import 'package:the_weather_app/widgets/compare_weather.dart';
 import 'package:the_weather_app/widgets/weather_today.dart';
 
 class MyHomePage extends StatefulWidget {
+  static const routeName = '/home';
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }

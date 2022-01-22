@@ -75,14 +75,14 @@ class MyApp extends StatelessWidget {
           textTheme: Typography().white,
         ),
         home: MyHomePage(),
-        // home: LocationScreen(),
-        // home: testPage(),
-        // home: dummyScreen(),
-        routes: {LocationScreen.routeName: (ctx) => LocationScreen()},
+        routes: {
+          MyHomePage.routeName: (ctx) => MyHomePage(),
+          LocationScreen.routeName: (ctx) => LocationScreen()},
       ),
     );
   }
 }
+
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices
