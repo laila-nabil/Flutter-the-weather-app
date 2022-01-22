@@ -173,7 +173,7 @@ class LoadingContent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
-            height: screenSize.height * 0.6,
+            height: screenSize.height * 0.57,
             child: Shimmer.fromColors(
               child: Container(
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color:Colors.white.withOpacity(0.37) ),
