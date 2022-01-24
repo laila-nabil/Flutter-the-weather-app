@@ -83,9 +83,36 @@ class _LocationScreenState extends State<LocationScreen> {
                           fillColor: Colors.purple),
                     ),
                   ),
+                  InkWell(
+                    onTap: () async {
+                      print('location :start');
+                      try{
+                        await Provider.of<WeatherProvider>(context,listen: false)
+                            .setLocationLatLon(byCurrentLocation: true);
+                      }catch(Error){
+                        print('location :error catched');
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(Error.toString())));
+                      }
+                      print('location :end');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.my_location , color: Colors.white,),
+                          SizedBox(width: 5,),
+                          Text(
+                            'current location',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Container(
                     width: screenSize.width * 0.9,
-                    height: screenSize.height * 0.3,
+                    height: screenSize.height * 0.7,
                     child: ListView.builder(
                       itemBuilder: (ctx, i) {
                         return InkWell(

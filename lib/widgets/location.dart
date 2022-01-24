@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/screens/location_screen.dart';
+import 'package:the_weather_app/screens/settings_screen.dart';
 
 class Location extends StatelessWidget {
   @override
@@ -20,21 +21,12 @@ class Location extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-                onPressed: () async {
-                  print('location :start');
-                  try{
-                    await Provider.of<WeatherProvider>(context,listen: false)
-                        .setLocationLatLon(byCurrentLocation: true);
-                  }catch(Error){
-                    print('location :error catched');
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(Error.toString())));
-                  }
-                  print('location :end');
+                onPressed: (){
+                  Navigator.of(context).pushNamed(SettingsScreen.routeName);
                 },
                 iconSize: constraints.maxHeight*0.7 > 20 ? constraints.maxHeight*0.7 : 20,
                 icon: Icon(
-                  Icons.location_on,
+                  Icons.settings,
                   color: Colors.white,
                   // size: constraints.maxHeight * 0.7,
                 )),
