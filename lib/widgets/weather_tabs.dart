@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -27,10 +28,11 @@ class WeatherTabs extends StatelessWidget {
                         day = 'Today';
                         break;
                       case todayIndex + 1:
-                        day = 'Tomorrow';
+                        day = 'tomorrow'.tr().toString();
                         break;
                       case todayIndex - 1:
-                        day = 'Yesterday';
+                        // day = 'Yesterday';
+                        day = 'yesterday'.tr().toString();
                         break;
                       default:
                         day =  DateFormat.MMMEd().format(e.value.date);

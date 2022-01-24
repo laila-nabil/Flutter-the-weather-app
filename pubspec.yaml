@@ -41,6 +41,7 @@ dependencies:
   geolocator: ^8.0.1
   flutter_mapbox_autocomplete: ^2.0.0
   shimmer: ^2.0.0
+  easy_localization: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,8 @@ flutter:
     - assets/3d/13n.png
     - assets/3d/50d.png
     - assets/3d/50n.png
+    - assets/locales/en-UK.json
+    - assets/locales/ar-EG.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

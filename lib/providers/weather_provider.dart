@@ -29,6 +29,7 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
+  var langEn = false;
   static const localTime = false;
   static const int historyDays = 4;
   static const int historyDaysUTC = 5;
@@ -93,9 +94,10 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     // const part = 'minutely,hourly';
+    final lang = langEn ? '':'&lang=ar';
     const excludedPart = 'minutely';
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$API_key';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric$lang&appid=$API_key';
     print('CurrentWeather url is $url');
     try {
       final response = await http.get(Uri.parse(url));
@@ -137,6 +139,7 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     const excludedPart = 'minutely';
+
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
     print('PresentFuture url is $url');
@@ -292,6 +295,7 @@ class WeatherProvider with ChangeNotifier {
     // var API_key = dotenv.env['API_KEY'];
     var API_key = _API_KEY;
     const part = 'current,minutely';
+
     var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
     print('nightTime $unixTimestamp');
     var url =
@@ -303,36 +307,6 @@ class WeatherProvider with ChangeNotifier {
       final historyWeather = json.decode(response.body);
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       hourlyPast.forEach((element) {
-        // print('for element');
-        // print(element['weather'][0]['main']);
-        // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
-        // _hourlyPastWeather.add(Weather(
-        //     lat: lat,
-        //     lon: lon,
-        //     isImageNetwork: !isImage3D,
-        //     image: isImage3D
-        //         ? 'assets/3d/${element['weather'][0]['icon']}.png'
-        //         : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
-        //     mainDescription: element['weather'][0]['main'].toString(),
-        //     detailedDescription:
-        //         element['weather'][0]['description'].toString(),
-        //     humidity: element['humidity'].toString(),
-        //     feelsLike: element['feels_like'].toString(),
-        //     uvi: element['uvi'].toString(),
-        //     clouds: element['clouds'].toString(),
-        //     windDeg: element['wind_deg'].toString(),
-        //     windSpeed: element['wind_speed'].toString(),
-        //     pressure: element['pressure'].toString(),
-        //     visibility: element['visibility'].toString(),
-        //     // date: unixSecondsToDate(element['dt']),
-        //     // date:unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']),
-        //     dt: element['dt'].toString(),
-        //     date: localTime
-        //         ? unixSecondsToDate(element['dt'])
-        //         : unixSecondsToDateTimezone(
-        //             element['dt'], historyWeather['timezone_offset']),
-        //     rain: "0.0",
-        //     tempCurrent: element['temp'].toString()));
         _hourlyPastWeatherMap[element['dt'].toString()]=Weather(
             lat: lat,
             lon: lon,

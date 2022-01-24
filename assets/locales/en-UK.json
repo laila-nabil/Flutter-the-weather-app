@@ -1,0 +1,13 @@
+{
+  "lang" : "EN",
+  "today" : "Today",
+  "tomorrow" : "Tomorrow",
+  "yesterday" : "Yesterday",
+  "min" : "min",
+  "pressure" : "Pressure",
+  "uvi" : "Uvi",
+  "visibility" : "visibility",
+  "clouds" : "clouds",
+  "humidity" : "humidity",
+  "feels_like" : "Feels like "
+}

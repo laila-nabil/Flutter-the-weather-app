@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cron/cron.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:the_weather_app/widgets/location.dart';
 import 'package:shimmer/shimmer.dart';
@@ -18,6 +19,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   var todayWeather = {};
   var historyWeatherDay = {};
   var historyWeatherNight = {};
@@ -96,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    context.locale == Locale('ar', 'EG');
+    // context.locale == Locale('en', 'UK');
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final orientation = mediaQuery.orientation;

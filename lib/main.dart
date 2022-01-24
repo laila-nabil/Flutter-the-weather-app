@@ -43,7 +43,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -57,18 +57,31 @@ import './screens/home_screen.dart';
 Future main() async {
   // await DotEnv.load(fileName: ".env");
   await dotenv.load(fileName: ".env");
-  runApp(MyApp());
+  //order is important
+  await EasyLocalization.ensureInitialized();
+  runApp(
+      EasyLocalization(
+          path: 'assets/locales',
+          supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
+          child:
+          MyApp()
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // context.locale == Locale('ar', 'EG');
     return ChangeNotifierProvider(
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         title: 'Weather app',
         theme: ThemeData(
           backgroundColor: Color(0xff060D26),
@@ -85,6 +98,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class dummy extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('child'),
+      ),
+    );
+  }
+}
+
 
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
