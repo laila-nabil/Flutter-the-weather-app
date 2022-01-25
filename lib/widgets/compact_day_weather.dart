@@ -83,12 +83,12 @@ class _CompactDay extends StatelessWidget {
               width: width,
               alignment: Alignment.center,
               child: AutoSizeText(
-                  DateFormat('hh a').format(detailedWeather.date),
+                  DateFormat('h a','locale'.tr().toString()).format(detailedWeather.date),
                   style: TextStyle(
                     fontSize: 20,
                   ),
-                  minFontSize: 12,
-                  maxFontSize: 25)),
+                  minFontSize: 14,
+                  maxFontSize: 30)),
           detailedWeather.isImageNetwork
               ? Image.network(
             detailedWeather.image,
