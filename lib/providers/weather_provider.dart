@@ -729,4 +729,9 @@ class WeatherProvider with ChangeNotifier {
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
+  void toggleLanguage(){
+    langEn = !langEn;
+    notifyListeners();
+  }
+
 }

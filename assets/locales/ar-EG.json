@@ -13,5 +13,9 @@
   "clouds" : "السحب",
   "humidity" : "الجفاف",
   "feels_like" : "تبدو ك",
-  "deg" : ""
+  "deg" : "",
+  "settings" : "اعدادات",
+  "location" : "الموقع",
+  "current_location" : "الموقع الحالى",
+  "search_location" : "البحث عن موقع"
 }

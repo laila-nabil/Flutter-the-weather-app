@@ -12,5 +12,10 @@
   "clouds" : "clouds",
   "humidity" : "humidity",
   "feels_like" : "Feels like ",
-  "deg" : "C"
+  "deg" : "C",
+  "settings" : "Settings",
+  "location" : "Location",
+  "current_location" : "current location",
+  "search_location" : "search for a location"
+
 }

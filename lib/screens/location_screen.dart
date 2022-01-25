@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:the_weather_app/providers/weather_provider.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
+    final theme = Theme.of(context);
     final orientation = mediaQuery.orientation;
     final isPortrait = screenSize.width < screenSize.height;
     return SafeArea(
@@ -26,20 +29,24 @@ class _LocationScreenState extends State<LocationScreen> {
         maintainBottomViewPadding: true,
         minimum: EdgeInsets.zero,
         child: Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
+          appBar: AppBar(
+            backgroundColor: theme.backgroundColor,
+            elevation: 0,
+            title: Text(
+              'location'.tr().toString(),
+              style: TextStyle(
+                  fontSize: 34,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          backgroundColor: theme.backgroundColor,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Location',
-                    style: TextStyle(
-                        fontSize: 34,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700),
-                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 16.0),
                     padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -74,7 +81,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               SizedBox(
                                 width: 4,
                               ),
-                              Text('Add Location'),
+                              Text('search_location'.tr().toString()),
                             ],
                           ),
                           labelStyle: TextStyle(
@@ -103,7 +110,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           Icon(Icons.my_location , color: Colors.white,),
                           SizedBox(width: 5,),
                           Text(
-                            'current location',
+                            'current_location'.tr(),
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
