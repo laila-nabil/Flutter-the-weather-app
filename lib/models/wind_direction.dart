@@ -1,5 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
+
 String windDirection(int windDegrees)
 {
-  final directions = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"];
-  return  '${directions[(windDegrees/22.5).round()]}';
+  final directionsEn = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"];
+  // final directionsAr = ["شمال","شمال","شمال شرق","شرق","شرق","شرق","جنوب شرق","جنوب","جنوب","جنوب","جنوب غرب","غرب","غرب","غرب","شمال غرب","شمال","شمال"];
+  final directionsAr = ["ش","ش","ش ق","ق","ق","ق","ج ق","ج","ج","ج","ج غ","غ","غ","غ","ش غ","ش","ش"];
+  final result = 'lang'.tr().contains('En')? '${directionsEn[(windDegrees/22.5).round()]}' : '${directionsAr[(windDegrees/22.5).round()]}';
+  return  result;
 }
