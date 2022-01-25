@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:the_weather_app/models/current_weather.dart';
 import 'package:the_weather_app/models/unix.dart';
 import 'package:the_weather_app/models/weather.dart';
@@ -109,7 +111,7 @@ class _WeatherToday extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
-                    '${weatherToday.temp} °C',
+                    '${weatherToday.temp} °'+'deg'.tr().toString(),
                     style: TextStyle(fontSize: 40),
                     maxFontSize: 55,
                   ),
@@ -127,7 +129,7 @@ class _WeatherToday extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Feels like ${weatherToday.feelsLike}°C, ',
+                  'feels_like'.tr().toString()+'${weatherToday.feelsLike} °'+'deg'.tr().toString()+', ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -201,8 +203,8 @@ class todayDetails extends StatelessWidget {
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  title: "Max",
-                  status: "${weatherTodayTempMax}°C",
+                  title: 'max'.tr().toString(),
+                  status: "${weatherTodayTempMax} °"+'deg'.tr().toString(),
                 ),
               ),
             ],
@@ -236,8 +238,8 @@ class todayDetails extends StatelessWidget {
                 height: constraints.maxHeight * 0.25,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  title: "Min",
-                  status: "${weatherTodayTempMin}°C",
+                  title: 'min'.tr().toString(),
+                  status: "${weatherTodayTempMin} "+'deg'.tr().toString(),
                 ),
               )
             ],

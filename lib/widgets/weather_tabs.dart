@@ -25,7 +25,7 @@ class WeatherTabs extends StatelessWidget {
                     String day;
                     switch(e.key) {
                       case todayIndex:
-                        day = 'Today';
+                        day = 'today'.tr().toString();
                         break;
                       case todayIndex + 1:
                         day = 'tomorrow'.tr().toString();

@@ -98,8 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.locale == Locale('ar', 'EG');
-    // context.locale == Locale('en', 'UK');
+    // context.locale == Locale('ar', 'EG');
+    print('tomorrow.tr().toString()');
+    print('${'tomorrow'.tr().toString()}');
+    print(context.locale);
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final orientation = mediaQuery.orientation;

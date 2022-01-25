@@ -2,14 +2,14 @@
   "lang" : "AR",
   "today" : "اليوم",
   "tomorrow" : "الغد",
-  "yesterday" : "اليوم السابق",
-  "min" : "الصغري",
+  "yesterday" : "الأمس",
+  "min" : "صغرى",
+  "max" : "عظمى",
   "pressure" : "الضغط",
   "uvi" : "اشعة الشمس",
   "visibility" : "الرؤية",
   "clouds" : "السحب",
   "humidity" : "الجفاف",
-  "feels_like" : "تبدو ك"
-
-
+  "feels_like" : "تبدو ك",
+  "deg" : ""
 }

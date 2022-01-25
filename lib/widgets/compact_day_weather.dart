@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/widgets/FrostedGlassEffectCard.dart';
 import 'package:the_weather_app/widgets/detailed_weather.dart';
@@ -108,7 +110,7 @@ class _CompactDay extends StatelessWidget {
               alignment: Alignment.center,
               child: AutoSizeText(
                 "${double.tryParse(detailedWeather.tempCurrent).toStringAsFixed(
-                    1)}°C",
+                    1)}°"+'deg'.tr().toString(),
                 style: TextStyle(fontSize: 18),
                 minFontSize: 10,
                 maxFontSize: 18,

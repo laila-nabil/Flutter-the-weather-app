@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -415,7 +415,7 @@ class WeatherProvider with ChangeNotifier {
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
       _compareTodayYesterday =
-          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
+          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night';
       notifyListeners();
 
       print('got getAllHistoryWeather');
@@ -574,7 +574,7 @@ class WeatherProvider with ChangeNotifier {
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
       _compareTodayYesterday =
-          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°C at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°C at night';
+          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°'+'deg'.tr().toString()+' at night';
       notifyListeners();
 
       print('got getAllHistoryWeather');

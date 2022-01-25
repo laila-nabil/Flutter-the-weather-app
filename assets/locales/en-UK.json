@@ -9,5 +9,6 @@
   "visibility" : "visibility",
   "clouds" : "clouds",
   "humidity" : "humidity",
-  "feels_like" : "Feels like "
+  "feels_like" : "Feels like ",
+  "deg" : "C"
 }

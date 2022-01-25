@@ -62,7 +62,8 @@ Future main() async {
   runApp(
       EasyLocalization(
           path: 'assets/locales',
-          supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
+          // supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
+          supportedLocales: [Locale('ar', 'EG'),Locale('en', 'UK')],
           child:
           MyApp()
       )
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // context.locale == Locale('ar', 'EG');
+
     return ChangeNotifierProvider(
       create: (ctx) => WeatherProvider(),
       child: MaterialApp(
