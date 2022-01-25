@@ -670,7 +670,7 @@ class WeatherProvider with ChangeNotifier {
 
   Future<Map> getLocationFromCoordinates() async {
     var url =
-        'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=en';
+        'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=${'locale'.tr().toString()}';
     final response = await http.get(Uri.parse(url));
 
     final locationDetails = json.decode(response.body);
