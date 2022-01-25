@@ -49,10 +49,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             backgroundColor: theme.backgroundColor,
             body: SingleChildScrollView(
-                child: Padding(
+                child: Container(
                     padding: const EdgeInsets.all(25.0),
+                    width: screenSize.width,
                     child: Column(
                       crossAxisAlignment: 'lang'.tr().contains('En') ? CrossAxisAlignment.end:CrossAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ElevatedButton.icon(onPressed: ()=>_toggleLanguage(), icon: Icon(Icons.language), label: Text('change_lang'.tr().toString()))
                       ],
