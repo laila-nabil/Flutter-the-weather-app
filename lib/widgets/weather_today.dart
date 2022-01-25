@@ -239,7 +239,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),
-                  status: "${weatherTodayTempMin} "+'deg'.tr().toString(),
+                  status: "${weatherTodayTempMin} °"+'deg'.tr().toString(),
                 ),
               )
             ],
