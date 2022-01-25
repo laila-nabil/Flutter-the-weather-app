@@ -35,7 +35,7 @@ class WeatherTabs extends StatelessWidget {
                         day = 'yesterday'.tr().toString();
                         break;
                       default:
-                        day =  DateFormat.MMMEd().format(e.value.date);
+                        day =  DateFormat.MMMEd('locale'.tr().toString()).format(e.value.date);
                     }
                     final tab = Tab(
                       child: Container(

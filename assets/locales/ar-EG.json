@@ -1,6 +1,7 @@
 {
   "lang" : "AR",
   "change_lang" : "change language",
+  "locale" : "ar",
   "today" : "اليوم",
   "tomorrow" : "الغد",
   "yesterday" : "الأمس",

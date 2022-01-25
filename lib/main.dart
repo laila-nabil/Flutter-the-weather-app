@@ -91,6 +91,7 @@ class MyApp extends StatelessWidget {
           textTheme: Typography().white,
         ),
         home: MyHomePage(),
+        // home: dummy(),
         routes: {
           MyHomePage.routeName: (ctx) => MyHomePage(),
           LocationScreen.routeName: (ctx) => LocationScreen(),
@@ -104,6 +105,11 @@ class MyApp extends StatelessWidget {
 class dummy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var dateString = DateFormat.MMMEd('ar').format(DateTime.now());
+    print('dateString');
+    print(DateFormat.MMMEd('ar').format(DateTime.now()));
+    print(DateFormat.MMMEd('en').format(DateTime.now()));
+    print(DateFormat('hh:mm a','ar').format(DateTime.now()));
     return Scaffold(
       body: Center(
         child: Text('child'),

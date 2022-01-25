@@ -1,6 +1,7 @@
 {
   "lang" : "EN",
   "change_lang" : "تغيير اللغة",
+  "locale" : "en",
   "today" : "Today",
   "tomorrow" : "Tomorrow",
   "yesterday" : "Yesterday",
