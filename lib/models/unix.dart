@@ -8,3 +8,8 @@ String unixSecondsToDateFormat(int unixTimeStamp) {
   final date = DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
   return DateFormat('hh:mm a').format(date);
 }
+
+String unixSecondsToDateFormatCtx(int unixTimeStamp,ctx) {
+  final date = DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
+  return DateFormat('hh:mm a',).format(date);
+}

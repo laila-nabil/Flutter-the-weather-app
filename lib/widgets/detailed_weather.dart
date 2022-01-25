@@ -112,7 +112,7 @@ class WeatherDetailed extends StatelessWidget {
                   height: constraints.maxHeight * 0.4,
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    '${weatherDay.tempCurrent} °C',
+                    '${weatherDay.tempCurrent} °'+'deg'.tr().toString(),
                     style: TextStyle(fontSize: 22),
                     maxLines: 1,
                     minFontSize: 15,

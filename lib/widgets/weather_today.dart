@@ -230,7 +230,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/sunset.svg',
                   status:
-                      '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                      '${unixSecondsToDateFormatCtx(int.parse(weatherToday.sunset),context)}',
                 ),
               ),
               Container(
