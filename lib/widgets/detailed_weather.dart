@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 import 'package:the_weather_app/widgets/custom_grid.dart';
@@ -31,27 +32,27 @@ class WeatherDetailed extends StatelessWidget {
         ),
         dashboardWeather(
           isStatusCentered: false,
-          title: 'Pressure',
+          title: 'pressure'.tr().toString(),
           status: '${double.tryParse(weatherDay.pressure)}  hPa',
         ),
         dashboardWeather(
           isStatusCentered: false,
-          title: 'Clouds',
+          title: 'clouds'.tr().toString(),
           status: '${double.tryParse(weatherDay.clouds)}%',
         ),
         dashboardWeather(
           isStatusCentered: false,
-          title: 'Uvi',
+          title: 'uvi'.tr().toString(),
           status: '${double.tryParse(weatherDay.uvi)}',
         ),
         dashboardWeather(
           isStatusCentered: false,
-          title: 'Humidity',
+          title: 'humidity'.tr().toString(),
           status: '${double.tryParse(weatherDay.humidity)}%',
         ),
         dashboardWeather(
           isStatusCentered: false,
-          title: 'Visibility',
+          title: 'visibility'.tr().toString(),
           status: double.tryParse(weatherDay.visibility) > 1000
               ? '${(double.tryParse(weatherDay.visibility) / 1000).toStringAsFixed(1)} km'
               : '${double.tryParse(weatherDay.visibility)} m',
@@ -168,8 +169,12 @@ class feelsLike extends StatelessWidget {
             padding:
                 EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.02),
             child: AutoSizeText.rich(
-              TextSpan(text: 'Feels like ', children: [
-                TextSpan(text: '${weatherDay.feelsLike}°C , '),
+              TextSpan(text: 'feels_like'.tr().toString(), children: [
+
+                TextSpan(text:
+               '${weatherDay.feelsLike} °'+'deg'.tr().toString()+', ',
+                // '${weatherDay.feelsLike}°C , '
+                ),
                 TextSpan(
                     text: '${weatherDay.detailedDescription}',
                     style: TextStyle(

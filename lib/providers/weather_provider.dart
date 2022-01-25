@@ -139,9 +139,9 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     const excludedPart = 'minutely';
-
+    final lang = langEn ? '':'&lang=ar';
     var url =
-        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric&appid=${API_key}';
+        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric$lang&appid=${API_key}';
     print('PresentFuture url is $url');
     try {
       _hourlyPresentFutureWeather = [];
@@ -298,8 +298,9 @@ class WeatherProvider with ChangeNotifier {
 
     var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
     print('nightTime $unixTimestamp');
+    final lang = langEn ? '':'&lang=ar';
     var url =
-        'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
+        'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
     print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
@@ -434,8 +435,9 @@ class WeatherProvider with ChangeNotifier {
     const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(duration: daysAgo, byDay:true);
     print('nightTime $unixTimestamp');
+    final lang = langEn ? '':'&lang=ar';
     var url =
-        'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric&appid=${API_key}';
+        'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
     print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
