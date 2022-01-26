@@ -418,7 +418,7 @@ class WeatherProvider with ChangeNotifier {
       _compareTodayYesterday =
           langEn ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night' :
 
-           'اليوم $diffDay من الأمس ب ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في النهار و$diffNight ب ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في الليل' ;
+           'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في الليل' ;
           // 'في الليل'+'deg'.tr().toString()+'°'+'${diffMin.toStringAsFixed(2)}'+'و بمقدار'+'في النهار'+'deg'.tr().toString()+'°'+'${diffMax.toStringAsFixed(2)}'+'من الأمس بمقدار'+'$diffDay'+'اليوم';
       notifyListeners();
 
