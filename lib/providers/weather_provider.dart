@@ -405,18 +405,21 @@ class WeatherProvider with ChangeNotifier {
       _pastWeather = [...(_pastWeather.reversed)];
       final diffDay = double.parse(todayWeather.tempMax) >
               double.parse(pastWeatherData[0].tempMax)
-          ? "warmer"
-          : "colder";
+          ? "warmer".tr().toString()
+          : "colder".tr().toString();
       final diffNight = double.parse(todayWeather.tempMin) >
               double.parse(pastWeatherData[0].tempMin)
-          ? "warmer"
-          : "colder";
+          ? "warmer".tr().toString()
+          : "colder".tr().toString();
       final diffMax = double.parse(todayWeather.tempMax) -
           double.parse(pastWeatherData[0].tempMax);
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
       _compareTodayYesterday =
-          'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night';
+          langEn ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night' :
+
+           'اليوم $diffDay من الأمس ب ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في النهار و$diffNight ب ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في الليل' ;
+          // 'في الليل'+'deg'.tr().toString()+'°'+'${diffMin.toStringAsFixed(2)}'+'و بمقدار'+'في النهار'+'deg'.tr().toString()+'°'+'${diffMax.toStringAsFixed(2)}'+'من الأمس بمقدار'+'$diffDay'+'اليوم';
       notifyListeners();
 
       print('got getAllHistoryWeather');

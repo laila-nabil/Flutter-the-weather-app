@@ -17,5 +17,7 @@
   "settings" : "اعدادات",
   "location" : "الموقع",
   "current_location" : "الموقع الحالى",
-  "search_location" : "البحث عن موقع"
+  "search_location" : "البحث عن موقع",
+  "colder" : "ابرد",
+  "warmer" : "ادفى"
 }

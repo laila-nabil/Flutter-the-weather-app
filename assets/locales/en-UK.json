@@ -16,6 +16,8 @@
   "settings" : "Settings",
   "location" : "Location",
   "current_location" : "current location",
-  "search_location" : "search for a location"
+  "search_location" : "search for a location",
+  "colder" : "colder",
+  "warmer" : "warmer"
 
 }
