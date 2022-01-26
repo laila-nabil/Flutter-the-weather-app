@@ -26,22 +26,24 @@ class WeatherToday extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        return isPortrait ? _WeatherToday(
-          weatherToday: weatherToday,
-          isPortrait: isPortrait,
-          weatherTodayNotDetailed: weatherTodayNotDetailed,
-          constraints: constraints,
-        ) : frostedGlassEffect(
-          context: context,
-          width: constraints.maxWidth,
-          height: constraints.maxHeight,
-          widget: _WeatherToday(
-            weatherToday: weatherToday,
-            isPortrait: isPortrait,
-            weatherTodayNotDetailed: weatherTodayNotDetailed,
-            constraints: constraints,
-          ),
-        );
+        return isPortrait
+            ? _WeatherToday(
+                weatherToday: weatherToday,
+                isPortrait: isPortrait,
+                weatherTodayNotDetailed: weatherTodayNotDetailed,
+                constraints: constraints,
+              )
+            : frostedGlassEffect(
+                context: context,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                widget: _WeatherToday(
+                  weatherToday: weatherToday,
+                  isPortrait: isPortrait,
+                  weatherTodayNotDetailed: weatherTodayNotDetailed,
+                  constraints: constraints,
+                ),
+              );
       },
     );
   }
@@ -111,7 +113,7 @@ class _WeatherToday extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
-                    '${weatherToday.temp} °'+'deg'.tr().toString(),
+                    '${weatherToday.temp} °' + 'deg'.tr().toString(),
                     style: TextStyle(fontSize: 40),
                     maxFontSize: 55,
                   ),
@@ -123,20 +125,25 @@ class _WeatherToday extends StatelessWidget {
         Container(
           // width: constraints.maxWidth * 0.65,
           height: constraints.maxHeight * 0.06,
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'feels_like'.tr().toString()+'${weatherToday.feelsLike} °'+'deg'.tr().toString()+', ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(weatherToday.detailedDescription),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AutoSizeText(
+                'feels_like'.tr().toString() +
+                    '${weatherToday.feelsLike} °' +
+                    'deg'.tr().toString() +
+                    ', ',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                minFontSize: 18,
+                maxFontSize: 50,
+              ),
+              AutoSizeText(
+                weatherToday.detailedDescription,
+                style: TextStyle(fontSize: 25),
+                minFontSize: 18,
+                maxFontSize: 50,
+              ),
+            ],
           ),
         ),
         Divider(),
@@ -204,7 +211,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'max'.tr().toString(),
-                  status: "${weatherTodayTempMax} °"+'deg'.tr().toString(),
+                  status: "${weatherTodayTempMax} °" + 'deg'.tr().toString(),
                 ),
               ),
             ],
@@ -239,7 +246,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),
-                  status: "${weatherTodayTempMin} °"+'deg'.tr().toString(),
+                  status: "${weatherTodayTempMin} °" + 'deg'.tr().toString(),
                 ),
               )
             ],
