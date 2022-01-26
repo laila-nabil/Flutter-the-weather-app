@@ -179,6 +179,8 @@ class todayDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraints) {
       // return Container(color: Colors.lightBlue,);
+      final height = constraints.maxHeight * 0.3;
+      final width = constraints.maxWidth * 0.4;
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -187,8 +189,8 @@ class todayDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/rain.svg',
@@ -196,8 +198,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/sunrise.svg',
@@ -206,8 +208,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'max'.tr().toString(),
@@ -221,8 +223,8 @@ class todayDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/wind_2.svg',
@@ -231,8 +233,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/sunset.svg',
@@ -241,8 +243,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width: constraints.maxWidth * 0.4,
-                height: constraints.maxHeight * 0.25,
+                width:width,
+                height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),

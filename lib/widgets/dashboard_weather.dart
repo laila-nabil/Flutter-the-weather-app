@@ -39,7 +39,7 @@ class dashboardWeather extends StatelessWidget {
               child: AutoSizeText(
             status,
             textAlign: isStatusCentered ? TextAlign.center : TextAlign.left,
-            maxLines: 2,
+            maxLines: 1,
           ))
         ],
       );
