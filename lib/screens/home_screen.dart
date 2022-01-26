@@ -279,7 +279,7 @@ class LoadedContent extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                'Last updated at ${DateFormat('dd MMM - hh:mm a').format(DateTime.now())}',
+                '${'last_update'.tr().toString()} ${DateFormat('dd MMM - hh:mm a','locale'.tr().toString()).format(DateTime.now())}',
                 style: TextStyle(fontSize: 11, color: Colors.white),
               ),
             )

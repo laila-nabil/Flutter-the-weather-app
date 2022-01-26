@@ -220,7 +220,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/wind_2.svg',
                   status:
-                      '${weatherToday.windSpeed} m/s ${windDirection(int.parse(weatherToday.windDeg))}',
+                      '${weatherToday.windSpeed} ${'m_s'.tr()} ${windDirection(int.parse(weatherToday.windDeg))}',
                 ),
               ),
               Container(

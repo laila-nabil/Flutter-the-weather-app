@@ -19,5 +19,9 @@
   "current_location" : "الموقع الحالى",
   "search_location" : "البحث عن موقع",
   "colder" : "ابرد",
-  "warmer" : "ادفى"
+  "warmer" : "ادفى",
+  "last_update": "اخر تحديث",
+  "m_s":"م/ث",
+  "hpa": "م. بار",
+  "km":"كم"
 }
