@@ -134,13 +134,13 @@ class _WeatherToday extends StatelessWidget {
                     'deg'.tr().toString() +
                     ', ',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                minFontSize: 18,
+                minFontSize: isPortrait ? 18 : 10,
                 maxFontSize: 50,
               ),
               AutoSizeText(
                 weatherToday.detailedDescription,
                 style: TextStyle(fontSize: 25),
-                minFontSize: 18,
+                minFontSize: isPortrait ? 18 : 10,
                 maxFontSize: 50,
               ),
             ],
