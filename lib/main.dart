@@ -26,18 +26,18 @@
 //prev error solved by deleting everything fvm related and dart cache
 //then pub repair cache
 
-//TODO adjust UI: responsiveness
-//TODO add settings screen
-//TODO in settings screen: change city by location search with autocomplete
+//DONE adjust UI: responsiveness
+//DONE add settings screen
+//DONE in settings screen: change city by location search with autocomplete
 //TODO in settings screen: add multiple cities
 //TODO in settings screen: add multiple cities + locally store them
-//TODO in settings screen: change language + localization
+//DONE in settings screen: change language + localization
 //TODO in settings screen: change unit
 //DONE is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
 //DONE max &min sometimes disappear==> fixed
 //DONE maybe make all weather one class or use inheritance
-//TODO add shimmer instead of loading circle
-//TODO(next level) splash screen
+//DONE add shimmer instead of loading circle
+//DONE(next level) splash screen
 //DONE(next level) icon
 //TODO(next level) on play store
 
@@ -105,14 +105,16 @@ class MyApp extends StatelessWidget {
 class dummy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var dateString = DateFormat.MMMEd('ar').format(DateTime.now());
-    print('dateString');
-    print(DateFormat.MMMEd('ar').format(DateTime.now()));
-    print(DateFormat.MMMEd('en').format(DateTime.now()));
-    print(DateFormat('hh:mm a','ar').format(DateTime.now()));
+
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
-        child: Text('child'),
+        child: Column(
+          children: [
+            Text('child',style: TextStyle(color: Colors.white),),
+            Text('95.4%',style: TextStyle(color: Colors.white),),
+          ],
+        ),
       ),
     );
   }
