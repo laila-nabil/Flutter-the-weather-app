@@ -29,7 +29,7 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
-  var langEn = false;
+  var langEn = true;
   static const localTime = false;
   static const int historyDays = 4;
   static const int historyDaysUTC = 5;

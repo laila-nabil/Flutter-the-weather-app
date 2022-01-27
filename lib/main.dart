@@ -62,8 +62,9 @@ Future main() async {
   runApp(
       EasyLocalization(
           path: 'assets/locales',
-          // supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
-          supportedLocales: [Locale('ar', 'EG'),Locale('en', 'UK')],
+          //changing locale that is used at first is from here,may need to uninstall/reinstall the app
+          supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
+          // supportedLocales: [Locale('ar', 'EG'),Locale('en', 'UK')],
           child:
           MyApp()
       )
