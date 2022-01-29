@@ -36,14 +36,14 @@ class _MyHomePageState extends State<MyHomePage> {
       try {
         debugPrint('debugPrint didChangeDependencies');
         // SharedPreferences prefs = await SharedPreferences.getInstance();
-        final isEnglishDefault = true;
+        // final isEnglishDefault = true;
         // bool isEn = prefs.containsKey('is_english') ? prefs.getBool('is_english') : isEnglishDefault;
-        bool isEn = isEnglishDefault;
+        // bool isEn = isEnglishDefault;
         // !prefs.containsKey('is_english') ?? prefs.setBool('is_english', isEnglishDefault);
-        print('is_english $isEn ');
+        // print('is_english $isEn ');
         // print('prefs.containsKey(is_english) ${prefs.containsKey('is_english')} ');
-        isEn ? context.setLocale(Locale('en', 'UK')): context.setLocale(Locale('ar', 'EG'));
-        Provider.of<WeatherProvider>(context,listen: false).setLanguageEn(isEn);
+        // isEn ? context.setLocale(Locale('en', 'UK')): context.setLocale(Locale('ar', 'EG'));
+        // Provider.of<WeatherProvider>(context,listen: false).setLanguageEn(isEn);
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
