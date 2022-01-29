@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_weather_app/providers/weather_provider.dart';
 import 'package:the_weather_app/screens/home_screen.dart';
 
@@ -23,6 +24,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(() {
         print('_toggleLanguage');
       });
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // print('_toggleLanguage prefs.containsKey(is_english) ${prefs.containsKey('is_english')}');
+      // prefs.containsKey('is_english') ?? prefs.setBool('is_english', context.locale == Locale('en', 'UK') ? false : true);
       context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
           'en', 'UK'));
       Provider.of<WeatherProvider>(context,listen: false).toggleLanguage();
