@@ -30,6 +30,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Future<void> didChangeDependencies() async {
     if (_isInit) {
+      print('didChangeDependencies');
+      context.setLocale(Locale('en', 'UK'));
+      // context.setLocale(Locale('ar', 'EG'));
+      Provider.of<WeatherProvider>(context,listen: false).setLanguageEn(true);
       _isLoading = true;
       try {
         debugPrint('debugPrint didChangeDependencies');

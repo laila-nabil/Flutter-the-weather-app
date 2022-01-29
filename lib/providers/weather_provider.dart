@@ -737,4 +737,8 @@ class WeatherProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setLanguageEn(bool isEnglish){
+    langEn = isEnglish;
+    notifyListeners();
+  }
 }

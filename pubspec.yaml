@@ -42,6 +42,7 @@ dependencies:
   flutter_mapbox_autocomplete: ^2.0.0
   shimmer: ^2.0.0
   easy_localization: ^3.0.0
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:
