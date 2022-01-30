@@ -29,7 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // prefs.containsKey('is_english') ?? prefs.setBool('is_english', context.locale == Locale('en', 'UK') ? false : true);
       context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
           'en', 'UK'));
-      Provider.of<WeatherProvider>(context,listen: false).toggleLanguage();
+      // Provider.of<WeatherProvider>(context,listen: false).toggleLanguage();
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
     return SafeArea(

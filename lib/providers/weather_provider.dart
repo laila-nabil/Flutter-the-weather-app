@@ -94,7 +94,8 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     // const part = 'minutely,hourly';
-    final lang = langEn ? '':'&lang=ar';
+    // final lang = langEn ? '':'&lang=ar';
+    final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     const excludedPart = 'minutely';
     var url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric$lang&appid=$API_key';
@@ -139,7 +140,8 @@ class WeatherProvider with ChangeNotifier {
     // const lat = '30.0444';
     // const lon = '31.2357';
     const excludedPart = 'minutely';
-    final lang = langEn ? '':'&lang=ar';
+    // final lang = langEn ? '':'&lang=ar';
+    final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric$lang&appid=${API_key}';
     print('PresentFuture url is $url');
@@ -298,7 +300,8 @@ class WeatherProvider with ChangeNotifier {
 
     var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
     print('nightTime $unixTimestamp');
-    final lang = langEn ? '':'&lang=ar';
+    // final lang = langEn ? '':'&lang=ar';
+    final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
     print('history url is $url');
@@ -416,7 +419,8 @@ class WeatherProvider with ChangeNotifier {
       final diffMin = double.parse(todayWeather.tempMin) -
           double.parse(pastWeatherData[0].tempMin);
       _compareTodayYesterday =
-          langEn ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night' :
+          // langEn ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night' :
+      'lang'.tr().toString().contains('EN') ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' at night' :
 
            'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °'+'deg'.tr().toString()+' في الليل' ;
           // 'في الليل'+'deg'.tr().toString()+'°'+'${diffMin.toStringAsFixed(2)}'+'و بمقدار'+'في النهار'+'deg'.tr().toString()+'°'+'${diffMax.toStringAsFixed(2)}'+'من الأمس بمقدار'+'$diffDay'+'اليوم';
@@ -438,7 +442,8 @@ class WeatherProvider with ChangeNotifier {
     const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(duration: daysAgo, byDay:true);
     print('nightTime $unixTimestamp');
-    final lang = langEn ? '':'&lang=ar';
+    // final lang = langEn ? '':'&lang=ar';
+    final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
     print('history url is $url');
@@ -732,13 +737,13 @@ class WeatherProvider with ChangeNotifier {
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
-  void toggleLanguage(){
-    langEn = !langEn;
-    notifyListeners();
-  }
-
-  void setLanguageEn(bool isEnglish){
-    langEn = isEnglish;
-    notifyListeners();
-  }
+  // void toggleLanguage(){
+  //   langEn = !langEn;
+  //   notifyListeners();
+  // }
+  //
+  // void setLanguageEn(bool isEnglish){
+  //   langEn = isEnglish;
+  //   notifyListeners();
+  // }
 }
