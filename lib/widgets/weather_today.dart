@@ -109,7 +109,7 @@ class _WeatherToday extends StatelessWidget {
                 // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
                 // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.325,
                 alignment: Alignment.center,
-                padding: const EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(constraints.maxWidth * 0.02),
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
@@ -147,15 +147,6 @@ class _WeatherToday extends StatelessWidget {
             maxLines: 2,
             textAlign: TextAlign.center,
           ),
-          // AutoSizeText(
-          //   'feels_like'.tr().toString() +
-          //       '${weatherToday.feelsLike} °' +
-          //       'deg'.tr().toString() +
-          //       ', '+weatherToday.detailedDescription,
-          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          //   minFontSize: 5,
-          //   maxFontSize: 50,
-          // ),
         ),
         Divider(),
         Container(
