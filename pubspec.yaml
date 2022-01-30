@@ -43,6 +43,7 @@ dependencies:
   shimmer: ^2.0.0
   easy_localization: ^3.0.0
   shared_preferences: ^2.0.12
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_test:

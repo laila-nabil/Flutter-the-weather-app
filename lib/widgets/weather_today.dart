@@ -123,28 +123,39 @@ class _WeatherToday extends StatelessWidget {
           ],
         ),
         Container(
-          // width: constraints.maxWidth * 0.65,
-          height: constraints.maxHeight * 0.06,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AutoSizeText(
-                'feels_like'.tr().toString() +
-                    '${weatherToday.feelsLike} °' +
-                    'deg'.tr().toString() +
-                    ', ',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                minFontSize: isPortrait ? 18 : 10,
-                maxFontSize: 50,
+          height: constraints.maxHeight * 0.07,
+          width: constraints.maxWidth * 0.98,
+          alignment: Alignment.center,
+          child:
+          AutoSizeText.rich(
+            TextSpan(text: 'feels_like'.tr().toString(), children: [
+              TextSpan(text:
+                  '${weatherToday.feelsLike} °' +
+                  'deg'.tr().toString() +
+                  ', ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  )
               ),
-              AutoSizeText(
-                weatherToday.detailedDescription,
-                style: TextStyle(fontSize: 25),
-                minFontSize: isPortrait ? 18 : 10,
-                maxFontSize: 50,
-              ),
-            ],
+              TextSpan(
+                  text: weatherToday.detailedDescription,
+                  )
+            ]),
+            style: TextStyle(fontSize: 25),
+            minFontSize: 12,
+            maxFontSize: 50,
+            maxLines: 2,
+            textAlign: TextAlign.center,
           ),
+          // AutoSizeText(
+          //   'feels_like'.tr().toString() +
+          //       '${weatherToday.feelsLike} °' +
+          //       'deg'.tr().toString() +
+          //       ', '+weatherToday.detailedDescription,
+          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          //   minFontSize: 5,
+          //   maxFontSize: 50,
+          // ),
         ),
         Divider(),
         Container(

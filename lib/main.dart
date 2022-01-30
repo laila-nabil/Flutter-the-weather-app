@@ -44,6 +44,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:universal_html/html.dart' as html;
+
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +92,6 @@ class MyApp extends StatelessWidget {
           textTheme: Typography().white,
         ),
         home: MyHomePage(),
-        // home: dummy(),
         routes: {
           MyHomePage.routeName: (ctx) => MyHomePage(),
           LocationScreen.routeName: (ctx) => LocationScreen(),
@@ -101,23 +102,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class dummy extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Center(
-        child: Column(
-          children: [
-            Text('child',style: TextStyle(color: Colors.white),),
-            Text('95.4%',style: TextStyle(color: Colors.white),),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 
 
