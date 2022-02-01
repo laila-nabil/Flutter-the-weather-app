@@ -99,7 +99,7 @@ class WeatherProvider with ChangeNotifier {
     const excludedPart = 'minutely';
     var url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric$lang&appid=$API_key';
-    print('CurrentWeather url is $url');
+    //print('CurrentWeather url is $url');
     try {
       final response = await http.get(Uri.parse(url));
       final currentWeather = json.decode(response.body);
@@ -144,7 +144,7 @@ class WeatherProvider with ChangeNotifier {
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric$lang&appid=${API_key}';
-    print('PresentFuture url is $url');
+    //print('PresentFuture url is $url');
     try {
       _hourlyPresentFutureWeather = [];
       final response = await http.get(Uri.parse(url));
@@ -154,7 +154,7 @@ class WeatherProvider with ChangeNotifier {
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
-      print('***hourly _hourlyPresentFutureWeather');
+      //print('***hourly _hourlyPresentFutureWeather');
       hourly.forEach((element) {
         // print('=>for element');
         // print(element['weather'][0]['main']);
@@ -199,7 +199,7 @@ class WeatherProvider with ChangeNotifier {
         }
         return false;
       });
-      print("todayHourly ${todayHourly.length} ${todayHourly}");
+      //print("todayHourly ${todayHourly.length} ${todayHourly}");
       _todayWeather = Weather(
         // date: unixSecondsToDate(date),
         // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
@@ -285,7 +285,7 @@ class WeatherProvider with ChangeNotifier {
           }).toList(),
         ));
       }
-      print('present done');
+      //print('present done');
     } catch (error) {
       throw (error);
     }
@@ -299,15 +299,15 @@ class WeatherProvider with ChangeNotifier {
     const part = 'current,minutely';
 
     var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
-    print('nightTime $unixTimestamp');
+    //print('nightTime $unixTimestamp');
     // final lang = langEn ? '':'&lang=ar';
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
-    print('history url is $url');
+    //print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      print('daysAgo $duration');
+      //print('daysAgo $duration');
       final historyWeather = json.decode(response.body);
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       hourlyPast.forEach((element) {
@@ -340,24 +340,24 @@ class WeatherProvider with ChangeNotifier {
             tempCurrent: element['temp'].toString());
       });
     } catch (error) {
-      print('error getHistoryDataAPIUTC daysAgo $duration $error');
+      //print('error getHistoryDataAPIUTC daysAgo $duration $error');
       throw (error);
     }
   }
 
   Future<void> getAllHistoryWeatherUTC() async {
-    print('getAllHistoryWeather');
+    //print('getAllHistoryWeather');
     isLoading = true;
     try {
       _pastWeather = [];
       _hourlyPastWeather = [];
-      print('reset _pastWeather _hourlyPastWeather');
+      //print('reset _pastWeather _hourlyPastWeather');
       await getHistoryDataAPIUTC(duration: 15,byDay: false);
       for (int i = 1; i <= historyDaysUTC; i++) {
       // for (int i = historyDaysUTC; i >= 1; i--) {
-        print('i before $i');
+        //print('i before $i');
         await getHistoryDataAPIUTC(duration: i,byDay: true);
-        print('i after $i');
+        //print('i after $i');
       }
       for (int j = 1; j <= historyDays; j++) {
         List<Weather> weatherTimeline = [];
@@ -370,11 +370,11 @@ class WeatherProvider with ChangeNotifier {
             0).toList()..sort(Weather().sortByDate);
         final weatherTimelineSet = Set<Weather>();
         weatherTimeline.forEach((element) {
-          print('element.date.hour ${element.date.hour}');
+          //print('element.date.hour ${element.date.hour}');
           weatherTimelineNoDup.insert(element.date.hour, element);
         });
-        print('original weatherTimeline ${weatherTimeline.length}');
-        print('no dup weatherTimeline ${weatherTimelineNoDup.length}');
+        //print('original weatherTimeline ${weatherTimeline.length}');
+        //print('no dup weatherTimeline ${weatherTimelineNoDup.length}');
         weatherTimelineSorted = weatherTimeline;
         weatherTimelineSorted.sort((a, b) =>
             double.parse(b.tempCurrent).round() -
@@ -399,9 +399,9 @@ class WeatherProvider with ChangeNotifier {
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
         _pastWeather.add(theWeather);
-        print('_pastWeather.last.weatherTimeline here');
+        //print('_pastWeather.last.weatherTimeline here');
         _pastWeather.last.weatherTimeline.forEach((element) {
-          print(element.date);
+          //print(element.date);
         });
       }
       final pastWeatherData = _pastWeather;
@@ -426,7 +426,7 @@ class WeatherProvider with ChangeNotifier {
           // 'في الليل'+'deg'.tr().toString()+'°'+'${diffMin.toStringAsFixed(2)}'+'و بمقدار'+'في النهار'+'deg'.tr().toString()+'°'+'${diffMax.toStringAsFixed(2)}'+'من الأمس بمقدار'+'$diffDay'+'اليوم';
       notifyListeners();
 
-      print('got getAllHistoryWeather');
+      //print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
     }
@@ -441,15 +441,15 @@ class WeatherProvider with ChangeNotifier {
     // const lon = '31.2357';
     const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(duration: daysAgo, byDay:true);
-    print('nightTime $unixTimestamp');
+    //print('nightTime $unixTimestamp');
     // final lang = langEn ? '':'&lang=ar';
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
-    print('history url is $url');
+    //print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      print('daysAgo $daysAgo');
+      //print('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
       // print('historyWeather $historyWeather');
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
@@ -502,8 +502,8 @@ class WeatherProvider with ChangeNotifier {
       hourlyPastTempSorted.sort();
       // print(
       //     'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
-      print(
-          '_pastWeather.insert before for daysAgo $daysAgo and _pastWeather $_pastWeather');
+      //print(
+      //     '_pastWeather.insert before for daysAgo $daysAgo and _pastWeather $_pastWeather');
       // _pastWeather.insert(
       //     daysAgo - 1,
       _pastWeather.add(Weather(
@@ -527,23 +527,23 @@ class WeatherProvider with ChangeNotifier {
               0);
         }).toList(),
       ));
-      print('_pastWeather.insert after');
+      //print('_pastWeather.insert after');
     } catch (error) {
-      print('error getHistoryWeatherAPI daysAgo $daysAgo $error');
+      //print('error getHistoryWeatherAPI daysAgo $daysAgo $error');
       throw (error);
     }
   }
 
   Future<bool> getWeather() async {
     bool result = false;
-    print('getWeather()');
+    //print('getWeather()');
     try {
-      print('in getWeather()');
+      //print('in getWeather()');
       await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
       // await getAllHistoryWeather();
       await getAllHistoryWeatherUTC();
-      print('got weather');
+      //print('got weather');
       result = true;
       notifyListeners();
     } catch (error) {
@@ -553,21 +553,21 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<void> getAllHistoryWeather() async {
-    print('getAllHistoryWeather');
+    //print('getAllHistoryWeather');
     isLoading = true;
     try {
       _pastWeather = [];
       _hourlyPastWeather = [];
-      print('reset _pastWeather _hourlyPastWeather');
+      //print('reset _pastWeather _hourlyPastWeather');
       // for (int i = 1; i <= historyDays; i++) {
       //   print('i before $i');
       //   await getHistoryWeatherAPI(i);
       //   print('i after $i');
       // }
       for (int i = historyDays; i >= 1; i--) {
-        print('i before $i');
+        //print('i before $i');
         await getHistoryWeatherAPI(i);
-        print('i after $i');
+        //print('i after $i');
       }
       final pastWeatherData = _pastWeather;
       // _pastWeather = [...(_pastWeather.reversed)];
@@ -587,7 +587,7 @@ class WeatherProvider with ChangeNotifier {
           'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°'+'deg'.tr().toString()+' at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°'+'deg'.tr().toString()+' at night';
       notifyListeners();
 
-      print('got getAllHistoryWeather');
+      //print('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
     }
@@ -611,7 +611,7 @@ class WeatherProvider with ChangeNotifier {
   }
 
   List<Weather> get futureWeather {
-    print('futureWeather length is ${_futureWeather.length}');
+    //print('futureWeather length is ${_futureWeather.length}');
     return [..._futureWeather];
   }
 
@@ -620,7 +620,7 @@ class WeatherProvider with ChangeNotifier {
   }
 
   List<Weather> get pastWeather {
-    print('pastWeather length is ${_pastWeather.length}');
+    //print('pastWeather length is ${_pastWeather.length}');
     return [..._pastWeather.reversed];
   }
 
@@ -628,7 +628,7 @@ class WeatherProvider with ChangeNotifier {
       {@required bool byCurrentLocation, String selectedLat,String selectedLon}) async {
     Position result;
     try {
-      print('setLocationLatLon');
+      //print('setLocationLatLon');
       if(byCurrentLocation){
         result = await _determinePosition();
         _lat = result.latitude.toString();
@@ -638,14 +638,14 @@ class WeatherProvider with ChangeNotifier {
         _lon = selectedLon;
       }
 
-      print("location : getting location $_lat $_lon");
+      //print("location : getting location $_lat $_lon");
       await getLocationFromCoordinates();
       await getCurrentWeatherAPI();
       await getPresentFutureWeatherAPI();
       await getAllHistoryWeather();
       notifyListeners();
     } catch (error) {
-      print('location : error $error');
+      //print('location : error $error');
       notifyListeners();
       return Future.error(error);
     }
@@ -665,7 +665,7 @@ class WeatherProvider with ChangeNotifier {
         'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
-    print('autoCompleteSearchLocation $body');
+    //print('autoCompleteSearchLocation $body');
     final List listResults = body['features'];
     listResults.forEach((element) {
       // result.add({'${element['properties']['city']}, ${element['properties']['country']}' : });
@@ -682,7 +682,7 @@ class WeatherProvider with ChangeNotifier {
     final response = await http.get(Uri.parse(url));
 
     final locationDetails = json.decode(response.body);
-    print('locationDetails $locationDetails');
+    //print('locationDetails $locationDetails');
     if (locationDetails != null) {
       location = locationDetails['city'].toString().isNotEmpty
           ? '${locationDetails['city']},${locationDetails['countryCode']}'
@@ -706,7 +706,7 @@ class WeatherProvider with ChangeNotifier {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      print("location : error('Location services are disabled.')");
+      //print("location : error('Location services are disabled.')");
       return Future.error('Location services are disabled.');
     }
 
@@ -719,19 +719,19 @@ class WeatherProvider with ChangeNotifier {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        print("location : error('Location permissions are denied'')");
+        //print("location : error('Location permissions are denied'')");
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      print("location : error('Location permissions are permanently denied')");
+      //print("location : error('Location permissions are permanently denied')");
 
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    print("location : getting location");
+    //print("location : getting location");
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.

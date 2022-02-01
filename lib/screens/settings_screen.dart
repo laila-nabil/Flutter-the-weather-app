@@ -19,7 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final isPortrait = screenSize.width < screenSize.height;
     void _toggleLanguage() async{
       setState(() {
-        print('_toggleLanguage');
+        //print('_toggleLanguage');
       });
       context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
           'en', 'UK'));

@@ -31,10 +31,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Future<void> didChangeDependencies() async {
     if (_isInit) {
-      print('didChangeDependencies');
+      //print('didChangeDependencies');
       _isLoading = true;
       try {
-        debugPrint('debugPrint didChangeDependencies');
+        // debug//print('debug//print didChangeDependencies');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
@@ -49,47 +49,47 @@ class _MyHomePageState extends State<MyHomePage> {
           _isInit = false;
         });
       } catch (error) {
-        print('error in did change $error');
+        //print('error in did change $error');
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('An error occurred! did $error')));
       }
 
       cron = Cron();
-      print('Alarm set');
+      //print('Alarm set');
       //https://crontab.guru/
       //'01/30 * * * *'
       //“At minute 1 and 30.”
       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
-        print('01,30 * * * * ${DateTime.now()}');
+        //print('01,30 * * * * ${DateTime.now()}');
         try {
           if (Provider.of<WeatherProvider>(context, listen: false).isLoading) {
-            print('cron can\'t since isLoading in true');
+            //print('cron can\'t since isLoading in true');
           } else {
             await Provider.of<WeatherProvider>(context, listen: false)
                 .getCurrentWeatherAPI();
           }
 
           setState(() {
-            print('update');
+            //print('update');
           });
         } catch (error) {
-          print(error);
+          //print(error);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('An error occurred!')));
         }
       });
       cron.schedule(Schedule.parse('01 0 * * *'), () async {
-        print('01 0 * * * ${DateTime.now()}');
+        //print('01 0 * * * ${DateTime.now()}');
         try {
           await Provider.of<WeatherProvider>(context, listen: false)
               .getPresentFutureWeatherAPI();
           // await Provider.of<WeatherProvider>(context, listen: false)
           //     .getAllHistoryWeather();
           setState(() {
-            print('update');
+            //print('update');
           });
         } catch (error) {
-          print(error);
+          //print(error);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('An error occurred!')));
         }
@@ -106,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final isPortrait = screenSize.width < screenSize.height;
     final minimalView = true;
     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-    print('userAgent $userAgent');
-    print("screenSize $screenSize");
-    print("orientation $orientation");
+    //print('userAgent $userAgent');
+    //print("screenSize $screenSize");
+    //print("orientation $orientation");
     return SafeArea(
       bottom: true,
       left: true,
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
               await Provider.of<WeatherProvider>(context, listen: false)
                   .getPresentFutureWeatherAPI();
             } catch (error) {
-              print('error in RefreshIndicator $error');
+              //print('error in RefreshIndicator $error');
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text('An error occurred!')));
             }
@@ -158,7 +158,7 @@ class LoadingContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-    print('userAgent $userAgent');
+    //print('userAgent $userAgent');
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -419,13 +419,13 @@ void cronSchedule(
   //https://crontab.guru/#01_00_*_*_*
   final cron = Cron();
   final time = '$minute $hour $day $month $dayWeek';
-  print('time is >$time>');
-  print('Alarm set');
+  //print('time is >$time>');
+  //print('Alarm set');
   cron.schedule(Schedule.parse(time), () async {
-    print(
-        '$minute minutes,$hour hours,$day days,$month month,$dayWeek day week ${DateTime.now()}');
+    //print(
+    //     '$minute minutes,$hour hours,$day days,$month month,$dayWeek day week ${DateTime.now()}');
     repeatedAction;
-    print('Alarm done');
+    //print('Alarm done');
   });
 }
 
