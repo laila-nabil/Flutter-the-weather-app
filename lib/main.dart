@@ -16,6 +16,9 @@
 //to reupload
 // fvm flutter build web --dart-define api_key=key
 // firebase deploy --only hosting
+//or
+//firebase deploy --only hosting:flutter-weather-app
+
 
 //to add arguments but to android studio
 //from main.dart menu

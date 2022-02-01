@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "flutter-weather-app",
     "public": "build/web",
     "ignore": [
       "firebase.json",
