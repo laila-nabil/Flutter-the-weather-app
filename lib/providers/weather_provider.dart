@@ -144,7 +144,7 @@ class WeatherProvider with ChangeNotifier {
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric$lang&appid=${API_key}';
-    //print('PresentFuture url is $url');
+    // print('PresentFuture url is $url');
     try {
       _hourlyPresentFutureWeather = [];
       final response = await http.get(Uri.parse(url));
@@ -216,6 +216,7 @@ class WeatherProvider with ChangeNotifier {
         detailedDescription: presentFutureWeather['daily'][0]['weather'][0]
             ['description'],
         isImageNetwork: !isImage3D,
+        rain: presentFutureWeather['daily'][0]['pop'].toString(),
         image: isImage3D
             ? 'assets/3d/$icon.png'
             : 'https://openweathermap.org/img/wn/$icon@4x.png',
@@ -304,7 +305,7 @@ class WeatherProvider with ChangeNotifier {
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
-    //print('history url is $url');
+    // print('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
       //print('daysAgo $duration');
