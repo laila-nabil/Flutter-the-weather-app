@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:the_weather_app/models/location.dart' as locationModel;
+import 'package:the_weather_app/models/unix.dart';
 
 import '../models/weather.dart';
 import '../models/current_weather.dart';
@@ -77,18 +78,6 @@ class WeatherProvider with ChangeNotifier {
                 1000)
             .round();
     return unixTime;
-  }
-
-  DateTime unixSecondsToDate(int unixTimeStamp) {
-    //If [isUtc] is false then the date is in the local time zone.
-    return DateTime.fromMillisecondsSinceEpoch(unixTimeStamp * 1000);
-  }
-
-  DateTime unixSecondsToDateTimezone(int unixTimeStamp, int timezoneOffset) {
-    //If [isUtc] is false then the date is in the local time zone.
-    return DateTime.fromMillisecondsSinceEpoch(
-        (unixTimeStamp + timezoneOffset) * 1000,
-        isUtc: true);
   }
 
   Future<void> getCurrentWeatherAPI() async {
