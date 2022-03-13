@@ -52,12 +52,12 @@ import 'package:universal_html/html.dart' as html;
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/providers/weather_provider.dart';
-import 'package:the_weather_app/screens/location_screen.dart';
-import 'package:the_weather_app/screens/settings_screen.dart';
+import 'package:the_weather_app/controllers/weather_provider.dart';
+import 'package:the_weather_app/views/screens/location_screen.dart';
+import 'package:the_weather_app/views/screens/settings_screen.dart';
 
 
-import './screens/home_screen.dart';
+import 'views/screens/home/home_screen.dart';
 
 Future main() async {
   // await DotEnv.load(fileName: ".env");

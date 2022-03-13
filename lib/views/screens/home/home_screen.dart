@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:the_weather_app/widgets/location.dart';
+import 'package:the_weather_app/views/screens/home/location.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:universal_html/html.dart' as html;
 
-import '../widgets/weather_tabs.dart';
-import 'package:the_weather_app/providers/weather_provider.dart';
-import 'package:the_weather_app/widgets/compare_weather.dart';
-import 'package:the_weather_app/widgets/weather_today.dart';
+import 'weather_tabs.dart';
+import 'package:the_weather_app/controllers/weather_provider.dart';
+import 'package:the_weather_app/views/screens/home/compare_weather.dart';
+import 'package:the_weather_app/views/screens/home/weather_today.dart';
 
 class MyHomePage extends StatefulWidget {
   static const routeName = '/home';

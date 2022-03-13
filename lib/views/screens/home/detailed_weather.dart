@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
-import 'package:the_weather_app/widgets/custom_grid.dart';
+import 'package:the_weather_app/views/screens/home/custom_grid.dart';
 import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {

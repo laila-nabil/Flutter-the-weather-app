@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/providers/weather_provider.dart';
+import 'package:the_weather_app/controllers/weather_provider.dart';
 
 class CompareWeather extends StatelessWidget {
   @override

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:the_weather_app/models/weather.dart';
-import 'package:the_weather_app/widgets/FrostedGlassEffectCard.dart';
-import 'package:the_weather_app/widgets/detailed_weather.dart';
+import 'package:the_weather_app/views/screens/home/FrostedGlassEffectCard.dart';
+import 'package:the_weather_app/views/screens/home/detailed_weather.dart';
 
 import 'dashboard_weather.dart';
 
