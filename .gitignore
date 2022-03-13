@@ -46,3 +46,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .firebase/hosting.YnVpbGRcd2Vi.cache
+pubspec.lock
+pubspec.lock
