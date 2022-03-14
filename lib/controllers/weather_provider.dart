@@ -4,6 +4,7 @@
 
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -41,7 +42,7 @@ class WeatherProvider with ChangeNotifier {
   static bool isImage3D = true;
   bool isLoading = false;
   static const terminalApi = String.fromEnvironment("api_key");
-  var _API_KEY = kIsWeb ? terminalApi : dotenv.env['API_KEY'];
+  var _API_KEY = terminalApi;
 
   DateTime daysFromNow(int daysAgo) {
     var timeNow = DateTime.now();
@@ -95,6 +96,7 @@ class WeatherProvider with ChangeNotifier {
     //print('CurrentWeather url is $url');
     try {
       final response = await http.get(Uri.parse(url));
+      developer.log('response ${response.body}, api ${API_key}');
       final currentWeather = json.decode(response.body);
       final iconNow = currentWeather['weather'][0]['icon'];
       _weatherNow = CurrentWeather(

@@ -60,9 +60,8 @@ import 'package:the_weather_app/views/screens/settings_screen.dart';
 import 'views/screens/home/home_screen.dart';
 
 Future main() async {
-  // await DotEnv.load(fileName: ".env");
-  await dotenv.load(fileName: ".env");
   //order is important
+  WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   runApp(
       EasyLocalization(

@@ -66,7 +66,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - .env
     - assets/splash_screen_icon.png
     - assets/dashboard_icons/rain.svg
     - assets/dashboard_icons/sunrise.svg
