@@ -97,6 +97,7 @@ class WeatherProvider with ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(url));
       developer.log('response ${response.body}, api ${API_key}');
+      developer.log('url $url');
       final currentWeather = json.decode(response.body);
       final iconNow = currentWeather['weather'][0]['icon'];
       _weatherNow = CurrentWeather(
