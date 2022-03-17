@@ -44,6 +44,8 @@
 //DONE(next level) icon
 //TODO(next level) on play store
 
+///TODO padding fixed but everything else is not
+///TODO is history correct?!
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
