@@ -60,10 +60,14 @@ flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or* 
         - [ ] Riverpod instead of provider
         - [ ] fix TODOs in WeatherProvider
         - [ ] splash screen instead of shimmer
+    - [ ] full refactoring
+        - [ ] UI from online designs
+        - [ ] refactor WeatherProvider
 - [ ] Next steps
     - [ ]  in settings screen: add multiple cities
     - [ ]  in settings screen: add multiple cities + locally store them
     - [ ] in settings screen: change unit
     - [ ] padding fixed but everything else is not
     - [ ] is history correct?!
+    - [ ] Tests
     - [ ] on play store
