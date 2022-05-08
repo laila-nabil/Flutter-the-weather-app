@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:the_weather_app/domain/resources/assets_paths.dart';
 
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/views/screens/home/FrostedGlassEffectCard.dart';
@@ -125,7 +126,7 @@ class _CompactDay extends StatelessWidget {
               alignment: Alignment.center,
               child: dashboardWeather(
                 isStatusCentered: true,
-                svgIcon: 'assets/dashboard_icons/rain.svg',
+                svgIcon: AppAssets.IconRain,
                 status: '${(double.tryParse(detailedWeather.rain)! * 100).toStringAsFixed(0)}%',
               ),
             ),

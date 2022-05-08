@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:the_weather_app/domain/resources/assets_paths.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 import 'package:the_weather_app/views/screens/home/custom_grid.dart';
@@ -20,13 +21,13 @@ class WeatherDetailed extends StatelessWidget {
       final dashboard = [
         dashboardWeather(
           isStatusCentered: false,
-          svgIcon: 'assets/dashboard_icons/rain.svg',
+          svgIcon: AppAssets.IconRain,
           status: '${(double.tryParse(weatherDay.rain)! * 100).toStringAsFixed(2)}%',
         ),
 
         dashboardWeather(
           isStatusCentered: false,
-          svgIcon: 'assets/dashboard_icons/wind_2.svg',
+          svgIcon: AppAssets.IconWind2,
           status:
       weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherDay.windDeg) ?? 0)}' : '_',
         ),

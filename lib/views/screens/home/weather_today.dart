@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:the_weather_app/domain/resources/assets_paths.dart';
 
 import 'package:the_weather_app/models/current_weather.dart';
 import 'package:the_weather_app/models/unix.dart';
@@ -195,7 +196,7 @@ class todayDetails extends StatelessWidget {
                 height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: 'assets/dashboard_icons/rain.svg',
+                  svgIcon: AppAssets.IconRain,
                   status: '${double.tryParse(weatherTodayRain)! * 100.0}%',
                 ),
               ),
@@ -204,7 +205,7 @@ class todayDetails extends StatelessWidget {
                 height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: 'assets/dashboard_icons/sunrise.svg',
+                  svgIcon: AppAssets.IconSunrise,
                   status:
                       '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
                 ),
@@ -229,7 +230,7 @@ class todayDetails extends StatelessWidget {
                 height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: 'assets/dashboard_icons/wind_2.svg',
+                  svgIcon: AppAssets.IconWind2,
                   status:
                       '${weatherToday.windSpeed} ${'m_s'.tr()} ${windDirection(int.parse(weatherToday.windDeg))}',
                 ),
@@ -239,7 +240,7 @@ class todayDetails extends StatelessWidget {
                 height:height,
                 child: dashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: 'assets/dashboard_icons/sunset.svg',
+                  svgIcon: AppAssets.IconSunset,
                   status:
                       '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
                 ),

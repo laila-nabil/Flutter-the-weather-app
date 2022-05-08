@@ -57,6 +57,10 @@ flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or* 
 - [ ] Refactoring
     - [ ] Basic refactoring
         - [ ] use lib/domain/resources
+            - [x] assets
+            - [ ] colors
+            - [ ] design parameters
+            - [ ] text styles
         - [ ] Riverpod instead of provider
         - [ ] fix TODOs in WeatherProvider
         - [ ] splash screen instead of shimmer

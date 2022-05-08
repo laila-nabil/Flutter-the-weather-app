@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:the_weather_app/domain/resources/assets_paths.dart';
 import 'package:the_weather_app/models/location.dart' as locationModel;
 import 'package:the_weather_app/models/unix.dart';
 
@@ -105,7 +106,7 @@ class WeatherProvider with ChangeNotifier {
         lon: lon,
         isImageNetwork: !isImage3D,
         image: isImage3D
-            ? 'assets/3d/$iconNow.png'
+            ? '${AppAssets.Icon3dPath}/$iconNow.png'
             : 'https://openweathermap.org/img/wn/$iconNow@4x.png',
         temp: currentWeather['main']['temp'].toString(),
         feelsLike: currentWeather['main']['feels_like'].toString(),
@@ -160,7 +161,7 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isImageNetwork: !isImage3D,
             image: isImage3D
-                ? 'assets/3d/${element['weather'][0]['icon']}.png'
+                ? '${AppAssets.Icon3dPath}/${element['weather'][0]['icon']}.png'
                 : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'],
             detailedDescription: element['weather'][0]['description'],
@@ -214,7 +215,7 @@ class WeatherProvider with ChangeNotifier {
         isImageNetwork: !isImage3D,
         rain: presentFutureWeather['daily'][0]['pop'].toString(),
         image: isImage3D
-            ? 'assets/3d/$icon.png'
+            ? '${AppAssets.Icon3dPath}/$icon.png'
             : 'https://openweathermap.org/img/wn/$icon@4x.png',
         // weatherTimeline: _hourlyPresentFutureWeather
         //     .where((element) => localTime
@@ -266,7 +267,7 @@ class WeatherProvider with ChangeNotifier {
               ['description'],
           isImageNetwork: !isImage3D,
           image: isImage3D
-              ? 'assets/3d/$icon.png'
+              ? '${AppAssets.Icon3dPath}/$icon.png'
               : 'https://openweathermap.org/img/wn/$icon@4x.png',
           weatherTimeline: _hourlyPresentFutureWeather.where((element) {
             // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
@@ -317,7 +318,7 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isImageNetwork: !isImage3D,
             image: isImage3D
-                ? 'assets/3d/${element['weather'][0]['icon']}.png'
+                ? '${AppAssets.Icon3dPath}/${element['weather'][0]['icon']}.png'
                 : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
             detailedDescription:
@@ -466,7 +467,7 @@ class WeatherProvider with ChangeNotifier {
             lon: lon,
             isImageNetwork: !isImage3D,
             image: isImage3D
-                ? 'assets/3d/${element['weather'][0]['icon']}.png'
+                ? '${AppAssets.Icon3dPath}/${element['weather'][0]['icon']}.png'
                 : 'https://openweathermap.org/img/wn/${element['weather'][0]['icon']}@4x.png',
             mainDescription: element['weather'][0]['main'].toString(),
             detailedDescription:
