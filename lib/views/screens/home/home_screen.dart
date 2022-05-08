@@ -9,7 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'weather_tabs.dart';
-import 'package:the_weather_app/controllers/weather_provider.dart';
+import 'package:the_weather_app/control/weather_provider.dart';
 import 'package:the_weather_app/views/screens/home/compare_weather.dart';
 import 'package:the_weather_app/views/screens/home/weather_today.dart';
 

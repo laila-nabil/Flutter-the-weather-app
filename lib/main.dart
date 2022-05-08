@@ -6,7 +6,7 @@ import 'package:universal_html/html.dart' as html;
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/controllers/weather_provider.dart';
+import 'package:the_weather_app/control/weather_provider.dart';
 import 'package:the_weather_app/views/screens/location_screen.dart';
 import 'package:the_weather_app/views/screens/settings_screen.dart';
 

@@ -2,7 +2,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/controllers/weather_provider.dart';
+import 'package:the_weather_app/control/weather_provider.dart';
 import 'package:the_weather_app/views/screens/home/weather_list.dart';
 
 class WeatherTabs extends StatelessWidget {
