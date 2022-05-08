@@ -51,11 +51,11 @@ class WeatherToday extends StatelessWidget {
 
 class _WeatherToday extends StatelessWidget {
   const _WeatherToday(
-      {Key key,
-      @required this.weatherToday,
-      @required this.isPortrait,
-      @required this.weatherTodayNotDetailed,
-      this.constraints})
+      {Key? key,
+      required this.weatherToday,
+      required this.isPortrait,
+      required this.weatherTodayNotDetailed,
+      required this.constraints})
       : super(key: key);
 
   final CurrentWeather weatherToday;
@@ -165,11 +165,11 @@ class _WeatherToday extends StatelessWidget {
 
 class todayDetails extends StatelessWidget {
   const todayDetails(
-      {Key key,
-      @required this.weatherToday,
-      this.weatherTodayRain,
-      this.weatherTodayTempMax,
-      this.weatherTodayTempMin})
+      {Key? key,
+      required this.weatherToday,
+      required this.weatherTodayRain,
+      required this.weatherTodayTempMax,
+      required this.weatherTodayTempMin})
       : super(key: key);
 
   final CurrentWeather weatherToday;
@@ -196,7 +196,7 @@ class todayDetails extends StatelessWidget {
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: 'assets/dashboard_icons/rain.svg',
-                  status: '${double.tryParse(weatherTodayRain) * 100.0}%',
+                  status: '${double.tryParse(weatherTodayRain)! * 100.0}%',
                 ),
               ),
               Container(

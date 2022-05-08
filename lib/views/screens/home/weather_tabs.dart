@@ -72,13 +72,13 @@ class WeatherTabs extends StatelessWidget {
                                   text: TextSpan(children: [
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.tempMax).toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.value.tempMax)!.toStringAsFixed(1)} ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white)),
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.tempMin).toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.value.tempMin)!.toStringAsFixed(1)} ",
                                         style: TextStyle(color: Colors.white)),
 
                                   ]),
@@ -106,7 +106,7 @@ class WeatherTabs extends StatelessWidget {
                       .map((e) {
                     // print("e.date ${e.date}");
                     // print("e.weatherTimeline ${e.weatherTimeline.length}");
-                    return WeatherList(e.weatherTimeline);
+                    return WeatherList(e.weatherTimeline!);
                   }).toList()
                 ]))
           ]));

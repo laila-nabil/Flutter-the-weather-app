@@ -9,7 +9,7 @@ class frostedGlassEffect extends StatelessWidget {
   final double width;
 
   const frostedGlassEffect(
-      {Key key, this.context, this.widget, this.height, this.width})
+      {Key? key, required this.context, required this.widget, required this.height, required this.width})
       : super(key: key);
 
   @override

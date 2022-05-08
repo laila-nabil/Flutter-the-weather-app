@@ -5,7 +5,7 @@ class location{
   final String lon;
   final String lat;
   String city = 'no where';
-  location({this.lon,this.lat});
+  location({required this.lon,required this.lat});
 
   Future<Map> getCityFromCoordinates() async {
     var url =

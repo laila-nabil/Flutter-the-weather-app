@@ -28,11 +28,11 @@ class WeatherProvider with ChangeNotifier {
 
   // String _lat = '37.5665'; //seoul's latitude
   // String _lon = '126.977'; //seoul's longitude
-  Weather _todayWeather;
+  late Weather _todayWeather;
   List<Weather> _hourlyPastWeather = [];
   Map<String,Weather> _hourlyPastWeatherMap = {};
   List<Weather> _hourlyPresentFutureWeather = [];
-  CurrentWeather _weatherNow;
+  late CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
   var langEn = true;
@@ -61,7 +61,7 @@ class WeatherProvider with ChangeNotifier {
     return date;
   }
 
-  int dateToUnixSeconds({bool byDay, int duration}) {
+  int dateToUnixSeconds({required bool byDay, required int duration}) {
     var timeNow = DateTime.now();
     var timeNowUtc = timeNow.toUtc();
     var durationDiff = byDay ? Duration(days: duration,) : Duration(hours: duration,);
@@ -232,13 +232,15 @@ class WeatherProvider with ChangeNotifier {
           // print("weather Timeline ${DateFormat('yyyy-MM-dd')
           //     .format(element.date)
           //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
-          return localTime
-              ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                  DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
-              : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                      DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(
-                          date, presentFutureWeather['timezone_offset']))) ==
-                  0;
+          ///TODO fix this
+          return true;
+          // return localTime
+          //     ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+          //     DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
+          //     : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+          //     DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(
+          //         date, presentFutureWeather['timezone_offset']))) ==
+          //     0;
         }).toList(),
       );
       await getLocationFromCoordinates();
@@ -271,14 +273,16 @@ class WeatherProvider with ChangeNotifier {
             // print("weather Timeline ${DateFormat('yyyy-MM-dd')
             //     .format(element.date)
             //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
-            return localTime
-                ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                    DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
-                : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
-                        DateFormat('yyyy-MM-dd').format(
-                            unixSecondsToDateTimezone(date,
-                                presentFutureWeather['timezone_offset']))) ==
-                    0;
+            ///TODO fix this
+            return true;
+            // return localTime
+            //     ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+            //         DateFormat('yyyy-MM-dd').format(unixSecondsToDate(date)))
+            //     : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+            //             DateFormat('yyyy-MM-dd').format(
+            //                 unixSecondsToDateTimezone(date,
+            //                     presentFutureWeather['timezone_offset']))) ==
+            //         0;
           }).toList(),
         ));
       }
@@ -289,7 +293,7 @@ class WeatherProvider with ChangeNotifier {
     isLoading = false;
   }
 
-  Future<void> getHistoryDataAPIUTC({bool byDay, int duration}) async {
+  Future<void> getHistoryDataAPIUTC({required bool byDay, required int duration}) async {
     // var API_key = DotEnv.env['API_KEY'];
     // var API_key = dotenv.env['API_KEY'];
     var API_key = _API_KEY;
@@ -397,7 +401,7 @@ class WeatherProvider with ChangeNotifier {
         );
         _pastWeather.add(theWeather);
         //print('_pastWeather.last.weatherTimeline here');
-        _pastWeather.last.weatherTimeline.forEach((element) {
+        _pastWeather.last.weatherTimeline!.forEach((element) {
           //print(element.date);
         });
       }
@@ -483,7 +487,7 @@ class WeatherProvider with ChangeNotifier {
                 : unixSecondsToDateTimezone(
                     element['dt'], historyWeather['timezone_offset']),
             rain: "0.0",
-            tempCurrent: element['temp'].toString()));
+            tempCurrent: element['temp'].toString(), weatherTimeline: []));
       });
       List<double> hourlyPastTemp = [];
       List<double> hourlyPastTempSorted = [];
@@ -622,17 +626,17 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<void> setLocationLatLon(
-      {@required bool byCurrentLocation, String selectedLat,String selectedLon}) async {
+      {bool? byCurrentLocation, String? selectedLat, String? selectedLon}) async {
     Position result;
     try {
       //print('setLocationLatLon');
-      if(byCurrentLocation){
+      if(byCurrentLocation!){
         result = await _determinePosition();
         _lat = result.latitude.toString();
         _lon = result.longitude.toString();
       }else{
-        _lat = selectedLat;
-        _lon = selectedLon;
+        _lat = selectedLat!;
+        _lon = selectedLon!;
       }
 
       //print("location : getting location $_lat $_lon");

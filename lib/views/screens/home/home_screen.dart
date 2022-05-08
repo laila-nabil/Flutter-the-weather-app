@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var historyWeatherNight = {};
   bool _isLoading = false;
   bool _isInit = true;
-  Cron cron;
+  late Cron cron;
 
   @override
   Future<void> didChangeDependencies() async {
@@ -149,8 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class LoadingContent extends StatelessWidget {
   const LoadingContent({
-    Key key,
-    @required this.screenSize,
+    Key? key,
+    required this.screenSize,
   }) : super(key: key);
 
   final Size screenSize;
@@ -177,8 +177,8 @@ class LoadingContent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white.withOpacity(0.37)),
                     ),
-                    baseColor: Colors.grey[300],
-                    highlightColor: Colors.grey[100],
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
                   ),
           ),
         ),
@@ -192,8 +192,8 @@ class LoadingContent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     color: Colors.white.withOpacity(0.37)),
               ),
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.grey[100],
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
             ),
           ),
         ),
@@ -204,8 +204,8 @@ class LoadingContent extends StatelessWidget {
 
 class loadingContent_ extends StatefulWidget {
   const loadingContent_({
-    Key key,
-    @required this.screenSize,
+    Key? key,
+    required this.screenSize,
   }) : super(key: key);
 
   final Size screenSize;
@@ -215,8 +215,8 @@ class loadingContent_ extends StatefulWidget {
 }
 
 class _loadingContent_State extends State<loadingContent_> with SingleTickerProviderStateMixin{
-  AnimationController _animationController; //controller
-  Animation<double> _opacityAnimation;
+  late AnimationController _animationController; //controller
+  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
@@ -275,10 +275,10 @@ class _loadingContent_State extends State<loadingContent_> with SingleTickerProv
 
 class LoadedContent extends StatelessWidget {
   const LoadedContent({
-    Key key,
-    @required this.screenSize,
-    @required this.isPortrait,
-    @required this.minimalView,
+    Key? key,
+    required this.screenSize,
+    required this.isPortrait,
+    required this.minimalView,
   }) : super(key: key);
 
   final Size screenSize;

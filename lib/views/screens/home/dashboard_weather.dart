@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class dashboardWeather extends StatelessWidget {
-  final String svgIcon;
-  final String title;
+  String? svgIcon;
+  String? title;
   final String status;
   final bool isStatusCentered;
 
   dashboardWeather(
-      {this.svgIcon, this.title, @required this.status, this.isStatusCentered});
+      {this.svgIcon, this.title, required this.status, required this.isStatusCentered});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class dashboardWeather extends StatelessWidget {
           if (svgIcon != null)
             Expanded(
               child: SvgPicture.asset(
-                svgIcon,
+                svgIcon!,
                 // width: 22,
                 // height: 22,
                 color: Colors.white,
@@ -28,7 +28,7 @@ class dashboardWeather extends StatelessWidget {
           if (title != null)
             Expanded(
               child: AutoSizeText(
-                title,
+                title!,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: TextStyle(

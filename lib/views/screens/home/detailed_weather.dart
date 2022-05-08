@@ -21,14 +21,14 @@ class WeatherDetailed extends StatelessWidget {
         dashboardWeather(
           isStatusCentered: false,
           svgIcon: 'assets/dashboard_icons/rain.svg',
-          status: '${(double.tryParse(weatherDay.rain) * 100).toStringAsFixed(2)}%',
+          status: '${(double.tryParse(weatherDay.rain)! * 100).toStringAsFixed(2)}%',
         ),
 
         dashboardWeather(
           isStatusCentered: false,
           svgIcon: 'assets/dashboard_icons/wind_2.svg',
           status:
-      weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherDay.windDeg))}' : '_',
+      weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherDay.windDeg) ?? 0)}' : '_',
         ),
         dashboardWeather(
           isStatusCentered: false,
@@ -53,8 +53,8 @@ class WeatherDetailed extends StatelessWidget {
         dashboardWeather(
           isStatusCentered: false,
           title: 'visibility'.tr().toString(),
-          status: double.tryParse(weatherDay.visibility) > 1000
-              ? '${(double.tryParse(weatherDay.visibility) / 1000).toStringAsFixed(1)} ${'km'.tr()}'
+          status: double.tryParse(weatherDay.visibility)! > 1000
+              ? '${(double.tryParse(weatherDay.visibility)! / 1000).toStringAsFixed(1)} ${'km'.tr()}'
               : '${double.tryParse(weatherDay.visibility)} m',
         ),
       ];
@@ -152,7 +152,7 @@ class feelsLike extends StatelessWidget {
   final Weather weatherDay;
   final bool isPortrait;
 
-  feelsLike({this.constraints, this.weatherDay, this.isPortrait});
+  feelsLike({required this.constraints, required this.weatherDay, required this.isPortrait});
 
   @override
   Widget build(BuildContext context) {

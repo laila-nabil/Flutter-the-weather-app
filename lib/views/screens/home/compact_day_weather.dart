@@ -54,12 +54,12 @@ class CompactDayWeather extends StatelessWidget {
 
 class _CompactDay extends StatelessWidget {
   const _CompactDay({
-    Key key,
-    @required this.width,
-    @required this.detailedWeather,
-    @required this.isPortrait,
-    @required this.mediaQuery,
-    @required this.constraints,
+    Key? key,
+    required this.width,
+    required this.detailedWeather,
+    required this.isPortrait,
+    required this.mediaQuery,
+    required this.constraints,
   }) : super(key: key);
 
   final double width;
@@ -109,7 +109,7 @@ class _CompactDay extends StatelessWidget {
               width: width * 0.6,
               alignment: Alignment.center,
               child: AutoSizeText(
-                "${double.tryParse(detailedWeather.tempCurrent).toStringAsFixed(
+                "${double.tryParse(detailedWeather.tempCurrent)!.toStringAsFixed(
                     1)}°"+'deg'.tr().toString(),
                 style: TextStyle(fontSize: 18),
                 minFontSize: 10,
@@ -126,7 +126,7 @@ class _CompactDay extends StatelessWidget {
               child: dashboardWeather(
                 isStatusCentered: true,
                 svgIcon: 'assets/dashboard_icons/rain.svg',
-                status: '${(double.tryParse(detailedWeather.rain) * 100).toStringAsFixed(0)}%',
+                status: '${(double.tryParse(detailedWeather.rain)! * 100).toStringAsFixed(0)}%',
               ),
             ),
         ],

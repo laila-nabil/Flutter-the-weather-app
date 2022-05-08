@@ -15,7 +15,7 @@ class Weather {
   final String windDeg;
   final String feelsLike;
   final bool isMetric;
-  final List<Weather> weatherTimeline;
+  final List<Weather>? weatherTimeline;
   final String humidity;
   final String pressure;
   final String uvi;
@@ -27,7 +27,7 @@ class Weather {
     this.dt = "0",
     this.tempMin = "0.0",
     this.tempCurrent = "0.0",
-    DateTime date,
+    DateTime? date,
     this.detailedDescription = "",
     this.mainDescription = "",
     this.image = 'assets/weather_status/clear.png',
@@ -44,12 +44,12 @@ class Weather {
     this.clouds = "0.0",
     this.feelsLike = "",
     this.isMetric = true,
-    this.weatherTimeline,
+    this.weatherTimeline ,
   }) : date = date ??
             DateTime
                 .now().toUtc(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
 
-Comparator<Weather> sortByDt = (a,b) => double.tryParse(a.dt).round()-double.tryParse(b.dt).round();
+Comparator<Weather> sortByDt = (a,b) => double.tryParse(a.dt)!.round()-double.tryParse(b.dt)!.round();
 Comparator<Weather> sortByDate = (a,b) => a.date.difference(b.date).inSeconds;
-Comparator<Weather> sortByTemp = (a,b) => double.tryParse(a.tempCurrent).round()-double.tryParse(b.tempCurrent).round();
+Comparator<Weather> sortByTemp = (a,b) => double.tryParse(a.tempCurrent)!.round()-double.tryParse(b.tempCurrent)!.round();
 }
