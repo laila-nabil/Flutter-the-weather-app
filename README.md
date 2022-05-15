@@ -67,6 +67,7 @@ flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or* 
     - [ ] full refactoring
         - [ ] UI from online designs
         - [ ] refactor WeatherProvider
+          test 3
 - [ ] Next steps
     - [ ]  in settings screen: add multiple cities
     - [ ]  in settings screen: add multiple cities + locally store them
