@@ -75,3 +75,4 @@ flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or* 
     - [ ] is history correct?!
     - [ ] Tests
     - [ ] on play store
+    test 1
