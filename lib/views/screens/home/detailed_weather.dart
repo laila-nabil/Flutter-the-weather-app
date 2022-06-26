@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:the_weather_app/domain/resources/app_design.dart';
 import 'package:the_weather_app/domain/resources/assets_paths.dart';
 import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
@@ -73,7 +74,7 @@ class WeatherDetailed extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+              topRight: Radius.circular(AppDesign.borderRadius2), topLeft: Radius.circular(AppDesign.borderRadius2)),
           color: Theme.of(context).backgroundColor,
         ),
         // height: 300,

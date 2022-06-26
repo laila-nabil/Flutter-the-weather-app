@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:the_weather_app/domain/resources/app_design.dart';
 import 'package:the_weather_app/domain/resources/assets_paths.dart';
 import 'package:the_weather_app/views/screens/home/location.dart';
 import 'package:shimmer/shimmer.dart';
@@ -36,13 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
       //print('didChangeDependencies');
       _isLoading = true;
       try {
-        // debug//print('debug//print didChangeDependencies');
         await Provider.of<WeatherProvider>(context, listen: false)
             .getCurrentWeatherAPI();
         await Provider.of<WeatherProvider>(context, listen: false)
             .getPresentFutureWeatherAPI();
-        // await Provider.of<WeatherProvider>(context, listen: false)
-        //     .getAllHistoryWeather();
         await Provider.of<WeatherProvider>(context, listen: false)
             .getAllHistoryWeatherUTC();
 
@@ -220,7 +218,7 @@ class loadingShimmer extends StatelessWidget {
             child: Shimmer.fromColors(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
                     color: Colors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -235,7 +233,7 @@ class loadingShimmer extends StatelessWidget {
             child: Shimmer.fromColors(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
                     color: Colors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -298,7 +296,7 @@ class _loadingShimmerIosState extends State<loadingShimmerIos>
               width: widget.screenSize.width * 0.55,
               height: widget.screenSize.height * 0.05,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
                   color: Colors.white.withOpacity(0.3)),
             ),
           ),
@@ -308,7 +306,7 @@ class _loadingShimmerIosState extends State<loadingShimmerIos>
               // width: screenSize.width * 0.99,
               height: widget.screenSize.height * 0.57,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
                   color: Colors.white.withOpacity(0.3)),
             ),
           ),

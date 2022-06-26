@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:the_weather_app/domain/resources/app_design.dart';
 
 class frostedGlassEffect extends StatelessWidget {
   final BuildContext context;
@@ -16,7 +17,7 @@ class frostedGlassEffect extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
         child: Container(
           child: Stack(children: [
             BackdropFilter(
@@ -47,7 +48,7 @@ class frostedGlassEffect extends StatelessWidget {
                     ],
                     stops: [0.0, 1.0],
                   ),
-                  borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius)),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: widget,

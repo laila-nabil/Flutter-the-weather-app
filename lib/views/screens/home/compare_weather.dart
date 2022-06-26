@@ -12,7 +12,7 @@ class CompareWeather extends StatelessWidget {
       return Card(
         // color: Color(0xff272F3A),
         color: Theme.of(context).backgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius)),
         child: Container(
           height: constraints.maxHeight * 0.9,
           width: constraints.maxWidth * 0.9,

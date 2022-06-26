@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:the_weather_app/control/weather_provider.dart';
+import 'package:the_weather_app/domain/resources/app_design.dart';
 
 class LocationScreen extends StatefulWidget {
   static const routeName = '/location';
@@ -53,7 +54,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     decoration: BoxDecoration(
                         border: Border.all(
                             color: Colors.white.withOpacity(0.2), width: 1.0),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
                         color: Color(0xff2d3647)),
                     child: TextField(
                       style: TextStyle(color: Colors.white),

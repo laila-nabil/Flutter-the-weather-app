@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:the_weather_app/domain/resources/app_colors.dart';
 import 'package:universal_html/html.dart' as html;
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         title: 'Weather app',
         theme: ThemeData(
-          backgroundColor: Color(0xff060D26),
+          backgroundColor: AppColors.backgroundDarkColor,
           primaryTextTheme: Typography().white,
           textTheme: Typography().white,
         ),
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         routes: {
           MyHomePage.routeName: (ctx) => MyHomePage(),
           LocationScreen.routeName: (ctx) => LocationScreen(),
-        SettingsScreen.routeName:(ctx)=> SettingsScreen(),
+          SettingsScreen.routeName:(ctx)=> SettingsScreen(),
         },
       ),
     );
