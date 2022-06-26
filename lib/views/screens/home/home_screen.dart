@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:the_weather_app/domain/resources/assets_paths.dart';
 import 'package:the_weather_app/views/screens/home/location.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:universal_html/html.dart' as html;
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var historyWeatherDay = {};
   var historyWeatherNight = {};
   bool _isLoading = false;
+  bool isShimmer = false;
   bool _isInit = true;
   late Cron cron;
 
@@ -136,7 +138,11 @@ class _MyHomePageState extends State<MyHomePage> {
               // physics: ,
               // padding: const EdgeInsets.all(18.0),
               child: _isLoading
-                  ? userAgent.contains('iphone') ? loadingShimmerIos(screenSize: screenSize) : loadingShimmer(screenSize: screenSize)
+                  ? isShimmer
+                      ? (userAgent.contains('iphone')
+                          ? loadingShimmerIos(screenSize: screenSize)
+                          : loadingShimmer(screenSize: screenSize))
+                      : loadingLogo()
                   : LoadedContent(
                       screenSize: screenSize,
                       isPortrait: isPortrait,
@@ -146,6 +152,48 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+class loadingLogo extends StatefulWidget {
+  const loadingLogo({Key? key}) : super(key: key);
+
+  @override
+  State<loadingLogo> createState() => _loadingLogoState();
+}
+
+class _loadingLogoState extends State<loadingLogo> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(
+        seconds: 1,
+        milliseconds: 500
+      ),
+      vsync: this,
+      value: 0.5,
+      lowerBound: 0.4,
+      upperBound: 0.5
+    )..repeat(reverse: true);
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(scale: _animation,child: Image.asset(AppAssets.appLogo),);
+  }
+}
+
+
 
 class loadingShimmer extends StatelessWidget {
   const loadingShimmer({
@@ -166,20 +214,18 @@ class loadingShimmer extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),
-          child: 
-          SizedBox(
+          child: SizedBox(
             width: screenSize.width * 0.55,
             height: screenSize.height * 0.05,
-            child:
-                 Shimmer.fromColors(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.37)),
-                    ),
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                  ),
+            child: Shimmer.fromColors(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white.withOpacity(0.37)),
+              ),
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+            ),
           ),
         ),
         Padding(
@@ -214,7 +260,8 @@ class loadingShimmerIos extends StatefulWidget {
   State<loadingShimmerIos> createState() => _loadingShimmerIosState();
 }
 
-class _loadingShimmerIosState extends State<loadingShimmerIos> with SingleTickerProviderStateMixin{
+class _loadingShimmerIosState extends State<loadingShimmerIos>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController; //controller
   late Animation<double> _opacityAnimation;
 
@@ -238,7 +285,6 @@ class _loadingShimmerIosState extends State<loadingShimmerIos> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-
     return FadeTransition(
       opacity: _opacityAnimation,
       child: Column(
@@ -258,8 +304,7 @@ class _loadingShimmerIosState extends State<loadingShimmerIos> with SingleTicker
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child:
-            Container(
+            child: Container(
               // width: screenSize.width * 0.99,
               height: widget.screenSize.height * 0.57,
               decoration: BoxDecoration(
