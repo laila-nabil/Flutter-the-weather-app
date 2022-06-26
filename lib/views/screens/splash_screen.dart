@@ -1,1 +1,0 @@
-///TODO Splash screen instead of just loading

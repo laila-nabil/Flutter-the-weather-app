@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // physics: ,
               // padding: const EdgeInsets.all(18.0),
               child: _isLoading
-                  ? userAgent.contains('iphone') ? loadingContent_(screenSize: screenSize) : LoadingContent(screenSize: screenSize)
+                  ? userAgent.contains('iphone') ? loadingShimmerIos(screenSize: screenSize) : loadingShimmer(screenSize: screenSize)
                   : LoadedContent(
                       screenSize: screenSize,
                       isPortrait: isPortrait,
@@ -147,8 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class LoadingContent extends StatelessWidget {
-  const LoadingContent({
+class loadingShimmer extends StatelessWidget {
+  const loadingShimmer({
     Key? key,
     required this.screenSize,
   }) : super(key: key);
@@ -202,8 +202,8 @@ class LoadingContent extends StatelessWidget {
   }
 }
 
-class loadingContent_ extends StatefulWidget {
-  const loadingContent_({
+class loadingShimmerIos extends StatefulWidget {
+  const loadingShimmerIos({
     Key? key,
     required this.screenSize,
   }) : super(key: key);
@@ -211,10 +211,10 @@ class loadingContent_ extends StatefulWidget {
   final Size screenSize;
 
   @override
-  State<loadingContent_> createState() => _loadingContent_State();
+  State<loadingShimmerIos> createState() => _loadingShimmerIosState();
 }
 
-class _loadingContent_State extends State<loadingContent_> with SingleTickerProviderStateMixin{
+class _loadingShimmerIosState extends State<loadingShimmerIos> with SingleTickerProviderStateMixin{
   late AnimationController _animationController; //controller
   late Animation<double> _opacityAnimation;
 
