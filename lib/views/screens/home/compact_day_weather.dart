@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/domain/resources/assets_paths.dart';
 
 import 'package:the_weather_app/models/weather.dart';
-import 'package:the_weather_app/views/screens/home/FrostedGlassEffectCard.dart';
+import 'package:the_weather_app/views/screens/home/frosted_glass_effect_card.dart';
 import 'package:the_weather_app/views/screens/home/detailed_weather.dart';
 
 import 'dashboard_weather.dart';

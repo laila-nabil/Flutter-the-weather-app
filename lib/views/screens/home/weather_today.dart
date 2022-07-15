@@ -12,7 +12,7 @@ import 'package:the_weather_app/models/weather.dart';
 import 'package:the_weather_app/models/wind_direction.dart';
 
 import 'package:the_weather_app/control/weather_provider.dart';
-import 'package:the_weather_app/views/screens/home/FrostedGlassEffectCard.dart';
+import 'package:the_weather_app/views/screens/home/frosted_glass_effect_card.dart';
 
 import 'dashboard_weather.dart';
 

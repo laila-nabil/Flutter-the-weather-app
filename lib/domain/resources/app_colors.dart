@@ -1,6 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
-
 
 ///TODO not used
 class AppColors {
