@@ -1,5 +1,5 @@
 
-class CurrentWeather {
+class CurrentWeatherEntity {
   final String temp;
   final String feelsLike;
   final String pressure;
@@ -20,7 +20,7 @@ class CurrentWeather {
   final String unixTime;
   final bool isMetric;
 
-  CurrentWeather({
+  CurrentWeatherEntity({
     this.lat = "",
     this.lon = "",
     this.image = 'assets/weather_status/clear.png',

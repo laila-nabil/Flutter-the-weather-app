@@ -1,4 +1,4 @@
-class Weather {
+class WeatherEntity {
   final String tempMax;
   final String tempMin;
   final String tempCurrent;
@@ -15,14 +15,14 @@ class Weather {
   final String windDeg;
   final String feelsLike;
   final bool isMetric;
-  final List<Weather>? weatherTimeline;
+  final List<WeatherEntity>? weatherTimeline;
   final String humidity;
   final String pressure;
   final String uvi;
   final String visibility;
   final String clouds;
 
-  Weather({
+  WeatherEntity({
     this.tempMax = "0.0",
     this.dt = "0",
     this.tempMin = "0.0",
@@ -49,7 +49,7 @@ class Weather {
             DateTime
                 .now().toUtc(); // This means date equals to second date, but if second date is null then a equals DateTime.now()
 
-Comparator<Weather> sortByDt = (a,b) => double.tryParse(a.dt)!.round()-double.tryParse(b.dt)!.round();
-Comparator<Weather> sortByDate = (a,b) => a.date.difference(b.date).inSeconds;
-Comparator<Weather> sortByTemp = (a,b) => double.tryParse(a.tempCurrent)!.round()-double.tryParse(b.tempCurrent)!.round();
+Comparator<WeatherEntity> sortByDt = (a,b) => double.tryParse(a.dt)!.round()-double.tryParse(b.dt)!.round();
+Comparator<WeatherEntity> sortByDate = (a,b) => a.date.difference(b.date).inSeconds;
+Comparator<WeatherEntity> sortByTemp = (a,b) => double.tryParse(a.tempCurrent)!.round()-double.tryParse(b.tempCurrent)!.round();
 }

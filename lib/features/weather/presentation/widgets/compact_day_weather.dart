@@ -11,7 +11,7 @@ import 'dashboard_weather.dart';
 import 'detailed_weather.dart';
 
 class CompactDayWeather extends StatelessWidget {
-  final Weather detailedWeather;
+  final WeatherEntity detailedWeather;
 
   CompactDayWeather(this.detailedWeather);
 
@@ -64,7 +64,7 @@ class _CompactDay extends StatelessWidget {
   }) : super(key: key);
 
   final double width;
-  final Weather detailedWeather;
+  final WeatherEntity detailedWeather;
   final bool isPortrait;
   final MediaQueryData mediaQuery;
   final BoxConstraints constraints;
