@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
 
 class dashboardWeather extends StatelessWidget {
   String? svgIcon;
@@ -22,7 +23,7 @@ class dashboardWeather extends StatelessWidget {
                 svgIcon!,
                 // width: 22,
                 // height: 22,
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ),
           if (title != null)

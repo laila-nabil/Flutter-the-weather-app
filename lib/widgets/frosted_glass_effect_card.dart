@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:the_weather_app/domain/resources/app_design.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/core/resources/app_design.dart';
 
 class frostedGlassEffect extends StatelessWidget {
   final BuildContext context;
@@ -36,15 +37,15 @@ class frostedGlassEffect extends StatelessWidget {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
+                      color: AppColors.black.withOpacity(0.25),
                     )
                   ],
                   border: Border.all(
-                      color: Colors.white.withOpacity(0.2), width: 1.0),
+                      color: AppColors.white.withOpacity(0.2), width: 1.0),
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.white.withOpacity(0.2)
+                      AppColors.white.withOpacity(0.5),
+                      AppColors.white.withOpacity(0.2)
                     ],
                     stops: [0.0, 1.0],
                   ),

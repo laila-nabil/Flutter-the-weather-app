@@ -2,8 +2,9 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/control/weather_provider.dart';
-import 'package:the_weather_app/views/screens/home/weather_list.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
 class WeatherTabs extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class WeatherTabs extends StatelessWidget {
             Container(
               child: TabBar(
                 isScrollable: true,
-                labelColor: Colors.white,
+                labelColor: AppColors.white,
                 unselectedLabelColor: Colors.grey,
                 tabs: [
                   ...weatherTabs.asMap().entries.map((e) {
@@ -66,7 +67,7 @@ class WeatherTabs extends StatelessWidget {
                               children: [
                                 Text(
                                   day,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: AppColors.white),
                                 ),
                                 RichText(
                                   text: TextSpan(children: [
@@ -75,11 +76,11 @@ class WeatherTabs extends StatelessWidget {
                                         "${double.tryParse(e.value.tempMax)!.toStringAsFixed(1)} ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white)),
+                                            color: AppColors.white)),
                                     TextSpan(
                                         text:
                                         "${double.tryParse(e.value.tempMin)!.toStringAsFixed(1)} ",
-                                        style: TextStyle(color: Colors.white)),
+                                        style: TextStyle(color: AppColors.white)),
 
                                   ]),
                                 ),

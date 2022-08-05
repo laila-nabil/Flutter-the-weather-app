@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:the_weather_app/domain/resources/app_design.dart';
-import 'package:the_weather_app/domain/resources/assets_paths.dart';
-import 'package:the_weather_app/models/weather.dart';
-import 'package:the_weather_app/models/wind_direction.dart';
-import 'package:the_weather_app/views/screens/home/custom_grid.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
+import 'package:the_weather_app/features/weather/domain/entities/wind_direction.dart';
+import 'package:the_weather_app/widgets/custom_grid.dart';
 import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {
@@ -75,7 +76,7 @@ class WeatherDetailed extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(AppDesign.borderRadius2), topLeft: Radius.circular(AppDesign.borderRadius2)),
-          color: Theme.of(context).backgroundColor,
+          color: AppColors.backgroundDarkColor,
         ),
         // height: 300,
         padding: EdgeInsets.symmetric(
@@ -186,7 +187,7 @@ class feelsLike extends StatelessWidget {
               // 'Feels like ${weatherDay.feelsLike}°C, ${weatherDay.detailedDescription}'
               minFontSize: 12,
               maxFontSize: 37,
-              style: TextStyle(fontSize: 25, color: Colors.white),
+              style: TextStyle(fontSize: 25, color: AppColors.white),
               softWrap: true,
             ),
           ),

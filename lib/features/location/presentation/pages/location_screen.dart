@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:the_weather_app/control/weather_provider.dart';
-import 'package:the_weather_app/domain/resources/app_design.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/core/resources/app_design.dart';
 
 class LocationScreen extends StatefulWidget {
   static const routeName = '/location';
@@ -37,7 +38,7 @@ class _LocationScreenState extends State<LocationScreen> {
               'location'.tr().toString(),
               style: TextStyle(
                   fontSize: 34,
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontWeight: FontWeight.w700),
             ),
           ),
@@ -53,11 +54,11 @@ class _LocationScreenState extends State<LocationScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 6.0),
                     decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.white.withOpacity(0.2), width: 1.0),
+                            color: AppColors.white.withOpacity(0.2), width: 1.0),
                         borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
                         color: Color(0xff2d3647)),
                     child: TextField(
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: AppColors.white),
                       onChanged: (input) async {
                         print('input $input');
                         if (input.length > 3) {
@@ -77,7 +78,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             children: [
                               Icon(
                                 Icons.search,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                               SizedBox(
                                 width: 4,
@@ -86,7 +87,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             ],
                           ),
                           labelStyle: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                           fillColor: Colors.purple),
                     ),
@@ -108,7 +109,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.my_location , color: Colors.white,),
+                          Icon(Icons.my_location , color: AppColors.white,),
                           SizedBox(width: 5,),
                           Text(
                             'current_location'.tr(),

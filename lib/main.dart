@@ -1,18 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:the_weather_app/domain/resources/app_colors.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:universal_html/html.dart' as html;
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:the_weather_app/control/weather_provider.dart';
-import 'package:the_weather_app/views/screens/location_screen.dart';
-import 'package:the_weather_app/views/screens/settings_screen.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
+import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
+import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
 
 
-import 'views/screens/home/home_screen.dart';
+import 'features/weather/presentation/widgets/home_screen.dart';
 
 Future main() async {
   //order is important

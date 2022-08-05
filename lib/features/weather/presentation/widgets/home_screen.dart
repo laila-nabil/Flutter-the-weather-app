@@ -4,16 +4,17 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:the_weather_app/domain/resources/app_design.dart';
-import 'package:the_weather_app/domain/resources/assets_paths.dart';
-import 'package:the_weather_app/views/screens/home/location.dart';
+import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/features/location/presentation/widgets/location.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'weather_tabs.dart';
-import 'package:the_weather_app/control/weather_provider.dart';
-import 'package:the_weather_app/views/screens/home/compare_weather.dart';
-import 'package:the_weather_app/views/screens/home/weather_today.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
+import 'compare_weather.dart';
+import 'weather_today.dart';
 
 class MyHomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -219,7 +220,7 @@ class loadingShimmer extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
-                    color: Colors.white.withOpacity(0.37)),
+                    color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
               highlightColor: Colors.grey[100]!,
@@ -234,7 +235,7 @@ class loadingShimmer extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
-                    color: Colors.white.withOpacity(0.37)),
+                    color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
               highlightColor: Colors.grey[100]!,
@@ -297,7 +298,7 @@ class _loadingShimmerIosState extends State<loadingShimmerIos>
               height: widget.screenSize.height * 0.05,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
-                  color: Colors.white.withOpacity(0.3)),
+                  color: AppColors.white.withOpacity(0.3)),
             ),
           ),
           Padding(
@@ -307,7 +308,7 @@ class _loadingShimmerIosState extends State<loadingShimmerIos>
               height: widget.screenSize.height * 0.57,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
-                  color: Colors.white.withOpacity(0.3)),
+                  color: AppColors.white.withOpacity(0.3)),
             ),
           ),
         ],
@@ -401,7 +402,7 @@ class LoadedContent extends StatelessWidget {
               flex: 1,
               child: Text(
                 '${'last_update'.tr().toString()} ${DateFormat('dd MMM - hh:mm a', 'locale'.tr().toString()).format(DateTime.now())}',
-                style: TextStyle(fontSize: 11, color: Colors.white),
+                style: TextStyle(fontSize: 11, color: AppColors.white),
               ),
             )
         ],

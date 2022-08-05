@@ -13,12 +13,12 @@ import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-import 'package:the_weather_app/domain/resources/assets_paths.dart';
-import 'package:the_weather_app/models/location.dart' as locationModel;
-import 'package:the_weather_app/models/unix.dart';
+import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/features/location/domain/entities/location.dart' as locationModel;
+import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 
-import '../models/weather.dart';
-import '../models/current_weather.dart';
+import '../../domain/entities/weather.dart';
+import '../../domain/entities/current_weather.dart';
 
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];
