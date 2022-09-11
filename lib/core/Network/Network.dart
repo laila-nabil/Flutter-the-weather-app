@@ -16,21 +16,21 @@ class Network{
     }catch (e){
       throw ServerException(message: e.toString());
     }
-    developer.log("${response??""}",name: "body - post request");
+    developer.log("$response",name: "body - post request");
     return response;
   }
 
   static Future<http.Response> get({required String url,Map<String, String>? header}) async {
     Uri uri = Uri.parse(url);
     developer.log(url,name: "url - get request");
-    developer.log("${header??""}",name: "header - get request");
+    developer.log("$header",name: "header - get request");
     http.Response response;
     try{
       response = await http.get(uri, headers: header,);
     }catch (e){
       throw ServerException(message: e.toString());
     }
-    developer.log("${response??""}",name: "body - get request");
+    developer.log("$response",name: "body - get request");
     return response;
   }
 
