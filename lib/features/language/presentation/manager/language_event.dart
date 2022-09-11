@@ -9,7 +9,6 @@ class SelectLanguage extends LanguageEvent{
 
   SelectLanguage(this.language);
   @override
-  // TODO: implement props
   List<Object?> get props => [language];
 
 }

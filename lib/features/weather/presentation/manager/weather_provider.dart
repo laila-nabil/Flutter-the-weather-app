@@ -536,24 +536,6 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getWeather() async {
-    bool result = false;
-    //print('getWeather()');
-    try {
-      //print('in getWeather()');
-      await getCurrentWeatherAPI();
-      await getPresentFutureWeatherAPI();
-      // await getAllHistoryWeather();
-      await getAllHistoryWeatherUTC();
-      //print('got weather');
-      result = true;
-      notifyListeners();
-    } catch (error) {
-      throw (error);
-    }
-    return result;
-  }
-
   Future<void> getAllHistoryWeather() async {
     //print('getAllHistoryWeather');
     isLoading = true;
