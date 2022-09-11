@@ -5,7 +5,7 @@ import 'package:the_weather_app/core/error/exceptions.dart';
 
 class Network{
 
-  Future<http.Response> post({required String url,Map<String, String>? header,Map? body}) async {
+  static Future<http.Response> post({required String url,Map<String, String>? header,Map? body}) async {
     Uri uri = Uri.parse(url);
     developer.log(url,name: "url - post request");
     developer.log("${header??""}",name: "header - post request");
@@ -20,7 +20,7 @@ class Network{
     return response;
   }
 
-  Future<http.Response> get({required String url,Map<String, String>? header}) async {
+  static Future<http.Response> get({required String url,Map<String, String>? header}) async {
     Uri uri = Uri.parse(url);
     developer.log(url,name: "url - get request");
     developer.log("${header??""}",name: "header - get request");
