@@ -9,6 +9,7 @@ enum languagesEnum { ar, en }
 abstract class Localization {
   Locale languagesEnumToLocale(languagesEnum language);
   Locale getCurrentLocale(BuildContext context);
+  languagesEnum? getCurrentLanguagesEnum(BuildContext context);
   String getCurrentLangCode(BuildContext context);
   void setLocale(BuildContext context, Locale selectedLanguage);
   void setLanguage(BuildContext context, languagesEnum selectedLanguage);
@@ -69,6 +70,18 @@ class LocalizationImpl implements Localization{
   @override
   String getCurrentLangCode(BuildContext context) {
     return context.locale.toString();
+  }
+
+  @override
+  languagesEnum? getCurrentLanguagesEnum(BuildContext context) {
+    final language = getCurrentLangCode(context);
+    switch(language){
+      case 'ar':
+        return languagesEnum.ar;
+      case 'en':
+        return languagesEnum.en;
+    }
+    return null;
   }
 
 }

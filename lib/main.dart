@@ -1,7 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/features/language/presentation/manager/language_bloc.dart';
 import 'package:universal_html/html.dart' as html;
 
 // import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -19,11 +22,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   runApp(
-      EasyLocalization(
-          path: 'assets/locales',
-          //changing locale that is used at first is from here,may need to uninstall/reinstall the app
-          supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
-          child:
+      LocalizationImpl().localizationSetup(
           MyApp()
       )
   );
@@ -47,7 +46,11 @@ class MyApp extends StatelessWidget {
           primaryTextTheme: Typography().white,
           textTheme: Typography().white,
         ),
-        home: MyHomePage(),
+        home:
+        BlocProvider<LanguageBloc>(
+          create: (context) => LanguageBloc(),
+          child: MyHomePage(),
+        ),
         routes: {
           MyHomePage.routeName: (ctx) => MyHomePage(),
           LocationScreen.routeName: (ctx) => LocationScreen(),

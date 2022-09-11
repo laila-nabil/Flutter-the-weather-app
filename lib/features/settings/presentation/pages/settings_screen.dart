@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/features/language/presentation/manager/language_bloc.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/home_screen.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
 
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -19,11 +17,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final orientation = mediaQuery.orientation;
     final isPortrait = screenSize.width < screenSize.height;
     void _toggleLanguage() async{
-      setState(() {
-        //print('_toggleLanguage');
-      });
+      // setState(() {
+      //   //print('_toggleLanguage');
+      // });
       context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
           'en', 'UK'));
+      final bloc = BlocProvider.of<LanguageBloc>(context);
+      var currentLanguagesEnum = LocalizationImpl().getCurrentLanguagesEnum(context);
+      if(currentLanguagesEnum!=null){
+        bloc.add(SelectLanguage(currentLanguagesEnum));
+      }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
     return SafeArea(
