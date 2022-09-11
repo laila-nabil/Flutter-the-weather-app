@@ -678,7 +678,6 @@ class WeatherProvider with ChangeNotifier {
     return result;
   }
 
-  ///in location feature
   Future<Map> getLocationFromCoordinates() async {
     var url =
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${_todayWeather.lat}&longitude=${_todayWeather.lon}&localityLanguage=${'locale'.tr().toString()}';

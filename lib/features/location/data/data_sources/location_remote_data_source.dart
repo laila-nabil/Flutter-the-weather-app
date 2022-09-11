@@ -2,19 +2,18 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/core/Network/Network.dart';
-import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates.dart';
 
 abstract class LocationRemoteDataSource{
-  Future<String> getLocationFromCoordinates({required GetLocationFromCoordinatesParams params});
+  Future<String> getLocationFromCoordinates({required String lat,required String lon});
 }
 class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
   @override
 
-  Future<String> getLocationFromCoordinates({required GetLocationFromCoordinatesParams params}) async{
+  Future<String> getLocationFromCoordinates({required String lat,required String lon}) async{
     String location = "";
     final result = await Network.get(
         url:
-            'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${params.lat}&longitude=${params.lon}&localityLanguage=${'locale'.tr().toString()}');
+            'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${'locale'.tr().toString()}');
     final locationDetails = json.decode(result.body);
     if (locationDetails != null) {
       location = locationDetails['city'].toString().isNotEmpty
