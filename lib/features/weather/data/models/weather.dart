@@ -51,33 +51,37 @@ class WeatherModel extends WeatherEntity {
             weatherTimeline: weatherTimeline,
             image: image);
 
-  /*factory WeatherModel.fromJson(
+  factory WeatherModel.fromJson(
       {required Map<String, dynamic> json,
       required String lat,
       required String lon}) {
     return WeatherModel(
-        lat: lat,
-        lon: lon,
-        isImageNetwork: !Config.isImage3D,
-        image: Config.isImage3D
-            ? '${AppAssets.Icon3dPath}/${json['weather'][0]['icon']}.png'
-            : 'https://openweathermap.org/img/wn/${json['weather'][0]['icon']}@4x.png',
-        mainDescription: json['weather'][0]['main'],
-        detailedDescription: json['weather'][0]['description'],
-        dt: json['dt'].toString(),
-        date: Config.localTime
-            ? unixSecondsToDate(json['dt'])
-            : unixSecondsToDateTimezone(
-                json['dt'], presentFutureWeather['timezone_offset']),
-        rain: json['pop'].toString(),
-        feelsLike: json['feels_like'].toString(),
-        windSpeed: json['wind_speed'].toString(),
-        windDeg: json['wind_deg'].toString(),
-        humidity: json['humidity'].toString(),
-        uvi: json['uvi'].toString(),
-        clouds: json['clouds'].toString(),
-        visibility: json['visibility'].toString(),
-        pressure: json['pressure'].toString(),
-        tempCurrent: json['temp'].toString(), isMetric: Config.isMetric,);
-  }*/
+      lat: lat,
+      lon: lon,
+      isImageNetwork: !Config.isImage3D,
+      image: Config.isImage3D
+          ? '${AppAssets.Icon3dPath}/${json['weather'][0]['icon']}.png'
+          : 'https://openweathermap.org/img/wn/${json['weather'][0]['icon']}@4x.png',
+      mainDescription: json['weather'][0]['main'],
+      detailedDescription: json['weather'][0]['description'],
+      dt: json['dt'].toString(),
+      date: Config.localTime
+          ? unixSecondsToDate(json['dt'])
+          : unixSecondsToDateTimezone(json['dt'], json['timezone_offset']),
+      rain: json['pop'].toString(),
+      feelsLike: json['feels_like'].toString(),
+      windSpeed: json['wind_speed'].toString(),
+      windDeg: json['wind_deg'].toString(),
+      humidity: json['humidity'].toString(),
+      uvi: json['uvi'].toString(),
+      clouds: json['clouds'].toString(),
+      visibility: json['visibility'].toString(),
+      pressure: json['pressure'].toString(),
+      tempCurrent: json['temp'].toString(),
+      isMetric: Config.isMetric,
+      tempMax: json['daily'][0]['temp']['max'].toString(),
+      tempMin: json['daily'][0]['temp']['min'].toString(),
+      weatherTimeline: []
+    );
+  }
 }

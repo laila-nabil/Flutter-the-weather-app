@@ -82,6 +82,7 @@ class WeatherProvider with ChangeNotifier {
     return unixTime;
   }
 
+  ///implemented
   Future<void> getCurrentWeatherAPI() async {
     // var API_key = DotEnv.env['API_KEY'];
     var API_key = _API_KEY;
