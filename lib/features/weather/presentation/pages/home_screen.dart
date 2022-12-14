@@ -11,10 +11,10 @@ import 'package:the_weather_app/features/location/presentation/widgets/location.
 import 'package:shimmer/shimmer.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'weather_tabs.dart';
+import '../widgets/weather_tabs.dart';
 import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
-import 'compare_weather.dart';
-import 'weather_today.dart';
+import '../widgets/compare_weather.dart';
+import '../widgets/weather_today.dart';
 
 class MyHomePage extends StatefulWidget {
   static const routeName = '/home';

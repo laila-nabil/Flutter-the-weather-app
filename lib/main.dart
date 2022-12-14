@@ -15,7 +15,8 @@ import 'package:the_weather_app/features/location/presentation/pages/location_sc
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
 
 
-import 'features/weather/presentation/widgets/home_screen.dart';
+import 'core/resources/app_theme.dart';
+import 'features/weather/presentation/pages/home_screen.dart';
 
 Future main() async {
   //order is important
@@ -41,11 +42,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         title: 'Weather app',
-        theme: ThemeData(
-          backgroundColor: AppColors.backgroundDarkColor,
-          primaryTextTheme: Typography().white,
-          textTheme: Typography().white,
-        ),
+        theme: theme,
         home:
         BlocProvider<LanguageBloc>(
           create: (context) => LanguageBloc(),

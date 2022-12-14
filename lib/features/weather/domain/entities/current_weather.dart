@@ -1,5 +1,7 @@
 
-class CurrentWeatherEntity {
+import 'package:equatable/equatable.dart';
+
+class CurrentWeatherEntity extends Equatable{
   final String temp;
   final String feelsLike;
   final String pressure;
@@ -41,6 +43,27 @@ class CurrentWeatherEntity {
     this.city = '',
     this.country = '',
   });
+
+  @override
+  List<Object?> get props => [ this.lat,
+    this.lon,
+    this.image ,
+    this.isImageNetwork,
+    this.isMetric,
+    this.temp,
+    this.clouds ,
+    this.feelsLike,
+    this.humidity,
+    this.mainDescription,
+    this.detailedDescription,
+    this.pressure,
+    this.sunrise,
+    this.sunset,
+    this.unixTime,
+    this.windDeg,
+    this.windSpeed,
+    this.city,
+    this.country,];
 
 }
 
