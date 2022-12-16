@@ -11,58 +11,50 @@ import 'package:the_weather_app/features/weather/presentation/manager/weather_pr
 import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/presentation/bloc/location_bloc.dart';
+import 'features/weather/presentation/bloc/weather_bloc.dart';
 import 'features/weather/presentation/pages/home_screen.dart';
 import 'injection_container.dart';
+import 'injection_container.dart' as di;
 
 Future main() async {
   //order is important
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  runApp(
-      LocalizationImpl().localizationSetup(
-          MyApp()
-      )
-  );
+  await di.init();
+  runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => WeatherProvider(),
-      child: MaterialApp(
-        scrollBehavior: MyCustomScrollBehavior(),
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        title: 'Weather app',
-        theme: theme,
-        home:
-        MultiBlocProvider(
-          providers: [
-            BlocProvider<LanguageBloc>(
-              create: (context) => sl<LanguageBloc>(),
-            ),
-            BlocProvider<LocationBloc>(
-              create: (context) => sl<LocationBloc>(),
-            ),
-          ],
-          child: MyHomePage(),
-        ),
-        routes: {
-          MyHomePage.routeName: (ctx) => MyHomePage(),
-          LocationScreen.routeName: (ctx) => LocationScreen(),
-          SettingsScreen.routeName:(ctx)=> SettingsScreen(),
-        },
+    return MaterialApp(
+      scrollBehavior: MyCustomScrollBehavior(),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      title: 'Weather app',
+      theme: theme,
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<LanguageBloc>(
+            create: (context) => sl<LanguageBloc>(),
+          ),
+          BlocProvider<LocationBloc>(
+            create: (context) => sl<LocationBloc>(),
+          ),
+        ],
+        child: MyHomePage(),
       ),
+      routes: {
+        MyHomePage.routeName: (ctx) => MyHomePage(),
+        LocationScreen.routeName: (ctx) => LocationScreen(),
+        SettingsScreen.routeName: (ctx) => SettingsScreen(),
+      },
     );
   }
 }
-
-
-
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices

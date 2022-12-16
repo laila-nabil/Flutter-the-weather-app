@@ -6,6 +6,7 @@ import 'package:the_weather_app/features/location/domain/use_cases/get_current_l
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 
+import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/domain/use_cases/autocomplete_search_location_use_case.dart';
 import 'features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'features/weather/data/repositories/weather_repo_impl.dart';
@@ -23,6 +24,7 @@ Future<void> init() async {
 
 // Bloc
 
+  sl.registerFactory(() => LanguageBloc());
   sl.registerFactory(() => WeatherBloc(sl(),sl(),sl(),sl()));
   sl.registerFactory(() => LocationBloc(sl(),sl(),sl()));
 
