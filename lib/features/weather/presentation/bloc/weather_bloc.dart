@@ -31,83 +31,130 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       this._getHistoryWeatherUseCase,
       this.locationBloc)
       : super(WeatherInitial()) {
-    on<WeatherEvent>((event, emit) {
-      _locationSubscription = locationBloc.stream.listen((state) {
+    on<WeatherEvent>((event, emit) async {
+      _locationSubscription = locationBloc.stream.listen((state) async {
         if (state is SetLocationState) {
           final longitude = state.location?.lon ?? "";
           final latitude = state.location?.lat ?? "";
 
           ///TODO
-          add(_GetCurrentWeather(GetCurrentWeatherParams(
-              language: '', longitude: longitude, latitude: latitude)));
-          add(_GetHistoryWeather(GetHistoryWeatherParams(
-              language: '',
-              longitude: longitude,
-              latitude: latitude,
-              unixTimestamp: 0)));
-          add(_GetPresentFutureWeather(GetPresentFutureWeatherParams(
-              language: '', longitude: longitude, latitude: latitude)));
+          await getCurrentWeather(
+              emit: emit,
+              event: event,
+              params: GetCurrentWeatherParams(
+                  language: '', longitude: longitude, latitude: latitude));
+          await getHistoryWeather(
+              emit: emit,
+              event: event,
+              params: GetHistoryWeatherParams(
+                  language: '',
+                  longitude: longitude,
+                  latitude: latitude,
+                  unixTimestamp: 0));
+          await getPresentFutureWeather(
+              emit: emit,
+              event: event,
+              params: GetPresentFutureWeatherParams(
+                  language: '', longitude: longitude, latitude: latitude));
         }
       });
-      on<WeatherRefreshEvent>((event, emit) {
+      if (event is WeatherRefreshEvent) {
         final location = locationBloc.location;
         final longitude = location?.lon ?? "";
         final latitude = location?.lat ?? "";
 
         ///TODO
-        add(_GetCurrentWeather(GetCurrentWeatherParams(
-            language: '', longitude: longitude, latitude: latitude)));
-        add(_GetHistoryWeather(GetHistoryWeatherParams(
-            language: '',
-            longitude: longitude,
-            latitude: latitude,
-            unixTimestamp: 0)));
-        add(_GetPresentFutureWeather(GetPresentFutureWeatherParams(
-            language: '', longitude: longitude, latitude: latitude)));
-      });
-      on<WeatherInitialEvent>((event, emit) {
+        await getCurrentWeather(
+            emit: emit,
+            event: event,
+            params: GetCurrentWeatherParams(
+                language: '', longitude: longitude, latitude: latitude));
+        await getHistoryWeather(
+            emit: emit,
+            event: event,
+            params: GetHistoryWeatherParams(
+                language: '',
+                longitude: longitude,
+                latitude: latitude,
+                unixTimestamp: 0));
+        await getPresentFutureWeather(
+            emit: emit,
+            event: event,
+            params: GetPresentFutureWeatherParams(
+                language: '', longitude: longitude, latitude: latitude));
+      } else if (event is WeatherInitialEvent) {
         final location = locationBloc.location;
         final longitude = location?.lon ?? "";
         final latitude = location?.lat ?? "";
 
         ///TODO
-        add(_GetCurrentWeather(GetCurrentWeatherParams(
-            language: '', longitude: longitude, latitude: latitude)));
-        add(_GetHistoryWeather(GetHistoryWeatherParams(
-            language: '',
-            longitude: longitude,
-            latitude: latitude,
-            unixTimestamp: 0)));
-        add(_GetPresentFutureWeather(GetPresentFutureWeatherParams(
-            language: '', longitude: longitude, latitude: latitude)));
-      });
-      on<_GetCurrentWeather>((event, emit) async {
-        emit(WeatherLoading(event));
-        final result = await _getCurrentWeatherUseCase(event.params);
-        result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) {
-          currentWeather = success;
-          emit(WeatherSuccess(event, currentWeather: success));
-        });
-      });
-      on<_GetHistoryWeather>((event, emit) async {
-        emit(WeatherLoading(event));
-        final result = await _getHistoryWeatherUseCase(event.params);
-        result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) {
-          historyWeather = success;
-          emit(WeatherSuccess(event, historyWeather: success));
-        });
-      });
-      on<_GetPresentFutureWeather>((event, emit) async {
-        emit(WeatherLoading(event));
-        final result = await _getPresentFutureWeatherUseCase(event.params);
-        result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) {
-          presentFutureWeather = success;
-          emit(WeatherSuccess(event, presentFutureWeather: success));
-        });
-      });
+        await getCurrentWeather(
+            emit: emit,
+            event: event,
+            params: GetCurrentWeatherParams(
+                language: '', longitude: longitude, latitude: latitude));
+        await getHistoryWeather(
+            emit: emit,
+            event: event,
+            params: GetHistoryWeatherParams(
+                language: '',
+                longitude: longitude,
+                latitude: latitude,
+                unixTimestamp: 0));
+        await getPresentFutureWeather(
+            emit: emit,
+            event: event,
+            params: GetPresentFutureWeatherParams(
+                language: '', longitude: longitude, latitude: latitude));
+      } else if (event is _GetCurrentWeather) {
+        var params = event.params;
+        await getCurrentWeather(emit: emit, event: event, params: params);
+      } else if (event is _GetHistoryWeather) {
+        var params = event.params;
+        await getHistoryWeather(emit: emit, event: event, params: params);
+      } else if (event is _GetPresentFutureWeather) {
+        var params = event.params;
+        await getPresentFutureWeather(emit: emit, event: event, params: params);
+      }
+    });
+  }
+
+  Future<void> getPresentFutureWeather(
+      {required Emitter<WeatherState> emit,
+      required WeatherEvent event,
+      required GetPresentFutureWeatherParams params}) async {
+    emit(WeatherLoading(event));
+    final result = await _getPresentFutureWeatherUseCase(params);
+    result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
+        (success) {
+      presentFutureWeather = success;
+      emit(WeatherSuccess(event, presentFutureWeather: success));
+    });
+  }
+
+  Future<void> getHistoryWeather(
+      {required Emitter<WeatherState> emit,
+      required GetHistoryWeatherParams params,
+      required WeatherEvent event}) async {
+    emit(WeatherLoading(event));
+    final result = await _getHistoryWeatherUseCase(params);
+    result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
+        (success) {
+      historyWeather = success;
+      emit(WeatherSuccess(event, historyWeather: success));
+    });
+  }
+
+  Future<void> getCurrentWeather(
+      {required Emitter<WeatherState> emit,
+      required GetCurrentWeatherParams params,
+      required WeatherEvent event}) async {
+    emit(WeatherLoading(event));
+    final result = await _getCurrentWeatherUseCase(params);
+    result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
+        (success) {
+      currentWeather = success;
+      emit(WeatherSuccess(event, currentWeather: success));
     });
   }
 }

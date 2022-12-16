@@ -18,7 +18,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final GetCurrentLocationUseCase _getCurrentLocationUseCase;
 
   List<LocationEntity> autoCompleteList = [];
-  LocationEntity? location;
+  LocationEntity? location  = LocationEntity(lat: '30.0444',lon: '31.2357');
   LocationEntity? userCurrentLocation;
 
   LocationBloc(this._autoCompleteSearchLocationUseCase,

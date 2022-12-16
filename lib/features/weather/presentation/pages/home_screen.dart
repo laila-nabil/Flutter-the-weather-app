@@ -12,6 +12,7 @@ import 'package:the_weather_app/features/location/presentation/widgets/location_
 import 'package:universal_html/html.dart' as html;
 
 import '../../../../injection_container.dart';
+import '../../domain/entities/weather.dart';
 import '../bloc/weather_bloc.dart';
 import '../widgets/compare_weather.dart';
 import '../widgets/weather_tabs.dart';
@@ -288,8 +289,7 @@ class LoadedContent extends StatelessWidget {
                           WeatherToday(
                               weatherToday: weatherBloc.currentWeather!,
                               weatherTodayNotDetailed: weatherBloc
-                                  .presentFutureWeather
-                                  !.elementAt(0)),
+                                  .presentFutureWeather?.first ?? Weather()),
                           CompareWeather()
                         ],
                         options: CarouselOptions(
