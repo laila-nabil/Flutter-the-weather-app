@@ -13,16 +13,16 @@ part 'location_event.dart';
 part 'location_state.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
-  final AutoCompleteSearchLocationUseCase autoCompleteSearchLocationUseCase;
-  final GetLocationFromCoordinatesUseCase getLocationFromCoordinatesUseCase;
-  final GetCurrentLocationUseCase getCurrentLocationUseCase;
+  final AutoCompleteSearchLocationUseCase _autoCompleteSearchLocationUseCase;
+  final GetLocationFromCoordinatesUseCase _getLocationFromCoordinatesUseCase;
+  final GetCurrentLocationUseCase _getCurrentLocationUseCase;
 
   List<LocationEntity> autoCompleteList = [];
   LocationEntity? location;
   LocationEntity? userCurrentLocation;
 
-  LocationBloc(this.autoCompleteSearchLocationUseCase,
-      this.getLocationFromCoordinatesUseCase, this.getCurrentLocationUseCase)
+  LocationBloc(this._autoCompleteSearchLocationUseCase,
+      this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
       : super(LocationInitial()) {
     on<LocationEvent>((event, emit) {
       on<LocationInitialEvent>((event, emit) {
@@ -30,7 +30,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       });
       on<GetLocationFromCoordinates>((event, emit) async {
         emit(LocationLoading(event));
-        final result = await getLocationFromCoordinatesUseCase(event.params);
+        final result = await _getLocationFromCoordinatesUseCase(event.params);
         result.fold(
             (failure) => emit(LocationFailure(event, failure: failure)),
             (success) =>
@@ -38,7 +38,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       });
       on<AutoCompleteSearchLocation>((event, emit) async {
         emit(LocationLoading(event));
-        final result = await autoCompleteSearchLocationUseCase(event.input);
+        final result = await _autoCompleteSearchLocationUseCase(event.input);
         result.fold((failure) => emit(LocationFailure(event, failure: failure)),
             (success) {
           autoCompleteList = success;
@@ -54,7 +54,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       });
       on<GetCurrentLocation>((event, emit) async {
         emit(LocationLoading(event));
-        final result = await getCurrentLocationUseCase(NoParams());
+        final result = await _getCurrentLocationUseCase(NoParams());
         result.fold((failure) => emit(LocationFailure(event, failure: failure)),
             (success) {
           location = success;

@@ -22,6 +22,7 @@ class MyHomePage extends StatelessWidget {
   static const routeName = '/home';
 
   static const bool _isShimmer = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WeatherBloc>(
@@ -32,7 +33,7 @@ class MyHomePage extends StatelessWidget {
         },
         builder: (context, state) {
           final weatherBloc = BlocProvider.of<WeatherBloc>(context);
-          if(state is WeatherInitial){
+          if (state is WeatherInitial) {
             weatherBloc.add(WeatherInitialEvent());
           }
           final mediaQuery = MediaQuery.of(context);
@@ -40,7 +41,8 @@ class MyHomePage extends StatelessWidget {
           final orientation = mediaQuery.orientation;
           final isPortrait = screenSize.width < screenSize.height;
           final minimalView = true;
-          final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+          final userAgent =
+              html.window.navigator.userAgent.toString().toLowerCase();
           //print('userAgent $userAgent');
           //print("screenSize $screenSize");
           //print("orientation $orientation");
@@ -58,20 +60,20 @@ class MyHomePage extends StatelessWidget {
                   weatherBloc.add(WeatherRefreshEvent());
                 },
                 child: SingleChildScrollView(
-                  // physics: AlwaysScrollableScrollPhysics(),
-                  // physics: ,
-                  // padding: const EdgeInsets.all(18.0),
+                    // physics: AlwaysScrollableScrollPhysics(),
+                    // physics: ,
+                    // padding: const EdgeInsets.all(18.0),
                     child: state is WeatherLoading
                         ? _isShimmer
-                        ? (userAgent.contains('iphone')
-                        ? loadingShimmerIos(screenSize: screenSize)
-                        : loadingShimmer(screenSize: screenSize))
-                        : loadingLogo()
+                            ? (userAgent.contains('iphone')
+                                ? loadingShimmerIos(screenSize: screenSize)
+                                : loadingShimmer(screenSize: screenSize))
+                            : loadingLogo()
                         : LoadedContent(
-                        city: weatherBloc.locationBloc.location?.city ?? "",
-                        screenSize: screenSize,
-                        isPortrait: isPortrait,
-                        minimalView: minimalView)),
+                            weatherBloc: weatherBloc,
+                            screenSize: screenSize,
+                            isPortrait: isPortrait,
+                            minimalView: minimalView)),
               ),
             ),
           );
@@ -150,7 +152,7 @@ class loadingShimmer extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius:
-                    BorderRadius.circular(AppDesign.borderRadius3),
+                        BorderRadius.circular(AppDesign.borderRadius3),
                     color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -166,7 +168,7 @@ class loadingShimmer extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius:
-                    BorderRadius.circular(AppDesign.mainBorderRadius),
+                        BorderRadius.circular(AppDesign.mainBorderRadius),
                     color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -255,13 +257,14 @@ class LoadedContent extends StatelessWidget {
     required this.screenSize,
     required this.isPortrait,
     required this.minimalView,
-    required this.city,
+    required this.weatherBloc,
   }) : super(key: key);
 
   final Size screenSize;
   final bool isPortrait;
   final bool minimalView;
-  final String city;
+  final WeatherBloc weatherBloc;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -272,7 +275,7 @@ class LoadedContent extends StatelessWidget {
           Expanded(
               flex: 1,
               child: LocationWidget(
-                city: city,
+                city: weatherBloc.locationBloc.location?.city ?? "",
               )),
           if (isPortrait && minimalView)
             Expanded(
@@ -281,7 +284,14 @@ class LoadedContent extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CarouselSlider(
-                        items: [WeatherToday(), CompareWeather()],
+                        items: [
+                          WeatherToday(
+                              weatherToday: weatherBloc.currentWeather!,
+                              weatherTodayNotDetailed: weatherBloc
+                                  .presentFutureWeather
+                                  !.elementAt(0)),
+                          CompareWeather()
+                        ],
                         options: CarouselOptions(
                           height: constraints.maxHeight - 0.1,
                           autoPlayInterval: Duration(seconds: 10),
@@ -292,7 +302,11 @@ class LoadedContent extends StatelessWidget {
                   );
                 })),
           if (isPortrait && !minimalView)
-            Expanded(flex: 7, child: WeatherToday()),
+            Expanded(flex: 7, child: WeatherToday(
+                weatherToday: weatherBloc.currentWeather!,
+                weatherTodayNotDetailed: weatherBloc
+                    .presentFutureWeather
+                !.elementAt(0))),
           if (isPortrait && !minimalView)
             Expanded(
               flex: 2,
@@ -312,7 +326,11 @@ class LoadedContent extends StatelessWidget {
                       flex: 1,
                       child: Container(),
                     ),
-                    Expanded(flex: 6, child: WeatherToday()),
+                    Expanded(flex: 6, child: WeatherToday(
+                        weatherToday: weatherBloc.currentWeather!,
+                        weatherTodayNotDetailed: weatherBloc
+                            .presentFutureWeather
+                        !.elementAt(0))),
                     Expanded(
                       flex: 6,
                       child: CompareWeather(),
@@ -326,7 +344,7 @@ class LoadedContent extends StatelessWidget {
               ),
             ),
           Expanded(
-            // flex: isPortrait ? 4 : 5,
+              // flex: isPortrait ? 4 : 5,
               flex: isPortrait ? 4 : 5,
               child: Padding(
                 padding: isPortrait
@@ -350,53 +368,66 @@ class LoadedContent extends StatelessWidget {
 
 class todayOverview extends StatelessWidget {
   final bool portrait;
+  final WeatherBloc weatherBloc;
 
-  todayOverview(this.portrait);
+  todayOverview(this.portrait, {required this.weatherBloc});
 
   @override
   Widget build(BuildContext context) {
     return !portrait
         ? Row(
-      children: [
-        SizedBox.expand(child: WeatherToday()),
-        SizedBox.expand(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CompareWeather(),
-          ),
-        ),
-      ],
-    )
+            children: [
+              SizedBox.expand(child: WeatherToday(
+                  weatherToday: weatherBloc.currentWeather!,
+                  weatherTodayNotDetailed: weatherBloc
+                      .presentFutureWeather
+                  !.elementAt(0))),
+              SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CompareWeather(),
+                ),
+              ),
+            ],
+          )
         : Column(
-      children: [
-        Expanded(flex: 7, child: WeatherToday()),
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CompareWeather(),
-          ),
-        ),
-      ],
-    );
+            children: [
+              Expanded(flex: 7, child: WeatherToday(weatherToday: weatherBloc.currentWeather!,
+                  weatherTodayNotDetailed: weatherBloc
+                      .presentFutureWeather
+                  !.elementAt(0))),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CompareWeather(),
+                ),
+              ),
+            ],
+          );
   }
 }
 
-List<Widget> weatherTodayOverview = [
-  Container(child: WeatherToday()),
-  Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: CompareWeather(),
-  ),
-];
+List<Widget> weatherTodayOverview (WeatherBloc weatherBloc){
+  return [
+    Container(child: WeatherToday(weatherToday: weatherBloc.currentWeather!,
+        weatherTodayNotDetailed: weatherBloc
+            .presentFutureWeather
+        !.elementAt(0))),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CompareWeather(),
+    ),
+  ];
+}
 
 void cronSchedule(
     {dynamic repeatedAction,
-      String minute = '*',
-      String hour = '*',
-      String day = '*',
-      String month = '*',
-      String dayWeek = '*'}) {
+    String minute = '*',
+    String hour = '*',
+    String day = '*',
+    String month = '*',
+    String dayWeek = '*'}) {
   //https://crontab.guru/#01_00_*_*_*
   final cron = Cron();
   final time = '$minute $hour $day $month $dayWeek';

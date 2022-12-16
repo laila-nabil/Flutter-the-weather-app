@@ -16,20 +16,23 @@ part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final GetPresentFutureWeatherUseCase getPresentFutureWeatherUseCase;
-  final GetCurrentWeatherUseCase getCurrentWeatherUseCase;
-  final GetHistoryWeatherUseCase getHistoryWeatherUseCase;
+  final GetPresentFutureWeatherUseCase _getPresentFutureWeatherUseCase;
+  final GetCurrentWeatherUseCase _getCurrentWeatherUseCase;
+  final GetHistoryWeatherUseCase _getHistoryWeatherUseCase;
   final LocationBloc locationBloc;
-  StreamSubscription? locationSubscription;
+  StreamSubscription? _locationSubscription;
+  CurrentWeather? currentWeather;
+  List<Weather>? historyWeather;
+  List<Weather>? presentFutureWeather;
 
   WeatherBloc(
-      this.getPresentFutureWeatherUseCase,
-      this.getCurrentWeatherUseCase,
-      this.getHistoryWeatherUseCase,
+      this._getPresentFutureWeatherUseCase,
+      this._getCurrentWeatherUseCase,
+      this._getHistoryWeatherUseCase,
       this.locationBloc)
       : super(WeatherInitial()) {
     on<WeatherEvent>((event, emit) {
-      locationSubscription = locationBloc.stream.listen((state) {
+      _locationSubscription = locationBloc.stream.listen((state) {
         if (state is SetLocationState) {
           final longitude = state.location?.lon ?? "";
           final latitude = state.location?.lat ?? "";
@@ -73,21 +76,30 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       });
       on<_GetCurrentWeather>((event, emit) async {
         emit(WeatherLoading(event));
-        final result = await getCurrentWeatherUseCase(event.params);
+        final result = await _getCurrentWeatherUseCase(event.params);
         result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) => emit(WeatherSuccess(event, currentWeather: success)));
+            (success) {
+          currentWeather = success;
+          emit(WeatherSuccess(event, currentWeather: success));
+        });
       });
       on<_GetHistoryWeather>((event, emit) async {
         emit(WeatherLoading(event));
-        final result = await getHistoryWeatherUseCase(event.params);
+        final result = await _getHistoryWeatherUseCase(event.params);
         result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) => emit(WeatherSuccess(event, history: success)));
+            (success) {
+          historyWeather = success;
+          emit(WeatherSuccess(event, historyWeather: success));
+        });
       });
       on<_GetPresentFutureWeather>((event, emit) async {
         emit(WeatherLoading(event));
-        final result = await getPresentFutureWeatherUseCase(event.params);
+        final result = await _getPresentFutureWeatherUseCase(event.params);
         result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
-            (success) => emit(WeatherSuccess(event, presentFuture: success)));
+            (success) {
+          presentFutureWeather = success;
+          emit(WeatherSuccess(event, presentFutureWeather: success));
+        });
       });
     });
   }

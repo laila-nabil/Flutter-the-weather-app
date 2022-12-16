@@ -12,11 +12,17 @@ import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 import 'dashboard_weather.dart';
 
 class WeatherToday extends StatelessWidget {
+  final CurrentWeather weatherToday;
+  final Weather weatherTodayNotDetailed;
+
+  const WeatherToday(
+      {Key? key,
+      required this.weatherToday,
+      required this.weatherTodayNotDetailed})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final weatherToday = Provider.of<WeatherProvider>(context).weatherNow;
-    final weatherTodayNotDetailed =
-        Provider.of<WeatherProvider>(context).todayWeather;
     // final city = Provider.of<WeatherProvider>(context).location;
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
@@ -122,20 +128,18 @@ class _WeatherToday extends StatelessWidget {
           height: constraints.maxHeight * 0.07,
           width: constraints.maxWidth * 0.98,
           alignment: Alignment.center,
-          child:
-          AutoSizeText.rich(
+          child: AutoSizeText.rich(
             TextSpan(text: 'feels_like'.tr().toString(), children: [
-              TextSpan(text:
-                  '${weatherToday.feelsLike} °' +
-                  'deg'.tr().toString() +
-                  ', ',
+              TextSpan(
+                  text: '${weatherToday.feelsLike} °' +
+                      'deg'.tr().toString() +
+                      ', ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                  )
-              ),
+                  )),
               TextSpan(
-                  text: weatherToday.detailedDescription,
-                  )
+                text: weatherToday.detailedDescription,
+              )
             ]),
             style: TextStyle(fontSize: 25),
             minFontSize: 12,
@@ -187,8 +191,8 @@ class todayDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconRain,
@@ -196,8 +200,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunrise,
@@ -206,8 +210,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'max'.tr().toString(),
@@ -221,8 +225,8 @@ class todayDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconWind2,
@@ -231,8 +235,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunset,
@@ -241,8 +245,8 @@ class todayDetails extends StatelessWidget {
                 ),
               ),
               Container(
-                width:width,
-                height:height,
+                width: width,
+                height: height,
                 child: dashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),

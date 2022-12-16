@@ -20,15 +20,15 @@ class WeatherLoading extends WeatherState {
 
 class WeatherSuccess extends WeatherState {
   final WeatherEvent event;
-  final List<Weather>? history;
-  final List<Weather>? presentFuture;
+  final List<Weather>? historyWeather;
+  final List<Weather>? presentFutureWeather;
   final CurrentWeather? currentWeather;
 
   WeatherSuccess(this.event,
-      {this.history, this.presentFuture, this.currentWeather});
+      {this.historyWeather, this.presentFutureWeather, this.currentWeather});
 
   @override
-  List<Object?> get props => [event, history, presentFuture, currentWeather];
+  List<Object?> get props => [event, historyWeather, presentFutureWeather, currentWeather];
 }
 
 class WeatherFailure extends WeatherState {
