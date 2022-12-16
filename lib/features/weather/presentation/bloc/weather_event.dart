@@ -9,6 +9,11 @@ class WeatherInitialEvent extends WeatherEvent {
   List<Object?> get props => [];
 }
 
+class WeatherRefreshEvent extends WeatherEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class _GetHistoryWeather extends WeatherEvent {
   final GetHistoryWeatherParams params;
 

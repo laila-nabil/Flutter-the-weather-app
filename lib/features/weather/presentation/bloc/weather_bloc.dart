@@ -46,6 +46,22 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
               language: '', longitude: longitude, latitude: latitude)));
         }
       });
+      on<WeatherRefreshEvent>((event, emit) {
+        final location = locationBloc.location;
+        final longitude = location?.lon ?? "";
+        final latitude = location?.lat ?? "";
+
+        ///TODO
+        add(_GetCurrentWeather(GetCurrentWeatherParams(
+            language: '', longitude: longitude, latitude: latitude)));
+        add(_GetHistoryWeather(GetHistoryWeatherParams(
+            language: '',
+            longitude: longitude,
+            latitude: latitude,
+            unixTimestamp: 0)));
+        add(_GetPresentFutureWeather(GetPresentFutureWeatherParams(
+            language: '', longitude: longitude, latitude: latitude)));
+      });
       on<WeatherInitialEvent>((event, emit) {
         //TODO
         add(_GetCurrentWeather(GetCurrentWeatherParams(
