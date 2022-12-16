@@ -8,6 +8,7 @@ import 'package:the_weather_app/features/location/presentation/pages/location_sc
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
 import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 
+import 'core/bloc_observer.dart';
 import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/presentation/bloc/location_bloc.dart';
@@ -21,6 +22,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await di.init();
+  Bloc.observer = AppBlocObserver();
   runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 
