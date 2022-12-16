@@ -206,7 +206,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunrise,
                   status:
-                      '${unixSecondsToDateFormat(int.parse(weatherToday.sunrise))}',
+                      '${unixSecondsToDateFormat(int.tryParse(weatherToday.sunrise)??0)}',
                 ),
               ),
               Container(
@@ -231,7 +231,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconWind2,
                   status:
-                      '${weatherToday.windSpeed} ${'m_s'.tr()} ${windDirection(int.parse(weatherToday.windDeg))}',
+                      '${weatherToday.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherToday.windDeg)??0)}',
                 ),
               ),
               Container(
@@ -241,7 +241,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunset,
                   status:
-                      '${unixSecondsToDateFormat(int.parse(weatherToday.sunset))}',
+                      '${unixSecondsToDateFormat(int.tryParse(weatherToday.sunset)??0)}',
                 ),
               ),
               Container(

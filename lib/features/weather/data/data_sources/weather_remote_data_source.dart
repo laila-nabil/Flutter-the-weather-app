@@ -30,11 +30,10 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
                 +'&lon=${params.longitude}'
                 +'&units=metric${params.language}'
                 +'&appid=$API_KEY';
-    printK("url $url");
     final result = await Network.get(
         url:
             url);
-    printK("result.body ${result.body}");
+    
     final responseBody = json.decode(result.body);
     final currentWeather = CurrentWeatherModel.fromJson(
         json: responseBody, lat: params.latitude, lon: params.longitude);
@@ -52,11 +51,11 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
                 +'&exclude=$excludedPart'
                 +'&units=metric${params.language}'
                 '+'+'&appid=${API_KEY}';
-    printK("url $url");
+
     final result = await Network.get(
         url:
         url);
-    printK("result.body ${result.body}");
+    
     final responseBody = json.decode(result.body);
     int timezoneOffset = responseBody['timezone_offset'];
     final date = responseBody['daily'][0]['dt'] as int;
@@ -79,11 +78,11 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
             '&exclude=$excludedPart' +
             '&units=metric${params.language}' +
             '&appid=${API_KEY}';
-    printK("url $url");
+
     final result = await Network.get(
         url:
         url);
-    printK("result.body ${result.body}");
+    
     final responseBody = json.decode(result.body);
     final List hourly = responseBody['hourly'];
     hourly.map((e) => historyWeather.add(WeatherModel.fromJson(
