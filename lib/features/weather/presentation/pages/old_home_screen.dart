@@ -8,10 +8,10 @@ import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/features/location/presentation/widgets/location.dart';
 import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 import 'package:universal_html/html.dart' as html;
 
+import '../../../location/presentation/widgets/location_widget.dart';
 import '../widgets/compare_weather.dart';
 import '../widgets/weather_tabs.dart';
 import '../widgets/weather_today.dart';
@@ -151,6 +151,7 @@ class _OldMyHomePageState extends State<OldMyHomePage> {
     );
   }
 }
+
 class loadingLogo extends StatefulWidget {
   const loadingLogo({Key? key}) : super(key: key);
 
@@ -158,7 +159,8 @@ class loadingLogo extends StatefulWidget {
   State<loadingLogo> createState() => _loadingLogoState();
 }
 
-class _loadingLogoState extends State<loadingLogo> with TickerProviderStateMixin {
+class _loadingLogoState extends State<loadingLogo>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -166,20 +168,18 @@ class _loadingLogoState extends State<loadingLogo> with TickerProviderStateMixin
   initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(
-        seconds: 1,
-        milliseconds: 500
-      ),
-      vsync: this,
-      value: 0.5,
-      lowerBound: 0.4,
-      upperBound: 0.5
-    )..repeat(reverse: true);
+        duration: const Duration(seconds: 1, milliseconds: 500),
+        vsync: this,
+        value: 0.5,
+        lowerBound: 0.4,
+        upperBound: 0.5)
+      ..repeat(reverse: true);
     _animation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     );
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -188,11 +188,12 @@ class _loadingLogoState extends State<loadingLogo> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(scale: _animation,child: Image.asset(AppAssets.appLogo),);
+    return ScaleTransition(
+      scale: _animation,
+      child: Image.asset(AppAssets.appLogo),
+    );
   }
 }
-
-
 
 class loadingShimmer extends StatelessWidget {
   const loadingShimmer({
@@ -219,7 +220,8 @@ class loadingShimmer extends StatelessWidget {
             child: Shimmer.fromColors(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppDesign.borderRadius3),
+                    borderRadius:
+                        BorderRadius.circular(AppDesign.borderRadius3),
                     color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -234,7 +236,8 @@ class loadingShimmer extends StatelessWidget {
             child: Shimmer.fromColors(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
+                    borderRadius:
+                        BorderRadius.circular(AppDesign.mainBorderRadius),
                     color: AppColors.white.withOpacity(0.37)),
               ),
               baseColor: Colors.grey[300]!,
@@ -336,7 +339,12 @@ class LoadedContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Expanded(flex: 1, child: Location()),
+          Expanded(
+              flex: 1,
+              child: LocationWidget(
+                city: Provider.of<WeatherProvider>(context, listen: true)
+                    .location,
+              )),
           if (isPortrait && minimalView)
             Expanded(
                 flex: 9,

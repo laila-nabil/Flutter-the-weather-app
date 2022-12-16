@@ -23,7 +23,7 @@ Future<void> init() async {
 
 // Bloc
 
-  sl.registerFactory(() => WeatherBloc(sl(),sl(),sl()));
+  sl.registerFactory(() => WeatherBloc(sl(),sl(),sl(),sl()));
   sl.registerFactory(() => LocationBloc(sl(),sl(),sl()));
 
 // UseCases

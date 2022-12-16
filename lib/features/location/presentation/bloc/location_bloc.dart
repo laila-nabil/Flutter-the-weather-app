@@ -61,6 +61,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           userCurrentLocation = success;
           emit(LocationSuccess(event, userCurrentLocation: success));
           emit(SetLocationState(location: location));
+          add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
+              lat: location?.lat ?? "", lon: location?.lat ?? "")));
         });
       });
     });

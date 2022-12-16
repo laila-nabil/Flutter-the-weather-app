@@ -6,10 +6,12 @@ import 'package:the_weather_app/features/location/presentation/pages/location_sc
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
 import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 
-class Location extends StatelessWidget {
+class LocationWidget extends StatelessWidget {
+  final String city;
+
+  const LocationWidget({Key? key, required this.city}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final city = Provider.of<WeatherProvider>(context,listen: true).location;
     return LayoutBuilder(builder: (ctx, constraints) {
       return Padding(
         padding: const EdgeInsets.symmetric(
