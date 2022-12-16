@@ -13,8 +13,15 @@ class Network{
     http.Response response;
     try{
       response = await http.post(uri, headers: header, body: body);
-    }catch (e){
-      throw ServerException(message: e.toString());
+      if(response.statusCode!=200){
+        throw ServerException(message: response.body.toString());
+      }
+    }catch (exception){
+      if(exception is ServerException){
+        throw exception;
+      }else{
+        throw ServerException(message: exception.toString());
+      }
     }
     developer.log("$response",name: "body - post request");
     return response;
@@ -27,8 +34,15 @@ class Network{
     http.Response response;
     try{
       response = await http.get(uri, headers: header,);
-    }catch (e){
-      throw ServerException(message: e.toString());
+      if(response.statusCode!=200){
+        throw ServerException(message: response.body.toString());
+      }
+    }catch (exception){
+      if(exception is ServerException){
+        throw exception;
+      }else{
+        throw ServerException(message: exception.toString());
+      }
     }
     developer.log("$response",name: "body - get request");
     return response;

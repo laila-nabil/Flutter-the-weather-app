@@ -59,9 +59,9 @@ class _WeatherToday extends StatelessWidget {
       required this.constraints})
       : super(key: key);
 
-  final CurrentWeatherEntity weatherToday;
+  final CurrentWeather weatherToday;
   final bool isPortrait;
-  final WeatherEntity weatherTodayNotDetailed;
+  final Weather weatherTodayNotDetailed;
   final BoxConstraints constraints;
 
   @override
@@ -173,7 +173,7 @@ class todayDetails extends StatelessWidget {
       required this.weatherTodayTempMin})
       : super(key: key);
 
-  final CurrentWeatherEntity weatherToday;
+  final CurrentWeather weatherToday;
   final String weatherTodayTempMax;
   final String weatherTodayTempMin;
   final String weatherTodayRain;

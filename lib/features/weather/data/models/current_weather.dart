@@ -2,7 +2,7 @@ import 'package:the_weather_app/core/config.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
 
-class CurrentWeatherModel extends CurrentWeatherEntity {
+class CurrentWeatherModel extends CurrentWeather {
   CurrentWeatherModel({
     required String temp,
     required String feelsLike,

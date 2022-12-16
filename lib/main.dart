@@ -17,6 +17,7 @@ import 'package:the_weather_app/features/settings/presentation/pages/settings_sc
 
 import 'core/resources/app_theme.dart';
 import 'features/weather/presentation/pages/home_screen.dart';
+import 'features/weather/presentation/pages/old_home_screen.dart';
 
 Future main() async {
   //order is important

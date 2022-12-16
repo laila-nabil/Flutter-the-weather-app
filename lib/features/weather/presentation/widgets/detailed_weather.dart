@@ -10,7 +10,7 @@ import 'package:the_weather_app/widgets/custom_grid.dart';
 import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {
-  final WeatherEntity weatherDay;
+  final Weather weatherDay;
 
   WeatherDetailed(this.weatherDay);
 
@@ -152,7 +152,7 @@ class WeatherDetailed extends StatelessWidget {
 
 class feelsLike extends StatelessWidget {
   final BoxConstraints constraints;
-  final WeatherEntity weatherDay;
+  final Weather weatherDay;
   final bool isPortrait;
 
   feelsLike({required this.constraints, required this.weatherDay, required this.isPortrait});

@@ -3,7 +3,7 @@ import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 
-class WeatherModel extends WeatherEntity {
+class WeatherModel extends Weather {
   WeatherModel({
     required String tempMax,
     required String tempMin,

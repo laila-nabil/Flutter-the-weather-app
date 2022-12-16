@@ -1,7 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
-class CurrentWeatherEntity extends Equatable{
+class CurrentWeather extends Equatable{
   final String temp;
   final String feelsLike;
   final String pressure;
@@ -22,7 +22,7 @@ class CurrentWeatherEntity extends Equatable{
   final String unixTime;
   final bool isMetric;
 
-  CurrentWeatherEntity({
+  CurrentWeather({
     this.lat = "",
     this.lon = "",
     this.image = 'assets/weather_status/clear.png',

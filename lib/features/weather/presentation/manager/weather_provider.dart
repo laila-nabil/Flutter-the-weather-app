@@ -21,19 +21,19 @@ import '../../domain/entities/weather.dart';
 import '../../domain/entities/current_weather.dart';
 
 class WeatherProvider with ChangeNotifier {
-  List<WeatherEntity> _pastWeather = [];
-  List<WeatherEntity> _futureWeather = [];
+  List<Weather> _pastWeather = [];
+  List<Weather> _futureWeather = [];
   String _lat = '30.0444'; //cairo's latitude
   String _lon = '31.2357'; //cairo's longitude
   int timezoneOffset = 7200;
 
   // String _lat = '37.5665'; //seoul's latitude
   // String _lon = '126.977'; //seoul's longitude
-  late WeatherEntity _todayWeather;
-  List<WeatherEntity> _hourlyPastWeather = [];
-  Map<String,WeatherEntity> _hourlyPastWeatherMap = {};
-  List<WeatherEntity> _hourlyPresentFutureWeather = [];
-  late CurrentWeatherEntity _weatherNow;
+  late Weather _todayWeather;
+  List<Weather> _hourlyPastWeather = [];
+  Map<String,Weather> _hourlyPastWeatherMap = {};
+  List<Weather> _hourlyPresentFutureWeather = [];
+  late CurrentWeather _weatherNow;
   String _compareTodayYesterday = '';
   String location = '';
   var langEn = true;
@@ -102,7 +102,7 @@ class WeatherProvider with ChangeNotifier {
       developer.log('url $url');
       final currentWeather = json.decode(response.body);
       final iconNow = currentWeather['weather'][0]['icon'];
-      _weatherNow = CurrentWeatherEntity(
+      _weatherNow = CurrentWeather(
         lat: lat,
         lon: lon,
         isImageNetwork: !isImage3D,
@@ -157,7 +157,7 @@ class WeatherProvider with ChangeNotifier {
         // print('=>for element');
         // print(element['weather'][0]['main']);
         // print("day unixSecondsToDateTimezone: ${unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset'])}");
-        _hourlyPresentFutureWeather.add(WeatherEntity(
+        _hourlyPresentFutureWeather.add(Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
@@ -198,7 +198,7 @@ class WeatherProvider with ChangeNotifier {
         return false;
       });
       //print("todayHourly ${todayHourly.length} ${todayHourly}");
-      _todayWeather = WeatherEntity(
+      _todayWeather = Weather(
         // date: unixSecondsToDate(date),
         // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
         dt: date.toString(),
@@ -250,7 +250,7 @@ class WeatherProvider with ChangeNotifier {
       for (int i = 1; i < 6; i++) {
         final date = presentFutureWeather['daily'][i]['dt'] as int;
         final icon = presentFutureWeather['daily'][i]['weather'][0]['icon'];
-        _futureWeather.add(WeatherEntity(
+        _futureWeather.add(Weather(
           // date: unixSecondsToDate(date),
           // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
           dt: date.toString(),
@@ -314,7 +314,7 @@ class WeatherProvider with ChangeNotifier {
       final historyWeather = json.decode(response.body);
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       hourlyPast.forEach((element) {
-        _hourlyPastWeatherMap[element['dt'].toString()]=WeatherEntity(
+        _hourlyPastWeatherMap[element['dt'].toString()]=Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
@@ -363,15 +363,15 @@ class WeatherProvider with ChangeNotifier {
         //print('i after $i');
       }
       for (int j = 1; j <= historyDays; j++) {
-        List<WeatherEntity> weatherTimeline = [];
-        List<WeatherEntity> weatherTimelineSorted = [];
-        List<WeatherEntity> weatherTimelineNoDup = [];
+        List<Weather> weatherTimeline = [];
+        List<Weather> weatherTimelineSorted = [];
+        List<Weather> weatherTimelineNoDup = [];
         weatherTimeline = _hourlyPastWeatherMap.values.where((element) =>
         DateFormat('yyyy-MM-dd')
             .format(element.date)
             .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-            0).toList()..sort(WeatherEntity().sortByDate);
-        final weatherTimelineSet = Set<WeatherEntity>();
+            0).toList()..sort(Weather().sortByDate);
+        final weatherTimelineSet = Set<Weather>();
         weatherTimeline.forEach((element) {
           //print('element.date.hour ${element.date.hour}');
           weatherTimelineNoDup.insert(element.date.hour, element);
@@ -382,7 +382,7 @@ class WeatherProvider with ChangeNotifier {
         weatherTimelineSorted.sort((a, b) =>
             double.parse(b.tempCurrent).round() -
             double.parse(a.tempCurrent).round());
-        var theWeather = WeatherEntity(
+        var theWeather = Weather(
           date: daysFromNow(j),
           lat: lat,
           lon: lon,
@@ -397,7 +397,7 @@ class WeatherProvider with ChangeNotifier {
           DateFormat('yyyy-MM-dd')
               .format(element.date)
               .compareTo(DateFormat('yyyy-MM-dd').format(daysFromNow(j))) ==
-              0).toList()..sort(WeatherEntity().sortByDate),
+              0).toList()..sort(Weather().sortByDate),
           tempMax: weatherTimelineSorted.first.tempCurrent,
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
@@ -463,7 +463,7 @@ class WeatherProvider with ChangeNotifier {
         // print('for element');
         // print(element['weather'][0]['main']);
         // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
-        _hourlyPastWeather.add(WeatherEntity(
+        _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
             isImageNetwork: !isImage3D,
@@ -509,7 +509,7 @@ class WeatherProvider with ChangeNotifier {
       //     '_pastWeather.insert before for daysAgo $daysAgo and _pastWeather $_pastWeather');
       // _pastWeather.insert(
       //     daysAgo - 1,
-      _pastWeather.add(WeatherEntity(
+      _pastWeather.add(Weather(
         date: DateTime.now().subtract(Duration(days: daysAgo)),
         // date: DateTime.now().toUtc().subtract(Duration(days: daysAgo)),
         lat: lat,
@@ -583,28 +583,28 @@ class WeatherProvider with ChangeNotifier {
     return _compareTodayYesterday;
   }
 
-  WeatherEntity get todayWeather {
+  Weather get todayWeather {
     return _todayWeather;
   }
 
-  List<WeatherEntity> get allWeather {
+  List<Weather> get allWeather {
     return [..._pastWeather] + [_todayWeather] + [..._futureWeather];
   }
 
-  List<WeatherEntity> get hourlyWeather {
+  List<Weather> get hourlyWeather {
     return [..._hourlyPastWeather.reversed] + [..._hourlyPresentFutureWeather];
   }
 
-  List<WeatherEntity> get futureWeather {
+  List<Weather> get futureWeather {
     //print('futureWeather length is ${_futureWeather.length}');
     return [..._futureWeather];
   }
 
-  CurrentWeatherEntity get weatherNow {
+  CurrentWeather get weatherNow {
     return _weatherNow;
   }
 
-  List<WeatherEntity> get pastWeather {
+  List<Weather> get pastWeather {
     //print('pastWeather length is ${_pastWeather.length}');
     return [..._pastWeather.reversed];
   }
