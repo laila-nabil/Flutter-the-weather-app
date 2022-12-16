@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cron/cron.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/location/presentation/widgets/location.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 import 'package:universal_html/html.dart' as html;
 
-import '../widgets/weather_tabs.dart';
-import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 import '../widgets/compare_weather.dart';
+import '../widgets/weather_tabs.dart';
 import '../widgets/weather_today.dart';
 
 class OldMyHomePage extends StatefulWidget {

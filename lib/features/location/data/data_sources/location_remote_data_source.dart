@@ -2,10 +2,14 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/core/Network/Network.dart';
-import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates.dart';
+import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
+
+import '../models/location_model.dart';
 
 abstract class LocationRemoteDataSource{
   Future<String> getLocationFromCoordinates({required GetLocationFromCoordinatesParams params});
+
+  Future<List<LocationModel>> autoCompleteSearchLocation(String input);
 }
 class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
   @override
@@ -22,6 +26,22 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
           : '${locationDetails['principalSubdivision']},${locationDetails['countryCode']}';
     }
     return location;
+  }
+
+  @override
+  Future<List<LocationModel>> autoCompleteSearchLocation(String input) async{
+    List<LocationModel> result = [];
+    var url =
+        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
+    final response = await Network.get(url: url);
+    final body = json.decode(response.body);
+    //print('autoCompleteSearchLocation $body');
+    final List listResults = body['features'];
+    listResults.forEach((element) {
+      result.add(LocationModel.fromJson(element));
+
+    });
+    return result;
   }
 /*
 * Future<Map> getLocationFromCoordinates() async {

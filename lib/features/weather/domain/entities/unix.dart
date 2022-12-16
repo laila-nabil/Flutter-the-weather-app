@@ -1,5 +1,5 @@
-import 'package:intl/intl.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:intl/intl.dart';
 
 DateTime unixSecondsToDate(int unixTimeStamp) {
   //If [isUtc] is false then the date is in the local time zone.

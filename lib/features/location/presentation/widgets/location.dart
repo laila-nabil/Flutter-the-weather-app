@@ -1,11 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 
 class Location extends StatelessWidget {
   @override

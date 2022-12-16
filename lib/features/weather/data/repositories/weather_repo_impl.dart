@@ -3,8 +3,6 @@ import 'package:the_weather_app/core/error/exceptions.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather.dart';

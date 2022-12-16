@@ -1,24 +1,18 @@
 ///TODO Riverpod
 ///TODO multiple providers
-
-
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:geolocator/geolocator.dart';
 import 'package:easy_localization/easy_localization.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/features/location/domain/entities/location.dart' as locationModel;
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 
-import '../../domain/entities/weather.dart';
 import '../../domain/entities/current_weather.dart';
+import '../../domain/entities/weather.dart';
 
 class WeatherProvider with ChangeNotifier {
   List<Weather> _pastWeather = [];

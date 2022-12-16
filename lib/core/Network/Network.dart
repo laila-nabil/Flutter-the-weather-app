@@ -1,6 +1,6 @@
-import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
+import 'package:http/http.dart' as http;
 import 'package:the_weather_app/core/error/exceptions.dart';
 
 class Network{

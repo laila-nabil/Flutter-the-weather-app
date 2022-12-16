@@ -1,21 +1,17 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:equatable/equatable.dart';
 
-class location{
-  final String lon;
-  final String lat;
-  String city = 'no where';
-  location({required this.lon,required this.lat});
+class LocationEntity extends Equatable {
+  String? lon;
+  String? lat;
+  String? city;
+  String? country;
 
-  Future<Map> getCityFromCoordinates() async {
-    var url =
-        'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=$lat&longitude=$lon&localityLanguage=en';
-    final response = await http.get(Uri.parse(url));
-    final locationDetails = json.decode(response.body);
-    // print('locationDetails $locationDetails');
-    city = locationDetails['city'];
-    return locationDetails;
+  LocationEntity(
+      {this.lon,
+      this.lat,
+      this.city,
+      this.country});
 
-  }
-
+  @override
+  List<Object?> get props => [lat, lon, city, country];
 }
