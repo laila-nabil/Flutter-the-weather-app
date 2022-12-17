@@ -35,7 +35,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
         'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
     final response = await Network.get(url: url);
     final body = json.decode(response.body);
-    //print('autoCompleteSearchLocation $body');
+    //printDebug('autoCompleteSearchLocation $body');
     final List listResults = body['features'];
     listResults.forEach((element) {
       result.add(LocationModel.fromJson(element));
@@ -50,7 +50,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
     final response = await http.get(Uri.parse(url));
 
     final locationDetails = json.decode(response.body);
-    //print('locationDetails $locationDetails');
+    //printDebug('locationDetails $locationDetails');
     if (locationDetails != null) {
       location = locationDetails['city'].toString().isNotEmpty
           ? '${locationDetails['city']},${locationDetails['countryCode']}'

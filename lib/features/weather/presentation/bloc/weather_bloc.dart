@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/error/failures.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather.dart';
 
+import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../domain/entities/weather.dart';
 
 part 'weather_event.dart';
@@ -20,7 +23,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetCurrentWeatherUseCase _getCurrentWeatherUseCase;
   final GetHistoryWeatherUseCase _getHistoryWeatherUseCase;
   final LocationBloc locationBloc;
+  final LanguageBloc languageBloc;
+  languagesEnum selectedLangEnum = languagesEnum.en;
+  String get selectedLang => selectedLangEnum.name;
   StreamSubscription? _locationSubscription;
+  StreamSubscription? _languageSubscription;
   CurrentWeather? currentWeather;
   List<Weather>? historyWeather;
   List<Weather>? presentFutureWeather;
@@ -29,35 +36,49 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       this._getPresentFutureWeatherUseCase,
       this._getCurrentWeatherUseCase,
       this._getHistoryWeatherUseCase,
-      this.locationBloc)
+      this.locationBloc, this.languageBloc)
       : super(WeatherInitial()) {
     on<WeatherEvent>((event, emit) async {
-      _locationSubscription = locationBloc.stream.listen((state) async {
-        if (state is SetLocationState) {
-          final longitude = state.location?.lon ?? "";
-          final latitude = state.location?.lat ?? "";
-
-          ///TODO
-          await getCurrentWeather(
-              emit: emit,
-              event: event,
-              params: GetCurrentWeatherParams(
-                  language: '', longitude: longitude, latitude: latitude));
-          await getHistoryWeather(
-              emit: emit,
-              event: event,
-              params: GetHistoryWeatherParams(
-                  language: '',
-                  longitude: longitude,
-                  latitude: latitude,
-                  unixTimestamp: 0));
-          await getPresentFutureWeather(
-              emit: emit,
-              event: event,
-              params: GetPresentFutureWeatherParams(
-                  language: '', longitude: longitude, latitude: latitude));
-        }
-      });
+      ///TODO NOT WORKING AS INTENDED
+      if(_locationSubscription == null){
+        _locationSubscription = locationBloc.stream.listen((state) async {
+          if (state is SetLocationState) {
+            final longitude = state.location?.lon ?? "";
+            final latitude = state.location?.lat ?? "";
+            await getCurrentWeather(
+                emit: emit,
+                event: event,
+                params: GetCurrentWeatherParams(
+                    language: selectedLang,
+                    longitude: longitude,
+                    latitude: latitude));
+            await getHistoryWeather(
+                emit: emit,
+                event: event,
+                params: GetHistoryWeatherParams(
+                    language: selectedLang,
+                    longitude: longitude,
+                    latitude: latitude,
+                    unixTimestamp: 0));
+            await getPresentFutureWeather(
+                emit: emit,
+                event: event,
+                params: GetPresentFutureWeatherParams(
+                    language: selectedLang,
+                    longitude: longitude,
+                    latitude: latitude));
+          }
+        });
+      }
+      if(_languageSubscription == null){
+        _languageSubscription = languageBloc.stream.listen((state) {
+          printDebug("listen languageBloc in weatherBloc");
+          if (state is SelectLanguageState) {
+            printDebug("selectedLangEnum $selectedLangEnum");
+            selectedLangEnum = state.language;
+          }
+        });
+      }
       if (event is WeatherRefreshEvent) {
         final location = locationBloc.location;
         final longitude = location?.lon ?? "";
@@ -68,12 +89,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             emit: emit,
             event: event,
             params: GetCurrentWeatherParams(
-                language: '', longitude: longitude, latitude: latitude));
+                language: selectedLang, longitude: longitude, latitude: latitude));
         await getHistoryWeather(
             emit: emit,
             event: event,
             params: GetHistoryWeatherParams(
-                language: '',
+                language: selectedLang,
                 longitude: longitude,
                 latitude: latitude,
                 unixTimestamp: 0));
@@ -81,12 +102,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             emit: emit,
             event: event,
             params: GetPresentFutureWeatherParams(
-                language: '', longitude: longitude, latitude: latitude));
+                language: selectedLang, longitude: longitude, latitude: latitude));
       } else if (event is WeatherInitialEvent) {
         ///TODO
         /*
         *  if (_isInit) {
-//       //print('didChangeDependencies');
+//       //printDebug('didChangeDependencies');
 //       _isLoading = true;
 //       try {
 //         await Provider.of<WeatherProvider>(context, listen: false)
@@ -101,47 +122,47 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 //           _isInit = false;
 //         });
 //       } catch (error) {
-//         //print('error in did change $error');
+//         //printDebug('error in did change $error');
 //         ScaffoldMessenger.of(context).showSnackBar(
 //             SnackBar(content: Text('An error occurred! did $error')));
 //       }
 //
 //       cron = Cron();
-//       //print('Alarm set');
+//       //printDebug('Alarm set');
 //       //https://crontab.guru/
 //       //'01/30 * * * *'
 //       //“At minute 1 and 30.”
 //       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
-//         //print('01,30 * * * * ${DateTime.now()}');
+//         //printDebug('01,30 * * * * ${DateTime.now()}');
 //         try {
 //           if (Provider.of<WeatherProvider>(context, listen: false).isLoading) {
-//             //print('cron can\'t since isLoading in true');
+//             //printDebug('cron can\'t since isLoading in true');
 //           } else {
 //             await Provider.of<WeatherProvider>(context, listen: false)
 //                 .getCurrentWeatherAPI();
 //           }
 //
 //           setState(() {
-//             //print('update');
+//             //printDebug('update');
 //           });
 //         } catch (error) {
-//           //print(error);
+//           //printDebug(error);
 //           ScaffoldMessenger.of(context)
 //               .showSnackBar(SnackBar(content: Text('An error occurred!')));
 //         }
 //       });
 //       cron.schedule(Schedule.parse('01 0 * * *'), () async {
-//         //print('01 0 * * * ${DateTime.now()}');
+//         //printDebug('01 0 * * * ${DateTime.now()}');
 //         try {
 //           await Provider.of<WeatherProvider>(context, listen: false)
 //               .getPresentFutureWeatherAPI();
 //           // await Provider.of<WeatherProvider>(context, listen: false)
 //           //     .getAllHistoryWeather();
 //           setState(() {
-//             //print('update');
+//             //printDebug('update');
 //           });
 //         } catch (error) {
-//           //print(error);
+//           //printDebug(error);
 //           ScaffoldMessenger.of(context)
 //               .showSnackBar(SnackBar(content: Text('An error occurred!')));
 //         }
@@ -151,17 +172,17 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         final longitude = location?.lon ?? "";
         final latitude = location?.lat ?? "";
 
-        ///TODO
+        ///TODO unixTimestamp
         await getCurrentWeather(
             emit: emit,
             event: event,
             params: GetCurrentWeatherParams(
-                language: '', longitude: longitude, latitude: latitude));
+                language: selectedLang, longitude: longitude, latitude: latitude));
         await getHistoryWeather(
             emit: emit,
             event: event,
             params: GetHistoryWeatherParams(
-                language: '',
+                language: selectedLang,
                 longitude: longitude,
                 latitude: latitude,
                 unixTimestamp: 0));
@@ -169,7 +190,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             emit: emit,
             event: event,
             params: GetPresentFutureWeatherParams(
-                language: '', longitude: longitude, latitude: latitude));
+                language: selectedLang, longitude: longitude, latitude: latitude));
       } else if (event is _GetCurrentWeather) {
         var params = event.params;
         await getCurrentWeather(emit: emit, event: event, params: params);
@@ -221,4 +242,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       emit(WeatherSuccess(event, currentWeather: success));
     });
   }
+@override
+  Future<void> close() {
+    _languageSubscription?.cancel();
+    _locationSubscription?.cancel();
+    return super.close();
+  }
+
 }

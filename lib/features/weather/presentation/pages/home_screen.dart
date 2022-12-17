@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/widgets/location_widget.dart';
 import 'package:universal_html/html.dart' as html;
 
 import '../../../../injection_container.dart';
+import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../domain/entities/current_weather.dart';
 import '../../domain/entities/weather.dart';
 import '../bloc/weather_bloc.dart';
@@ -36,7 +39,13 @@ class MyHomePage extends StatelessWidget {
         },
         builder: (context, state) {
           final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+          final languageBloc = BlocProvider.of<LanguageBloc>(context);
           if (state is WeatherInitial) {
+            var language = LocalizationImpl().getCurrentLanguagesEnum(context) ??
+                    languagesEnum.en;
+            printDebug("selectedLangEnum WeatherInitial $language");
+            languageBloc.add(SelectLanguage(
+                language));
             weatherBloc.add(WeatherInitialEvent());
           }
           final mediaQuery = MediaQuery.of(context);
@@ -46,9 +55,9 @@ class MyHomePage extends StatelessWidget {
           final minimalView = true;
           final userAgent =
               html.window.navigator.userAgent.toString().toLowerCase();
-          //print('userAgent $userAgent');
-          //print("screenSize $screenSize");
-          //print("orientation $orientation");
+          //printDebug('userAgent $userAgent');
+          //printDebug("screenSize $screenSize");
+          //printDebug("orientation $orientation");
           return SafeArea(
             bottom: true,
             left: true,
@@ -140,7 +149,7 @@ class loadingShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-    //print('userAgent $userAgent');
+    //printDebug('userAgent $userAgent');
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -432,13 +441,13 @@ void cronSchedule(
   //https://crontab.guru/#01_00_*_*_*
   final cron = Cron();
   final time = '$minute $hour $day $month $dayWeek';
-  //print('time is >$time>');
-  //print('Alarm set');
+  //printDebug('time is >$time>');
+  //printDebug('Alarm set');
   cron.schedule(Schedule.parse(time), () async {
-    //print(
+    //printDebug(
     //     '$minute minutes,$hour hours,$day days,$month month,$dayWeek day week ${DateTime.now()}');
     repeatedAction;
-    //print('Alarm done');
+    //printDebug('Alarm done');
   });
 }
 

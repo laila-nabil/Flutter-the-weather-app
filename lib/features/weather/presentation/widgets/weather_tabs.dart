@@ -106,8 +106,8 @@ class WeatherTabs extends StatelessWidget {
                   ...weatherTabs
                       // .map((e) => WeatherList(e.weatherTimeline))
                       .map((e) {
-                    // print("e.date ${e.date}");
-                    // print("e.weatherTimeline ${e.weatherTimeline.length}");
+                    // printDebug("e.date ${e.date}");
+                    // printDebug("e.weatherTimeline ${e.weatherTimeline.length}");
                     return WeatherList(e.weatherTimeline);
                   }).toList()
                 ]))

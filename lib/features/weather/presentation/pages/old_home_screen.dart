@@ -36,7 +36,7 @@
 //   @override
 //   Future<void> didChangeDependencies() async {
 //     if (_isInit) {
-//       //print('didChangeDependencies');
+//       //printDebug('didChangeDependencies');
 //       _isLoading = true;
 //       try {
 //         await Provider.of<WeatherProvider>(context, listen: false)
@@ -51,47 +51,47 @@
 //           _isInit = false;
 //         });
 //       } catch (error) {
-//         //print('error in did change $error');
+//         //printDebug('error in did change $error');
 //         ScaffoldMessenger.of(context).showSnackBar(
 //             SnackBar(content: Text('An error occurred! did $error')));
 //       }
 //
 //       cron = Cron();
-//       //print('Alarm set');
+//       //printDebug('Alarm set');
 //       //https://crontab.guru/
 //       //'01/30 * * * *'
 //       //“At minute 1 and 30.”
 //       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
-//         //print('01,30 * * * * ${DateTime.now()}');
+//         //printDebug('01,30 * * * * ${DateTime.now()}');
 //         try {
 //           if (Provider.of<WeatherProvider>(context, listen: false).isLoading) {
-//             //print('cron can\'t since isLoading in true');
+//             //printDebug('cron can\'t since isLoading in true');
 //           } else {
 //             await Provider.of<WeatherProvider>(context, listen: false)
 //                 .getCurrentWeatherAPI();
 //           }
 //
 //           setState(() {
-//             //print('update');
+//             //printDebug('update');
 //           });
 //         } catch (error) {
-//           //print(error);
+//           //printDebug(error);
 //           ScaffoldMessenger.of(context)
 //               .showSnackBar(SnackBar(content: Text('An error occurred!')));
 //         }
 //       });
 //       cron.schedule(Schedule.parse('01 0 * * *'), () async {
-//         //print('01 0 * * * ${DateTime.now()}');
+//         //printDebug('01 0 * * * ${DateTime.now()}');
 //         try {
 //           await Provider.of<WeatherProvider>(context, listen: false)
 //               .getPresentFutureWeatherAPI();
 //           // await Provider.of<WeatherProvider>(context, listen: false)
 //           //     .getAllHistoryWeather();
 //           setState(() {
-//             //print('update');
+//             //printDebug('update');
 //           });
 //         } catch (error) {
-//           //print(error);
+//           //printDebug(error);
 //           ScaffoldMessenger.of(context)
 //               .showSnackBar(SnackBar(content: Text('An error occurred!')));
 //         }
@@ -108,9 +108,9 @@
 //     final isPortrait = screenSize.width < screenSize.height;
 //     final minimalView = true;
 //     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-//     //print('userAgent $userAgent');
-//     //print("screenSize $screenSize");
-//     //print("orientation $orientation");
+//     //printDebug('userAgent $userAgent');
+//     //printDebug("screenSize $screenSize");
+//     //printDebug("orientation $orientation");
 //     return SafeArea(
 //       bottom: true,
 //       left: true,
@@ -128,7 +128,7 @@
 //               await Provider.of<WeatherProvider>(context, listen: false)
 //                   .getPresentFutureWeatherAPI();
 //             } catch (error) {
-//               //print('error in RefreshIndicator $error');
+//               //printDebug('error in RefreshIndicator $error');
 //               ScaffoldMessenger.of(context)
 //                   .showSnackBar(SnackBar(content: Text('An error occurred!')));
 //             }
@@ -208,7 +208,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
-//     //print('userAgent $userAgent');
+//     //printDebug('userAgent $userAgent');
 //     return Column(
 //       mainAxisAlignment: MainAxisAlignment.end,
 //       crossAxisAlignment: CrossAxisAlignment.center,
@@ -495,13 +495,13 @@
 //   //https://crontab.guru/#01_00_*_*_*
 //   final cron = Cron();
 //   final time = '$minute $hour $day $month $dayWeek';
-//   //print('time is >$time>');
-//   //print('Alarm set');
+//   //printDebug('time is >$time>');
+//   //printDebug('Alarm set');
 //   cron.schedule(Schedule.parse(time), () async {
-//     //print(
+//     //printDebug(
 //     //     '$minute minutes,$hour hours,$day days,$month month,$dayWeek day week ${DateTime.now()}');
 //     repeatedAction;
-//     //print('Alarm done');
+//     //printDebug('Alarm done');
 //   });
 // }
 //

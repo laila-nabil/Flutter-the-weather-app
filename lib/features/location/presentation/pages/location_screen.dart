@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
 import '../bloc/location_bloc.dart';
@@ -66,7 +67,7 @@ class LocationScreen extends StatelessWidget {
                         child: TextField(
                           style: TextStyle(color: AppColors.white),
                           onChanged: (input) {
-                            print('input $input');
+                            printDebug('input $input');
                             locationBloc.add(AutoCompleteSearchLocation(input));
                           },
                           decoration: InputDecoration(

@@ -89,7 +89,7 @@ class WeatherProvider with ChangeNotifier {
     const excludedPart = 'minutely';
     var url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric$lang&appid=$API_key';
-    //print('CurrentWeather url is $url');
+    //printDebug('CurrentWeather url is $url');
     try {
       final response = await http.get(Uri.parse(url));
       developer.log('response ${response.body}, api ${API_key}');
@@ -136,7 +136,7 @@ class WeatherProvider with ChangeNotifier {
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=$excludedPart&units=metric$lang&appid=${API_key}';
-    // print('PresentFuture url is $url');
+    // printDebug('PresentFuture url is $url');
     try {
       _hourlyPresentFutureWeather = [];
       final response = await http.get(Uri.parse(url));
@@ -146,11 +146,11 @@ class WeatherProvider with ChangeNotifier {
       final iconNow = presentFutureWeather['current']['weather'][0]['icon'];
       final icon = presentFutureWeather['daily'][0]['weather'][0]['icon'];
       final List hourly = presentFutureWeather['hourly'];
-      //print('***hourly _hourlyPresentFutureWeather');
+      //printDebug('***hourly _hourlyPresentFutureWeather');
       hourly.forEach((element) {
-        // print('=>for element');
-        // print(element['weather'][0]['main']);
-        // print("day unixSecondsToDateTimezone: ${unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset'])}");
+        // printDebug('=>for element');
+        // printDebug(element['weather'][0]['main']);
+        // printDebug("day unixSecondsToDateTimezone: ${unixSecondsToDateTimezone(element['dt'],presentFutureWeather['timezone_offset'])}");
         _hourlyPresentFutureWeather.add(Weather(
             lat: lat,
             lon: lon,
@@ -191,7 +191,7 @@ class WeatherProvider with ChangeNotifier {
         }
         return false;
       });
-      //print("todayHourly ${todayHourly.length} ${todayHourly}");
+      //printDebug("todayHourly ${todayHourly.length} ${todayHourly}");
       _todayWeather = Weather(
         // date: unixSecondsToDate(date),
         // date: unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']),
@@ -224,8 +224,8 @@ class WeatherProvider with ChangeNotifier {
         //             0)
         //     .toList(),
         weatherTimeline: _hourlyPresentFutureWeather.where((element) {
-          // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
-          // print("weather Timeline ${DateFormat('yyyy-MM-dd')
+          // printDebug("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
+          // printDebug("weather Timeline ${DateFormat('yyyy-MM-dd')
           //     .format(element.date)
           //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
           ///TODO fix this
@@ -265,8 +265,8 @@ class WeatherProvider with ChangeNotifier {
               ? '${AppAssets.Icon3dPath}/$icon.png'
               : 'https://openweathermap.org/img/wn/$icon@4x.png',
           weatherTimeline: _hourlyPresentFutureWeather.where((element) {
-            // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
-            // print("weather Timeline ${DateFormat('yyyy-MM-dd')
+            // printDebug("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
+            // printDebug("weather Timeline ${DateFormat('yyyy-MM-dd')
             //     .format(element.date)
             //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
             ///TODO fix this
@@ -282,7 +282,7 @@ class WeatherProvider with ChangeNotifier {
           }).toList(),
         ));
       }
-      //print('present done');
+      //printDebug('present done');
     } catch (error) {
       throw (error);
     }
@@ -296,15 +296,15 @@ class WeatherProvider with ChangeNotifier {
     const part = 'current,minutely';
 
     var unixTimestamp = dateToUnixSeconds(byDay: byDay,duration: duration);
-    //print('nightTime $unixTimestamp');
+    //printDebug('nightTime $unixTimestamp');
     // final lang = langEn ? '':'&lang=ar';
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
-    // print('history url is $url');
+    // printDebug('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      //print('daysAgo $duration');
+      //printDebug('daysAgo $duration');
       final historyWeather = json.decode(response.body);
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
       hourlyPast.forEach((element) {
@@ -337,24 +337,24 @@ class WeatherProvider with ChangeNotifier {
             tempCurrent: element['temp'].toString());
       });
     } catch (error) {
-      //print('error getHistoryDataAPIUTC daysAgo $duration $error');
+      //printDebug('error getHistoryDataAPIUTC daysAgo $duration $error');
       throw (error);
     }
   }
 
   Future<void> getAllHistoryWeatherUTC() async {
-    //print('getAllHistoryWeather');
+    //printDebug('getAllHistoryWeather');
     isLoading = true;
     try {
       _pastWeather = [];
       _hourlyPastWeather = [];
-      //print('reset _pastWeather _hourlyPastWeather');
+      //printDebug('reset _pastWeather _hourlyPastWeather');
       await getHistoryDataAPIUTC(duration: 15,byDay: false);
       for (int i = 1; i <= historyDaysUTC; i++) {
       // for (int i = historyDaysUTC; i >= 1; i--) {
-        //print('i before $i');
+        //printDebug('i before $i');
         await getHistoryDataAPIUTC(duration: i,byDay: true);
-        //print('i after $i');
+        //printDebug('i after $i');
       }
       for (int j = 1; j <= historyDays; j++) {
         List<Weather> weatherTimeline = [];
@@ -367,11 +367,11 @@ class WeatherProvider with ChangeNotifier {
             0).toList()..sort(Weather().sortByDate);
         final weatherTimelineSet = Set<Weather>();
         weatherTimeline.forEach((element) {
-          //print('element.date.hour ${element.date.hour}');
+          //printDebug('element.date.hour ${element.date.hour}');
           weatherTimelineNoDup.insert(element.date.hour, element);
         });
-        //print('original weatherTimeline ${weatherTimeline.length}');
-        //print('no dup weatherTimeline ${weatherTimelineNoDup.length}');
+        //printDebug('original weatherTimeline ${weatherTimeline.length}');
+        //printDebug('no dup weatherTimeline ${weatherTimelineNoDup.length}');
         weatherTimelineSorted = weatherTimeline;
         weatherTimelineSorted.sort((a, b) =>
             double.parse(b.tempCurrent).round() -
@@ -396,9 +396,9 @@ class WeatherProvider with ChangeNotifier {
           tempMin: weatherTimelineSorted.last.tempCurrent,
         );
         _pastWeather.add(theWeather);
-        //print('_pastWeather.last.weatherTimeline here');
+        //printDebug('_pastWeather.last.weatherTimeline here');
         _pastWeather.last.weatherTimeline!.forEach((element) {
-          //print(element.date);
+          //printDebug(element.date);
         });
       }
       final pastWeatherData = _pastWeather;
@@ -423,7 +423,7 @@ class WeatherProvider with ChangeNotifier {
           // 'في الليل'+'deg'.tr().toString()+'°'+'${diffMin.toStringAsFixed(2)}'+'و بمقدار'+'في النهار'+'deg'.tr().toString()+'°'+'${diffMax.toStringAsFixed(2)}'+'من الأمس بمقدار'+'$diffDay'+'اليوم';
       notifyListeners();
 
-      //print('got getAllHistoryWeather');
+      //printDebug('got getAllHistoryWeather');
     } catch (error) {
       throw (error);
     }
@@ -438,25 +438,25 @@ class WeatherProvider with ChangeNotifier {
     // const lon = '31.2357';
     const part = 'current,minutely';
     var unixTimestamp = dateToUnixSeconds(duration: daysAgo, byDay:true);
-    //print('nightTime $unixTimestamp');
+    //printDebug('nightTime $unixTimestamp');
     // final lang = langEn ? '':'&lang=ar';
     final lang = 'lang'.tr().toString().contains('EN') ? '':'&lang=ar';
     var url =
         'https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=$lat&lon=$lon&dt=$unixTimestamp&exclude=$part&units=metric$lang&appid=${API_key}';
-    //print('history url is $url');
+    //printDebug('history url is $url');
     try {
       final response = await http.get(Uri.parse(url));
-      //print('daysAgo $daysAgo');
+      //printDebug('daysAgo $daysAgo');
       final historyWeather = json.decode(response.body);
-      // print('historyWeather $historyWeather');
+      // printDebug('historyWeather $historyWeather');
       List<dynamic> hourlyPast = json.decode(response.body)['hourly'];
-      // print(
+      // printDebug(
       //     'json.decode(response.body)[hourly] ${json.decode(response.body)['hourly'].runtimeType}');
-      // print('***hourly history');
+      // printDebug('***hourly history');
       hourlyPast.forEach((element) {
-        // print('for element');
-        // print(element['weather'][0]['main']);
-        // print(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
+        // printDebug('for element');
+        // printDebug(element['weather'][0]['main']);
+        // printDebug(unixSecondsToDateTimezone(element['dt'],historyWeather['timezone_offset']));
         _hourlyPastWeather.add(Weather(
             lat: lat,
             lon: lon,
@@ -489,17 +489,17 @@ class WeatherProvider with ChangeNotifier {
       List<double> hourlyPastTempSorted = [];
       hourlyPast.forEach((value) {
         {
-          // print('adding > $value ${value.runtimeType}');
+          // printDebug('adding > $value ${value.runtimeType}');
           double valueDouble = value['temp'] + 0.0;
-          // print('value[temp] ${value['temp']} ${value['temp'].runtimeType}');
+          // printDebug('value[temp] ${value['temp']} ${value['temp'].runtimeType}');
           hourlyPastTemp.add(valueDouble);
         }
       });
       hourlyPastTempSorted = hourlyPastTemp;
       hourlyPastTempSorted.sort();
-      // print(
+      // printDebug(
       //     'at $unixTimestamp : min temp ${hourlyPastTempSorted[0]}, max temp ${hourlyPastTempSorted[hourlyPastTempSorted.length - 1]}');
-      //print(
+      //printDebug(
       //     '_pastWeather.insert before for daysAgo $daysAgo and _pastWeather $_pastWeather');
       // _pastWeather.insert(
       //     daysAgo - 1,
@@ -514,7 +514,7 @@ class WeatherProvider with ChangeNotifier {
         tempMax:
             hourlyPastTempSorted[hourlyPastTempSorted.length - 1].toString(),
         weatherTimeline: _hourlyPastWeather.where((element) {
-          // print("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
+          // printDebug("weather Timeline past ${element.date} is ${daysAgo} days ago ? ${DateFormat('yyyy-MM-dd')
           //     .format(element.date)
           //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
           //     .compareTo(DateFormat('yyyy-MM-dd').format( DateTime.now().toUtc().subtract(Duration(days: daysAgo))))==0}");
@@ -524,9 +524,9 @@ class WeatherProvider with ChangeNotifier {
               0);
         }).toList(),
       ));
-      //print('_pastWeather.insert after');
+      //printDebug('_pastWeather.insert after');
     } catch (error) {
-      //print('error getHistoryWeatherAPI daysAgo $daysAgo $error');
+      //printDebug('error getHistoryWeatherAPI daysAgo $daysAgo $error');
       throw (error);
     }
   }

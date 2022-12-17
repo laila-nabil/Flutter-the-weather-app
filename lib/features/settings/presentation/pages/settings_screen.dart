@@ -20,14 +20,14 @@ class SettingsScreen extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     void _toggleLanguage() async{
       // setState(() {
-      //   //print('_toggleLanguage');
+      //   //printDebug('_toggleLanguage');
       // });
       context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
           'en', 'UK'));
-      final bloc = BlocProvider.of<LanguageBloc>(context);
+      final languageBloc = BlocProvider.of<LanguageBloc>(context);
       var currentLanguagesEnum = LocalizationImpl().getCurrentLanguagesEnum(context);
       if(currentLanguagesEnum!=null){
-        bloc.add(SelectLanguage(currentLanguagesEnum));
+        languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }

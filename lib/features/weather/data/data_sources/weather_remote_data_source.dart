@@ -28,7 +28,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
     String url = 'https://api.openweathermap.org/data/2.5/weather?'
                 +'lat=${params.latitude}'
                 +'&lon=${params.longitude}'
-                +'&units=metric${params.language}'
+                +'&units=metric&lang=${params.language}'
                 +'&appid=$API_KEY';
     final result = await Network.get(
         url:
@@ -49,8 +49,8 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
                 +'lat=${params.latitude}'
                 +'&lon=${params.longitude}'
                 +'&exclude=$excludedPart'
-                +'&units=metric${params.language}'
-                '+'+'&appid=${API_KEY}';
+                +'&units=metric&lang=${params.language}'
+                +'&appid=${API_KEY}';
 
     final result = await Network.get(
         url:
@@ -76,7 +76,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
             '&lon=${params.longitude}' +
             '&dt=${params.unixTimestamp}' +
             '&exclude=$excludedPart' +
-            '&units=metric${params.language}' +
+            '&units=metric&lang=${params.language}' +
             '&appid=${API_KEY}';
 
     final result = await Network.get(

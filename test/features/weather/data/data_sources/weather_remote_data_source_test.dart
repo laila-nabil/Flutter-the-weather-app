@@ -15,14 +15,14 @@ void main() {
         final result = await weatherRemoteDataSource.getCurrentWeatherAPI(
             params: GetCurrentWeatherParams(
                 language: "en", latitude: '30.0444', longitude: '31.2357'));
-        printK("Result $result");
+        printDebug("Result $result");
       });
       test("getPresentFutureWeatherAPI without mock", () async {
         weatherRemoteDataSource = WeatherRemoteDatSourceImpl();
         final result = await weatherRemoteDataSource.getPresentFutureWeatherAPI(
             params: GetPresentFutureWeatherParams(
                 language: "en", latitude: '30.0444', longitude: '31.2357'));
-        printK("Result $result");
+        printDebug("Result $result");
       });
       test("getHistoryWeatherAPI without mock", () async {
         weatherRemoteDataSource = WeatherRemoteDatSourceImpl();
@@ -30,7 +30,7 @@ void main() {
             params: GetHistoryWeatherParams(
                 unixTimestamp: 1671048851,
                 language: "en", latitude: '30.0444', longitude: '31.2357'));
-        printK("Result $result");
+        printDebug("Result $result");
       });
     });
   });

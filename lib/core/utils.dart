@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
-void printK(Object? message){
+void printDebug(Object? message){
   if(kDebugMode){
     print(message);
   }else{

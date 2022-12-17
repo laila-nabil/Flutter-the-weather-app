@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/presentation/manager/weather_provider.dart';
 
 class OldLocationScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _OldLocationScreenState extends State<OldLocationScreen> {
                     child: TextField(
                       style: TextStyle(color: AppColors.white),
                       onChanged: (input) async {
-                        print('input $input');
+                        printDebug('input $input');
                         if (input.length > 3) {
                           autoCompleteList = await Provider.of<WeatherProvider>(
                                   context,
@@ -69,7 +70,7 @@ class _OldLocationScreenState extends State<OldLocationScreen> {
                           autoCompleteList = [];
                         }
                         setState(() {
-                          print('autoCompleteList $autoCompleteList');
+                          printDebug('autoCompleteList $autoCompleteList');
                         });
                       },
                       decoration: InputDecoration(
@@ -93,16 +94,16 @@ class _OldLocationScreenState extends State<OldLocationScreen> {
                   ),
                   InkWell(
                     onTap: () async {
-                      print('location :start');
+                      printDebug('location :start');
                       try{
                         await Provider.of<WeatherProvider>(context,listen: false)
                             .setLocationLatLon(byCurrentLocation: true);
                       }catch(Error){
-                        print('location :error catched');
+                        printDebug('location :error catched');
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(Error.toString())));
                       }
-                      print('location :end');
+                      printDebug('location :end');
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
