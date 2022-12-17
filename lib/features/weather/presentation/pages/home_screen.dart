@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
@@ -290,7 +291,7 @@ class LoadedContent extends StatelessWidget {
                           WeatherToday(
                               weatherToday: weatherBloc.currentWeather ?? CurrentWeather(),
                               weatherTodayNotDetailed: weatherBloc
-                                  .presentFutureWeather?.first ?? Weather()),
+                                  .presentFutureWeather.tryFirst ?? Weather()),
                           CompareWeather()
                         ],
                         options: CarouselOptions(
@@ -328,10 +329,9 @@ class LoadedContent extends StatelessWidget {
                       child: Container(),
                     ),
                     Expanded(flex: 6, child: WeatherToday(
-                        weatherToday: weatherBloc.currentWeather!,
-                        weatherTodayNotDetailed: weatherBloc
-                            .presentFutureWeather
-                        !.elementAt(0))),
+                        weatherToday: weatherBloc.currentWeather ?? CurrentWeather(),
+                        weatherTodayNotDetailed:weatherBloc
+                            .presentFutureWeather?.first ?? Weather())),
                     Expanded(
                       flex: 6,
                       child: CompareWeather(),
