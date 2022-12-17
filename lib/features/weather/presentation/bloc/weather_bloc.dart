@@ -83,6 +83,70 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             params: GetPresentFutureWeatherParams(
                 language: '', longitude: longitude, latitude: latitude));
       } else if (event is WeatherInitialEvent) {
+        ///TODO
+        /*
+        *  if (_isInit) {
+//       //print('didChangeDependencies');
+//       _isLoading = true;
+//       try {
+//         await Provider.of<WeatherProvider>(context, listen: false)
+//             .getCurrentWeatherAPI();
+//         await Provider.of<WeatherProvider>(context, listen: false)
+//             .getPresentFutureWeatherAPI();
+//         await Provider.of<WeatherProvider>(context, listen: false)
+//             .getAllHistoryWeatherUTC();
+//
+//         setState(() {
+//           _isLoading = false;
+//           _isInit = false;
+//         });
+//       } catch (error) {
+//         //print('error in did change $error');
+//         ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(content: Text('An error occurred! did $error')));
+//       }
+//
+//       cron = Cron();
+//       //print('Alarm set');
+//       //https://crontab.guru/
+//       //'01/30 * * * *'
+//       //“At minute 1 and 30.”
+//       cron.schedule(Schedule.parse('01,30 * * * *'), () async {
+//         //print('01,30 * * * * ${DateTime.now()}');
+//         try {
+//           if (Provider.of<WeatherProvider>(context, listen: false).isLoading) {
+//             //print('cron can\'t since isLoading in true');
+//           } else {
+//             await Provider.of<WeatherProvider>(context, listen: false)
+//                 .getCurrentWeatherAPI();
+//           }
+//
+//           setState(() {
+//             //print('update');
+//           });
+//         } catch (error) {
+//           //print(error);
+//           ScaffoldMessenger.of(context)
+//               .showSnackBar(SnackBar(content: Text('An error occurred!')));
+//         }
+//       });
+//       cron.schedule(Schedule.parse('01 0 * * *'), () async {
+//         //print('01 0 * * * ${DateTime.now()}');
+//         try {
+//           await Provider.of<WeatherProvider>(context, listen: false)
+//               .getPresentFutureWeatherAPI();
+//           // await Provider.of<WeatherProvider>(context, listen: false)
+//           //     .getAllHistoryWeather();
+//           setState(() {
+//             //print('update');
+//           });
+//         } catch (error) {
+//           //print(error);
+//           ScaffoldMessenger.of(context)
+//               .showSnackBar(SnackBar(content: Text('An error occurred!')));
+//         }
+//       });
+//     }*/
         final location = locationBloc.location;
         final longitude = location?.lon ?? "";
         final latitude = location?.lat ?? "";
