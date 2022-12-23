@@ -77,10 +77,12 @@ class _WeatherToday extends StatelessWidget {
             weatherToday.isImageNetwork
                 ? Expanded(
                     flex: 1,
-                    child: Image.network(
+                    child: Image.asset(
                       weatherToday.image,
-                      // width: constraints.maxWidth * 0.5,
-                      // width: constraints.maxWidth * 0.325,
+                      // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
+                      // width: isPortrait
+                      //     ? constraints.maxWidth * 0.65
+                      //     : constraints.maxWidth * 0.325,
                       height: isPortrait
                           ? constraints.maxHeight * 0.5
                           : constraints.maxHeight * 0.4,
@@ -91,12 +93,10 @@ class _WeatherToday extends StatelessWidget {
                   )
                 : Expanded(
                     flex: 1,
-                    child: Image.asset(
+                    child: Image.network(
                       weatherToday.image,
-                      // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
-                      // width: isPortrait
-                      //     ? constraints.maxWidth * 0.65
-                      //     : constraints.maxWidth * 0.325,
+                      // width: constraints.maxWidth * 0.5,
+                      // width: constraints.maxWidth * 0.325,
                       height: isPortrait
                           ? constraints.maxHeight * 0.5
                           : constraints.maxHeight * 0.4,
