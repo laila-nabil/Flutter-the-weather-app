@@ -1,4 +1,6 @@
-class Weather {
+import 'package:equatable/equatable.dart';
+
+class Weather extends Equatable{
   final String tempMax;
   final String tempMin;
   final String tempCurrent;
@@ -52,4 +54,29 @@ class Weather {
 Comparator<Weather> sortByDt = (a,b) => double.tryParse(a.dt)!.round()-double.tryParse(b.dt)!.round();
 Comparator<Weather> sortByDate = (a,b) => a.date.difference(b.date).inSeconds;
 Comparator<Weather> sortByTemp = (a,b) => double.tryParse(a.tempCurrent)!.round()-double.tryParse(b.tempCurrent)!.round();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [tempMax,
+  tempMin,
+  tempCurrent,
+  dt,
+  date,
+  mainDescription,
+  detailedDescription,
+  image,
+  isImageNetwork,
+  lat,
+  lon,
+  rain,
+  windSpeed,
+  windDeg,
+  feelsLike,
+  isMetric,
+  weatherTimeline,
+  humidity,
+  pressure,
+  uvi,
+  visibility,
+  clouds,];
 }
