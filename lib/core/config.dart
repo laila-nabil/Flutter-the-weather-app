@@ -3,4 +3,5 @@ class Config {
   static bool isMetric = true;
   static bool isImageNetwork = true;
   static const localTime = false;
+  static const isDegCelsius = true;
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/error/failures.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
@@ -31,7 +32,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   CurrentWeather? currentWeather;
   List<Weather>? historyWeather;
   List<Weather>? presentFutureWeather;
-
+  String compareTodayYesterday = "";
   WeatherBloc(
       this._getPresentFutureWeatherUseCase,
       this._getCurrentWeatherUseCase,
@@ -103,6 +104,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             event: event,
             params: GetPresentFutureWeatherParams(
                 language: selectedLang, longitude: longitude, latitude: latitude));
+        updateCompareTodayYesterday(emit: emit,
+            event: event,
+            todayWeather :presentFutureWeather.tryFirst,
+            historyWeather: historyWeather);
       } else if (event is WeatherInitialEvent) {
         ///TODO
         /*
@@ -191,6 +196,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             event: event,
             params: GetPresentFutureWeatherParams(
                 language: selectedLang, longitude: longitude, latitude: latitude));
+        updateCompareTodayYesterday(emit: emit,
+            event: event,
+            todayWeather:presentFutureWeather.tryFirst,
+            historyWeather: historyWeather);
       } else if (event is _GetCurrentWeather) {
         var params = event.params;
         await getCurrentWeather(emit: emit, event: event, params: params);
@@ -242,7 +251,47 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       emit(WeatherSuccess(event, currentWeather: success));
     });
   }
-@override
+
+  void updateCompareTodayYesterday(
+      {required Emitter<WeatherState> emit,
+      required Weather? todayWeather,
+      List<Weather>? historyWeather,
+      required WeatherEvent event}) {
+    if (historyWeather != null &&
+        historyWeather.isNotEmpty == true &&
+        todayWeather != null) {
+      var yesterdayMaxTemp =
+          double.parse(historyWeather.tryFirst?.tempMax ?? "");
+      var yesterdayMinTemp =
+          double.parse(historyWeather.tryFirst?.tempMin ?? "");
+      var todayMinTemp = double.parse(todayWeather.tempMin);
+      var todayMaxTemp = double.parse(todayWeather.tempMax);
+
+      var warmerText = LocalizationImpl().translate("warmer");
+      var colderText = LocalizationImpl().translate("colder");
+      final diffDay = todayMaxTemp > yesterdayMaxTemp ? warmerText : colderText;
+      final diffNight =
+          todayMinTemp > yesterdayMinTemp ? warmerText : colderText;
+      final diffMax = (todayMaxTemp - yesterdayMaxTemp).toString();
+      final diffMin = (todayMinTemp - yesterdayMinTemp).toString();
+      compareTodayYesterday =
+          LocalizationImpl().translate("compareWeather", namedArguments: {
+        "diffDay": diffDay,
+        "diffNight": diffNight,
+        "diffMin": diffMin,
+        "diffMax": diffMax
+      });
+      printDebug("compareTodayYesterday $compareTodayYesterday");
+    }
+    else {
+      printDebug(
+          "compareTodayYesterday else ${historyWeather != null} ${historyWeather?.isNotEmpty == true} ${todayWeather != null} $compareTodayYesterday");
+      compareTodayYesterday = "";
+    }
+    emit(WeatherSuccess(event, compareTodayYesterday: compareTodayYesterday));
+  }
+
+  @override
   Future<void> close() {
     _languageSubscription?.cancel();
     _locationSubscription?.cancel();

@@ -23,5 +23,6 @@
   "last_update": "Last updated at",
   "m_s":"m/s",
   "hpa": "hpa",
-  "km":"km"
+  "km":"km",
+  "compareWeather": "Today is {diffDay} than yesterday by {diffMax} °C at day and is {diffNight} by {diffMin} °C at night"
 }

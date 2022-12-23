@@ -23,12 +23,21 @@ class WeatherSuccess extends WeatherState {
   final List<Weather>? historyWeather;
   final List<Weather>? presentFutureWeather;
   final CurrentWeather? currentWeather;
-
+  final String? compareTodayYesterday;
   WeatherSuccess(this.event,
-      {this.historyWeather, this.presentFutureWeather, this.currentWeather});
+      {this.historyWeather,
+      this.presentFutureWeather,
+      this.currentWeather,
+      this.compareTodayYesterday});
 
   @override
-  List<Object?> get props => [event, historyWeather, presentFutureWeather, currentWeather];
+  List<Object?> get props => [
+        event,
+        historyWeather,
+        presentFutureWeather,
+        currentWeather,
+        compareTodayYesterday
+      ];
 }
 
 class WeatherFailure extends WeatherState {

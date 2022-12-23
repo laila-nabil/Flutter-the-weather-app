@@ -62,8 +62,9 @@ class LocalizationImpl implements Localization{
   }
 
   @override
-  String translate(String key) {
-    return key.tr();
+  String translate(String key,
+      {List<String>? arguments, Map<String, String>? namedArguments}) {
+    return key.tr(args:arguments,namedArgs: namedArguments);
   }
 
   @override

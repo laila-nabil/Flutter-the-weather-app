@@ -1,14 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class CompareWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ///TODO
-    final compareWeather = "";
+    final compareWeather = BlocProvider.of<WeatherBloc>(context).compareTodayYesterday;
         // Provider.of<WeatherProvider>(context).compareTodayYesterday;
     return LayoutBuilder(builder: (ctx, constraints) {
       return Card(

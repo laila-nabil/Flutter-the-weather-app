@@ -23,5 +23,6 @@
   "last_update": "اخر تحديث",
   "m_s":"م/ث",
   "hpa": "م. بار",
-  "km":"كم"
+  "km":"كم",
+  "compareWeather": "اليوم {diffDay} عن أمس بمقدار {diffMax} في النهار و{diffNight} عن أمس بمقدار {diffMin} في الليل"
 }
