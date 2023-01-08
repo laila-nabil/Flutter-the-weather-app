@@ -8,6 +8,7 @@ import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
+import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather.dart';
@@ -25,6 +26,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetHistoryWeatherUseCase _getHistoryWeatherUseCase;
   final LocationBloc locationBloc;
   final LanguageBloc languageBloc;
+
   languagesEnum selectedLangEnum = languagesEnum.en;
   String get selectedLang => selectedLangEnum.name;
   StreamSubscription? _locationSubscription;
@@ -33,6 +35,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   List<Weather>? historyWeather;
   List<Weather>? presentFutureWeather;
   String compareTodayYesterday = "";
+  int _timezoneDiff = 7200;//cairo
+  Duration _duration = Duration(days: 5);
   WeatherBloc(
       this._getPresentFutureWeatherUseCase,
       this._getCurrentWeatherUseCase,
@@ -60,7 +64,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                     language: selectedLang,
                     longitude: longitude,
                     latitude: latitude,
-                    unixTimestamp: 0));
+                    unixTimestamp: dateToUnixSeconds(
+                        duration: Duration(), timezoneOffset: _timezoneDiff)));
             await getPresentFutureWeather(
                 emit: emit,
                 event: event,
@@ -98,7 +103,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 language: selectedLang,
                 longitude: longitude,
                 latitude: latitude,
-                unixTimestamp: 0));
+                unixTimestamp: dateToUnixSeconds(timezoneOffset: _timezoneDiff,duration: _duration)));
         await getPresentFutureWeather(
             emit: emit,
             event: event,
@@ -190,7 +195,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 language: selectedLang,
                 longitude: longitude,
                 latitude: latitude,
-                unixTimestamp: 0));
+                unixTimestamp: dateToUnixSeconds(duration: _duration,timezoneOffset: _timezoneDiff)));
         await getPresentFutureWeather(
             emit: emit,
             event: event,
@@ -221,7 +226,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     final result = await _getPresentFutureWeatherUseCase(params);
     result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
         (success) {
-      presentFutureWeather = success;
+      presentFutureWeather = success.presentFutureWeather;
+      _timezoneDiff = success.timezoneOffset;
       emit(WeatherSuccess(event, presentFutureWeather: success));
     });
   }
@@ -298,4 +304,24 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     return super.close();
   }
 
+}
+
+int dateToUnixSeconds(
+    {required Duration duration, required int timezoneOffset}) {
+  var timeNow = DateTime.now();
+  var timeNowUtc = timeNow.toUtc();
+  var unixTime = !timezoneOffset.sign.isNegative
+      ? ((timeNowUtc
+                  .subtract(duration)
+                  .add(Duration(seconds: timezoneOffset))
+                  .millisecondsSinceEpoch) /
+              1000)
+          .round()
+      : ((timeNowUtc
+                  .subtract(duration)
+                  .subtract(Duration(seconds: timezoneOffset))
+                  .millisecondsSinceEpoch) /
+              1000)
+          .round();
+  return unixTime;
 }

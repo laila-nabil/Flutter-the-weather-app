@@ -3,18 +3,19 @@ import 'dart:convert';
 import 'package:the_weather_app/core/Network/Network.dart';
 import 'package:the_weather_app/core/constants.dart';
 import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/weather/data/models/current_weather.dart';
-import 'package:the_weather_app/features/weather/data/models/weather.dart';
+import 'package:the_weather_app/features/weather/data/models/current_weather_model.dart';
+import 'package:the_weather_app/features/weather/data/models/weather_model.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather.dart';
 
 import '../../domain/use_cases/get_history_weather.dart';
+import '../models/present_future_weather_model.dart';
 
 abstract class WeatherRemoteDataSource {
   Future<CurrentWeatherModel> getCurrentWeatherAPI(
       {required GetCurrentWeatherParams params});
 
-  Future<List<WeatherModel>> getPresentFutureWeatherAPI(
+  Future<PresentFutureWeatherModel> getPresentFutureWeatherAPI(
       {required GetPresentFutureWeatherParams params});
 
   Future<List<WeatherModel>> getHistoryWeatherAPI(
@@ -41,7 +42,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   }
 
   @override
-  Future<List<WeatherModel>> getPresentFutureWeatherAPI(
+  Future<PresentFutureWeatherModel> getPresentFutureWeatherAPI(
       {required GetPresentFutureWeatherParams params}) async {
     List<WeatherModel> presentFutureWeather = [];
     const excludedPart = 'minutely';
@@ -57,13 +58,8 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
         url);
     
     final responseBody = json.decode(result.body);
-    int timezoneOffset = responseBody['timezone_offset'];
-    final date = responseBody['daily'][0]['dt'] as int;
-    final icon = responseBody['daily'][0]['weather'][0]['icon'];
-    final List hourly = responseBody['hourly'];
-    hourly.map((e) => presentFutureWeather.add(WeatherModel.fromJson(
-        json: e, lat: params.latitude, lon: params.longitude)));
-    return presentFutureWeather;
+    return PresentFutureWeatherModel.fromJson(
+        json: responseBody, lat: params.latitude, lon: params.longitude);
   }
 
   @override

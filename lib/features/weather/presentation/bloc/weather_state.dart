@@ -21,7 +21,7 @@ class WeatherLoading extends WeatherState {
 class WeatherSuccess extends WeatherState {
   final WeatherEvent event;
   final List<Weather>? historyWeather;
-  final List<Weather>? presentFutureWeather;
+  final PresentFutureWeather? presentFutureWeather;
   final CurrentWeather? currentWeather;
   final String? compareTodayYesterday;
   WeatherSuccess(this.event,
