@@ -1,0 +1,23 @@
+{
+  "dt": 1674928800,
+  "temp": 18.3,
+  "feels_like": 17.52,
+  "pressure": 1016,
+  "humidity": 51,
+  "dew_point": 8,
+  "uvi": 0,
+  "clouds": 20,
+  "visibility": 10000,
+  "wind_speed": 7.21,
+  "wind_deg": 42,
+  "wind_gust": 10.62,
+  "weather": [
+    {
+      "id": 801,
+      "main": "Clouds",
+      "description": "few clouds",
+      "icon": "02n"
+    }
+  ],
+  "pop": 0
+}

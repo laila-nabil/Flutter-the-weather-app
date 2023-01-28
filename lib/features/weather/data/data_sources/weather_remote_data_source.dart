@@ -81,8 +81,11 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
     
     final responseBody = json.decode(result.body);
     final List hourly = responseBody['hourly'];
+    ///TODO timezoneOffset
+    ///TODO jsonDaily
     hourly.map((e) => historyWeather.add(WeatherModel.fromJson(
-        json: e, lat: params.latitude, lon: params.longitude)));
+        jsonDaily: {},
+        json: e, lat: params.latitude, lon: params.longitude,timezoneOffset: 0)));
     return historyWeather;
   }
 }

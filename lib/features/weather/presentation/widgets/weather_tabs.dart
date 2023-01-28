@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
+import '../../domain/entities/weather.dart';
+
 class WeatherTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///TODO
     // final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
-    final weatherTabs = [];
+    final List<Weather> weatherTabs = [];
     const todayIndex = 4;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
@@ -108,7 +110,7 @@ class WeatherTabs extends StatelessWidget {
                       .map((e) {
                     // printDebug("e.date ${e.date}");
                     // printDebug("e.weatherTimeline ${e.weatherTimeline.length}");
-                    return WeatherList(e.weatherTimeline);
+                    return WeatherList(e.weatherTimeline ?? []);
                   }).toList()
                 ]))
           ]));

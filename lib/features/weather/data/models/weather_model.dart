@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/core/config.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 
@@ -53,8 +55,15 @@ class WeatherModel extends Weather {
 
   factory WeatherModel.fromJson(
       {required Map<String, dynamic> json,
+        required Map<String, dynamic> jsonDaily,
       required String lat,
-      required String lon}) {
+      required String lon,
+      required int timezoneOffset}) {
+    printDebug("json['weather'] ${json['weather']} ${json['weather'][0]}");
+    var _tempMax = (jsonDaily[0]['temp']['max'] ?? "").toString();
+    var _tempMin = (jsonDaily[0]['temp']['min'] ?? "").toString();
+    var _mainDescription = (json['weather']?[0]['main'] ?? "");
+    var _detailedDescription = (json['weather']?[0]['description'] ?? "");
     return WeatherModel(
       lat: lat,
       lon: lon,
@@ -62,12 +71,12 @@ class WeatherModel extends Weather {
       image: Config.isImage3D
           ? '${AppAssets.Icon3dPath}/${json['weather'][0]['icon']}.png'
           : 'https://openweathermap.org/img/wn/${json['weather'][0]['icon']}@4x.png',
-      mainDescription: json['weather'][0]['main'],
-      detailedDescription: json['weather'][0]['description'],
+      mainDescription: _mainDescription,
+      detailedDescription: _detailedDescription,
       dt: json['dt'].toString(),
       date: Config.localTime
           ? unixSecondsToDate(json['dt'])
-          : unixSecondsToDateTimezone(json['dt'], json['timezone_offset']),
+          : unixSecondsToDateTimezone(json['dt'], timezoneOffset),
       rain: json['pop'].toString(),
       feelsLike: json['feels_like'].toString(),
       windSpeed: json['wind_speed'].toString(),
@@ -79,9 +88,58 @@ class WeatherModel extends Weather {
       pressure: json['pressure'].toString(),
       tempCurrent: json['temp'].toString(),
       isMetric: Config.isMetric,
-      tempMax: json['daily'][0]['temp']['max'].toString(),
-      tempMin: json['daily'][0]['temp']['min'].toString(),
-      weatherTimeline: []
+      tempMax: _tempMax,
+      tempMin: _tempMin,
+      weatherTimeline: null,
     );
+  }
+  static WeatherModel fromJsonWithTimeline(
+      {required Map<String, dynamic> json,
+      required  List<WeatherModel> hourly,
+        required String lat,
+        required String lon,
+        required int timezoneOffset,
+      }) {
+    return WeatherModel(
+        lat: lat,
+        lon: lon,
+        isImageNetwork: !Config.isImage3D,
+        image: Config.isImage3D
+            ? '${AppAssets.Icon3dPath}/${json['weather'][0]['icon']}.png'
+            : 'https://openweathermap.org/img/wn/${json['weather'][0]['icon']}@4x.png',
+        mainDescription: json['weather'][0]['main'].toString(),
+        detailedDescription: json['weather'][0]['description'].toString(),
+        dt: json['dt'].toString(),
+        date: Config.localTime
+            ? unixSecondsToDate(json['dt'])
+            : unixSecondsToDateTimezone(json['dt'], timezoneOffset),
+        rain: json['pop'].toString(),
+        feelsLike: json['feels_like'].toString(),
+        windSpeed: json['wind_speed'].toString(),
+        windDeg: json['wind_deg'].toString(),
+        humidity: json['humidity'].toString(),
+        uvi: json['uvi'].toString(),
+        clouds: json['clouds'].toString(),
+        visibility: json['visibility'].toString(),
+        pressure: json['pressure'].toString(),
+        tempCurrent: json['temp'].toString(),
+        isMetric: Config.isMetric,
+        tempMax: json['daily'][0]['temp']['max'].toString(),
+        tempMin: json['daily'][0]['temp']['min'].toString(),
+        weatherTimeline: hourly.where((element) {
+          // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
+          // print("weather Timeline ${DateFormat('yyyy-MM-dd')
+          //     .format(element.date)
+          //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
+          printDebug("_element $element");
+          var _date = json['daily'][0]['dt'] as int;
+          var difference = ( Config.localTime
+              ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+              DateFormat('yyyy-MM-dd').format(unixSecondsToDate(_date)))
+              : DateFormat('yyyy-MM-dd').format(element.date).compareTo(
+              DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(
+                  _date, timezoneOffset))) );
+          return difference == 0;
+        }).toList());
   }
 }
