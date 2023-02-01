@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:the_weather_app/core/Network/Network.dart';
+import 'package:the_weather_app/core/Network/network.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 
 import '../models/location_model.dart';

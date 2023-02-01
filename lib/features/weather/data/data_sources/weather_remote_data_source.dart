@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:the_weather_app/core/Network/Network.dart';
+import 'package:the_weather_app/core/Network/network.dart';
 import 'package:the_weather_app/core/constants.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/models/current_weather_model.dart';
@@ -84,7 +84,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
     ///TODO timezoneOffset
     ///TODO jsonDaily
     hourly.map((e) => historyWeather.add(WeatherModel.fromJson(
-        jsonDaily: {},
+        jsonDaily: [],
         json: e, lat: params.latitude, lon: params.longitude,timezoneOffset: 0)));
     return historyWeather;
   }

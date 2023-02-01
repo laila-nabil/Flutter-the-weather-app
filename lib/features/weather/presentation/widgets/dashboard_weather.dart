@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 
-class dashboardWeather extends StatelessWidget {
-  String? svgIcon;
-  String? title;
+class DashboardWeather extends StatelessWidget {
+  final String? svgIcon;
+  final String? title;
   final String status;
   final bool isStatusCentered;
 
-  dashboardWeather(
+  DashboardWeather(
       {this.svgIcon, this.title, required this.status, required this.isStatusCentered});
 
   @override

@@ -55,7 +55,7 @@ class WeatherModel extends Weather {
 
   factory WeatherModel.fromJson(
       {required Map<String, dynamic> json,
-        required Map<String, dynamic> jsonDaily,
+        required List< dynamic> jsonDaily,
       required String lat,
       required String lon,
       required int timezoneOffset}) {

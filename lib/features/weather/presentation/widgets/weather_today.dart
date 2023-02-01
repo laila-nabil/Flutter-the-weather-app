@@ -193,7 +193,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconRain,
                   status: '${double.parse(weatherTodayRain) * 100.0}%',
@@ -202,7 +202,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunrise,
                   status:
@@ -212,7 +212,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   title: 'max'.tr().toString(),
                   status: "${weatherTodayTempMax} °" + 'deg'.tr().toString(),
@@ -227,7 +227,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconWind2,
                   status:
@@ -237,7 +237,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunset,
                   status:
@@ -247,7 +247,7 @@ class todayDetails extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                child: dashboardWeather(
+                child: DashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),
                   status: "${weatherTodayTempMin} °" + 'deg'.tr().toString(),

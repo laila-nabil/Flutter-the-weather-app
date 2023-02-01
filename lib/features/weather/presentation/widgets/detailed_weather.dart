@@ -22,39 +22,39 @@ class WeatherDetailed extends StatelessWidget {
     //printDebug("detailed weather for ${weatherDay.date} ${weatherDay.rain} ${double.tryParse(weatherDay.rain)} ${(double.tryParse(weatherDay.rain) * 100).toStringAsFixed(2)}%");
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           svgIcon: AppAssets.IconRain,
           status: '${(double.tryParse(weatherDay.rain)! * 100).toStringAsFixed(2)}%',
         ),
 
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           svgIcon: AppAssets.IconWind2,
           status:
       weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherDay.windDeg) ?? 0)}' : '_',
         ),
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           title: 'pressure'.tr().toString(),
           status: '${double.tryParse(weatherDay.pressure)}  ${'hpa'.tr()}',
         ),
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           title: 'clouds'.tr().toString(),
           status: '${double.tryParse(weatherDay.clouds)}%',
         ),
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           title: 'uvi'.tr().toString(),
           status: '${double.tryParse(weatherDay.uvi)}',
         ),
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           title: 'humidity'.tr().toString(),
           status: '${double.tryParse(weatherDay.humidity)}%',
         ),
-        dashboardWeather(
+        DashboardWeather(
           isStatusCentered: false,
           title: 'visibility'.tr().toString(),
           status: double.tryParse(weatherDay.visibility)! > 1000
