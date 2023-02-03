@@ -18,7 +18,7 @@ class CurrentWeatherModel extends CurrentWeather {
   final num? mainPressure;
   final num? mainHumidity;
   final num? visibility;
-  final double? windSpeed;
+  final num? windSpeed;
   final int? windDeg;
   final num? clouds;
   final num? dt;
