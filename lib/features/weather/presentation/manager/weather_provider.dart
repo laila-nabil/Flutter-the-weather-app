@@ -96,29 +96,29 @@ class WeatherProvider with ChangeNotifier {
       developer.log('url $url');
       final currentWeather = json.decode(response.body);
       final iconNow = currentWeather['weather'][0]['icon'];
-      _weatherNow = CurrentWeather(
-        lat: lat,
-        lon: lon,
-        isImageNetwork: !isImage3D,
-        image: isImage3D
-            ? '${AppAssets.Icon3dPath}/$iconNow.png'
-            : 'https://openweathermap.org/img/wn/$iconNow@4x.png',
-        temp: currentWeather['main']['temp'].toString(),
-        feelsLike: currentWeather['main']['feels_like'].toString(),
-        mainDescription: currentWeather['weather'][0]['main'],
-        detailedDescription: currentWeather['weather'][0]['description'],
-        clouds: currentWeather['clouds']['all'].toString(),
-        humidity: currentWeather['main']['humidity'].toString(),
-        pressure: currentWeather['main']['pressure'].toString(),
-        sunrise: currentWeather['sys']['sunrise'].toString(),
-        sunset: currentWeather['sys']['sunset'].toString(),
-        unixTime: currentWeather['dt'].toString(),
-        windDeg: currentWeather['wind']['deg'].toString(),
-        windSpeed: currentWeather['wind']['speed'].toString(),
-        city: currentWeather['name'],
-        country: currentWeather['sys']['country'],
-        // rain:
-      );
+      // _weatherNow = CurrentWeather(
+      //   lat: lat,
+      //   lon: lon,
+      //   isImageNetwork: !isImage3D,
+      //   image: isImage3D
+      //       ? '${AppAssets.Icon3dPath}/$iconNow.png'
+      //       : 'https://openweathermap.org/img/wn/$iconNow@4x.png',
+      //   temp: currentWeather['main']['temp'].toString(),
+      //   feelsLike: currentWeather['main']['feels_like'].toString(),
+      //   mainDescription: currentWeather['weather'][0]['main'],
+      //   detailedDescription: currentWeather['weather'][0]['description'],
+      //   clouds: currentWeather['clouds']['all'].toString(),
+      //   humidity: currentWeather['main']['humidity'].toString(),
+      //   pressure: currentWeather['main']['pressure'].toString(),
+      //   sunrise: currentWeather['sys']['sunrise'].toString(),
+      //   sunset: currentWeather['sys']['sunset'].toString(),
+      //   unixTime: currentWeather['dt'].toString(),
+      //   windDeg: currentWeather['wind']['deg'].toString(),
+      //   windSpeed: currentWeather['wind']['speed'].toString(),
+      //   city: currentWeather['name'],
+      //   country: currentWeather['sys']['country'],
+      //   // rain:
+      // );
     } catch (error) {
       throw (error);
     }

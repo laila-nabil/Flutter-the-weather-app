@@ -298,7 +298,7 @@ class LoadedContent extends StatelessWidget {
                     child: CarouselSlider(
                         items: [
                           WeatherToday(
-                              weatherToday: weatherBloc.currentWeather ?? CurrentWeather(),
+                              weatherToday: weatherBloc.currentWeather,
                               weatherTodayNotDetailed: weatherBloc
                                   .presentFutureWeather.tryFirst ?? Weather()),
                           CompareWeather()
@@ -338,7 +338,7 @@ class LoadedContent extends StatelessWidget {
                       child: Container(),
                     ),
                     Expanded(flex: 6, child: WeatherToday(
-                        weatherToday: weatherBloc.currentWeather ?? CurrentWeather(),
+                        weatherToday: weatherBloc.currentWeather,
                         weatherTodayNotDetailed:weatherBloc
                             .presentFutureWeather?.first ?? Weather())),
                     Expanded(

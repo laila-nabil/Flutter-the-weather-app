@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/wind_direction.dart';
 import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 
 import 'dashboard_weather.dart';
 
 class WeatherToday extends StatelessWidget {
-  final CurrentWeather weatherToday;
+  final CurrentWeather? weatherToday;
   final Weather weatherTodayNotDetailed;
 
   const WeatherToday(
@@ -60,7 +58,7 @@ class _WeatherToday extends StatelessWidget {
       required this.constraints})
       : super(key: key);
 
-  final CurrentWeather weatherToday;
+  final CurrentWeather? weatherToday;
   final bool isPortrait;
   final Weather weatherTodayNotDetailed;
   final BoxConstraints constraints;
@@ -74,11 +72,11 @@ class _WeatherToday extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            weatherToday.isImageNetwork
+            true
                 ? Expanded(
                     flex: 1,
                     child: Image.asset(
-                      weatherToday.image,
+                      weatherToday?.imageUrl ?? "",
                       // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
                       // width: isPortrait
                       //     ? constraints.maxWidth * 0.65
@@ -94,7 +92,7 @@ class _WeatherToday extends StatelessWidget {
                 : Expanded(
                     flex: 1,
                     child: Image.network(
-                      weatherToday.image,
+                      weatherToday?.imageUrl ?? "",
                       // width: constraints.maxWidth * 0.5,
                       // width: constraints.maxWidth * 0.325,
                       height: isPortrait
@@ -115,7 +113,7 @@ class _WeatherToday extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
-                    '${weatherToday.temp} °' + 'deg'.tr().toString(),
+                    '${weatherToday?.currentTemp} °' + 'deg'.tr().toString(),
                     style: TextStyle(fontSize: 40),
                     maxFontSize: 55,
                   ),
@@ -131,14 +129,14 @@ class _WeatherToday extends StatelessWidget {
           child: AutoSizeText.rich(
             TextSpan(text: 'feels_like'.tr().toString(), children: [
               TextSpan(
-                  text: '${weatherToday.feelsLike} °' +
+                  text: '${weatherToday?.feelsLikeTemp} °' +
                       'deg'.tr().toString() +
                       ', ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   )),
               TextSpan(
-                text: weatherToday.detailedDescription,
+                text:"${weatherToday?.feelsLikeTemp ?? ""}",
               )
             ]),
             style: TextStyle(fontSize: 25),
@@ -172,7 +170,7 @@ class todayDetails extends StatelessWidget {
       required this.weatherTodayTempMin})
       : super(key: key);
 
-  final CurrentWeather weatherToday;
+  final CurrentWeather? weatherToday;
   final String weatherTodayTempMax;
   final String weatherTodayTempMin;
   final String weatherTodayRain;
@@ -206,7 +204,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunrise,
                   status:
-                      '${unixSecondsToDateFormat(int.tryParse(weatherToday.sunrise)??0)}',
+                      '${weatherToday?.sunriseTime}',
                 ),
               ),
               Container(
@@ -231,7 +229,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconWind2,
                   status:
-                      '${weatherToday.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherToday.windDeg)??0)}',
+                      '${weatherToday?.windSpeed} ${'m_s'.tr()} ${weatherToday?.windDegrees}',
                 ),
               ),
               Container(
@@ -241,7 +239,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunset,
                   status:
-                      '${unixSecondsToDateFormat(int.tryParse(weatherToday.sunset)??0)}',
+                      '${weatherToday?.sunsetTime}',
                 ),
               ),
               Container(

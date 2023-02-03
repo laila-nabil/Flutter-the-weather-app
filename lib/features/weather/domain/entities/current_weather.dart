@@ -3,27 +3,40 @@
 import 'package:equatable/equatable.dart';
 
 class CurrentWeather extends Equatable{
-  final String? currentTemp;
-  final String? windDetails;
+  final num? currentTemp;
+  final num? windDegrees;
+  final String? windDegreesDescription;
+  final num? windSpeed;
   final String? sunriseTime;
   final String? sunsetTime;
-  final String? maxTemp;
-  final String? minTemp;
+  final num? maxTemp;
+  final num? minTemp;
+  final num? feelsLikeTemp;
+  final String? imageUrl;
 
   CurrentWeather(
-      {this.currentTemp,
-      this.windDetails,
-      this.sunriseTime,
-      this.sunsetTime,
-      this.maxTemp,
-      this.minTemp});
+      {required this.currentTemp,
+      required this.windDegrees,
+      required this.windDegreesDescription,
+      required this.windSpeed,
+      required this.sunriseTime,
+      required this.sunsetTime,
+      required this.maxTemp,
+      required this.minTemp,
+      required this.feelsLikeTemp,
+      required this.imageUrl
+      });
   @override
   List<Object?> get props => [
         this.currentTemp,
-        this.windDetails,
+        this.windDegrees,
+        this.windDegreesDescription,
+        this.windSpeed,
         this.sunriseTime,
         this.sunsetTime,
         this.maxTemp,
-        this.minTemp
+        this.minTemp,
+        this.feelsLikeTemp,
+        this.imageUrl
       ];
 }
