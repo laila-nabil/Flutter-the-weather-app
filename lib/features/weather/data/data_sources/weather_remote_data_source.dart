@@ -58,8 +58,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
         url);
     
     final responseBody = json.decode(result.body);
-    return PresentFutureWeatherModel.fromJson(
-        json: responseBody, lat: params.latitude, lon: params.longitude);
+    return PresentFutureWeatherModel.fromJson(responseBody);
   }
 
   @override

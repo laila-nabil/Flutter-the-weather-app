@@ -9,8 +9,7 @@ void main(){
   final weatherPresentFutureWeatherModelJson = fixtureJson("weather_present_future_weather.json");
 
   test("PresentFutureWeatherModel.fromJson", (){
-    print("json ${PresentFutureWeatherModel.fromJson(
-        json: presentFutureWeatherModelJson, lat: "30.0444", lon: "31.2357")}");
+    print("json ${PresentFutureWeatherModel.fromJson(presentFutureWeatherModelJson)}");
   },);
   // test("WeatherModel.fromJson", (){
   //   print("json ${WeatherModel.fromJson(

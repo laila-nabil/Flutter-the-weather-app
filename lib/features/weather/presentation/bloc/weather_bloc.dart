@@ -226,8 +226,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     final result = await _getPresentFutureWeatherUseCase(params);
     result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
         (success) {
-      presentFutureWeather = success.presentFutureWeather;
-      _timezoneDiff = success.timezoneOffset;
+      ///TODO
+      // presentFutureWeather = success.presentFutureWeather;
+      // _timezoneDiff = success.timezoneOffset;
       emit(WeatherSuccess(event, presentFutureWeather: success));
     });
   }
