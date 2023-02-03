@@ -32,8 +32,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   StreamSubscription? _locationSubscription;
   StreamSubscription? _languageSubscription;
   CurrentWeather? currentWeather;
-  List<Weather>? historyWeather;
-  List<Weather>? presentFutureWeather;
+  List<Weather>? historyWeatherList;
+  List<Weather>? presentFutureWeatherList;
   String compareTodayYesterday = "";
   int _timezoneDiff = 7200;//cairo
   Duration _duration = Duration(days: 5);
@@ -111,8 +111,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 language: selectedLang, longitude: longitude, latitude: latitude));
         updateCompareTodayYesterday(emit: emit,
             event: event,
-            todayWeather :presentFutureWeather.tryFirst,
-            historyWeather: historyWeather);
+            todayWeather :presentFutureWeatherList.tryFirst,
+            historyWeather: historyWeatherList);
       } else if (event is WeatherInitialEvent) {
         ///TODO
         /*
@@ -203,8 +203,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 language: selectedLang, longitude: longitude, latitude: latitude));
         updateCompareTodayYesterday(emit: emit,
             event: event,
-            todayWeather:presentFutureWeather.tryFirst,
-            historyWeather: historyWeather);
+            todayWeather:presentFutureWeatherList.tryFirst,
+            historyWeather: historyWeatherList);
       } else if (event is _GetCurrentWeather) {
         var params = event.params;
         await getCurrentWeather(emit: emit, event: event, params: params);
@@ -227,7 +227,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
         (success) {
       ///TODO
-      // presentFutureWeather = success.presentFutureWeather;
+      // presentFutureWeather = success;
       // _timezoneDiff = success.timezoneOffset;
       emit(WeatherSuccess(event, presentFutureWeather: success));
     });
@@ -241,7 +241,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     final result = await _getHistoryWeatherUseCase(params);
     result.fold((failure) => emit(WeatherFailure(event, failure: failure)),
         (success) {
-      historyWeather = success;
+      historyWeatherList = success;
       emit(WeatherSuccess(event, historyWeather: success));
     });
   }

@@ -1,27 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 
 class PresentFutureWeather extends Equatable {
   PresentFutureWeather({
     required this.lat,
     required this.lon,
-    required this.timezone,
     required this.timezoneOffset,
-    required this.current,
-    required this.hourly,
-    required this.daily,
+    required this.weather,
   });
 
   final num? lat;
   final num? lon;
-  final String? timezone;
   final int? timezoneOffset;
-  final Current? current;
-  final List<Current> hourly;
-  final List<Daily> daily;
-
+  final List<Weather> weather;
   @override
   List<Object?> get props => [
-    lat, lon, timezone, timezoneOffset, current, hourly, daily, ];
+    lat, lon, timezoneOffset,weather ];
 }
 
 class Current extends Equatable {
