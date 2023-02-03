@@ -1,77 +1,131 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/core/config.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
 
 class CurrentWeatherModel extends CurrentWeather {
-  CurrentWeatherModel({
-    required String temp,
-    required String feelsLike,
-    required String pressure,
-    required String clouds,
-    required String windSpeed,
-    required String windDeg,
-    required String humidity,
-    required String sunset,
-    required String sunrise,
-    required String detailedDescription,
-    required String mainDescription,
-    required String image,
-    required bool isImageNetwork,
-    required String lat,
-    required String lon,
-    required String city,
-    required String country,
-    required String unixTime,
-    required bool isMetric,
-  }) : super(
-            clouds: clouds,
-            detailedDescription: detailedDescription,
-            country: country,
-            city: city,
-            feelsLike: feelsLike,
-            humidity: humidity,
-            image: image,
-            isImageNetwork: isImageNetwork,
-            isMetric: isMetric,
-            lat: lat,
-            lon: lon,
-            mainDescription: mainDescription,
-            pressure: pressure,
-            sunrise: sunrise,
-            sunset: sunset,
-            temp: temp,
-            unixTime: unixTime,
-            windDeg: windDeg,
-            windSpeed: windSpeed);
+  final num? coordLat;
+  final num? coordLon;
+  final String? weatherMain;
+  final String? weatherDescription;
+  final String? weatherIcon;
+  final num? mainTemp;
+  final num? mainTempMin;
+  final num? mainTempMax;
+  final num? mainFeelsLike;
+  final num? mainPressure;
+  final num? mainHumidity;
+  final num? visibility;
+  final num? windSpeed;
+  final int? windDeg;
+  final num? clouds;
+  final num? dt;
+  final num? sysType;
+  final num? sysId;
+  final String? sysCountry;
+  final num? sysSunrise;
+  final num? sysSunset;
+  final num? timezone;
+  final num? id;
+  final String? name;
+  final num? cod;
 
-  factory CurrentWeatherModel.fromJson(
-      {required Map<String, dynamic> json,
-      required String lat,
-      required String lon}) {
-    final iconNow = json['weather'][0]['icon'];
-    final currentWeather = CurrentWeatherModel(
-        isMetric: Config.isMetric,
-        image: Config.isImage3D
-            ? '${AppAssets.Icon3dPath}/$iconNow.png'
-            : 'https://openweathermap.org/img/wn/$iconNow@4x.png',
-        temp: json['main']['temp'].toString(),
-        feelsLike: json['main']['feels_like'].toString(),
-        mainDescription: json['weather'][0]['main'],
-        detailedDescription: json['weather'][0]['description'],
-        clouds: json['clouds']['all'].toString(),
-        humidity: json['main']['humidity'].toString(),
-        pressure: json['main']['pressure'].toString(),
-        sunrise: json['sys']['sunrise'].toString(),
-        sunset: json['sys']['sunset'].toString(),
-        unixTime: json['dt'].toString(),
-        windDeg: json['wind']['deg'].toString(),
-        windSpeed: json['wind']['speed'].toString(),
-        city: json['name'],
-        country: json['sys']['country'],
-        isImageNetwork: Config.isImageNetwork,
-        lon: lon,
-        lat: lat);
+  // CurrentWeatherModel(
+  //     {this.coordLat,
+  //     this.coordLon,
+  //     this.weatherMain,
+  //     this.weatherDescription,
+  //     this.weatherIcon,
+  //     this.mainTemp,
+  //     this.mainTempMin,
+  //     this.mainTempMax,
+  //     this.mainFeelsLike,
+  //     this.mainPressure,
+  //     this.mainHumidity,
+  //     this.visibility,
+  //     this.windSpeed,
+  //     this.windDeg,
+  //     this.clouds,
+  //     this.dt,
+  //     this.sysType,
+  //     this.sysId,
+  //     this.sysCountry,
+  //     this.sysSunrise,
+  //     this.sysSunset,
+  //     this.timezone,
+  //     this.id,
+  //     this.name,
+  //     this.cod});
+  CurrentWeatherModel(
+      {this.coordLat,
+      this.coordLon,
+      this.weatherMain,
+      this.weatherDescription,
+      this.weatherIcon,
+      this.mainTemp,
+      this.mainTempMin,
+      this.mainTempMax,
+      this.mainFeelsLike,
+      this.mainPressure,
+      this.mainHumidity,
+      this.visibility,
+      this.windSpeed,
+      this.windDeg,
+      this.clouds,
+      this.dt,
+      this.sysType,
+      this.sysId,
+      this.sysCountry,
+      this.sysSunrise,
+      this.sysSunset,
+      this.timezone,
+      this.id,
+      this.name,
+      this.cod})
+      : super(
+            currentTemp: mainTemp?.nullableToString(),
+            maxTemp: mainTempMax.nullableToString(),
+            minTemp: mainTempMin.nullableToString(),
+            sunriseTime: sysSunrise.nullableToString(),
+            sunsetTime: sysSunset.nullableToString(),
+            windDetails: windDeg!=null ? windDirection(windDeg) : null
+            );
 
-    return currentWeather;
+  factory CurrentWeatherModel.fromJson(Map<String, dynamic> json) {
+    return CurrentWeatherModel(
+      coordLat: (json["coord"]?["lon"]) ?? null,
+      coordLon: (json["coord"]?["lon"]) ?? null,
+      weatherMain: (json["weather"]?[0]?["main"]) ?? null,
+      weatherDescription: (json["weather"]?[0]?["description"]) ?? null,
+      weatherIcon: (json["weather"]?[0]?["icon"]) ?? null,
+      mainTemp: (json["main"]?["temp"]) ?? null,
+      mainTempMax: (json["main"]?["temp_max"]) ?? null,
+      mainTempMin: (json["main"]?["temp_min"]) ?? null,
+      mainPressure: (json["main"]?["pressure"]) ?? null,
+      mainFeelsLike: (json["main"]?["feels_like"]) ?? null,
+      mainHumidity: (json["main"]?["humidity"]) ?? null,
+      windSpeed: (json["wind"]?["speed"]) ?? null,
+      windDeg: (json["wind"]?["deg"]) ?? null,
+      clouds: (json["clouds"]?["all"]) ?? null,
+      dt: (json["dt"]) ?? null,
+      sysType: (json["sys"]?["type"]) ?? null,
+      sysId: (json["sys"]?["id"]) ?? null,
+      sysCountry: (json["sys"]?["country"]) ?? null,
+      sysSunrise: (json["sys"]?["sunrise"]) ?? null,
+      sysSunset: (json["sys"]?["sunset"]) ?? null,
+      timezone: (json["timezone"]) ?? null,
+      id: (json["id"]) ?? null,
+      name: (json["name"]) ?? null,
+      cod: (json["cod"]) ?? null,
+    );
   }
+}
+String windDirection(int windDegrees)
+{
+  final directionsEn = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"];
+  // final directionsAr = ["شمال","شمال","شمال شرق","شرق","شرق","شرق","جنوب شرق","جنوب","جنوب","جنوب","جنوب غرب","غرب","غرب","غرب","شمال غرب","شمال","شمال"];
+  final directionsAr = ["ش","ش","ش ق","ق","ق","ق","ج ق","ج","ج","ج","ج غ","غ","غ","غ","ش غ","ش","ش"];
+  final result = 'lang'.tr().contains('EN')? '${directionsEn[(windDegrees/22.5).round()]}' : '${directionsAr[(windDegrees/22.5).round()]}';
+  return  result;
 }

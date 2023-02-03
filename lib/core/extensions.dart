@@ -7,3 +7,13 @@ extension ElementAtNullableOrEmpty<T> on List<T>?{
     }
   }
 }
+
+extension toStringNull on Object?{
+  String? nullableToString(){
+    if(this == null){
+      return null;
+    }else{
+      return this.toString();
+    }
+  }
+}
