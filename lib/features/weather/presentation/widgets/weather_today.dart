@@ -137,7 +137,7 @@ class _WeatherToday extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
               TextSpan(
-                text:"${weatherToday?.feelsLikeTemp ?? ""}",
+                text:"${weatherToday?.weatherDescription ?? ""}",
               )
             ]),
             style: TextStyle(fontSize: 25),

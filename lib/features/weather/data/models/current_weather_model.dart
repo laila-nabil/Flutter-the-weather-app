@@ -71,7 +71,9 @@ class CurrentWeatherModel extends CurrentWeather {
             windSpeed: windSpeed,
             iconPath: ("assets/3d/"+(weatherIcon??"")+".png"),
             windDegreesDescription:
-                windDeg != null ? windDirection(windDeg) : null);
+                windDeg != null ? windDirection(windDeg) : null,
+            weatherDescription: weatherDescription
+  );
 
   factory CurrentWeatherModel.fromJson(Map<String, dynamic> json) {
     return CurrentWeatherModel(
