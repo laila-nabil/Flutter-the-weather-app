@@ -100,15 +100,16 @@ class WeatherModel extends Weather {
         required String lon,
         required int timezoneOffset,
       }) {
+    print("json['weather'] ${json['weather']}");
     return WeatherModel(
         lat: lat,
         lon: lon,
         isImageNetwork: !Config.isImage3D,
         image: Config.isImage3D
-            ? '${AppAssets.Icon3dPath}/${json['weather'][0]['icon']}.png'
-            : 'https://openweathermap.org/img/wn/${json['weather'][0]['icon']}@4x.png',
-        mainDescription: json['weather'][0]['main'].toString(),
-        detailedDescription: json['weather'][0]['description'].toString(),
+            ? '${AppAssets.Icon3dPath}/${json['weather']?[0]?['icon']}.png'
+            : 'https://openweathermap.org/img/wn/${json['weather']?[0]?['icon']}@4x.png',
+        mainDescription: json['weather']?[0]?['main'].toString()??"",
+        detailedDescription: json['weather']?[0]?['description'].toString()??"",
         dt: json['dt'].toString(),
         date: Config.localTime
             ? unixSecondsToDate(json['dt'])
@@ -124,15 +125,16 @@ class WeatherModel extends Weather {
         pressure: json['pressure'].toString(),
         tempCurrent: json['temp'].toString(),
         isMetric: Config.isMetric,
-        tempMax: json['daily'][0]['temp']['max'].toString(),
-        tempMin: json['daily'][0]['temp']['min'].toString(),
+        tempMax: json['daily']?[0]?['temp']?['max'].toString()??"",
+        tempMin: json['daily']?[0]?['temp']?['min'].toString()??"",
         weatherTimeline: hourly.where((element) {
           // print("weather Timeline ${element.date} $date ${unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset'])}");
           // print("weather Timeline ${DateFormat('yyyy-MM-dd')
           //     .format(element.date)
           //     .compareTo(DateFormat('yyyy-MM-dd').format(unixSecondsToDateTimezone(date, presentFutureWeather['timezone_offset']))) }");
           printDebug("_element $element");
-          var _date = json['daily'][0]['dt'] as int;
+          printDebug("json['daily'] ${json['daily']}");
+          var _date = json['daily']?[0]?['dt'] as int;
           var difference = ( Config.localTime
               ? DateFormat('yyyy-MM-dd').format(element.date).compareTo(
               DateFormat('yyyy-MM-dd').format(unixSecondsToDate(_date)))
