@@ -31,7 +31,7 @@ class WeatherTodayWidget extends StatelessWidget {
             ? _WeatherToday(
                 weatherToday: weatherToday,
                 isPortrait: isPortrait,
-                weatherTodayNotDetailed: weatherTodayNotDetailed,
+                rain: weatherTodayNotDetailed.rain,
                 constraints: constraints,
               )
             : frostedGlassEffect(
@@ -41,7 +41,7 @@ class WeatherTodayWidget extends StatelessWidget {
                 widget: _WeatherToday(
                   weatherToday: weatherToday,
                   isPortrait: isPortrait,
-                  weatherTodayNotDetailed: weatherTodayNotDetailed,
+                  rain: weatherTodayNotDetailed.rain,
                   constraints: constraints,
                 ),
               );
@@ -55,13 +55,13 @@ class _WeatherToday extends StatelessWidget {
       {Key? key,
       required this.weatherToday,
       required this.isPortrait,
-      required this.weatherTodayNotDetailed,
+      required this.rain,///TODO
       required this.constraints})
       : super(key: key);
 
   final CurrentWeather? weatherToday;
   final bool isPortrait;
-  final Weather weatherTodayNotDetailed;
+  final String rain;
   final BoxConstraints constraints;
 
   @override
@@ -153,7 +153,7 @@ class _WeatherToday extends StatelessWidget {
             height: constraints.maxHeight * 0.25,
             child: todayDetails(
               weatherToday: weatherToday,
-              weatherTodayRain: weatherTodayNotDetailed.rain,
+              weatherTodayRain: rain,
               weatherTodayTempMax: weatherToday?.maxTemp?.nullableToString() ??"",
               weatherTodayTempMin: weatherToday?.minTemp?.nullableToString() ??"",
             )),
