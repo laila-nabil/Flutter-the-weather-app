@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/current_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
@@ -153,8 +154,8 @@ class _WeatherToday extends StatelessWidget {
             child: todayDetails(
               weatherToday: weatherToday,
               weatherTodayRain: weatherTodayNotDetailed.rain,
-              weatherTodayTempMax: weatherTodayNotDetailed.tempMax,
-              weatherTodayTempMin: weatherTodayNotDetailed.tempMin,
+              weatherTodayTempMax: weatherToday?.maxTemp?.nullableToString() ??"",
+              weatherTodayTempMin: weatherToday?.minTemp?.nullableToString() ??"",
             )),
       ],
     );
