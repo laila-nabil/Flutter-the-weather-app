@@ -9,11 +9,11 @@ import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 
 import 'dashboard_weather.dart';
 
-class WeatherToday extends StatelessWidget {
+class WeatherTodayWidget extends StatelessWidget {
   final CurrentWeather? weatherToday;
   final Weather weatherTodayNotDetailed;
 
-  const WeatherToday(
+  const WeatherTodayWidget(
       {Key? key,
       required this.weatherToday,
       required this.weatherTodayNotDetailed})
@@ -76,7 +76,7 @@ class _WeatherToday extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: Image.asset(
-                      weatherToday?.imageUrl ?? "",
+                      weatherToday?.iconPath ?? "",
                       // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
                       // width: isPortrait
                       //     ? constraints.maxWidth * 0.65
@@ -92,7 +92,7 @@ class _WeatherToday extends StatelessWidget {
                 : Expanded(
                     flex: 1,
                     child: Image.network(
-                      weatherToday?.imageUrl ?? "",
+                      weatherToday?.iconPath ?? "",
                       // width: constraints.maxWidth * 0.5,
                       // width: constraints.maxWidth * 0.325,
                       height: isPortrait

@@ -69,7 +69,7 @@ class CurrentWeatherModel extends CurrentWeather {
             windDegrees: windDeg,
             feelsLikeTemp: mainFeelsLike,
             windSpeed: windSpeed,
-            imageUrl: weatherIcon,
+            iconPath: ("assets/3d/"+(weatherIcon??"")+".png"),
             windDegreesDescription:
                 windDeg != null ? windDirection(windDeg) : null);
 

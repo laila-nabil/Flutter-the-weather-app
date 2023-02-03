@@ -12,7 +12,7 @@ class CurrentWeather extends Equatable{
   final num? maxTemp;
   final num? minTemp;
   final num? feelsLikeTemp;
-  final String? imageUrl;
+  final String? iconPath;
 
   CurrentWeather(
       {required this.currentTemp,
@@ -24,7 +24,7 @@ class CurrentWeather extends Equatable{
       required this.maxTemp,
       required this.minTemp,
       required this.feelsLikeTemp,
-      required this.imageUrl
+      required this.iconPath
       });
   @override
   List<Object?> get props => [
@@ -37,6 +37,6 @@ class CurrentWeather extends Equatable{
         this.maxTemp,
         this.minTemp,
         this.feelsLikeTemp,
-        this.imageUrl
+        this.iconPath
       ];
 }

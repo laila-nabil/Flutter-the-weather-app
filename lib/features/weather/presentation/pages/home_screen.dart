@@ -297,7 +297,7 @@ class LoadedContent extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CarouselSlider(
                         items: [
-                          WeatherToday(
+                          WeatherTodayWidget(
                               weatherToday: weatherBloc.currentWeather,
                               weatherTodayNotDetailed: weatherBloc
                                   .presentFutureWeather.tryFirst ?? Weather()),
@@ -313,7 +313,7 @@ class LoadedContent extends StatelessWidget {
                   );
                 })),
           if (isPortrait && !minimalView)
-            Expanded(flex: 7, child: WeatherToday(
+            Expanded(flex: 7, child: WeatherTodayWidget(
                 weatherToday: weatherBloc.currentWeather!,
                 weatherTodayNotDetailed: weatherBloc
                     .presentFutureWeather
@@ -337,7 +337,7 @@ class LoadedContent extends StatelessWidget {
                       flex: 1,
                       child: Container(),
                     ),
-                    Expanded(flex: 6, child: WeatherToday(
+                    Expanded(flex: 6, child: WeatherTodayWidget(
                         weatherToday: weatherBloc.currentWeather,
                         weatherTodayNotDetailed:weatherBloc
                             .presentFutureWeather?.first ?? Weather())),
@@ -387,7 +387,7 @@ class todayOverview extends StatelessWidget {
     return !portrait
         ? Row(
             children: [
-              SizedBox.expand(child: WeatherToday(
+              SizedBox.expand(child: WeatherTodayWidget(
                   weatherToday: weatherBloc.currentWeather!,
                   weatherTodayNotDetailed: weatherBloc
                       .presentFutureWeather
@@ -402,7 +402,7 @@ class todayOverview extends StatelessWidget {
           )
         : Column(
             children: [
-              Expanded(flex: 7, child: WeatherToday(weatherToday: weatherBloc.currentWeather!,
+              Expanded(flex: 7, child: WeatherTodayWidget(weatherToday: weatherBloc.currentWeather!,
                   weatherTodayNotDetailed: weatherBloc
                       .presentFutureWeather
                   !.elementAt(0))),
@@ -420,7 +420,7 @@ class todayOverview extends StatelessWidget {
 
 List<Widget> weatherTodayOverview (WeatherBloc weatherBloc){
   return [
-    Container(child: WeatherToday(weatherToday: weatherBloc.currentWeather!,
+    Container(child: WeatherTodayWidget(weatherToday: weatherBloc.currentWeather!,
         weatherTodayNotDetailed: weatherBloc
             .presentFutureWeather
         !.elementAt(0))),
