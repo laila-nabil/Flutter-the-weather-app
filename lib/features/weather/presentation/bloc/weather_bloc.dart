@@ -15,7 +15,7 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_present_fu
 
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../domain/entities/weather.dart';
-import '../../domain/use_cases/get_weather_user_case.dart';
+import '../../domain/use_cases/get_weather_use_case.dart';
 
 part 'weather_event.dart';
 
