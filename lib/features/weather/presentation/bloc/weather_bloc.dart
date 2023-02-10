@@ -15,12 +15,14 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_present_fu
 
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../domain/entities/weather.dart';
+import '../../domain/use_cases/get_weather_user_case.dart';
 
 part 'weather_event.dart';
 
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
+  final GetWeatherUseCase _getWeatherUseCase;
   final GetPresentFutureWeatherUseCase _getPresentFutureWeatherUseCase;
   final GetCurrentWeatherUseCase _getCurrentWeatherUseCase;
   final GetHistoryWeatherUseCase _getHistoryWeatherUseCase;
@@ -38,6 +40,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   int _timezoneDiff = 7200;//cairo
   Duration _duration = Duration(days: 5);
   WeatherBloc(
+      this._getWeatherUseCase,
       this._getPresentFutureWeatherUseCase,
       this._getCurrentWeatherUseCase,
       this._getHistoryWeatherUseCase,
