@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
-import 'package:the_weather_app/features/weather/presentation/pages/home_screen.dart';
-import 'package:the_weather_app/features/weather/presentation/pages/old_home_screen.dart';
-
 import '../../../language/presentation/bloc/language_bloc.dart';
+import '../../../weather/presentation/pages/home_page.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
