@@ -20,7 +20,7 @@ Future<void> init() async {
 // Bloc
 
   sl.registerFactory(() => LanguageBloc());
-  sl.registerFactory(() => WeatherBloc());
+  sl.registerFactory(() => WeatherBloc(sl()));
   sl.registerFactory(() => LocationBloc(sl(),sl(),sl()));
 
 // UseCases

@@ -25,7 +25,7 @@ class GetTodayOverviewParams extends Equatable {
   final UnitGroup unit;
 
   GetTodayOverviewParams(
-      {required this.unit,
+      {this.unit = UnitGroup.metric,
       required this.latitude,
       required this.longitude,
       required this.language});
