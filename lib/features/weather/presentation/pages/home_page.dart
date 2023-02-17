@@ -472,5 +472,5 @@ void cronSchedule(
 }
 
 void newRefresh({dynamic repeatedAction}) {
-  cronSchedule(repeatedAction: repeatedAction, minute: '*/39');
+  // cronSchedule(repeatedAction: repeatedAction, minute: '*/39');
 }
