@@ -69,7 +69,7 @@ class LocalizationImpl implements Localization{
 
   @override
   String getCurrentLangCode(BuildContext context) {
-    return context.locale.toString();
+    return context.locale.languageCode;
   }
 
   @override

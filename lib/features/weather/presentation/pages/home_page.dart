@@ -10,7 +10,8 @@ import '../bloc/weather_bloc.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-  static const routeName = "/";
+  static const routeName = "/home";
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WeatherBloc>(
@@ -22,20 +23,21 @@ class MyHomePage extends StatelessWidget {
         builder: (context, state) {
           final bloc = BlocProvider.of<WeatherBloc>(context);
           final locationBloc = BlocProvider.of<LocationBloc>(context);
-          if(state.weatherStatus == WeatherStatus.initial){
-            bloc.add(GetTodayOverview(params: GetTodayOverviewParams(
-              longitude: locationBloc.location?.lon??"",
-              latitude: locationBloc.location?.lat??"",
-              language:LocalizationImpl().getCurrentLangCode(context) ,
-              unit: UnitGroup.metric
-            )));
+          if (state.weatherStatus == WeatherStatus.initial) {
+            bloc.add(GetTodayOverview(
+                params: GetTodayOverviewParams(
+                    longitude: locationBloc.location?.lon ?? "",
+                    latitude: locationBloc.location?.lat ?? "",
+                    language: LocalizationImpl().getCurrentLangCode(context),
+                    unit: UnitGroup.metric)));
           }
-          if(state.todayOverview!=null){
-            return Scaffold(
-              body: Text(state.todayOverview.toString()),
-            );
-          }
-          return Container();
+          return Scaffold(
+            body: Center(
+                child: Text(
+              "${state.todayOverview}",
+              style: TextStyle(color: Colors.black),
+            )),
+          );
         },
       ),
     );

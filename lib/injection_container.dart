@@ -6,6 +6,9 @@ import 'package:the_weather_app/features/location/presentation/bloc/location_blo
 import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 
 import 'features/language/presentation/bloc/language_bloc.dart';
+import 'features/location/domain/use_cases/autocomplete_search_location_use_case.dart';
+import 'features/location/domain/use_cases/get_current_location_use_case.dart';
+import 'features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 import 'features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'features/weather/data/repositories/weather_repo_impl.dart';
 import 'features/weather/domain/repositories/weather_repo.dart';
@@ -26,6 +29,9 @@ Future<void> init() async {
 // UseCases
 
   sl.registerLazySingleton(() => GetTodayWeatherOverviewUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocationFromCoordinatesUseCase(sl()));
+  sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
+  sl.registerLazySingleton(() => GetCurrentLocationUseCase());
 
 
 // Repository

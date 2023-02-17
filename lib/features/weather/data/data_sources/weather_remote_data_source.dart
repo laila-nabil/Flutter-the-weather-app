@@ -15,10 +15,10 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   @override
   Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params) async {
     String url =
-        'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/l' +
+        'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' +
             '${params.latitude},${params.longitude}' +
             '/today?' +
-            ' unitGroup=${params.unit.name}' +
+            'unitGroup=${params.unit.name}' +
             '&include=current' +
             '&key=$API_KEY' +
             '&contentType=json&lang=${params.language}';
