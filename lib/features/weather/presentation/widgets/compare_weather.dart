@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class CompareWeather extends StatelessWidget {
@@ -13,7 +14,7 @@ class CompareWeather extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        // Provider.of<WeatherProvider>(context).compareTodayYesterday;
+       printDebug("compare $compareWeather");
     return LayoutBuilder(builder: (ctx, constraints) {
       return Card(
         // color: Color(0xff272F3A),

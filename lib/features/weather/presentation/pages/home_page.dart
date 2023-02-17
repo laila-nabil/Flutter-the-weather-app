@@ -327,7 +327,7 @@ class LoadedContent extends StatelessWidget {
                         items: [
                           WeatherTodayWidget(
                               weatherToday: weatherBloc.state.todayOverview,),
-                          CompareWeather(compareWeather: "",)///TODO
+                          CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??"")///TODO
                         ],
                         options: CarouselOptions(
                           height: constraints.maxHeight - 0.1,
@@ -346,7 +346,7 @@ class LoadedContent extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CompareWeather(compareWeather: ""),///TODO
+                child: CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??"")
               ),
             ),
           if (!isPortrait)
@@ -364,7 +364,7 @@ class LoadedContent extends StatelessWidget {
                         weatherToday: weatherBloc.state.todayOverview,)),
                     Expanded(
                       flex: 6,
-                      child: CompareWeather(compareWeather: ""),///TODO
+                      child: CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??""),
                     ),
                     Expanded(
                       flex: 1,
@@ -415,7 +415,7 @@ class todayOverview extends StatelessWidget {
         SizedBox.expand(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CompareWeather(compareWeather: ""),///TODO
+            child: CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??""),
           ),
         ),
       ],
@@ -428,7 +428,7 @@ class todayOverview extends StatelessWidget {
           flex: 2,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CompareWeather(compareWeather: ""),
+            child: CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??""),
           ),
         ),
       ],
@@ -442,7 +442,7 @@ List<Widget> weatherTodayOverview (WeatherBloc weatherBloc){
       weatherToday: weatherBloc.state.todayOverview!,)),
     Padding(
       padding: const EdgeInsets.all(8.0),
-      child: CompareWeather(compareWeather: ""),
+      child: CompareWeather(compareWeather: weatherBloc.state.compareTodayYesterday??""),
     ),
   ];
 }

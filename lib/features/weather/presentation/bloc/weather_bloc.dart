@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../domain/entities/day_weather.dart';
 import '../../domain/entities/weather_timeline.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
