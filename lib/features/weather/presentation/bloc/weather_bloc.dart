@@ -55,6 +55,33 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             weatherTimelineFailure: l)),
             (r) => emit(state.copyWith(
             weatherStatus: WeatherStatus.weatherTimelineSuccess,
-            weatherTimeline: r)));
+            weatherTimeline: r,
+            compareTodayYesterday: compareTodayYesterday(state.todayOverview,
+                state.weatherTimeline?.days?.elementAt(params.daysBeforeToday-1)))));
   }
+}
+
+String? compareTodayYesterday(TodayOverview? todayOverview,Day? yesterday) {
+  if(todayOverview == null || yesterday == null){
+    return null;
+  }
+  final diffDay = todayOverview!.day!.tempmax! > yesterday!.tempmax!
+      ? "warmer".tr().toString()
+      : "colder".tr().toString();
+  final diffNight = todayOverview!.day!.tempmin! > yesterday!.tempmin!
+      ? "warmer".tr().toString()
+      : "colder".tr().toString();
+  final diffMax = todayOverview!.day!.tempmax! - yesterday!.tempmax!;
+  final diffMin = todayOverview!.day!.tempmin! - yesterday!.tempmin!;
+  return 'lang'.tr().toString().contains('EN')
+      ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °' +
+      'deg'.tr().toString() +
+      ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °' +
+      'deg'.tr().toString() +
+      ' at night'
+      : 'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °' +
+      'deg'.tr().toString() +
+      ' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °' +
+      'deg'.tr().toString() +
+      ' في الليل';
 }

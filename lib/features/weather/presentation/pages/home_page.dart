@@ -79,7 +79,11 @@ class MyHomePage extends StatelessWidget {
                   var getCurrentLangCode =
                   LocalizationImpl().getCurrentLangCode(context);
                   var unit = UnitGroup.metric;
-                  getWeatherData(bloc, long, lat, getCurrentLangCode, unit);
+                  bloc.add(GetTodayOverview(params: GetTodayOverviewParams(
+                      longitude: long,
+                      latitude: lat,
+                      language: getCurrentLangCode,
+                      unit: unit)));
                 },
                 child: SingleChildScrollView(
                   // physics: AlwaysScrollableScrollPhysics(),
@@ -117,7 +121,7 @@ class MyHomePage extends StatelessWidget {
             latitude: lat,
             language: getCurrentLangCode,
             unit: unit,
-            daysAfterToday: 5,
+            daysAfterToday: 1,
             daysBeforeToday: 5)));
   }
 }
