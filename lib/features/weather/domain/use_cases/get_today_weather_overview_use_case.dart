@@ -20,7 +20,7 @@ class GetTodayWeatherOverviewUseCase
 
 class GetTodayOverviewParams extends Equatable {
   final String latitude;
-  final String longitude; //latitude
+  final String longitude;
   final String language;
   final UnitGroup unit;
 
