@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../domain/entities/weather_timeline.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 
@@ -21,16 +22,37 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
     on<WeatherEvent>((event, emit) async {
       if (event is GetTodayOverview) {
-        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
-        final result = await _getTodayWeatherOverviewUseCase(event.params);
-        result.fold(
-            (l) => emit(state.copyWith(
-                weatherStatus: WeatherStatus.todayOverviewFailure,
-                todayOverviewFailure: l)),
-            (r) => emit(state.copyWith(
-                weatherStatus: WeatherStatus.todayOverviewSuccess,
-                todayOverview: r)));
+        await _getTodayOverview(emit, event.params);
+      }else if(event is GetWeatherTimeline){
+        await _getWeatherTimeline(emit, event.params);
+      }else if(event is InitialWeatherEvent){
+        await _getTodayOverview(emit, event.getTodayOverviewParams);
+        await _getWeatherTimeline(emit, event.weatherTimelineParams);
       }
     });
+  }
+
+  Future<void> _getTodayOverview(Emitter<WeatherState> emit, GetTodayOverviewParams params) async {
+     emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+    final result = await _getTodayWeatherOverviewUseCase(params);
+    result.fold(
+        (l) => emit(state.copyWith(
+            weatherStatus: WeatherStatus.todayOverviewFailure,
+            todayOverviewFailure: l)),
+        (r) => emit(state.copyWith(
+            weatherStatus: WeatherStatus.todayOverviewSuccess,
+            todayOverview: r)));
+  }
+
+  Future<void> _getWeatherTimeline(Emitter<WeatherState> emit, WeatherTimelineParams params) async {
+    emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+    final result = await _getWeatherTimelineUseCase(params);
+    result.fold(
+            (l) => emit(state.copyWith(
+            weatherStatus: WeatherStatus.weatherTimelineFailure,
+            weatherTimelineFailure: l)),
+            (r) => emit(state.copyWith(
+            weatherStatus: WeatherStatus.weatherTimelineSuccess,
+            weatherTimeline: r)));
   }
 }

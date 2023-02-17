@@ -37,10 +37,10 @@ class WeatherTimelineParams extends Equatable {
     required this.daysAfterToday,
   });
 
-  String get startDate => DateFormat("YYYY-MM-DD")
+  String get startDate => DateFormat("yyyy-M-d")
       .format(DateTime.now().subtract(Duration(days: daysBeforeToday)));
 
-  String get endDate => DateFormat("YYYY-MM-DD")
+  String get endDate => DateFormat("yyyy-M-d")
       .format(DateTime.now().add(Duration(days: daysAfterToday)));
 
   @override

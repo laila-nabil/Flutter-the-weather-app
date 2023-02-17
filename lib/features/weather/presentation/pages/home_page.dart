@@ -6,6 +6,7 @@ import '../../../../core/localization/localization.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/unit.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 import '../bloc/weather_bloc.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -24,19 +25,38 @@ class MyHomePage extends StatelessWidget {
           final bloc = BlocProvider.of<WeatherBloc>(context);
           final locationBloc = BlocProvider.of<LocationBloc>(context);
           if (state.weatherStatus == WeatherStatus.initial) {
-            bloc.add(GetTodayOverview(
-                params: GetTodayOverviewParams(
-                    longitude: locationBloc.location?.lon ?? "",
-                    latitude: locationBloc.location?.lat ?? "",
-                    language: LocalizationImpl().getCurrentLangCode(context),
-                    unit: UnitGroup.metric)));
+            var long = locationBloc.location?.lon ?? "";
+            var lat = locationBloc.location?.lat ?? "";
+            var getCurrentLangCode = LocalizationImpl().getCurrentLangCode(context);
+            var unit = UnitGroup.metric;
+            bloc.add(InitialWeatherEvent(
+                getTodayOverviewParams: GetTodayOverviewParams(
+                    longitude: long,
+                    latitude: lat,
+                    language: getCurrentLangCode,
+                    unit: unit),
+                weatherTimelineParams: WeatherTimelineParams(
+                    longitude: long,
+                    latitude: lat,
+                    language: getCurrentLangCode,
+                    unit: unit,
+                    daysAfterToday: 1,
+                    daysBeforeToday: 1)));
           }
           return Scaffold(
             body: Center(
-                child: Text(
+                child: Column(
+                  children: [
+                    Text(
               "${state.todayOverview}",
               style: TextStyle(color: Colors.black),
-            )),
+            ),
+                    Text(
+                      "${state.weatherTimeline}",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                )),
           );
         },
       ),
