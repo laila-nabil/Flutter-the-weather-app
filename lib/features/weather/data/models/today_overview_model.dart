@@ -1,3 +1,5 @@
+import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/resources/assets_paths.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
 
 import 'day_weather_model.dart';
@@ -22,12 +24,12 @@ class TodayOverviewModel extends TodayOverview{
     String? address,
     String? timezone,
     double? tzoffset,
-    List<DaysModel>? days,
+    DayModel? day,
     CurrentConditions? currentConditions,}):super(
     latitude: latitude,
     longitude: longitude,
     timezone: timezone,
-    days: days,
+    day: day,
     address: address,
     currentConditions: currentConditions,
     queryCost: queryCost,
@@ -44,10 +46,11 @@ class TodayOverviewModel extends TodayOverview{
     timezone = json['timezone'];
     tzoffset = json['tzoffset'];
     if (json['days'] != null) {
-      days = [];
+      List<DayModel> days = [];
       json['days'].forEach((v) {
-        days?.add(DaysModel.fromJson(v));
+        days.add(DayModel.fromJson(v));
       });
+      day = days.tryFirst;
     }
     currentConditions = json['currentConditions'] != null ? CurrentConditionsModel.fromJson(json['currentConditions']) : null;
   }
@@ -121,7 +124,7 @@ class CurrentConditionsModel extends CurrentConditions {
     sunset: sunset,
     sunrise: sunrise,
     humidity: humidity,
-    icon: icon,
+    iconPath: icon,
     cloudcover: cloudcover,
     conditions: conditions,
     datetime: datetime,
@@ -169,7 +172,7 @@ class CurrentConditionsModel extends CurrentConditions {
     solarenergy = json['solarenergy'];
     uvindex = json['uvindex'];
     conditions = json['conditions'];
-    icon = json['icon'];
+    iconPath = AppAssets.VisualCrossingFolder +"/${json['icon']}.png";
     stations = json['stations'] != null ? json['stations'].cast<String>() : [];
     source = json['source'];
     sunrise = json['sunrise'];
@@ -228,7 +231,7 @@ class CurrentConditionsModel extends CurrentConditions {
   solarenergy: solarenergy ?? this.solarenergy,
   uvindex: uvindex ?? this.uvindex,
   conditions: conditions ?? this.conditions,
-  icon: icon ?? this.icon,
+  icon: icon ?? this.iconPath,
   stations: stations ?? this.stations,
   source: source ?? this.source,
   sunrise: sunrise ?? this.sunrise,
@@ -260,7 +263,7 @@ class CurrentConditionsModel extends CurrentConditions {
     map['solarenergy'] = solarenergy;
     map['uvindex'] = uvindex;
     map['conditions'] = conditions;
-    map['icon'] = icon;
+    map['icon'] = iconPath;
     map['stations'] = stations;
     map['source'] = source;
     map['sunrise'] = sunrise;

@@ -12,4 +12,5 @@ class AppAssets {
 
   static const String localeAr = 'assets/locales/ar-EG.json';
   static const String localeEn = 'assets/locales/en-UK.json';
+  static const String VisualCrossingFolder = 'assets/VisualCrossingFolder';
 }

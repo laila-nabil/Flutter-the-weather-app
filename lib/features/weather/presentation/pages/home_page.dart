@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/weather/presentation/widgets/weather_today.dart';
 
 import '../../../../core/localization/localization.dart';
 import '../../../../injection_container.dart';
@@ -27,7 +28,8 @@ class MyHomePage extends StatelessWidget {
           if (state.weatherStatus == WeatherStatus.initial) {
             var long = locationBloc.location?.lon ?? "";
             var lat = locationBloc.location?.lat ?? "";
-            var getCurrentLangCode = LocalizationImpl().getCurrentLangCode(context);
+            var getCurrentLangCode =
+                LocalizationImpl().getCurrentLangCode(context);
             var unit = UnitGroup.metric;
             bloc.add(InitialWeatherEvent(
                 getTodayOverviewParams: GetTodayOverviewParams(
@@ -43,20 +45,26 @@ class MyHomePage extends StatelessWidget {
                     daysAfterToday: 5,
                     daysBeforeToday: 5)));
           }
+
+          if (state.weatherStatus == WeatherStatus.loading) {
+            return Scaffold(
+              backgroundColor: Theme.of(context).backgroundColor,
+              body: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
             body: Center(
-                child: Column(
-                  children: [
-                    Text(
-              "${state.todayOverview}",
-              style: TextStyle(color: Colors.black),
-            ),
-                    Text(
-                      "${state.weatherTimeline}",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ],
-                )),
+                child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      width: 500,
+                      height: 500,
+                      child: WeatherTodayWidget(weatherToday: state.todayOverview)),
+                ],
+              ),
+            )),
           );
         },
       ),

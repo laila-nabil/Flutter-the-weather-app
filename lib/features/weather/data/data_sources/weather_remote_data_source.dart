@@ -24,7 +24,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
             'unitGroup=${params.unit.name}' +
             '&include=current' +
             '&key=$API_KEY' +
-            '&contentType=json&lang=${params.language}';
+            '&contentType=json&lang=${params.language}&iconSet=icons2';
     final result = await Network.get(
         url:
         url);
@@ -44,7 +44,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
         '?unitGroup=metric'
         '&include=days%2Chours'
         '&key=$API_KEY'
-        '&contentType=json&lang=${params.language}';
+        '&contentType=json&lang=${params.language}&iconSet=icons2';
 
     final result = await Network.get(
         url:

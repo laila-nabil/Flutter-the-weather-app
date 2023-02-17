@@ -22,7 +22,7 @@ class TodayOverview extends Equatable{
     this.address,
     this.timezone,
     this.tzoffset,
-    this.days,
+    this.day,
     this.currentConditions,});
   
   int? queryCost;
@@ -32,7 +32,7 @@ class TodayOverview extends Equatable{
   String? address;
   String? timezone;
   double? tzoffset;
-  List<Days>? days;
+  Day? day;
   CurrentConditions? currentConditions;
 
   @override
@@ -43,7 +43,7 @@ class TodayOverview extends Equatable{
     address,
     timezone,
     tzoffset,
-    days,
+    day,
     currentConditions,];
 
 }
@@ -101,7 +101,7 @@ class CurrentConditions extends Equatable{
     this.solarenergy,
     this.uvindex,
     this.conditions,
-    this.icon,
+    this.iconPath,
     this.stations,
     this.source,
     this.sunrise,
@@ -131,7 +131,7 @@ class CurrentConditions extends Equatable{
   dynamic solarenergy;
   double? uvindex;
   String? conditions;
-  String? icon;
+  String? iconPath;
   List<String>? stations;
   String? source;
   String? sunrise;
@@ -189,7 +189,7 @@ class CurrentConditions extends Equatable{
     solarenergy: solarenergy ?? this.solarenergy,
     uvindex: uvindex ?? this.uvindex,
     conditions: conditions ?? this.conditions,
-    icon: icon ?? this.icon,
+    iconPath: icon ?? this.iconPath,
     stations: stations ?? this.stations,
     source: source ?? this.source,
     sunrise: sunrise ?? this.sunrise,
@@ -221,7 +221,7 @@ class CurrentConditions extends Equatable{
     solarenergy,
     uvindex,
     conditions,
-    icon,
+    iconPath,
     stations,
     source,
     sunrise,

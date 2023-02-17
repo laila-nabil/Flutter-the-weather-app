@@ -38,8 +38,8 @@ import '../../domain/entities/day_weather.dart';
 /// stations : ["HECA"]
 /// source : "comb"
 
-class DaysModel extends Days{
-  DaysModel({String? datetime,
+class DayModel extends Day{
+  DayModel({String? datetime,
     int? datetimeEpoch,
     double? tempmax,
     double? tempmin,
@@ -113,7 +113,7 @@ class DaysModel extends Days{
     source:source,
   );
 
-  DaysModel.fromJson(dynamic json) {
+  DayModel.fromJson(dynamic json) {
     datetime = json['datetime'];
     datetimeEpoch = json['datetimeEpoch'];
     tempmax = json['tempmax'];
@@ -152,7 +152,7 @@ class DaysModel extends Days{
     source = json['source'];
   }
 
-  DaysModel copyWith({  String? datetime,
+  DayModel copyWith({  String? datetime,
     int? datetimeEpoch,
     double? tempmax,
     double? tempmin,
@@ -188,7 +188,7 @@ class DaysModel extends Days{
     String? icon,
     List<String>? stations,
     String? source,
-  }) => DaysModel(  datetime: datetime ?? this.datetime,
+  }) => DayModel(  datetime: datetime ?? this.datetime,
     datetimeEpoch: datetimeEpoch ?? this.datetimeEpoch,
     tempmax: tempmax ?? this.tempmax,
     tempmin: tempmin ?? this.tempmin,

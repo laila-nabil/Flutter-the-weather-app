@@ -21,7 +21,7 @@ class WeatherTimelineModel extends WeatherTimeline{
     String? address,
     String? timezone,
     double? tzoffset,
-    List<DaysModel>? days,}):super(queryCost:queryCost,
+    List<DayModel>? days,}):super(queryCost:queryCost,
     latitude:latitude,
     longitude:longitude,
     resolvedAddress:resolvedAddress,
@@ -42,7 +42,7 @@ class WeatherTimelineModel extends WeatherTimeline{
     if (json['days'] != null) {
       days = [];
       json['days'].forEach((v) {
-        days?.add(DaysModel.fromJson(v));
+        days?.add(DayModel.fromJson(v));
       });
     }
   }

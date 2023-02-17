@@ -73,6 +73,7 @@ flutter:
     - assets/dashboard_icons/
     - assets/3d/
     - assets/locales/
+    - assets/VisualCrossingFolder/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
