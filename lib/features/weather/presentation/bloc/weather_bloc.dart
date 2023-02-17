@@ -7,6 +7,7 @@ import 'package:the_weather_app/features/weather/domain/entities/today_overview.
 
 import '../../../../core/error/failures.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 
 part 'weather_event.dart';
 
@@ -14,8 +15,9 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetTodayWeatherOverviewUseCase _getTodayWeatherOverviewUseCase;
+  final GetWeatherTimelineUseCase _getWeatherTimelineUseCase;
 
-  WeatherBloc(this._getTodayWeatherOverviewUseCase)
+  WeatherBloc(this._getTodayWeatherOverviewUseCase, this._getWeatherTimelineUseCase)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
     on<WeatherEvent>((event, emit) async {
       if (event is GetTodayOverview) {

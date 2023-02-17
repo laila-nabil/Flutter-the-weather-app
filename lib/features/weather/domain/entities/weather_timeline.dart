@@ -22,21 +22,6 @@ class WeatherTimeline {
       this.tzoffset, 
       this.days, });
 
-  WeatherTimeline.fromJson(dynamic json) {
-    queryCost = json['queryCost'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    resolvedAddress = json['resolvedAddress'];
-    address = json['address'];
-    timezone = json['timezone'];
-    tzoffset = json['tzoffset'];
-    if (json['days'] != null) {
-      days = [];
-      json['days'].forEach((v) {
-        days?.add(DaysModel.fromJson(v));
-      });
-    }
-  }
   int? queryCost;
   double? latitude;
   double? longitude;
@@ -45,23 +30,7 @@ class WeatherTimeline {
   String? timezone;
   double? tzoffset;
   List<Days>? days;
-WeatherTimeline copyWith({  int? queryCost,
-  double? latitude,
-  double? longitude,
-  String? resolvedAddress,
-  String? address,
-  String? timezone,
-  double? tzoffset,
-  List<Days>? days,
-}) => WeatherTimeline(  queryCost: queryCost ?? this.queryCost,
-  latitude: latitude ?? this.latitude,
-  longitude: longitude ?? this.longitude,
-  resolvedAddress: resolvedAddress ?? this.resolvedAddress,
-  address: address ?? this.address,
-  timezone: timezone ?? this.timezone,
-  tzoffset: tzoffset ?? this.tzoffset,
-  days: days ?? this.days,
-);
+
 }
 
 
@@ -120,33 +89,6 @@ class Hours {
       this.stations, 
       this.source,});
 
-  Hours.fromJson(dynamic json) {
-    datetime = json['datetime'];
-    datetimeEpoch = json['datetimeEpoch'];
-    temp = json['temp'];
-    feelslike = json['feelslike'];
-    humidity = json['humidity'];
-    dew = json['dew'];
-    precip = json['precip'];
-    precipprob = json['precipprob'];
-    snow = json['snow'];
-    snowdepth = json['snowdepth'];
-    preciptype = json['preciptype'];
-    windgust = json['windgust'];
-    windspeed = json['windspeed'];
-    winddir = json['winddir'];
-    pressure = json['pressure'];
-    visibility = json['visibility'];
-    cloudcover = json['cloudcover'];
-    solarradiation = json['solarradiation'];
-    solarenergy = json['solarenergy'];
-    uvindex = json['uvindex'];
-    severerisk = json['severerisk'];
-    conditions = json['conditions'];
-    icon = json['icon'];
-    stations = json['stations'] != null ? json['stations'].cast<String>() : [];
-    source = json['source'];
-  }
   String? datetime;
   int? datetimeEpoch;
   double? temp;
