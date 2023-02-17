@@ -3,6 +3,7 @@ import 'package:the_weather_app/features/location/data/data_sources/location_rem
 import 'package:the_weather_app/features/location/data/repositories/location_repo_impl.dart';
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/weather/data/data_sources/weather_remote_data_source.dart';
@@ -24,6 +25,7 @@ Future<void> init() async {
 
 // UseCases
 
+  sl.registerLazySingleton(() => GetTodayWeatherOverviewUseCase(sl()));
 
 
 // Repository
