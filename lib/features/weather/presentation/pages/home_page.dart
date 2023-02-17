@@ -40,8 +40,8 @@ class MyHomePage extends StatelessWidget {
                     latitude: lat,
                     language: getCurrentLangCode,
                     unit: unit,
-                    daysAfterToday: 1,
-                    daysBeforeToday: 1)));
+                    daysAfterToday: 5,
+                    daysBeforeToday: 5)));
           }
           return Scaffold(
             body: Center(
