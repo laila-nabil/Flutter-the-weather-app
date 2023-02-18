@@ -42,7 +42,7 @@ dependencies:
   flutter_mapbox_autocomplete: ^2.0.0
   shimmer: ^2.0.0
   easy_localization: ^3.0.0
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.0.17
   universal_html: ^2.0.8
   flutter_riverpod: ^1.0.3
   dartz: ^0.10.1

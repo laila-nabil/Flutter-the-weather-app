@@ -12,3 +12,10 @@ abstract class Failure extends Equatable {
 class ServerFailure extends Failure {
   ServerFailure({required String message}) : super(message: message);
 }
+
+class EmptyCacheFailure extends Failure {
+  EmptyCacheFailure() : super(message: "");
+
+  @override
+  List<Object?> get props => [];
+}

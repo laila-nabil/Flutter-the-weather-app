@@ -44,7 +44,8 @@ class MyHomePage extends StatelessWidget {
             languageBloc.add(SelectLanguage(
                 LocalizationImpl().getCurrentLanguagesEnum(context)!));
             var unit = UnitGroup.metric;
-            getWeatherData(bloc, long, lat, getCurrentLangCode, unit);
+            getWeatherData(bloc, long, lat, locationBloc.location?.city ?? "",
+                getCurrentLangCode, unit);
           }
 
           if (state.weatherStatus == WeatherStatus.loading) {
@@ -109,7 +110,8 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  void getWeatherData(WeatherBloc bloc, String long, String lat, String getCurrentLangCode, UnitGroup unit) {
+  void getWeatherData(WeatherBloc bloc, String long, String lat,String city,
+      String getCurrentLangCode, UnitGroup unit) {
     bloc.add(InitialWeatherEvent(
         getTodayOverviewParams: GetTodayOverviewParams(
             longitude: long,
@@ -117,8 +119,9 @@ class MyHomePage extends StatelessWidget {
             language: getCurrentLangCode,
             unit: unit),
         weatherTimelineParams: WeatherTimelineParams(
-            longitude: long,
-            latitude: lat,
+            // longitude: long,
+            // latitude: lat,
+            city: city,
             language: getCurrentLangCode,
             unit: unit,
             daysAfterToday: 1,

@@ -21,8 +21,9 @@ class GetWeatherTimelineUseCase
 }
 
 class WeatherTimelineParams extends Equatable {
-  final String latitude;
-  final String longitude;
+  // final String latitude;
+  // final String longitude;
+  final String city;
   final String language;
   final UnitGroup unit;
   final int daysBeforeToday;
@@ -30,8 +31,9 @@ class WeatherTimelineParams extends Equatable {
 
   WeatherTimelineParams({
     this.unit = UnitGroup.metric,
-    required this.latitude,
-    required this.longitude,
+    required this.city,
+    // required this.latitude,
+    // required this.longitude,
     required this.language,
     required this.daysBeforeToday,
     required this.daysAfterToday,
@@ -45,8 +47,9 @@ class WeatherTimelineParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        latitude,
-        longitude,
+        // latitude,
+        // longitude,
+        city,
         language,
         unit,
         daysAfterToday,

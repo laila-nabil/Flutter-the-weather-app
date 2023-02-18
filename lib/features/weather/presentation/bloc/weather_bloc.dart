@@ -65,14 +65,14 @@ String? compareTodayYesterday(TodayOverview? todayOverview,Day? yesterday) {
   if(todayOverview == null || yesterday == null){
     return null;
   }
-  final diffDay = todayOverview!.day!.tempmax! > yesterday!.tempmax!
+  final diffDay = todayOverview.day!.tempmax! > yesterday.tempmax!
       ? "warmer".tr().toString()
       : "colder".tr().toString();
-  final diffNight = todayOverview!.day!.tempmin! > yesterday!.tempmin!
+  final diffNight = todayOverview.day!.tempmin! > yesterday.tempmin!
       ? "warmer".tr().toString()
       : "colder".tr().toString();
-  final diffMax = todayOverview!.day!.tempmax! - yesterday!.tempmax!;
-  final diffMin = todayOverview!.day!.tempmin! - yesterday!.tempmin!;
+  final diffMax = todayOverview.day!.tempmax! - yesterday.tempmax!;
+  final diffMin = todayOverview.day!.tempmin! - yesterday.tempmin!;
   return 'lang'.tr().toString().contains('EN')
       ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °' +
       'deg'.tr().toString() +

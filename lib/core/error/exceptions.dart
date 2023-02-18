@@ -4,3 +4,5 @@ class ServerException implements Exception{
   ServerException({this.message});
 
 }
+
+class EmptyCacheException implements Exception {}

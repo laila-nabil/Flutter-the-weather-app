@@ -38,11 +38,12 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   @override
   Future<WeatherTimelineModel> getWeatherTimeline(WeatherTimelineParams params)async {
     String url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/'
-        '${params.latitude},${params.longitude}'
+        // '${params.latitude},${params.longitude}'
+        '${params.city}'
         '/${params.startDate}'
         '/${params.endDate}'
         '?unitGroup=metric'
-        '&include=days%2Chours'
+        '&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp'
         '&key=$API_KEY'
         '&contentType=json&lang=${params.language}&iconSet=icons2';
 

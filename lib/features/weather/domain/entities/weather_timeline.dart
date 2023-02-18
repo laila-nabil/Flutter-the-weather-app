@@ -24,14 +24,14 @@ class WeatherTimeline extends Equatable{
       this.tzoffset, 
       this.days, });
 
-  int? queryCost;
-  double? latitude;
-  double? longitude;
-  String? resolvedAddress;
-  String? address;
-  String? timezone;
-  double? tzoffset;
-  List<Day>? days;
+  final int? queryCost;
+  final double? latitude;
+  final double? longitude;
+  final String? resolvedAddress;
+  final String? address;
+  final String? timezone;
+  final double? tzoffset;
+  final List<Day>? days;
 
   @override
   List<Object?> get props => [this.queryCost,
