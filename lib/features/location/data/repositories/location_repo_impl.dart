@@ -12,7 +12,7 @@ class LocationRepoImpl implements LocationRepo {
   LocationRepoImpl(this.locationRemoteDataSource);
 
   @override
-  Future<Either<Failure, String>> getLocationFromCoordinates(
+  Future<Either<Failure, LocationModel>> getLocationFromCoordinates(
       {required GetLocationFromCoordinatesParams params}) async {
     try {
       final result = await locationRemoteDataSource.getLocationFromCoordinates(

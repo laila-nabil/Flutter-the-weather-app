@@ -3,6 +3,7 @@ import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_today.dart';
 import 'package:universal_html/html.dart' as html;
@@ -36,7 +37,14 @@ class MyHomePage extends StatelessWidget {
           final bloc = BlocProvider.of<WeatherBloc>(context);
           final locationBloc = BlocProvider.of<LocationBloc>(context);
           final languageBloc = BlocProvider.of<LanguageBloc>(context);
-          if (state.weatherStatus == WeatherStatus.initial) {
+          printDebug("locationBloc.state ${locationBloc.state}");
+          if(locationBloc.state == LocationInitial()){
+            locationBloc.add(LocationInitialEvent());
+          }
+          if (state.weatherStatus == WeatherStatus.initial &&
+              locationBloc.location?.city != null) {
+            locationBloc.add(LocationInitialEvent());
+
             var long = locationBloc.location?.lon ?? "";
             var lat = locationBloc.location?.lat ?? "";
             var getCurrentLangCode =

@@ -5,7 +5,7 @@ import 'package:the_weather_app/features/location/domain/use_cases/get_location_
 import '../entities/location.dart';
 
 abstract class LocationRepo {
-  Future<Either<Failure, String>> getLocationFromCoordinates(
+  Future<Either<Failure, LocationEntity>> getLocationFromCoordinates(
       {required GetLocationFromCoordinatesParams params});
 
   Future<Either<Failure, List<LocationEntity>>> autoCompleteSearchLocation(

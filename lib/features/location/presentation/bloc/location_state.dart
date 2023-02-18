@@ -21,7 +21,7 @@ class LocationLoading extends LocationState {
 class LocationSuccess extends LocationState {
   final LocationEvent event;
   final List<LocationEntity>? autoCompleteSearchLocation;
-  final String? locationFromCoordinates;
+  final LocationEntity? locationFromCoordinates;
   final LocationEntity? userCurrentLocation;
 
   LocationSuccess(this.event,

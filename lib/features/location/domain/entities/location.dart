@@ -5,13 +5,14 @@ class LocationEntity extends Equatable {
   String? lat;
   String? city;
   String? country;
-
+  String? countryCode;
   LocationEntity(
       {this.lon,
       this.lat,
       this.city,
+      this.countryCode,
       this.country});
 
   @override
-  List<Object?> get props => [lat, lon, city, country];
+  List<Object?> get props => [lat, lon, city, country,countryCode];
 }
