@@ -1,3 +1,5 @@
+import 'package:the_weather_app/core/utils.dart';
+
 import '../../domain/entities/location.dart';
 
 class LocationModel extends LocationEntity {
@@ -8,10 +10,10 @@ class LocationModel extends LocationEntity {
     country = json['properties']['country'];
   }
   LocationModel.bigDataCloudFromJson(Map<String,dynamic> json) {
-    lon =json['longitude'];
-    lat = json['latitude'];
-    city = json['city'];
-    country = json['countryName'];
-    countryCode = json['countryCode'];
+    lon =json['longitude'].toString();
+    lat = json['latitude'].toString();
+    city = json['city'].toString();
+    country = json['countryName'].toString();
+    countryCode = json['countryCode'].toString();
   }
 }
