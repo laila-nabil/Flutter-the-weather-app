@@ -61,7 +61,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   }
 }
 
-String? compareTodayYesterday(TodayOverview? todayOverview,Day? yesterday) {
+String? compareTodayYesterday(TodayOverviewV? todayOverview,DayV? yesterday) {
   if(todayOverview == null || yesterday == null){
     return null;
   }

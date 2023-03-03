@@ -9,13 +9,13 @@ import 'package:the_weather_app/features/weather/domain/repositories/weather_rep
 import '../entities/unit.dart';
 
 class GetWeatherTimelineUseCase
-    implements UseCase<WeatherTimeline, WeatherTimelineParams> {
+    implements UseCase<WeatherTimelineV, WeatherTimelineParams> {
   final WeatherRepo repo;
 
   GetWeatherTimelineUseCase(this.repo);
 
   @override
-  Future<Either<Failure, WeatherTimeline>> call(WeatherTimelineParams params) async {
+  Future<Either<Failure, WeatherTimelineV>> call(WeatherTimelineParams params) async {
     return await repo.getWeatherTimeline(params);
   }
 }

@@ -11,16 +11,16 @@ enum WeatherStatus {
 
 class WeatherState extends Equatable {
   final WeatherStatus weatherStatus;
-  TodayOverview? todayOverview;
-  WeatherTimeline? weatherTimeline;
+  TodayOverviewV? todayOverview;
+  WeatherTimelineV? weatherTimeline;
   Failure? todayOverviewFailure;
   Failure? weatherTimelineFailure;
   String? compareTodayYesterday;
   WeatherState copyWith(
       {required WeatherStatus weatherStatus,
-      TodayOverview? todayOverview,
+      TodayOverviewV? todayOverview,
       Failure? todayOverviewFailure,
-      WeatherTimeline? weatherTimeline,
+      WeatherTimelineV? weatherTimeline,
       Failure? weatherTimelineFailure,
         String? compareTodayYesterday
       }) {

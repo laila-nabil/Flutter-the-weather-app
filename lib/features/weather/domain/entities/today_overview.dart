@@ -13,8 +13,8 @@ import 'day_weather.dart';
 /// stations : {"HECA":{"distance":18512.0,"latitude":30.13,"longitude":31.4,"useCount":0,"id":"HECA","name":"HECA","quality":50,"contribution":0.0}}
 /// currentConditions : {"datetime":"19:00:00","datetimeEpoch":1676653200,"temp":15.0,"feelslike":15.0,"humidity":54.9,"dew":6.0,"precip":0.0,"precipprob":0.0,"snow":0.0,"snowdepth":0.0,"preciptype":null,"windgust":null,"windspeed":25.9,"winddir":30.0,"pressure":1027.0,"visibility":10.0,"cloudcover":50.0,"solarradiation":0.0,"solarenergy":null,"uvindex":0.0,"conditions":"Partially cloudy","icon":"partly-cloudy-night","stations":["HECA"],"source":"obs","sunrise":"06:33:36","sunriseEpoch":1676608416,"sunset":"17:45:01","sunsetEpoch":1676648701,"moonphase":0.9}
 
-class TodayOverview extends Equatable{
-  TodayOverview({
+class TodayOverviewV extends Equatable{
+  TodayOverviewV({
     this.queryCost,
     this.latitude,
     this.longitude,
@@ -32,8 +32,8 @@ class TodayOverview extends Equatable{
   String? address;
   String? timezone;
   double? tzoffset;
-  Day? day;
-  CurrentConditions? currentConditions;
+  DayV? day;
+  CurrentConditionsV? currentConditions;
 
   @override
   List<Object?> get props => [queryCost,
@@ -78,8 +78,8 @@ class TodayOverview extends Equatable{
 /// sunsetEpoch : 1676648701
 /// moonphase : 0.9
 
-class CurrentConditions extends Equatable{
-  CurrentConditions({
+class CurrentConditionsV extends Equatable{
+  CurrentConditionsV({
     this.datetime,
     this.datetimeEpoch,
     this.temp,
@@ -139,7 +139,7 @@ class CurrentConditions extends Equatable{
   String? sunset;
   int? sunsetEpoch;
   double? moonphase;
-  CurrentConditions copyWith({  String? datetime,
+  CurrentConditionsV copyWith({  String? datetime,
     int? datetimeEpoch,
     double? temp,
     double? feelslike,
@@ -168,7 +168,7 @@ class CurrentConditions extends Equatable{
     String? sunset,
     int? sunsetEpoch,
     double? moonphase,
-  }) => CurrentConditions(  datetime: datetime ?? this.datetime,
+  }) => CurrentConditionsV(  datetime: datetime ?? this.datetime,
     datetimeEpoch: datetimeEpoch ?? this.datetimeEpoch,
     temp: temp ?? this.temp,
     feelslike: feelslike ?? this.feelslike,

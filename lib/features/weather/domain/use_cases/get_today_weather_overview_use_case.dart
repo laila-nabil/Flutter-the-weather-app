@@ -8,12 +8,12 @@ import 'package:the_weather_app/features/weather/domain/repositories/weather_rep
 import '../entities/unit.dart';
 
 class GetTodayWeatherOverviewUseCase
-    implements UseCase<TodayOverview, GetTodayOverviewParams> {
+    implements UseCase<TodayOverviewV, GetTodayOverviewParams> {
   final WeatherRepo repo;
 
   GetTodayWeatherOverviewUseCase(this.repo);
   @override
-  Future<Either<Failure, TodayOverview>> call(GetTodayOverviewParams params) async{
+  Future<Either<Failure, TodayOverviewV>> call(GetTodayOverviewParams params) async{
     return await repo.getTodayOverview(params);
   }
 }

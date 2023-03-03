@@ -11,7 +11,7 @@ import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 import 'dashboard_weather.dart';
 
 class WeatherTodayWidget extends StatelessWidget {
-  final TodayOverview? weatherToday;
+  final TodayOverviewV? weatherToday;
 
   const WeatherTodayWidget(
       {Key? key,
@@ -57,7 +57,7 @@ class _WeatherToday extends StatelessWidget {
       required this.constraints})
       : super(key: key);
 
-  final TodayOverview? weatherToday;
+  final TodayOverviewV? weatherToday;
   final bool isPortrait;
   final String rain;
   final BoxConstraints constraints;
@@ -169,7 +169,7 @@ class todayDetails extends StatelessWidget {
       required this.weatherTodayTempMin})
       : super(key: key);
 
-  final TodayOverview? weatherToday;
+  final TodayOverviewV? weatherToday;
   final String weatherTodayTempMax;
   final String weatherTodayTempMin;
   final String weatherTodayRain;

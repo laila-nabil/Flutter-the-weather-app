@@ -38,7 +38,7 @@ import '../../domain/entities/day_weather.dart';
 /// stations : ["HECA"]
 /// source : "comb"
 
-class DayModel extends Day{
+class DayModel extends DayV{
   DayModel({String? datetime,
     int? datetimeEpoch,
     double? tempmax,

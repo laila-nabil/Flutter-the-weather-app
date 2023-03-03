@@ -37,8 +37,8 @@ import 'package:equatable/equatable.dart';
 /// stations : ["HECA"]
 /// source : "comb"
 
-class Day extends Equatable{
-  Day({
+class DayV extends Equatable{
+  DayV({
     this.datetime,
     this.datetimeEpoch,
     this.tempmax,
@@ -112,7 +112,7 @@ class Day extends Equatable{
   String? icon;
   List<String>? stations;
   String? source;
-  Day copyWith({  String? datetime,
+  DayV copyWith({  String? datetime,
     int? datetimeEpoch,
     double? tempmax,
     double? tempmin,
@@ -148,7 +148,7 @@ class Day extends Equatable{
     String? icon,
     List<String>? stations,
     String? source,
-  }) => Day(  datetime: datetime ?? this.datetime,
+  }) => DayV(  datetime: datetime ?? this.datetime,
     datetimeEpoch: datetimeEpoch ?? this.datetimeEpoch,
     tempmax: tempmax ?? this.tempmax,
     tempmin: tempmin ?? this.tempmin,

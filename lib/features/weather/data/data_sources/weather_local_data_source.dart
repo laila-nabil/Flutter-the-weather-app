@@ -9,13 +9,13 @@ import '../../../../core/Network/network.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
-import '../models/today_overview_model.dart';
-import '../models/weather_timeline_model.dart';
+import '../models/today_overview_model_v.dart';
+import '../models/weather_timeline_model_v.dart';
 
 abstract class WeatherLocalDataSource {
-  Future<WeatherTimelineModel> getWeatherTimeline(WeatherTimelineParams params);
+  Future<WeatherTimelineModelV> getWeatherTimeline(WeatherTimelineParams params);
   // Future<String> getWeatherTimelineCity();
-  Future<Unit> saveWeatherTimeline(WeatherTimelineModel weatherTimelineModel);
+  Future<Unit> saveWeatherTimeline(WeatherTimelineModelV weatherTimelineModel);
 }
 
 const CACHED_WEATHER_TIMELINE = "CACHED_WEATHER_TIMELINE";
@@ -27,19 +27,19 @@ class WeatherLocalDataSourceImpl implements WeatherLocalDataSource {
   WeatherLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<WeatherTimelineModel> getWeatherTimeline(
+  Future<WeatherTimelineModelV> getWeatherTimeline(
       WeatherTimelineParams params) async {
     final jsonString = await sharedPreferences.getString(CACHED_WEATHER_TIMELINE);
     if (jsonString != null) {
       List decodeJsonData = json.decode(jsonString);
-      return Future.value(WeatherTimelineModel.fromJson(decodeJsonData));
+      return Future.value(WeatherTimelineModelV.fromJson(decodeJsonData));
     } else {
       throw EmptyCacheException();
     }
   }
 
   @override
-  Future<Unit> saveWeatherTimeline(WeatherTimelineModel weatherTimelineModel) async {
+  Future<Unit> saveWeatherTimeline(WeatherTimelineModelV weatherTimelineModel) async {
     // await sharedPreferences.setString(
     //     CACHED_CITY, json.encode(weatherTimelineModel.address??""));
     await sharedPreferences.setString(

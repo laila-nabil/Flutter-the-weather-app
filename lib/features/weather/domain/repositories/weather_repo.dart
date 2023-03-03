@@ -7,9 +7,9 @@ import '../entities/today_overview.dart';
 import '../entities/weather_timeline.dart';
 
 abstract class WeatherRepo {
-  Future<Either<Failure, TodayOverview>> getTodayOverview(
+  Future<Either<Failure, TodayOverviewV>> getTodayOverview(
       GetTodayOverviewParams params);
 
-  Future<Either<Failure, WeatherTimeline>> getWeatherTimeline(
+  Future<Either<Failure, WeatherTimelineV>> getWeatherTimeline(
       WeatherTimelineParams params);
 }
