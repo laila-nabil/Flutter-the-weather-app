@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/day_weather.dart';

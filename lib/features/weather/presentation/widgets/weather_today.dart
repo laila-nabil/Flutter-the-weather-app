@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 
 import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 

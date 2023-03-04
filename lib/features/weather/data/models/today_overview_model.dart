@@ -1,3 +1,6 @@
+import '../../domain/entities/today_overview.dart';
+import 'weather_model.dart';
+
 /// coord : {"lon":31.2357,"lat":30.0444}
 /// weather : [{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}]
 /// base : "stations"
@@ -12,89 +15,63 @@
 /// name : "Al ‘Atabah"
 /// cod : 200
 
-class TodayOverviewModel {
+class TodayOverviewModel extends TodayOverview{
   TodayOverviewModel({
-      this.coord, 
-      this.weather, 
-      this.base, 
-      this.main, 
-      this.visibility, 
-      this.wind, 
-      this.clouds, 
-      this.dt, 
-      this.sys, 
-      this.timezone, 
-      this.id, 
-      this.name, 
-      this.cod,});
+    CoordModel? coord,
+    List<WeatherModel>? weather,
+    String? base,
+    MainModel? main,
+    int? visibility,
+    WindModel? wind,
+    CloudsModel? clouds,
+    int? dt,
+    SysModel? sys,
+    int? timezone,
+    int? id,
+    String? name,
+    int? cod,}):super(coord:coord,
+    weather:weather,
+    base:base,
+    main:main,
+    visibility:visibility,
+    wind:wind,
+    clouds:clouds,
+    dt:dt,
+    sys:sys,
+    timezone:timezone,
+    id:id,
+    name:name,
+    cod:cod,
+  );
 
   TodayOverviewModel.fromJson(dynamic json) {
-    coord = json['coord'] != null ? Coord.fromJson(json['coord']) : null;
+    coord = json['coord'] != null ? CoordModel.fromJson(json['coord']) : null;
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather?.add(Weather.fromJson(v));
+        weather?.add(WeatherModel.fromJson(v));
       });
     }
     base = json['base'];
-    main = json['main'] != null ? Main.fromJson(json['main']) : null;
+    main = json['main'] != null ? MainModel.fromJson(json['main']) : null;
     visibility = json['visibility'];
-    wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
-    clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
+    wind = json['wind'] != null ? WindModel.fromJson(json['wind']) : null;
+    clouds = json['clouds'] != null ? CloudsModel.fromJson(json['clouds']) : null;
     dt = json['dt'];
-    sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
+    sys = json['sys'] != null ? SysModel.fromJson(json['sys']) : null;
     timezone = json['timezone'];
     id = json['id'];
     name = json['name'];
     cod = json['cod'];
   }
-  Coord? coord;
-  List<Weather>? weather;
-  String? base;
-  Main? main;
-  int? visibility;
-  Wind? wind;
-  Clouds? clouds;
-  int? dt;
-  Sys? sys;
-  int? timezone;
-  int? id;
-  String? name;
-  int? cod;
-TodayOverviewModel copyWith({  Coord? coord,
-  List<Weather>? weather,
-  String? base,
-  Main? main,
-  int? visibility,
-  Wind? wind,
-  Clouds? clouds,
-  int? dt,
-  Sys? sys,
-  int? timezone,
-  int? id,
-  String? name,
-  int? cod,
-}) => TodayOverviewModel(  coord: coord ?? this.coord,
-  weather: weather ?? this.weather,
-  base: base ?? this.base,
-  main: main ?? this.main,
-  visibility: visibility ?? this.visibility,
-  wind: wind ?? this.wind,
-  clouds: clouds ?? this.clouds,
-  dt: dt ?? this.dt,
-  sys: sys ?? this.sys,
-  timezone: timezone ?? this.timezone,
-  id: id ?? this.id,
-  name: name ?? this.name,
-  cod: cod ?? this.cod,
-);
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (coord != null) {
-      map['coord'] = coord?.toJson();
+      map['coord'] = (coord as CoordModel).toJson();
     }
     if (weather != null) {
-      map['weather'] = weather?.map((v) => v.toJson()).toList();
+      map['weather'] = weather?.map((v) => (v as WeatherModel).toJson()).toList();
     }
     map['base'] = base;
     if (main != null) {
@@ -102,14 +79,14 @@ TodayOverviewModel copyWith({  Coord? coord,
     }
     map['visibility'] = visibility;
     if (wind != null) {
-      map['wind'] = wind?.toJson();
+      map['wind'] = (wind as WindModel).toJson();
     }
     if (clouds != null) {
-      map['clouds'] = clouds?.toJson();
+      map['clouds'] = (clouds as CloudsModel).toJson();
     }
     map['dt'] = dt;
     if (sys != null) {
-      map['sys'] = sys?.toJson();
+      map['sys'] = (sys as SysModel).toJson();
     }
     map['timezone'] = timezone;
     map['id'] = id;
@@ -126,15 +103,20 @@ TodayOverviewModel copyWith({  Coord? coord,
 /// sunrise : 1675399472
 /// sunset : 1675438383
 
-class Sys {
-  Sys({
-      this.type, 
-      this.id, 
-      this.country, 
-      this.sunrise, 
-      this.sunset,});
+class SysModel extends Sys{
+  SysModel({
+    int? type,
+    int? id,
+    String? country,
+    int? sunrise,
+    int? sunset, }):super(type:type,
+    id:id,
+    country:country,
+    sunrise:sunrise,
+    sunset:sunset,
+  );
 
-  Sys.fromJson(dynamic json) {
+  SysModel.fromJson(dynamic json) {
     type = json['type'];
     id = json['id'];
     country = json['country'];
@@ -146,12 +128,12 @@ class Sys {
   String? country;
   int? sunrise;
   int? sunset;
-Sys copyWith({  int? type,
+SysModel copyWith({  int? type,
   int? id,
   String? country,
   int? sunrise,
   int? sunset,
-}) => Sys(  type: type ?? this.type,
+}) => SysModel(  type: type ?? this.type,
   id: id ?? this.id,
   country: country ?? this.country,
   sunrise: sunrise ?? this.sunrise,
@@ -171,16 +153,15 @@ Sys copyWith({  int? type,
 
 /// all : 0
 
-class Clouds {
-  Clouds({
-      this.all,});
+class CloudsModel extends Clouds {
+  CloudsModel({
+    int? all}):super(all:all);
 
-  Clouds.fromJson(dynamic json) {
+  CloudsModel.fromJson(dynamic json) {
     all = json['all'];
   }
-  int? all;
-Clouds copyWith({  int? all,
-}) => Clouds(  all: all ?? this.all,
+CloudsModel copyWith({  int? all,
+}) => CloudsModel(  all: all ?? this.all,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -193,20 +174,19 @@ Clouds copyWith({  int? all,
 /// speed : 1.54
 /// deg : 280
 
-class Wind {
-  Wind({
-      this.speed, 
-      this.deg,});
+class WindModel extends Wind{
+  WindModel({
+    double? speed,
+    int? deg,}):super(speed: speed,deg:deg);
 
-  Wind.fromJson(dynamic json) {
+  WindModel.fromJson(dynamic json) {
     speed = json['speed'];
     deg = json['deg'];
   }
-  double? speed;
-  int? deg;
-Wind copyWith({  double? speed,
+  
+WindModel copyWith({  double? speed,
   int? deg,
-}) => Wind(  speed: speed ?? this.speed,
+}) => WindModel(  speed: speed ?? this.speed,
   deg: deg ?? this.deg,
 );
   Map<String, dynamic> toJson() {
@@ -225,16 +205,23 @@ Wind copyWith({  double? speed,
 /// pressure : 1021
 /// humidity : 41
 
-class Main {
-  Main({
-      this.temp, 
-      this.feelsLike, 
-      this.tempMin, 
-      this.tempMax, 
-      this.pressure, 
-      this.humidity,});
+class MainModel extends Main {
+  MainModel({
+    double? temp,
+    double? feelsLike,
+    double? tempMin,
+    double? tempMax,
+    int? pressure,
+    int? humidity,
+  }):super(temp:temp,
+    feelsLike:feelsLike,
+    tempMin:tempMin,
+    tempMax:tempMax,
+    pressure:pressure,
+    humidity:humidity,
+  );
 
-  Main.fromJson(dynamic json) {
+  MainModel.fromJson(dynamic json) {
     temp = json['temp'];
     feelsLike = json['feels_like'];
     tempMin = json['temp_min'];
@@ -242,19 +229,14 @@ class Main {
     pressure = json['pressure'];
     humidity = json['humidity'];
   }
-  double? temp;
-  double? feelsLike;
-  double? tempMin;
-  double? tempMax;
-  int? pressure;
-  int? humidity;
-Main copyWith({  double? temp,
+
+MainModel copyWith({  double? temp,
   double? feelsLike,
   double? tempMin,
   double? tempMax,
   int? pressure,
   int? humidity,
-}) => Main(  temp: temp ?? this.temp,
+}) => MainModel(  temp: temp ?? this.temp,
   feelsLike: feelsLike ?? this.feelsLike,
   tempMin: tempMin ?? this.tempMin,
   tempMax: tempMax ?? this.tempMax,
@@ -274,65 +256,23 @@ Main copyWith({  double? temp,
 
 }
 
-/// id : 800
-/// main : "Clear"
-/// description : "clear sky"
-/// icon : "01n"
-
-class Weather {
-  Weather({
-      this.id, 
-      this.main, 
-      this.description, 
-      this.icon,});
-
-  Weather.fromJson(dynamic json) {
-    id = json['id'];
-    main = json['main'];
-    description = json['description'];
-    icon = json['icon'];
-  }
-  int? id;
-  String? main;
-  String? description;
-  String? icon;
-Weather copyWith({  int? id,
-  String? main,
-  String? description,
-  String? icon,
-}) => Weather(  id: id ?? this.id,
-  main: main ?? this.main,
-  description: description ?? this.description,
-  icon: icon ?? this.icon,
-);
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['main'] = main;
-    map['description'] = description;
-    map['icon'] = icon;
-    return map;
-  }
-
-}
 
 /// lon : 31.2357
 /// lat : 30.0444
 
-class Coord {
-  Coord({
-      this.lon, 
-      this.lat,});
+class CoordModel extends Coord {
+  CoordModel({
+    double? lon,
+    double? lat}):super(lon:lon,lat: lat);
 
-  Coord.fromJson(dynamic json) {
+  CoordModel.fromJson(dynamic json) {
     lon = json['lon'];
     lat = json['lat'];
   }
-  double? lon;
-  double? lat;
-Coord copyWith({  double? lon,
+
+CoordModel copyWith({  double? lon,
   double? lat,
-}) => Coord(  lon: lon ?? this.lon,
+}) => CoordModel(  lon: lon ?? this.lon,
   lat: lat ?? this.lat,
 );
   Map<String, dynamic> toJson() {

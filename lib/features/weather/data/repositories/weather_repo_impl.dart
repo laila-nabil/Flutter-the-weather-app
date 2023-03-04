@@ -3,7 +3,7 @@ import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/today_overview_model_v.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_timeline.dart';
 
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';

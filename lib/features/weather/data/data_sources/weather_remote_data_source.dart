@@ -6,6 +6,7 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_ti
 import '../../../../core/Network/network.dart';
 import '../../../../core/utils.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../models/present_future_weather_model.dart';
 import '../models/today_overview_model.dart';
 import '../models/today_overview_model_v.dart';
 import '../models/weather_timeline_model_v.dart';
@@ -14,6 +15,8 @@ abstract class WeatherRemoteDataSource {
   Future<TodayOverviewModelV> getTodayOverviewV(GetTodayOverviewParams params);
 
   Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params);
+
+  // Future<PresentFutureWeatherModel> getPresentFutureWeatherModel();
 
   Future<WeatherTimelineModelV> getWeatherTimeline(
       WeatherTimelineParams params);

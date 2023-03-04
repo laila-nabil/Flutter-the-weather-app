@@ -1,6 +1,6 @@
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 
 import 'day_weather_model_v.dart';
 
