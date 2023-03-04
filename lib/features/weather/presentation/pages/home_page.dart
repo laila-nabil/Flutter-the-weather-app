@@ -103,7 +103,7 @@ class MyHomePage extends StatelessWidget {
                       var getCurrentLangCode =
                       LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
-                      bloc.add(GetTodayOverview(
+                      bloc.add(GetTodayOverviewV(
                           params: GetTodayOverviewParamsV(
                               longitude: long,
                               latitude: lat,
@@ -139,7 +139,7 @@ class MyHomePage extends StatelessWidget {
   void getWeatherData(WeatherBloc bloc, String long, String lat, String city,
       String getCurrentLangCode, UnitGroup unit) {
     printDebug("getWeatherData $city");
-    bloc.add(InitialWeatherEvent(
+    bloc.add(InitialWeatherEventV(
         getTodayOverviewParams: GetTodayOverviewParamsV(
             longitude: long,
             latitude: lat,

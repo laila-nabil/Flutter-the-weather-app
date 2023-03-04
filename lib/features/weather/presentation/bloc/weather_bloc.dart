@@ -5,10 +5,13 @@ import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/day_weather.dart';
 import '../../domain/entities/weather_timeline.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 
@@ -23,11 +26,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(this._getTodayWeatherOverviewUseCase, this._getWeatherTimelineUseCase)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
     on<WeatherEvent>((event, emit) async {
-      if (event is GetTodayOverview) {
+      if (event is GetTodayOverviewV) {
         await _getTodayOverview(emit, event.params);
       }else if(event is GetWeatherTimeline){
         await _getWeatherTimeline(emit, event.params);
-      }else if(event is InitialWeatherEvent){
+      }else if(event is InitialWeatherEventV){
         await _getTodayOverview(emit, event.getTodayOverviewParams);
         await _getWeatherTimeline(emit, event.weatherTimelineParams);
       }
