@@ -4,19 +4,16 @@ import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/today_overview_model_v.dart';
-import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
-import 'package:the_weather_app/features/weather/domain/entities/weather_timeline.dart';
+
 
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../models/history_weather_model.dart';
 import '../models/present_future_weather_model.dart';
 import '../models/today_overview_model.dart';
@@ -30,7 +27,7 @@ class WeatherRepoImpl extends WeatherRepo {
 
   @override
   Future<Either<Failure, TodayOverviewModelV>> getTodayOverviewV(
-      GetTodayOverviewParams params) async {
+      GetTodayOverviewParamsV params) async {
     TodayOverviewModelV result;
     try {
       result = await weatherRemoteDataSource.getTodayOverviewV(params);
@@ -110,7 +107,8 @@ class WeatherRepoImpl extends WeatherRepo {
       GetHistoryListWeatherParams params) async {
     List<HistoryWeatherModel> result = List.empty(growable: true);
     try {
-      final now = DateTime.now().toUtc().subtract(Duration(days: 1));
+      final now =
+          DateTime.now().toUtc().subtract(Duration(days: params.numOfDays));
       final dates =
           List.generate(5, (index) => now.subtract(Duration(days: index)));
       for (final date in dates) {

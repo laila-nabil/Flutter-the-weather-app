@@ -5,7 +5,7 @@ abstract class WeatherEvent extends Equatable {
 }
 
 class GetTodayOverview extends WeatherEvent {
-  final GetTodayOverviewParams params;
+  final GetTodayOverviewParamsV params;
 
   GetTodayOverview({required this.params});
 
@@ -24,7 +24,7 @@ class GetWeatherTimeline extends WeatherEvent {
 
 class InitialWeatherEvent extends WeatherEvent {
   final WeatherTimelineParams weatherTimelineParams;
-  final GetTodayOverviewParams getTodayOverviewParams;
+  final GetTodayOverviewParamsV getTodayOverviewParams;
 
   InitialWeatherEvent(
       {required this.weatherTimelineParams,

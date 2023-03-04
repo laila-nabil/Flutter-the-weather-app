@@ -8,7 +8,7 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_ti
 import '../../../../core/Network/network.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../models/today_overview_model_v.dart';
 import '../models/weather_timeline_model_v.dart';
 

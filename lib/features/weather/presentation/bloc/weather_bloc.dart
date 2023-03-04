@@ -9,7 +9,7 @@ import 'package:the_weather_app/features/weather/domain/entities/today_overview_
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/day_weather.dart';
 import '../../domain/entities/weather_timeline.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 
 part 'weather_event.dart';
@@ -17,7 +17,7 @@ part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final GetTodayWeatherOverviewUseCase _getTodayWeatherOverviewUseCase;
+  final GetTodayWeatherOverviewUseCaseV _getTodayWeatherOverviewUseCase;
   final GetWeatherTimelineUseCase _getWeatherTimelineUseCase;
 
   WeatherBloc(this._getTodayWeatherOverviewUseCase, this._getWeatherTimelineUseCase)
@@ -34,7 +34,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     });
   }
 
-  Future<void> _getTodayOverview(Emitter<WeatherState> emit, GetTodayOverviewParams params) async {
+  Future<void> _getTodayOverview(Emitter<WeatherState> emit, GetTodayOverviewParamsV params) async {
      emit(state.copyWith(weatherStatus: WeatherStatus.loading));
     final result = await _getTodayWeatherOverviewUseCase(params);
     result.fold(

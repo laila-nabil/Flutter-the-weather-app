@@ -13,9 +13,8 @@ class GetPresentFutureWeatherUseCase
 
   @override
   Future<Either<Failure, PresentFutureWeather>> call(
-      GetPresentFutureWeatherParams params) {
-    // TODO: implement call
-    throw UnimplementedError();
+      GetPresentFutureWeatherParams params) async{
+    return await repo.getPresentFutureWeather(params);
   }
 }
 

@@ -16,7 +16,7 @@ import '../../../../injection_container.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../location/presentation/widgets/location_widget.dart';
 import '../../domain/entities/unit.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 import '../bloc/weather_bloc.dart';
 import '../widgets/compare_weather.dart';
@@ -104,7 +104,7 @@ class MyHomePage extends StatelessWidget {
                       LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
                       bloc.add(GetTodayOverview(
-                          params: GetTodayOverviewParams(
+                          params: GetTodayOverviewParamsV(
                               longitude: long,
                               latitude: lat,
                               language: getCurrentLangCode,
@@ -140,7 +140,7 @@ class MyHomePage extends StatelessWidget {
       String getCurrentLangCode, UnitGroup unit) {
     printDebug("getWeatherData $city");
     bloc.add(InitialWeatherEvent(
-        getTodayOverviewParams: GetTodayOverviewParams(
+        getTodayOverviewParams: GetTodayOverviewParamsV(
             longitude: long,
             latitude: lat,
             language: getCurrentLangCode,

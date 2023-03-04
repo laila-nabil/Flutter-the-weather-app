@@ -7,7 +7,7 @@ import 'package:the_weather_app/features/location/presentation/bloc/location_blo
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case_v.dart';
 
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/domain/use_cases/autocomplete_search_location_use_case.dart';
@@ -16,6 +16,7 @@ import 'features/location/domain/use_cases/get_location_from_coordinates_use_cas
 import 'features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'features/weather/data/repositories/weather_repo_impl.dart';
 import 'features/weather/domain/repositories/weather_repo.dart';
+import 'features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 import 'features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 import 'features/weather/presentation/bloc/weather_bloc.dart';
 
@@ -34,7 +35,7 @@ Future<void> init() async {
 // UseCases
 
   sl.registerLazySingleton(() => GetWeatherTimelineUseCase(sl()));
-  sl.registerLazySingleton(() => GetTodayWeatherOverviewUseCase(sl()));
+  sl.registerLazySingleton(() => GetTodayWeatherOverviewUseCaseV(sl()));
   sl.registerLazySingleton(() => GetLocationFromCoordinatesUseCase(sl()));
   sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
   sl.registerLazySingleton(() => GetCurrentLocationUseCase());

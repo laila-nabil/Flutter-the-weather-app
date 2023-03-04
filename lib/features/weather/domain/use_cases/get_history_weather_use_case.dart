@@ -14,9 +14,8 @@ class GetHistoryListWeatherUseCase
 
   @override
   Future<Either<Failure, List<HistoryWeather>>> call(
-      GetHistoryListWeatherParams params) {
-    // TODO: implement call
-    throw UnimplementedError();
+      GetHistoryListWeatherParams params) async{
+    return await repo.getHistoryListWeather(params);
   }
 }
 
