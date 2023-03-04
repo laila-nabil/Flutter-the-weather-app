@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:the_weather_app/core/constants.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 
 import '../../../../core/Network/network.dart';
 import '../../../../core/utils.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
+import '../models/history_weather_model.dart';
 import '../models/present_future_weather_model.dart';
 import '../models/today_overview_model.dart';
 import '../models/today_overview_model_v.dart';
@@ -15,12 +17,16 @@ import '../models/weather_timeline_model_v.dart';
 abstract class WeatherRemoteDataSource {
   Future<TodayOverviewModelV> getTodayOverviewV(GetTodayOverviewParams params);
 
-  Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params);
-
-  Future<PresentFutureWeatherModel> getPresentFutureWeatherModel(GetPresentFutureWeatherParams params);
-
   Future<WeatherTimelineModelV> getWeatherTimeline(
       WeatherTimelineParams params);
+
+  Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params);
+
+  Future<PresentFutureWeatherModel> getPresentFutureWeatherModel(
+      GetPresentFutureWeatherParams params);
+
+  Future<HistoryWeatherModel> getHistoryWeather(
+      {required GetHistoryListWeatherParams params,required String dt});
 }
 
 class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
@@ -92,6 +98,23 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
     final responseBody = json.decode(response.body);
     final result = PresentFutureWeatherModel.fromJson(responseBody);
     printDebug("getPresentFutureWeatherModel ${result}");
+    return result;
+  }
+
+  @override
+  Future<HistoryWeatherModel> getHistoryWeather(
+      {required GetHistoryListWeatherParams params,required String dt}) async {
+    String url =
+        "https://api.openweathermap.org/data/2.5/onecall/timemachine?" +
+            "lat=${params.latitude}&lon=${params.longitude}" +
+            "&dt=$dt&exclude=current,minutely" +
+            "&units=metric" +
+            "&appid=$API_KEY";
+
+    final response = await Network.get(url: url);
+    final responseBody = json.decode(response.body);
+    final result = HistoryWeatherModel.fromJson(responseBody);
+    printDebug("getHistoryWeather ${result}");
     return result;
   }
 }
