@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:the_weather_app/core/error/failures.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/today_overview_model_v.dart';
@@ -16,6 +17,9 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weat
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../models/history_weather_model.dart';
+import '../models/present_future_weather_model.dart';
+import '../models/today_overview_model.dart';
 import '../models/weather_timeline_model_v.dart';
 
 class WeatherRepoImpl extends WeatherRepo {
@@ -67,7 +71,7 @@ class WeatherRepoImpl extends WeatherRepo {
   }
 
   @override
-  Future<Either<Failure, TodayOverview>> getTodayOverview(
+  Future<Either<Failure, TodayOverviewModel>> getTodayOverview(
       GetTodayOverviewParams params) async {
     try {
       final result = await weatherRemoteDataSource.getTodayOverview(params);
@@ -84,10 +88,11 @@ class WeatherRepoImpl extends WeatherRepo {
   }
 
   @override
-  Future<Either<Failure, PresentFutureWeather>> getPresentFutureWeather(
+  Future<Either<Failure, PresentFutureWeatherModel>> getPresentFutureWeather(
       GetPresentFutureWeatherParams params) async {
     try {
-      final result = await weatherRemoteDataSource.getPresentFutureWeather(params);
+      final result =
+          await weatherRemoteDataSource.getPresentFutureWeather(params);
       return Right(result);
     } catch (exception) {
       String message = exception.toString();
@@ -101,10 +106,19 @@ class WeatherRepoImpl extends WeatherRepo {
   }
 
   @override
-  Future<Either<Failure, List<HistoryWeather>>> getHistoryListWeather(
+  Future<Either<Failure, List<HistoryWeatherModel>>> getHistoryListWeather(
       GetHistoryListWeatherParams params) async {
+    List<HistoryWeatherModel> result = List.empty(growable: true);
     try {
-      final result = await weatherRemoteDataSource.getPresentFutureWeather(params);
+      final now = DateTime.now().toUtc().subtract(Duration(days: 1));
+      final dates =
+          List.generate(5, (index) => now.subtract(Duration(days: index)));
+      for (final date in dates) {
+        final dt = date.millisecondsSinceEpoch ~/ 1000;
+        result.add(await weatherRemoteDataSource.getHistoryWeather(
+            params: params, dt: dt));
+      }
+      printDebug("getHistoryListWeather $result");
       return Right(result);
     } catch (exception) {
       String message = exception.toString();

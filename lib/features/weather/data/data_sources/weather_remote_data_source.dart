@@ -26,7 +26,7 @@ abstract class WeatherRemoteDataSource {
       GetPresentFutureWeatherParams params);
 
   Future<HistoryWeatherModel> getHistoryWeather(
-      {required GetHistoryListWeatherParams params,required String dt});
+      {required GetHistoryListWeatherParams params,required int dt});
 }
 
 class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
@@ -103,7 +103,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
 
   @override
   Future<HistoryWeatherModel> getHistoryWeather(
-      {required GetHistoryListWeatherParams params,required String dt}) async {
+      {required GetHistoryListWeatherParams params,required int dt}) async {
     String url =
         "https://api.openweathermap.org/data/2.5/onecall/timemachine?" +
             "lat=${params.latitude}&lon=${params.longitude}" +
