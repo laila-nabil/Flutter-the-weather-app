@@ -64,15 +64,9 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   @override
   Future<TodayOverviewModel> getTodayOverview(
       GetTodayOverviewParams params) async {
-    String url =
-        "https://api.openweathermap.org/data/2.5/weather?lat=${params.latitude}&lon=${params.longitude}&appid=$API_KEY'&units=metric";
-    // 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' +
-    //     '${params.latitude},${params.longitude}' +
-    //     '/today?' +
-    //     'unitGroup=${params.unit.name}' +
-    //     '&include=current' +
-    //     '&key=$API_KEY' +
-    //     '&contentType=json&lang=${params.language}&iconSet=icons2';
+    String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
+        "${params.latitude}&lon=${params.longitude}" +
+        "&appid=$API_KEY'&units=metric";
 
     final result = await Network.get(url: url);
 
