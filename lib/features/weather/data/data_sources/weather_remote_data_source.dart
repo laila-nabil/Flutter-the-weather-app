@@ -22,7 +22,7 @@ abstract class WeatherRemoteDataSource {
 
   Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params);
 
-  Future<PresentFutureWeatherModel> getPresentFutureWeatherModel(
+  Future<PresentFutureWeatherModel> getPresentFutureWeather(
       GetPresentFutureWeatherParams params);
 
   Future<HistoryWeatherModel> getHistoryWeather(
@@ -87,7 +87,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   }
 
   @override
-  Future<PresentFutureWeatherModel> getPresentFutureWeatherModel(
+  Future<PresentFutureWeatherModel> getPresentFutureWeather(
       GetPresentFutureWeatherParams params) async {
     String url = "https://api.openweathermap.org/data/2.5/onecall?" +
         "lat=${params.latitude}&lon=${params.longitude}" +

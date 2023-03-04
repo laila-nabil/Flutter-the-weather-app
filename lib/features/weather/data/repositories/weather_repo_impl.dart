@@ -3,10 +3,15 @@ import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/today_overview_model_v.dart';
+import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
+import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_timeline.dart';
 
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 
@@ -20,7 +25,7 @@ class WeatherRepoImpl extends WeatherRepo {
   WeatherRepoImpl(this.weatherRemoteDataSource, this.weatherLocalDataSource);
 
   @override
-  Future<Either<Failure, TodayOverviewModelV>> getTodayOverview(
+  Future<Either<Failure, TodayOverviewModelV>> getTodayOverviewV(
       GetTodayOverviewParams params) async {
     TodayOverviewModelV result;
     try {
@@ -41,6 +46,7 @@ class WeatherRepoImpl extends WeatherRepo {
     WeatherTimelineModelV result;
     try {
       final oldResult = await weatherLocalDataSource.getWeatherTimeline(params);
+
       ///TODO CONDITION MAY NEED TO BE FIXED
       if (oldResult.address?.contains(params.city) == true) {
         result = oldResult;
@@ -58,5 +64,56 @@ class WeatherRepoImpl extends WeatherRepo {
       return Left(ServerFailure(message: message));
     }
     return Right(result);
+  }
+
+  @override
+  Future<Either<Failure, TodayOverview>> getTodayOverview(
+      GetTodayOverviewParams params) async {
+    try {
+      final result = await weatherRemoteDataSource.getTodayOverview(params);
+      return Right(result);
+    } catch (exception) {
+      String message = exception.toString();
+      if (exception is EmptyCacheException) {
+        return Left(EmptyCacheFailure());
+      } else if (exception is ServerException) {
+        message = exception.message ?? "";
+      }
+      return Left(ServerFailure(message: message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PresentFutureWeather>> getPresentFutureWeather(
+      GetPresentFutureWeatherParams params) async {
+    try {
+      final result = await weatherRemoteDataSource.getPresentFutureWeather(params);
+      return Right(result);
+    } catch (exception) {
+      String message = exception.toString();
+      if (exception is EmptyCacheException) {
+        return Left(EmptyCacheFailure());
+      } else if (exception is ServerException) {
+        message = exception.message ?? "";
+      }
+      return Left(ServerFailure(message: message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HistoryWeather>>> getHistoryListWeather(
+      GetHistoryListWeatherParams params) async {
+    try {
+      final result = await weatherRemoteDataSource.getPresentFutureWeather(params);
+      return Right(result);
+    } catch (exception) {
+      String message = exception.toString();
+      if (exception is EmptyCacheException) {
+        return Left(EmptyCacheFailure());
+      } else if (exception is ServerException) {
+        message = exception.message ?? "";
+      }
+      return Left(ServerFailure(message: message));
+    }
   }
 }

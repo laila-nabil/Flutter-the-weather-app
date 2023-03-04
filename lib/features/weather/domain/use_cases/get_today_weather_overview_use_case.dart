@@ -14,7 +14,7 @@ class GetTodayWeatherOverviewUseCase
   GetTodayWeatherOverviewUseCase(this.repo);
   @override
   Future<Either<Failure, TodayOverviewV>> call(GetTodayOverviewParams params) async{
-    return await repo.getTodayOverview(params);
+    return await repo.getTodayOverviewV(params);
   }
 }
 
