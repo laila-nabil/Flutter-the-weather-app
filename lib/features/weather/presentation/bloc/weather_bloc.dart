@@ -4,12 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
+import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/day_weather.dart';
+import '../../domain/entities/today_overview.dart';
 import '../../domain/entities/weather_timeline.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
@@ -20,25 +23,52 @@ part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final GetTodayWeatherOverviewUseCaseV _getTodayWeatherOverviewUseCase;
-  final GetWeatherTimelineUseCase _getWeatherTimelineUseCase;
+  final GetHistoryListWeatherUseCase _getHistoryListWeatherUseCase;
+  final GetPresentFutureWeatherUseCase _getPresentFutureWeatherUseCase;
+  final GetTodayWeatherOverviewUseCase _getTodayWeatherOverviewUseCase;
 
-  WeatherBloc(this._getTodayWeatherOverviewUseCase, this._getWeatherTimelineUseCase)
+  WeatherBloc(this._getTodayWeatherOverviewUseCase,
+      this._getHistoryListWeatherUseCase, this._getPresentFutureWeatherUseCase)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
     on<WeatherEvent>((event, emit) async {
-      if (event is GetTodayOverviewV) {
-        await _getTodayOverview(emit, event.params);
-      }else if(event is GetWeatherTimeline){
-        await _getWeatherTimeline(emit, event.params);
-      }else if(event is InitialWeatherEventV){
-        await _getTodayOverview(emit, event.getTodayOverviewParams);
-        await _getWeatherTimeline(emit, event.weatherTimelineParams);
+      if (event is InitialWeatherEvent) {
+        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+        final presentFutureResult = await _getPresentFutureWeatherUseCase(
+            event.getPresentFutureWeatherParams);
+        presentFutureResult.fold(
+            (l) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.presentFutureFailure,
+                presentFutureFailure: l)),
+            (r) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.presentFutureSuccess,
+                presentFutureWeather: r)));
+        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+        final todayResult = await _getTodayWeatherOverviewUseCase(
+            event.getTodayOverviewParams);
+        todayResult.fold(
+                (l) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.todayOverviewFailure,
+                todayOverviewFailure: l)),
+                (r) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.todayOverviewSuccess,
+                todayOverview: r)));
+        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+        final historyResult = await _getHistoryListWeatherUseCase(
+            event.getHistoryListWeatherParams);
+        historyResult.fold(
+                (l) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.historyFailure,
+                historyListFailure: l)),
+                (r) => emit(state.copyWith(
+                weatherStatus: WeatherStatus.historySuccess,
+                historyListWeather: r)));
       }
     });
   }
 
-  Future<void> _getTodayOverview(Emitter<WeatherState> emit, GetTodayOverviewParamsV params) async {
-     emit(state.copyWith(weatherStatus: WeatherStatus.loading));
+  Future<void> _getTodayOverview(
+      Emitter<WeatherState> emit, GetTodayOverviewParams params) async {
+    emit(state.copyWith(weatherStatus: WeatherStatus.loading));
     final result = await _getTodayWeatherOverviewUseCase(params);
     result.fold(
         (l) => emit(state.copyWith(
@@ -48,43 +78,30 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             weatherStatus: WeatherStatus.todayOverviewSuccess,
             todayOverview: r)));
   }
-
-  Future<void> _getWeatherTimeline(Emitter<WeatherState> emit, WeatherTimelineParams params) async {
-    emit(state.copyWith(weatherStatus: WeatherStatus.loading));
-    final result = await _getWeatherTimelineUseCase(params);
-    result.fold(
-            (l) => emit(state.copyWith(
-            weatherStatus: WeatherStatus.weatherTimelineFailure,
-            weatherTimelineFailure: l)),
-            (r) => emit(state.copyWith(
-            weatherStatus: WeatherStatus.weatherTimelineSuccess,
-            weatherTimeline: r,
-            compareTodayYesterday: compareTodayYesterday(state.todayOverview,
-                state.weatherTimeline?.days?.elementAt(params.daysBeforeToday-1)))));
-  }
 }
 
-String? compareTodayYesterday(TodayOverviewV? todayOverview,DayV? yesterday) {
-  if(todayOverview == null || yesterday == null){
+String? compareTodayYesterday(
+    TodayOverview? todayOverview, HistoryWeather? yesterday) {
+  if (todayOverview == null || yesterday == null) {
     return null;
   }
-  final diffDay = todayOverview.day!.tempmax! > yesterday.tempmax!
+  final diffDay = todayOverview.main!.tempMax! > yesterday.getTempMax!
       ? "warmer".tr().toString()
       : "colder".tr().toString();
-  final diffNight = todayOverview.day!.tempmin! > yesterday.tempmin!
+  final diffNight = todayOverview.main!.tempMin! > yesterday.getTempMin!
       ? "warmer".tr().toString()
       : "colder".tr().toString();
-  final diffMax = todayOverview.day!.tempmax! - yesterday.tempmax!;
-  final diffMin = todayOverview.day!.tempmin! - yesterday.tempmin!;
+  final diffMax = todayOverview.main!.tempMax! - yesterday.getTempMax!;
+  final diffMin = todayOverview.main!.tempMin! - yesterday.getTempMin!;
   return 'lang'.tr().toString().contains('EN')
       ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °' +
-      'deg'.tr().toString() +
-      ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °' +
-      'deg'.tr().toString() +
-      ' at night'
+          'deg'.tr().toString() +
+          ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °' +
+          'deg'.tr().toString() +
+          ' at night'
       : 'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °' +
-      'deg'.tr().toString() +
-      ' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °' +
-      'deg'.tr().toString() +
-      ' في الليل';
+          'deg'.tr().toString() +
+          ' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °' +
+          'deg'.tr().toString() +
+          ' في الليل';
 }

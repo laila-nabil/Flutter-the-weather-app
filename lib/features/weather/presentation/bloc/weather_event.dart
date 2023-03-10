@@ -13,14 +13,6 @@ class GetTodayOverviewV extends WeatherEvent {
   List<Object?> get props => [params];
 }
 
-class GetTodayOverview extends WeatherEvent {
-  final GetTodayOverviewParams params;
-
-  GetTodayOverview({required this.params});
-
-  @override
-  List<Object?> get props => [params];
-}
 
 class InitialWeatherEvent extends WeatherEvent {
   final GetHistoryListWeatherParams getHistoryListWeatherParams;
@@ -40,23 +32,9 @@ class InitialWeatherEvent extends WeatherEvent {
       ];
 }
 
-class GetWeatherTimeline extends WeatherEvent {
-  final WeatherTimelineParams params;
-
-  GetWeatherTimeline({required this.params});
-
+class RefreshWeatherEvent extends WeatherEvent {
   @override
-  List<Object?> get props => [params];
-}
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 
-class InitialWeatherEventV extends WeatherEvent {
-  final WeatherTimelineParams weatherTimelineParams;
-  final GetTodayOverviewParamsV getTodayOverviewParams;
-
-  InitialWeatherEventV(
-      {required this.weatherTimelineParams,
-      required this.getTodayOverviewParams});
-
-  @override
-  List<Object?> get props => [weatherTimelineParams, getTodayOverviewParams];
 }

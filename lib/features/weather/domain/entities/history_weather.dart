@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/core/extensions.dart';
 
 import 'present_future_weather.dart';
 
@@ -25,7 +26,23 @@ class HistoryWeather extends Equatable {
   Current? current;
   List<Hourly>? hourly;
 
-  @override
+  ///TODO??
+  double? get getTempMax {
+    List<double?> temps = _getTemps();
+    return temps.tryFirst;
+  }
+
+  double? get getTempMin {
+    List<double?> temps = _getTemps();
+    return temps.tryElementAt(temps.length - 1);
+  }
+
+  List<double?> _getTemps() {
+    List<double?> temps = [];
+    hourly?.forEach((element) {temps.add(element.temp??0);});
+    temps.sort();
+    return temps;
+  }@override
   List<Object?> get props => [this.lat,
     this.lon,
     this.timezone,

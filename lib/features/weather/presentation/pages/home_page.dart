@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_today.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -55,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                 var long = locationBloc.location?.lon ?? "";
                 var lat = locationBloc.location?.lat ?? "";
                 var getCurrentLangCode =
-                LocalizationImpl().getCurrentLangCode(context);
+                    LocalizationImpl().getCurrentLangCode(context);
                 languageBloc.add(SelectLanguage(
                     LocalizationImpl().getCurrentLanguagesEnum(context)!));
                 var unit = UnitGroup.metric;
@@ -64,8 +67,8 @@ class MyHomePage extends StatelessWidget {
                     long,
                     lat,
                     (LocationState as LocationSuccess)
-                        .userCurrentLocation
-                        ?.city ??
+                            .userCurrentLocation
+                            ?.city ??
                         "",
                     getCurrentLangCode,
                     unit);
@@ -83,7 +86,7 @@ class MyHomePage extends StatelessWidget {
               final isPortrait = screenSize.width < screenSize.height;
               final minimalView = true;
               final userAgent =
-              html.window.navigator.userAgent.toString().toLowerCase();
+                  html.window.navigator.userAgent.toString().toLowerCase();
               //printDebug('userAgent $userAgent');
               //printDebug("screenSize $screenSize");
               //printDebug("orientation $orientation");
@@ -101,7 +104,7 @@ class MyHomePage extends StatelessWidget {
                       var long = locationBloc.location?.lon ?? "";
                       var lat = locationBloc.location?.lat ?? "";
                       var getCurrentLangCode =
-                      LocalizationImpl().getCurrentLangCode(context);
+                          LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
                       bloc.add(GetTodayOverviewV(
                           params: GetTodayOverviewParamsV(
@@ -111,21 +114,21 @@ class MyHomePage extends StatelessWidget {
                               unit: unit)));
                     },
                     child: SingleChildScrollView(
-                      // physics: AlwaysScrollableScrollPhysics(),
-                      // physics: ,
-                      // padding: const EdgeInsets.all(18.0),
+                        // physics: AlwaysScrollableScrollPhysics(),
+                        // physics: ,
+                        // padding: const EdgeInsets.all(18.0),
                         child: state.weatherStatus == WeatherStatus.loading
                             ? false
-                            ? (userAgent.contains('iphone')
-                            ? loadingShimmerIos(screenSize: screenSize)
-                            : loadingShimmer(screenSize: screenSize))
-                            : loadingLogo()
+                                ? (userAgent.contains('iphone')
+                                    ? loadingShimmerIos(screenSize: screenSize)
+                                    : loadingShimmer(screenSize: screenSize))
+                                : loadingLogo()
                             : LoadedContent(
-                            city: locationBloc.location?.city ?? "",
-                            weatherBloc: bloc,
-                            screenSize: screenSize,
-                            isPortrait: isPortrait,
-                            minimalView: minimalView)),
+                                city: locationBloc.location?.city ?? "",
+                                weatherBloc: bloc,
+                                screenSize: screenSize,
+                                isPortrait: isPortrait,
+                                minimalView: minimalView)),
                   ),
                 ),
               );
@@ -136,23 +139,21 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  void getWeatherData(WeatherBloc bloc, String long, String lat, String city,
-      String getCurrentLangCode, UnitGroup unit) {
+  void getWeatherData(WeatherBloc bloc, String longitude, String latitude,
+      String city, String getCurrentLangCode, UnitGroup unit) {
     printDebug("getWeatherData $city");
-    bloc.add(InitialWeatherEventV(
-        getTodayOverviewParams: GetTodayOverviewParamsV(
-            longitude: long,
-            latitude: lat,
+    bloc.add(InitialWeatherEvent(
+        getPresentFutureWeatherParams: GetPresentFutureWeatherParams(
+            getCurrentLangCode,
+            latitude: latitude,
+            longitude: longitude),
+        getHistoryListWeatherParams: GetHistoryListWeatherParams(
+            latitude: latitude,
+            longitude: longitude,
             language: getCurrentLangCode,
-            unit: unit),
-        weatherTimelineParams: WeatherTimelineParams(
-            // longitude: long,
-            // latitude: lat,
-            city: city,
-            language: getCurrentLangCode,
-            unit: unit,
-            daysAfterToday: 1,
-            daysBeforeToday: 5)));
+            numOfDays: 5),
+        getTodayOverviewParams: GetTodayOverviewParams(
+            latitude: latitude, longitude: longitude, language: getCurrentLangCode)));
   }
 }
 

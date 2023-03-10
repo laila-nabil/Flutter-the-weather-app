@@ -6,6 +6,14 @@ extension ElementAtNullableOrEmpty<T> on List<T>?{
       return null;
     }
   }
+
+  T?  tryElementAt(int index){
+    if(this!=null && this?.isNotEmpty == true && (index < (this?.length ??0) == true)){
+      return this?.elementAt(index);
+    }else{
+      return null;
+    }
+  }
 }
 
 extension toStringNull on Object?{

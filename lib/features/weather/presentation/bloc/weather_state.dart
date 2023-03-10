@@ -5,80 +5,62 @@ enum WeatherStatus {
   loading,
   todayOverviewSuccess,
   todayOverviewFailure,
-  weatherTimelineSuccess,
-  weatherTimelineFailure
+  presentFutureSuccess,
+  presentFutureFailure,
+  historySuccess,
+  historyFailure
 }
 
 class WeatherState extends Equatable {
   final WeatherStatus weatherStatus;
-  TodayOverviewV? todayOverview;
-  WeatherTimelineV? weatherTimeline;
+  TodayOverview? todayOverview;
+  PresentFutureWeather? presentFutureWeather;
+  List<HistoryWeather>? historyListWeather;
   Failure? todayOverviewFailure;
-  Failure? weatherTimelineFailure;
+  Failure? presentFutureFailure;
+  Failure? historyListFailure;
   String? compareTodayYesterday;
+
   WeatherState copyWith(
       {required WeatherStatus weatherStatus,
-      TodayOverviewV? todayOverview,
+      TodayOverview? todayOverview,
+      PresentFutureWeather? presentFutureWeather,
+      List<HistoryWeather>? historyListWeather,
       Failure? todayOverviewFailure,
-      WeatherTimelineV? weatherTimeline,
-      Failure? weatherTimelineFailure,
-        String? compareTodayYesterday
-      }) {
+      Failure? presentFutureFailure,
+      Failure? historyListFailure,
+      String? compareTodayYesterday}) {
     return WeatherState(
         weatherStatus: weatherStatus,
         todayOverview: todayOverview ?? this.todayOverview,
         todayOverviewFailure: todayOverviewFailure ?? this.todayOverviewFailure,
-        weatherTimeline: weatherTimeline ?? this.weatherTimeline,
-        weatherTimelineFailure:
-            weatherTimelineFailure ?? this.weatherTimelineFailure,
-        compareTodayYesterday: compareTodayYesterday??this.compareTodayYesterday
-    );
+        historyListFailure: historyListFailure ?? this.historyListFailure,
+        historyListWeather: historyListWeather ?? this.historyListWeather,
+        presentFutureFailure: presentFutureFailure ?? this.presentFutureFailure,
+        presentFutureWeather: presentFutureWeather??this.presentFutureWeather,
+        compareTodayYesterday:
+            compareTodayYesterday ?? this.compareTodayYesterday);
   }
-
-  // Day? get yesterday => weatherTimeline?.days?.elementAt(4);
-  //
-  // ///TODO
-  // String? get compareTodayYesterday {
-  //   if(todayOverview == null || yesterday == null){
-  //     return null;
-  //   }
-  //   final diffDay = todayOverview!.day!.tempmax! > yesterday!.tempmax!
-  //       ? "warmer".tr().toString()
-  //       : "colder".tr().toString();
-  //   final diffNight = todayOverview!.day!.tempmin! > yesterday!.tempmin!
-  //       ? "warmer".tr().toString()
-  //       : "colder".tr().toString();
-  //   final diffMax = todayOverview!.day!.tempmax! - yesterday!.tempmax!;
-  //   final diffMin = todayOverview!.day!.tempmin! - yesterday!.tempmin!;
-  //   return 'lang'.tr().toString().contains('EN')
-  //       ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °' +
-  //           'deg'.tr().toString() +
-  //           ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °' +
-  //           'deg'.tr().toString() +
-  //           ' at night'
-  //       : 'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °' +
-  //           'deg'.tr().toString() +
-  //           ' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °' +
-  //           'deg'.tr().toString() +
-  //           ' في الليل';
-  // }
 
   WeatherState(
       {required this.weatherStatus,
       this.todayOverview,
       this.todayOverviewFailure,
-      this.weatherTimeline,
-      this.weatherTimelineFailure,
-      this.compareTodayYesterday
-      });
+      this.presentFutureWeather,
+      this.compareTodayYesterday,
+      this.historyListFailure,
+      this.historyListWeather,
+      this.presentFutureFailure});
 
   @override
   List<Object?> get props => [
         weatherStatus,
         todayOverview,
         todayOverviewFailure,
-        weatherTimeline,
-        weatherTimelineFailure,
-        compareTodayYesterday
+        presentFutureWeather,
+        compareTodayYesterday,
+        historyListFailure,
+        historyListWeather,
+        presentFutureFailure
       ];
 }
