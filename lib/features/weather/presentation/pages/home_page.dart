@@ -3,6 +3,7 @@ import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
@@ -153,7 +154,9 @@ class MyHomePage extends StatelessWidget {
             language: getCurrentLangCode,
             numOfDays: 5),
         getTodayOverviewParams: GetTodayOverviewParams(
-            latitude: latitude, longitude: longitude, language: getCurrentLangCode)));
+            latitude: latitude,
+            longitude: longitude,
+            language: getCurrentLangCode)));
   }
 }
 
@@ -362,6 +365,8 @@ class LoadedContent extends StatelessWidget {
                     child: CarouselSlider(
                         items: [
                           WeatherTodayWidget(
+                            weatherToday_: weatherBloc
+                                .state.presentFutureWeather!.daily.tryFirst!,
                             weatherToday: weatherBloc.state.todayOverview,
                           ),
                           CompareWeather(
@@ -383,6 +388,8 @@ class LoadedContent extends StatelessWidget {
             Expanded(
                 flex: 7,
                 child: WeatherTodayWidget(
+                  weatherToday_:
+                      weatherBloc.state.presentFutureWeather!.daily.tryFirst!,
                   weatherToday: weatherBloc.state.todayOverview!,
                 )),
           if (isPortrait && !minimalView)
@@ -409,6 +416,8 @@ class LoadedContent extends StatelessWidget {
                         flex: 6,
                         child: WeatherTodayWidget(
                           weatherToday: weatherBloc.state.todayOverview,
+                          weatherToday_: weatherBloc
+                              .state.presentFutureWeather!.daily.tryFirst!,
                         )),
                     Expanded(
                       flex: 6,
@@ -462,6 +471,8 @@ class todayOverview extends StatelessWidget {
             children: [
               SizedBox.expand(
                   child: WeatherTodayWidget(
+                weatherToday_:
+                    weatherBloc.state.presentFutureWeather!.daily.tryFirst!,
                 weatherToday: weatherBloc.state.todayOverview!,
               )),
               SizedBox.expand(
@@ -479,6 +490,8 @@ class todayOverview extends StatelessWidget {
               Expanded(
                   flex: 7,
                   child: WeatherTodayWidget(
+                    weatherToday_:
+                        weatherBloc.state.presentFutureWeather!.daily.tryFirst!,
                     weatherToday: weatherBloc.state.todayOverview!,
                   )),
               Expanded(
@@ -500,6 +513,7 @@ List<Widget> weatherTodayOverview(WeatherBloc weatherBloc) {
     Container(
         child: WeatherTodayWidget(
       weatherToday: weatherBloc.state.todayOverview!,
+      weatherToday_: weatherBloc.state.presentFutureWeather!.daily.tryFirst!,
     )),
     Padding(
       padding: const EdgeInsets.all(8.0),
