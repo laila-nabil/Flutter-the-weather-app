@@ -77,7 +77,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
       GetTodayOverviewParams params) async {
     String url = "https://api.openweathermap.org/data/2.5/weather?" +
         "lat=${params.latitude}&lon=${params.longitude}" +
-        "&appid=$API_KEY'&units=metric&lang${params.language}";
+        "&appid=$API_KEY&units=metric&lang=${params.language}";
 
     final result = await Network.get(url: url);
 
@@ -92,7 +92,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
       GetPresentFutureWeatherParams params) async {
     String url = "https://api.openweathermap.org/data/2.5/onecall?" +
         "lat=${params.latitude}&lon=${params.longitude}" +
-        "&exclude=minutely&lang${params.language}" +
+        "&exclude=minutely&lang=${params.language}" +
         "&appid=$API_KEY";
 
     final response = await Network.get(url: url);
@@ -110,7 +110,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
             "lat=${params.latitude}&lon=${params.longitude}" +
             "&dt=$dt&exclude=current,minutely" +
             "&units=metric" +
-            "&appid=$API_KEY";
+            "&lang=${params.language}&appid=$API_KEY";
 
     final response = await Network.get(url: url);
     final responseBody = json.decode(response.body);
