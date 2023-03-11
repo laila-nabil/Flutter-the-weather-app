@@ -34,18 +34,20 @@ class MyHomePage extends StatelessWidget {
     return BlocProvider<WeatherBloc>(
       create: (context) => sl<WeatherBloc>(),
       child: BlocBuilder<LocationBloc, LocationState>(
-        builder: (context, state) {
+        builder: (context, locationState) {
+          if (locationState == LocationInitial()) {
+            final locationBloc = BlocProvider.of<LocationBloc>(context);
+            locationBloc.add(LocationInitialEvent());
+          }
           return BlocConsumer<WeatherBloc, WeatherState>(
-            listener: (context, LocationState) {
-              final locationBloc = BlocProvider.of<LocationBloc>(context);
-              if (LocationState == LocationInitial()) {
-                locationBloc.add(LocationInitialEvent());
-              }
+            listener: (context, state) {
+
             },
             builder: (context, state) {
               final bloc = BlocProvider.of<WeatherBloc>(context);
               final locationBloc = BlocProvider.of<LocationBloc>(context);
               final languageBloc = BlocProvider.of<LanguageBloc>(context);
+
               printDebug("LocationState ${LocationState}");
 
               printDebug(
@@ -114,7 +116,12 @@ class MyHomePage extends StatelessWidget {
                               language: getCurrentLangCode,
                               unit: unit)));
                     },
-                    child: SingleChildScrollView(
+                    child: true ? Column(
+                      children: [
+                        Text(locationBloc.state.toString()),
+                        Text(state.toString()),
+                      ],
+                    ) : SingleChildScrollView(
                         // physics: AlwaysScrollableScrollPhysics(),
                         // physics: ,
                         // padding: const EdgeInsets.all(18.0),
