@@ -28,23 +28,20 @@ class WeatherTodayWidget extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        return isPortrait
-            ? _WeatherToday(
-                weatherToday: weatherToday,
-                isPortrait: isPortrait,
-                rain: (0).toString() ,///TODO
-                constraints: constraints,
-              )
-            : frostedGlassEffect(
-                context: context,
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                widget: _WeatherToday(
+        var weather = _WeatherToday(
+                  weatherToday_: weatherToday_ ,
                   weatherToday: weatherToday,
                   isPortrait: isPortrait,
                   rain: (0).toString() ,///TODO
                   constraints: constraints,
-                ),
+                );
+        return isPortrait
+            ? weather
+            : frostedGlassEffect(
+                context: context,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                widget: weather,
               );
       },
     );
@@ -57,7 +54,7 @@ class _WeatherToday extends StatelessWidget {
       required this.weatherToday,
       required this.isPortrait,
       required this.rain,///TODO
-      required this.constraints, this.weatherToday_})
+      required this.constraints, required this.weatherToday_})
       : super(key: key);
 
   final TodayOverview? weatherToday;
