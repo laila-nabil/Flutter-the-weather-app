@@ -92,7 +92,7 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
       GetPresentFutureWeatherParams params) async {
     String url = "https://api.openweathermap.org/data/2.5/onecall?" +
         "lat=${params.latitude}&lon=${params.longitude}" +
-        "&exclude=minutely&lang=${params.language}" +
+        "&exclude=minutely&lang=${params.language}&units=metric" +
         "&appid=$API_KEY";
 
     final response = await Network.get(url: url);

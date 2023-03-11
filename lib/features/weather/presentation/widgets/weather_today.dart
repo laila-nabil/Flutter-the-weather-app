@@ -53,7 +53,7 @@ class _WeatherToday extends StatelessWidget {
       {Key? key,
       required this.weatherToday,
       required this.isPortrait,
-      required this.rain,///TODO
+      required this.rain,
       required this.constraints, required this.weatherToday_})
       : super(key: key);
 
