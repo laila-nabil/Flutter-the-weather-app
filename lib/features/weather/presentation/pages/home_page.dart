@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cron/cron.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,6 +25,7 @@ import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 import '../bloc/weather_bloc.dart';
 import '../widgets/compare_weather.dart';
+import '../widgets/weather_tabs.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -40,9 +42,7 @@ class MyHomePage extends StatelessWidget {
             locationBloc.add(LocationInitialEvent());
           }
           return BlocConsumer<WeatherBloc, WeatherState>(
-            listener: (context, state) {
-
-            },
+            listener: (context, state) {},
             builder: (context, state) {
               final bloc = BlocProvider.of<WeatherBloc>(context);
               final locationBloc = BlocProvider.of<LocationBloc>(context);
@@ -56,8 +56,7 @@ class MyHomePage extends StatelessWidget {
               printDebug("bloc ${bloc.state}");
               if (state.weatherStatus == WeatherStatus.initial &&
                   locationState is LocationSuccess &&
-                  (locationState).userCurrentLocation !=
-                      null) {
+                  (locationState).userCurrentLocation != null) {
                 var long = locationBloc.location?.lon ?? "";
                 var lat = locationBloc.location?.lat ?? "";
                 var getCurrentLangCode =
@@ -433,15 +432,17 @@ class LoadedContent extends StatelessWidget {
                 ),
               ),
             ),
-
           Expanded(
-            // flex: isPortrait ? 4 : 5,
+              // flex: isPortrait ? 4 : 5,
               flex: isPortrait ? 4 : 5,
               child: Padding(
                 padding: isPortrait
                     ? const EdgeInsets.only(top: 8.0)
                     : const EdgeInsets.only(top: 16.0),
-                child: WeatherTabs(),
+                child: WeatherTabs(
+                  presentFutureWeather: weatherBloc.state.presentFutureWeather,
+                  historyWeather: weatherBloc.state.historyListWeather,
+                ),
               )),
           if (isPortrait)
             Expanded(

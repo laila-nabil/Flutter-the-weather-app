@@ -3,20 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
+import '../../domain/entities/present_future_weather.dart';
 import '../../domain/entities/weather.dart';
 
 class WeatherTabs extends StatelessWidget {
+  final PresentFutureWeather? presentFutureWeather;
+  final List<HistoryWeather>? historyWeather;
+
+  const WeatherTabs(
+      {Key? key,
+      required this.presentFutureWeather,
+      required this.historyWeather})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    ///TODO
-    // final weatherTabs = Provider.of<WeatherProvider>(context).allWeather;
-    final List<Weather> weatherTabs = [];
+
     const todayIndex = 4;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
-          length: weatherTabs.length, // length of tabs
+          length: (presentFutureWeather?.daily?.length ?? 0)+(historyWeather?.length ?? 0), // length of tabs
           initialIndex: todayIndex,
           child: Column(children: <Widget>[
             Container(
@@ -25,7 +33,7 @@ class WeatherTabs extends StatelessWidget {
                 labelColor: AppColors.white,
                 unselectedLabelColor: Colors.grey,
                 tabs: [
-                  ...weatherTabs.asMap().entries.map((e) {
+                  ...presentFutureWeather?.asMap().entries.map((e) {
                     String day;
                     switch(e.key) {
                       case todayIndex:
