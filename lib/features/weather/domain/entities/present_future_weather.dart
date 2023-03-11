@@ -24,7 +24,7 @@ class PresentFutureWeather extends Equatable{
   double? lat;
   double? lon;
   String? timezone;
-  int? timezoneOffset;
+  num? timezoneOffset;
   Current? current;
   List<Hourly>? hourly;
   List<Daily>? daily;
@@ -82,22 +82,22 @@ class Daily extends Equatable{
       this.pop, 
       this.uvi,});
 
-  int? dt;
-  int? sunrise;
-  int? sunset;
-  int? moonrise;
-  int? moonset;
+  num? dt;
+  num? sunrise;
+  num? sunset;
+  num? moonrise;
+  num? moonset;
   double? moonPhase;
   Temp? temp;
   FeelsLike? feelsLike;
-  int? pressure;
-  int? humidity;
+  num? pressure;
+  num? humidity;
   double? dewPoint;
   double? windSpeed;
-  int? windDeg;
+  num? windDeg;
   double? windGust;
   List<Weather>? weather;
-  int? clouds;
+  num? clouds;
   double? pop;
   double? uvi;
 
@@ -217,17 +217,17 @@ class Hourly extends Equatable{
       this.weather, 
       this.pop,});
 
-  int? dt;
+  num? dt;
   double? temp;
   double? feelsLike;
-  int? pressure;
-  int? humidity;
+  num? pressure;
+  num? humidity;
   double? dewPoint;
-  int? uvi;
-  int? clouds;
-  int? visibility;
+  num? uvi;
+  num? clouds;
+  num? visibility;
   double? windSpeed;
-  int? windDeg;
+  num? windDeg;
   double? windGust;
   List<Weather>? weather;
   double? pop;
@@ -284,19 +284,19 @@ class Current extends Equatable {
       this.windDeg, 
       this.weather,});
 
-  int? dt;
-  int? sunrise;
-  int? sunset;
+  num? dt;
+  num? sunrise;
+  num? sunset;
   double? temp;
   double? feelsLike;
-  int? pressure;
-  int? humidity;
+  num? pressure;
+  num? humidity;
   double? dewPoint;
   double? uvi;
-  int? clouds;
-  int? visibility;
+  num? clouds;
+  num? visibility;
   double? windSpeed;
-  int? windDeg;
+  num? windDeg;
   List<Weather>? weather;
 
   @override
