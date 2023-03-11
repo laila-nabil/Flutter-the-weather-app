@@ -32,7 +32,7 @@ class WeatherTodayWidget extends StatelessWidget {
                   weatherToday_: weatherToday_ ,
                   weatherToday: weatherToday,
                   isPortrait: isPortrait,
-                  rain: (0).toString() ,///TODO
+                  rain: (weatherToday_.pop).toString() ,
                   constraints: constraints,
                 );
         return isPortrait
