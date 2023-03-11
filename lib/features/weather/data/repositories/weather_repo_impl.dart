@@ -108,11 +108,14 @@ class WeatherRepoImpl extends WeatherRepo {
     List<HistoryWeatherModel> result = List.empty(growable: true);
     try {
       final now =
-          DateTime.now().toUtc().subtract(Duration(days: params.numOfDays));
+          DateTime.now().toUtc();
       final dates =
-          List.generate(5, (index) => now.subtract(Duration(days: index)));
+          List.generate(params.numOfDays, (index) => now.subtract(Duration(days: index)));
+      printDebug("now $now");
+      printDebug("dates $dates");
       for (final date in dates) {
         final dt = date.millisecondsSinceEpoch ~/ 1000;
+        printDebug("date $date $dt");
         result.add(await weatherRemoteDataSource.getHistoryWeather(
             params: params, dt: dt));
       }
