@@ -207,7 +207,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunrise,
                   status:
-                      '${weatherToday?.sys?.sunrise}',
+                      '${weatherToday?.sys?.getSunrise}',
                 ),
               ),
               Container(
@@ -242,7 +242,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconSunset,
                   status:
-                      '${weatherToday?.sys?.sunset}',
+                      '${weatherToday?.sys?.getSunset}',
                 ),
               ),
               Container(

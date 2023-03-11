@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/utils.dart';
+import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 
 import 'weather.dart';
 
@@ -88,6 +89,8 @@ class Sys extends Equatable{
   int? sunset;
 
 
+  String? get getSunset => sunset == null ? null : unixSecondsToDateFormat(sunset!);
+  String? get getSunrise => sunrise == null ? null : unixSecondsToDateFormat(sunrise!);
   @override
   List<Object?> get props => [this.type,
     this.id,
