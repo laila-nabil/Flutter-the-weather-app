@@ -42,7 +42,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             (r) => emit(state.copyWith(
                 weatherStatus: WeatherStatus.presentFutureSuccess,
                 presentFutureWeather: r)));
-        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
         final todayResult = await _getTodayWeatherOverviewUseCase(
             event.getTodayOverviewParams);
         todayResult.fold(
@@ -52,7 +51,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 (r) => emit(state.copyWith(
                 weatherStatus: WeatherStatus.todayOverviewSuccess,
                 todayOverview: r)));
-        emit(state.copyWith(weatherStatus: WeatherStatus.loading));
         final historyResult = await _getHistoryListWeatherUseCase(
             event.getHistoryListWeatherParams);
         historyResult.fold(

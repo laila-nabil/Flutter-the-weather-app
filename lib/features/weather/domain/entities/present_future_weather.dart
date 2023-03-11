@@ -98,7 +98,7 @@ class Daily extends Equatable{
   double? windGust;
   List<Weather>? weather;
   int? clouds;
-  int? pop;
+  double? pop;
   double? uvi;
 
 
@@ -230,7 +230,7 @@ class Hourly extends Equatable{
   int? windDeg;
   double? windGust;
   List<Weather>? weather;
-  int? pop;
+  double? pop;
 
 
   @override
@@ -292,7 +292,7 @@ class Current extends Equatable {
   int? pressure;
   int? humidity;
   double? dewPoint;
-  int? uvi;
+  double? uvi;
   int? clouds;
   int? visibility;
   double? windSpeed;
