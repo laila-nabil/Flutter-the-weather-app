@@ -434,8 +434,7 @@ class LoadedContent extends StatelessWidget {
               ),
             ),
 
-          ///TODO
-          /*Expanded(
+          Expanded(
             // flex: isPortrait ? 4 : 5,
               flex: isPortrait ? 4 : 5,
               child: Padding(
@@ -451,7 +450,7 @@ class LoadedContent extends StatelessWidget {
                 '${'last_update'.tr().toString()} ${DateFormat('dd MMM - hh:mm a', 'locale'.tr().toString()).format(DateTime.now())}',
                 style: TextStyle(fontSize: 11, color: AppColors.white),
               ),
-            )*/
+            )
         ],
       ),
     );
