@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/core/utils.dart';
 
 import 'weather.dart';
 
@@ -119,6 +121,16 @@ class Wind extends Equatable{
   double? speed;
   int? deg;
 
+  String get windDirection
+  {
+    final directionsEn = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"];
+    // final directionsAr = ["شمال","شمال","شمال شرق","شرق","شرق","شرق","جنوب شرق","جنوب","جنوب","جنوب","جنوب غرب","غرب","غرب","غرب","شمال غرب","شمال","شمال"];
+    final directionsAr = ["ش","ش","ش ق","ق","ق","ق","ج ق","ج","ج","ج","ج غ","غ","غ","غ","ش غ","ش","ش"];
+    var deg_ = deg ?? 0;
+    final result = 'lang'.tr().contains('EN')? '${directionsEn[(deg_/22.5).round()]}' : '${directionsAr[(deg_/22.5).round()]}';
+    printDebug("windDirection $result");
+    return  result;
+  }
 
   @override
   List<Object?> get props => [speed,deg];

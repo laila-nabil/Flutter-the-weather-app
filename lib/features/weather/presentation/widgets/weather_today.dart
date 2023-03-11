@@ -232,7 +232,7 @@ class todayDetails extends StatelessWidget {
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconWind2,
                   status:
-                      '${weatherToday?.wind?.speed} ${'m_s'.tr()} ${weatherToday?.wind?.deg}',
+                      '${weatherToday?.wind?.speed} ${'m_s'.tr()} ${weatherToday?.wind?.windDirection}',
                 ),
               ),
               Container(
