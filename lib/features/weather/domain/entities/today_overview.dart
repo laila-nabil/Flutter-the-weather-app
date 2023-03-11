@@ -16,6 +16,7 @@ import 'weather.dart';
 /// name : "Al ‘Atabah"
 /// cod : 200
 
+///TODO MODEL AND ENTITY
 class TodayOverview extends Equatable{
   TodayOverview({
       this.coord, 
@@ -86,8 +87,11 @@ class Sys extends Equatable{
 
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [this.type,
+    this.id,
+    this.country,
+    this.sunrise,
+    this.sunset,];
 
 }
 
@@ -176,8 +180,12 @@ Main copyWith({  double? temp,
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [this.temp,
+    this.feelsLike,
+    this.tempMin,
+    this.tempMax,
+    this.pressure,
+    this.humidity,];
 
 }
 
