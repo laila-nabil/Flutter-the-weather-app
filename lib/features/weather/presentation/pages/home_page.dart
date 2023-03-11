@@ -116,12 +116,7 @@ class MyHomePage extends StatelessWidget {
                               language: getCurrentLangCode,
                               unit: unit)));
                     },
-                    child: true ? Column(
-                      children: [
-                        Text(locationBloc.state.toString()),
-                        Text(state.toString()),
-                      ],
-                    ) : SingleChildScrollView(
+                    child: SingleChildScrollView(
                         // physics: AlwaysScrollableScrollPhysics(),
                         // physics: ,
                         // padding: const EdgeInsets.all(18.0),
@@ -379,8 +374,6 @@ class LoadedContent extends StatelessWidget {
                           CompareWeather(
                               compareWeather:
                                   weatherBloc.state.compareTodayYesterday ?? "")
-
-                          ///TODO
                         ],
                         options: CarouselOptions(
                           height: constraints.maxHeight - 0.1,

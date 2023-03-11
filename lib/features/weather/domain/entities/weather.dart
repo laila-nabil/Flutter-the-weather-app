@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 /// description : "clear sky"
 /// icon : "01n"
 
+///todo model and entity
 class Weather extends Equatable{
   Weather({
     this.id,
@@ -22,7 +23,7 @@ class Weather extends Equatable{
   String? main;
   String? description;
   String? icon;
-
+  String get iconPath => "assets/3d/"+(icon??"")+".png";
   @override
   List<Object?> get props => [this.id,
     this.main,

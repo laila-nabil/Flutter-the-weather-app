@@ -79,7 +79,7 @@ class _WeatherToday extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: Image.asset(
-                      weatherToday?.weather.tryFirst?.icon ?? "",
+                      weatherToday?.weather.tryFirst?.iconPath ?? "",
                       // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
                       // width: isPortrait
                       //     ? constraints.maxWidth * 0.65
@@ -95,7 +95,7 @@ class _WeatherToday extends StatelessWidget {
                 : Expanded(
                     flex: 1,
                     child: Image.network(
-                      weatherToday?.weather.tryFirst?.icon ?? "",
+                      weatherToday?.weather.tryFirst?.iconPath ?? "",
                       // width: constraints.maxWidth * 0.5,
                       // width: constraints.maxWidth * 0.325,
                       height: isPortrait
