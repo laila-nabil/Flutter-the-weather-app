@@ -48,15 +48,15 @@ class MyHomePage extends StatelessWidget {
               final locationBloc = BlocProvider.of<LocationBloc>(context);
               final languageBloc = BlocProvider.of<LanguageBloc>(context);
 
-              printDebug("LocationState ${LocationState}");
+              printDebug("locationState ${locationState}");
 
               printDebug(
                   "locationBloc.location?.city != null ${locationBloc.location?.city}");
-              printDebug("locationBloc ${LocationState}");
+              printDebug("locationBloc ${locationState}");
               printDebug("bloc ${bloc.state}");
               if (state.weatherStatus == WeatherStatus.initial &&
-                  LocationState is LocationSuccess &&
-                  (LocationState as LocationSuccess).userCurrentLocation !=
+                  locationState is LocationSuccess &&
+                  (locationState).userCurrentLocation !=
                       null) {
                 var long = locationBloc.location?.lon ?? "";
                 var lat = locationBloc.location?.lat ?? "";
@@ -69,7 +69,7 @@ class MyHomePage extends StatelessWidget {
                     bloc,
                     long,
                     lat,
-                    (LocationState as LocationSuccess)
+                    (locationState as LocationSuccess)
                             .userCurrentLocation
                             ?.city ??
                         "",

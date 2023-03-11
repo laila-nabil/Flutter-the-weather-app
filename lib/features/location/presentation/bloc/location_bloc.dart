@@ -69,7 +69,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     result.fold((failure) => emit(LocationFailure(event, failure: failure)),
         (success) {
       location = success;
-      emit(LocationSuccess(event, locationFromCoordinates: success));
+      emit(LocationSuccess(event, locationFromCoordinates: success,userCurrentLocation: userCurrentLocation));
     });
   }
 }
