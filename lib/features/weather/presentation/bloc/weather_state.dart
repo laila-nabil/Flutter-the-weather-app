@@ -124,12 +124,12 @@ class WeatherState extends Equatable {
                 uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
                 humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
                 visibility: "visibility",
-                detailedDescription: presentFutureWeather!.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-                feelsLike: presentFutureWeather!.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
+                detailedDescription: presentFutureWeather?.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
+                feelsLike: presentFutureWeather?.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
                 isImageNetwork: true,
                 date: unixSecondsToDateTimezone(presentFutureWeather!.hourly
                     .tryElementAt(index)
-                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
+                ?.dt?.toInt() ??0, presentFutureWeather?.timezoneOffset?.toInt() ??0),
             ))
         ));
     List<DayWeatherParams> _historyWeatherDays = List.generate(
