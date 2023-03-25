@@ -8,15 +8,14 @@ import 'package:the_weather_app/features/weather/presentation/widgets/weather_li
 
 import '../../domain/entities/present_future_weather.dart';
 import '../../domain/entities/weather.dart';
+import 'compact_day_weather.dart';
 
 class WeatherTabs extends StatelessWidget {
-  final PresentFutureWeather? presentFutureWeather;
-  final List<HistoryWeather>? historyWeather;
+  final List<DayWeatherParams> days;
 
   const WeatherTabs(
       {Key? key,
-      required this.presentFutureWeather,
-      required this.historyWeather})
+      required this.days,})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class WeatherTabs extends StatelessWidget {
     const todayIndex = 4;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
-          length: (presentFutureWeather?.daily?.length ?? 0)+(historyWeather?.length ?? 0), // length of tabs
+          length: (days.length ?? 0), // length of tabs
           initialIndex: todayIndex,
           child: Column(children: <Widget>[
             Container(
@@ -33,7 +32,7 @@ class WeatherTabs extends StatelessWidget {
                 labelColor: AppColors.white,
                 unselectedLabelColor: Colors.grey,
                 tabs: [
-                  ...presentFutureWeather?.asMap().entries.map((e) {
+                  ...days.asMap().entries.map((e) {
                     String day;
                     switch(e.key) {
                       case todayIndex:
@@ -55,22 +54,22 @@ class WeatherTabs extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             if (e.value.isImageNetwork &&
-                                (e.value.image != null &&
-                                    e.value.image != "" &&
-                                    e.value.image !=
+                                (e.value.iconPath != null &&
+                                    e.value.iconPath != "" &&
+                                    e.value.iconPath !=
                                         'assets/weather_status/clear.png'))
                               Image.network(
-                                e.value.image,
+                                e.value.iconPath,
                                 width: 50,
                                 height: 50,
                               ),
                             if (!e.value.isImageNetwork &&
-                                (e.value.image != null &&
-                                    e.value.image != "" &&
-                                    e.value.image !=
+                                (e.value.iconPath != null &&
+                                    e.value.iconPath != "" &&
+                                    e.value.iconPath !=
                                         'assets/weather_status/clear.png'))
                               Image.asset(
-                                e.value.image,
+                                e.value.iconPath,
                                 width: 35,
                                 height: 35,
                               ),
@@ -84,13 +83,13 @@ class WeatherTabs extends StatelessWidget {
                                   text: TextSpan(children: [
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.tempMax)?.toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.value.maxTemp)?.toStringAsFixed(1)} ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.white)),
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.tempMin)?.toStringAsFixed(1)} ",
+                                        "${double.tryParse(e.value.minTemp)?.toStringAsFixed(1)} ",
                                         style: TextStyle(color: AppColors.white)),
 
                                   ]),
@@ -113,13 +112,7 @@ class WeatherTabs extends StatelessWidget {
                     border: Border(
                         top: BorderSide(color: Colors.grey, width: 0.5))),
                 child: TabBarView(children: <Widget>[
-                  ...weatherTabs
-                      // .map((e) => WeatherList(e.weatherTimeline))
-                      .map((e) {
-                    // printDebug("e.date ${e.date}");
-                    // printDebug("e.weatherTimeline ${e.weatherTimeline.length}");
-                    return WeatherList(e.weatherTimeline ?? []);
-                  }).toList()
+                  WeatherList(days)
                 ]))
           ]));
     });

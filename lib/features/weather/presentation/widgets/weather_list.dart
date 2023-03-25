@@ -4,7 +4,7 @@ import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/compact_day_weather.dart';
 
 class WeatherList extends StatelessWidget {
-  final List<Weather> weatherList;
+  final List<DayWeatherParams> weatherList;
 
   WeatherList(this.weatherList);
 
@@ -17,7 +17,6 @@ class WeatherList extends StatelessWidget {
       width: double.infinity,
       child: ScrollablePositionedList.builder(
         physics: AlwaysScrollableScrollPhysics(),
-
         itemBuilder: (ctx, i) {
           return CompactDayWeather(weatherList[i]);
         },

@@ -440,8 +440,7 @@ class LoadedContent extends StatelessWidget {
                     ? const EdgeInsets.only(top: 8.0)
                     : const EdgeInsets.only(top: 16.0),
                 child: WeatherTabs(
-                  presentFutureWeather: weatherBloc.state.presentFutureWeather,
-                  historyWeather: weatherBloc.state.historyListWeather,
+                  days: weatherBloc.state.days
                 ),
               )),
           if (isPortrait)

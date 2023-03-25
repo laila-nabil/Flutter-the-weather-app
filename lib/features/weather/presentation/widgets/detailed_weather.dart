@@ -8,58 +8,59 @@ import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/wind_direction.dart';
 import 'package:the_weather_app/widgets/custom_grid.dart';
 
+import 'compact_day_weather.dart';
 import 'dashboard_weather.dart';
 
 class WeatherDetailed extends StatelessWidget {
-  final Weather weatherDay;
+  final DayWeatherParams params;
 
-  WeatherDetailed(this.weatherDay);
+  WeatherDetailed(this.params);
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isPortrait = screenSize.width < screenSize.height;
-    //printDebug("detailed weather for ${weatherDay.date} ${weatherDay.rain} ${double.tryParse(weatherDay.rain)} ${(double.tryParse(weatherDay.rain) * 100).toStringAsFixed(2)}%");
+    //printDebug("detailed weather for ${params.date} ${params.rain} ${double.tryParse(params.rain)} ${(double.tryParse(params.rain) * 100).toStringAsFixed(2)}%");
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
         DashboardWeather(
           isStatusCentered: false,
           svgIcon: AppAssets.IconRain,
-          status: '${(double.tryParse(weatherDay.rain)! * 100).toStringAsFixed(2)}%',
+          status: '${(double.tryParse(params.rain)! * 100).toStringAsFixed(2)}%',
         ),
 
         DashboardWeather(
           isStatusCentered: false,
           svgIcon: AppAssets.IconWind2,
           status:
-      weatherDay.windSpeed.isNotEmpty&&weatherDay.windDeg.isNotEmpty ? '${weatherDay.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(weatherDay.windDeg) ?? 0)}' : '_',
+      params.windSpeed.isNotEmpty&&params.windDeg.isNotEmpty ? '${params.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(params.windDeg) ?? 0)}' : '_',
         ),
         DashboardWeather(
           isStatusCentered: false,
           title: 'pressure'.tr().toString(),
-          status: '${double.tryParse(weatherDay.pressure)}  ${'hpa'.tr()}',
+          status: '${double.tryParse(params.pressure)}  ${'hpa'.tr()}',
         ),
         DashboardWeather(
           isStatusCentered: false,
           title: 'clouds'.tr().toString(),
-          status: '${double.tryParse(weatherDay.clouds)}%',
+          status: '${double.tryParse(params.clouds)}%',
         ),
         DashboardWeather(
           isStatusCentered: false,
           title: 'uvi'.tr().toString(),
-          status: '${double.tryParse(weatherDay.uvi)}',
+          status: '${double.tryParse(params.uvi)}',
         ),
         DashboardWeather(
           isStatusCentered: false,
           title: 'humidity'.tr().toString(),
-          status: '${double.tryParse(weatherDay.humidity)}%',
+          status: '${double.tryParse(params.humidity)}%',
         ),
         DashboardWeather(
           isStatusCentered: false,
           title: 'visibility'.tr().toString(),
-          status: double.tryParse(weatherDay.visibility)! > 1000
-              ? '${(double.tryParse(weatherDay.visibility)! / 1000).toStringAsFixed(1)} ${'km'.tr()}'
-              : '${double.tryParse(weatherDay.visibility)} m',
+          status: double.tryParse(params.visibility)! > 1000
+              ? '${(double.tryParse(params.visibility)! / 1000).toStringAsFixed(1)} ${'km'.tr()}'
+              : '${double.tryParse(params.visibility)} m',
         ),
       ];
       final cols = isPortrait ? 2 : 4;
@@ -90,9 +91,9 @@ class WeatherDetailed extends StatelessWidget {
           children: [
             Row(
               children: [
-                weatherDay.isImageNetwork
+                params.isImageNetwork
                     ? Image.network(
-                        weatherDay.image,
+                        params.iconPath,
                         width: isPortrait
                             ? constraints.maxWidth * 0.5
                             : constraints.maxWidth * 0.3,
@@ -100,7 +101,7 @@ class WeatherDetailed extends StatelessWidget {
                         fit: BoxFit.contain,
                       )
                     : Image.asset(
-                        weatherDay.image,
+                        params.iconPath,
                         width: isPortrait
                             ? constraints.maxWidth * 0.5
                             : constraints.maxWidth * 0.3,
@@ -116,7 +117,7 @@ class WeatherDetailed extends StatelessWidget {
                   height: constraints.maxHeight * 0.4,
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    '${weatherDay.tempCurrent} °'+'deg'.tr().toString(),
+                    '${params.currentTemp} °'+'deg'.tr().toString(),
                     style: TextStyle(fontSize: 22),
                     maxLines: 1,
                     minFontSize: 15,
@@ -124,20 +125,22 @@ class WeatherDetailed extends StatelessWidget {
                   ),
                 ),
                 if (!isPortrait)
-                  feelsLike(
+                  FeelsLikeWidget(
                     constraints: constraints,
-                    weatherDay: weatherDay,
+                    detailedDescription: params.detailedDescription,
+                    feelsLike: params.feelsLike,
                     isPortrait: isPortrait,
                   ),
               ],
             ),
             if (isPortrait)
-              feelsLike(
+              FeelsLikeWidget(
                 constraints: constraints,
-                weatherDay: weatherDay,
+                detailedDescription: params.detailedDescription,
+                feelsLike: params.feelsLike,
                 isPortrait: isPortrait,
               ),
-            // Expanded(child: Text('lat ${weatherDay.lat}, lon ${weatherDay.lon}')),
+            // Expanded(child: Text('lat ${params.lat}, lon ${params.lon}')),
             GoogleGrid(
               // children: dashboard,
               children: newDashboard,
@@ -151,19 +154,24 @@ class WeatherDetailed extends StatelessWidget {
   }
 }
 
-class feelsLike extends StatelessWidget {
+class FeelsLikeWidget extends StatelessWidget {
   final BoxConstraints constraints;
-  final Weather weatherDay;
+  final String feelsLike;
+  final String detailedDescription;
   final bool isPortrait;
 
-  feelsLike({required this.constraints, required this.weatherDay, required this.isPortrait});
+  FeelsLikeWidget(
+      {required this.constraints,
+      required this.feelsLike,
+      required this.detailedDescription,
+      required this.isPortrait});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (weatherDay.feelsLike != null && weatherDay.feelsLike != "")
+        if (feelsLike != "")
           Container(
             alignment: Alignment.center,
             height: isPortrait
@@ -176,16 +184,16 @@ class feelsLike extends StatelessWidget {
               TextSpan(text: 'feels_like'.tr().toString(), children: [
 
                 TextSpan(text:
-               '${weatherDay.feelsLike} °'+'deg'.tr().toString()+', ',
-                // '${weatherDay.feelsLike}°C , '
+               '${feelsLike} °'+'deg'.tr().toString()+', ',
+                // '${params.feelsLike}°C , '
                 ),
                 TextSpan(
-                    text: '${weatherDay.detailedDescription}',
+                    text: '${detailedDescription}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ))
               ]),
-              // 'Feels like ${weatherDay.feelsLike}°C, ${weatherDay.detailedDescription}'
+              // 'Feels like ${params.feelsLike}°C, ${params.detailedDescription}'
               minFontSize: 12,
               maxFontSize: 37,
               style: TextStyle(fontSize: 25, color: AppColors.white),
