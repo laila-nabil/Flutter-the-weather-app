@@ -132,8 +132,71 @@ class WeatherState extends Equatable {
                 !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
             ))
         ));
+    List<DayWeatherParams> _historyWeatherDays = List.generate(
+        (historyListWeather?.length ?? 0),
+        (index) => DayWeatherParams(
+            iconPath: historyListWeather?.tryElementAt(index)
+                    ?.current?.weather
+                    .tryFirst
+                    ?.iconPath ??
+                "",
+            currentTemp:  historyListWeather?.tryElementAt(index)?.current?.temp.toString() ?? "",
+            minTemp:
+                "minTemp",
+            maxTemp:  "maxTemp",
+            rain: "rain",
+            windSpeed:
+                "windSpeed",
+            windDeg:
+                "windDeg",
+            pressure: "pressure",
+            clouds: "clouds",
+            uvi: "uvi",
+            humidity: "humidity",
+            visibility: "visibility",
+            detailedDescription: "detailedDescription",
+            feelsLike: "feelsLike",
+            isImageNetwork: true,
+            date: unixSecondsToDateTimezone(historyListWeather.tryElementAt(index)!.current!.dt!.toInt(), historyListWeather.tryElementAt(index)!.timezoneOffset!.toInt()),
+            ///TODO WRONG
+            details: List.generate(presentFutureWeather?.hourly?.length ?? 0, (index) =>  DayWeatherParams(
+                iconPath: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.weather
+                    .tryFirst
+                    ?.iconPath ??
+                    "",
+                currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
+                minTemp:"minTemp",
+                maxTemp:"maxTemp",
+                rain: "rain",
+                windSpeed: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.windSpeed
+                    ?.toString() ??
+                    "",
+                windDeg: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.windDeg
+                    ?.toString() ??
+                    "",
+                pressure: presentFutureWeather?.hourly.tryElementAt(index)?.pressure?.toString() ?? "",
+                clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
+                uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
+                humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
+                visibility: "visibility",
+                detailedDescription: presentFutureWeather!.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
+                feelsLike: presentFutureWeather!.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
+                isImageNetwork: true,
+                date: unixSecondsToDateTimezone(presentFutureWeather!.hourly
+                    .tryElementAt(index)
+                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
+                details: []
+            )),
+        ));
 
-    return _presentFutureWeatherDays;
+
+    return _historyWeatherDays + _presentFutureWeatherDays;
   }
   @override
   List<Object?> get props => [
