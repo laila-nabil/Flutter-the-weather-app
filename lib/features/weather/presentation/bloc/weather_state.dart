@@ -134,16 +134,24 @@ class WeatherState extends Equatable {
         ));
     List<DayWeatherParams> _historyWeatherDays = List.generate(
         (historyListWeather?.length ?? 0),
-        (index) => DayWeatherParams(
-            iconPath: historyListWeather?.tryElementAt(index)
+        (index) {
+          var element = historyListWeather?.tryElementAt(index);
+          List<double> temps = [];
+          element?.hourly?.forEach((element) {
+            if(element.temp!=null) {
+              temps.add(element.temp!);
+            }});
+          temps.sort();
+          return DayWeatherParams(
+            iconPath: element
                     ?.current?.weather
                     .tryFirst
                     ?.iconPath ??
                 "",
-            currentTemp:  historyListWeather?.tryElementAt(index)?.current?.temp.toString() ?? "",
+            currentTemp:  element?.current?.temp.toString() ?? "",
             minTemp:
-                "minTemp",
-            maxTemp:  "maxTemp",
+            temps.tryFirst.toString() ?? "minTemp",
+            maxTemp:  temps.tryElementAt(temps.length - 1).toString() ?? "maxTemp",
             rain: "rain",
             windSpeed:
                 "windSpeed",
@@ -158,42 +166,9 @@ class WeatherState extends Equatable {
             feelsLike: "feelsLike",
             isImageNetwork: true,
             date: unixSecondsToDateTimezone(historyListWeather.tryElementAt(index)!.current!.dt!.toInt(), historyListWeather.tryElementAt(index)!.timezoneOffset!.toInt()),
-            ///TODO WRONG
-            details: List.generate(presentFutureWeather?.hourly?.length ?? 0, (index) =>  DayWeatherParams(
-                iconPath: presentFutureWeather?.hourly
-                    .tryElementAt(index)
-                    ?.weather
-                    .tryFirst
-                    ?.iconPath ??
-                    "",
-                currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
-                minTemp:"minTemp",
-                maxTemp:"maxTemp",
-                rain: "rain",
-                windSpeed: presentFutureWeather?.hourly
-                    .tryElementAt(index)
-                    ?.windSpeed
-                    ?.toString() ??
-                    "",
-                windDeg: presentFutureWeather?.hourly
-                    .tryElementAt(index)
-                    ?.windDeg
-                    ?.toString() ??
-                    "",
-                pressure: presentFutureWeather?.hourly.tryElementAt(index)?.pressure?.toString() ?? "",
-                clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
-                uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
-                humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
-                visibility: "visibility",
-                detailedDescription: presentFutureWeather!.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-                feelsLike: presentFutureWeather!.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
-                isImageNetwork: true,
-                date: unixSecondsToDateTimezone(presentFutureWeather!.hourly
-                    .tryElementAt(index)
-                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
-                details: []
-            )),
-        ));
+            details: []
+        );
+        });
 
 
     return _historyWeatherDays + _presentFutureWeatherDays;

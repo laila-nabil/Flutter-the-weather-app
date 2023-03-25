@@ -83,13 +83,13 @@ class WeatherTabs extends StatelessWidget {
                                   text: TextSpan(children: [
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.maxTemp)?.toStringAsFixed(1)} ",
+                                        e.value.maxTemp,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.white)),
                                     TextSpan(
                                         text:
-                                        "${double.tryParse(e.value.minTemp)?.toStringAsFixed(1)} ",
+                                        e.value.minTemp,
                                         style: TextStyle(color: AppColors.white)),
 
                                   ]),
