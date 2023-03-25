@@ -20,9 +20,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   // LocationEntity? location = LocationEntity(lat: '30.0444', lon: '31.2357');
 
+  LocationEntity defaultLocation = LocationEntity(lat: '30.0444', lon: '31.2357',city: "Cairo",country: "Egypt",countryCode: "EG");
   LocationBloc(this._autoCompleteSearchLocationUseCase,
       this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
-      : super(LocationState(status: LocationStatus.initial)) {
+      : super(LocationState(status: LocationStatus.initial,userCurrentLocation:  LocationEntity(lat: '30.0444', lon: '31.2357',city: "Cairo",country: "Egypt",countryCode: "EG"))) {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
         add(GetCurrentLocation());
