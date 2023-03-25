@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/utils.dart';
@@ -20,14 +22,15 @@ class LocationScreen extends StatelessWidget {
     final isPortrait = screenSize.width < screenSize.height;
     return BlocConsumer<LocationBloc, LocationState>(
       listener: (context, state) {
-        if(state is LocationFailure && state.event is SetLocation){
+        if (state.status == LocationStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.failure.message)));
+              content: Text(state.failure?.message ??
+                  LocalizationImpl().translate("anErrorOccurred"))));
         }
       },
       builder: (context, state) {
         final locationBloc = BlocProvider.of<LocationBloc>(context);
-        if(state is LocationInitial){
+        if (state.status == LocationStatus.initial) {
           locationBloc.add(LocationInitialEvent());
         }
         return SafeArea(
@@ -61,8 +64,10 @@ class LocationScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 6.0),
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: AppColors.white.withOpacity(0.2), width: 1.0),
-                            borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius),
+                                color: AppColors.white.withOpacity(0.2),
+                                width: 1.0),
+                            borderRadius: BorderRadius.circular(
+                                AppDesign.mainBorderRadius),
                             color: Color(0xff2d3647)),
                         child: TextField(
                           style: TextStyle(color: AppColors.white),
@@ -97,8 +102,13 @@ class LocationScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              Icon(Icons.my_location , color: AppColors.white,),
-                              SizedBox(width: 5,),
+                              Icon(
+                                Icons.my_location,
+                                color: AppColors.white,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
                               Text(
                                 'current_location'.tr(),
                                 style: TextStyle(fontSize: 20),
@@ -117,20 +127,25 @@ class LocationScreen extends StatelessWidget {
                                   locationBloc.add(SetLocation(
                                       location: LocationEntity(
                                           lat: locationBloc
-                                              .autoCompleteList[i].lat,
+                                              .state.autoCompleteList
+                                              .tryElementAt(i)
+                                              ?.lat,
                                           lon: locationBloc
-                                              .autoCompleteList[i].lon)));
+                                              .state.autoCompleteList
+                                              .tryElementAt(i)
+                                              ?.lon)));
                                   Navigator.of(context).pop();
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '${locationBloc.autoCompleteList[i].city}${locationBloc.autoCompleteList[i].country}',
+                                    '${locationBloc.state.autoCompleteList.tryElementAt(i)?.city}${locationBloc.state.autoCompleteList.tryElementAt(i)?.country}',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ));
                           },
-                          itemCount: locationBloc.autoCompleteList.length,
+                          itemCount:
+                              locationBloc.state.autoCompleteList?.length ?? 0,
                         ),
                       )
                     ],

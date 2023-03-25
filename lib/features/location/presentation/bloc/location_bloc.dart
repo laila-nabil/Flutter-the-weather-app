@@ -18,42 +18,41 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final GetLocationFromCoordinatesUseCase _getLocationFromCoordinatesUseCase;
   final GetCurrentLocationUseCase _getCurrentLocationUseCase;
 
-  List<LocationEntity> autoCompleteList = [];
-  LocationEntity? location = LocationEntity(lat: '30.0444', lon: '31.2357');
-  LocationEntity? userCurrentLocation;
+  // LocationEntity? location = LocationEntity(lat: '30.0444', lon: '31.2357');
 
   LocationBloc(this._autoCompleteSearchLocationUseCase,
       this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
-      : super(LocationInitial()) {
+      : super(LocationState(status: LocationStatus.initial)) {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
         add(GetCurrentLocation());
       } else if (event is GetCurrentLocation) {
-        emit(LocationLoading(event));
+        emit(LocationState(status: LocationStatus.loading));
         final result = await _getCurrentLocationUseCase(NoParams());
         printDebug("_getCurrentLocationUseCase $result");
-        result.fold((failure) => emit(LocationFailure(event, failure: failure)),
+        result.fold((failure) => emit(LocationState(status: LocationStatus.failure,failure: failure)),
             (success) {
-          location = success;
-          userCurrentLocation = success;
-          emit(LocationSuccess(event, userCurrentLocation: success));
-          emit(SetLocationState(location: location));
+          emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
           add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
-              lat: location?.lat ?? "", lon: location?.lon ?? "")));
+              lat: success.lat ?? "", lon: success.lon ?? "")));
         });
       } else if (event is SetLocation) {
         if (event.location == null) {
           add(GetCurrentLocation());
-        } else {
-          emit(SetLocationState(location: location));
         }
       } else if (event is AutoCompleteSearchLocation) {
-        emit(LocationLoading(event));
+        emit(LocationState(
+          status: LocationStatus.success,
+          userCurrentLocation: state.userCurrentLocation,
+        ));
         final result = await _autoCompleteSearchLocationUseCase(event.input);
-        result.fold((failure) => emit(LocationFailure(event, failure: failure)),
-            (success) {
-          autoCompleteList = success;
-          emit(LocationSuccess(event, autoCompleteSearchLocation: success));
+        result.fold((failure) => emit(LocationState(status: LocationStatus.failure,failure: failure)),
+            (autoCompleteList) {
+              emit(LocationState(
+                status: LocationStatus.success,
+                userCurrentLocation: state.userCurrentLocation,
+                autoCompleteList: autoCompleteList
+              ));
         });
       } else if (event is GetLocationFromCoordinates) {
         await _getLocationFromCoordinates(emit, event);
@@ -63,13 +62,20 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   Future<void> _getLocationFromCoordinates(
       Emitter<LocationState> emit, GetLocationFromCoordinates event) async {
-    emit(LocationLoading(event));
+    emit(LocationState(
+      status: LocationStatus.loading,
+      userCurrentLocation: state.userCurrentLocation,
+      autoCompleteList: state.autoCompleteList
+    ));
     final result = await _getLocationFromCoordinatesUseCase(event.params);
     printDebug("_getLocationFromCoordinatesUseCase $result");
-    result.fold((failure) => emit(LocationFailure(event, failure: failure)),
+    result.fold((failure) => emit(LocationState(status: LocationStatus.failure)),
         (success) {
-      location = success;
-      emit(LocationSuccess(event, locationFromCoordinates: success,userCurrentLocation: userCurrentLocation));
+          emit(LocationState(
+              status: LocationStatus.success,
+              userCurrentLocation: success,
+              autoCompleteList: state.autoCompleteList
+          ));
     });
   }
 }

@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
       create: (context) => sl<WeatherBloc>(),
       child: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, locationState) {
-          if (locationState == LocationInitial()) {
+          if (locationState.status == LocationStatus.initial) {
             final locationBloc = BlocProvider.of<LocationBloc>(context);
             locationBloc.add(LocationInitialEvent());
           }
@@ -51,14 +51,13 @@ class MyHomePage extends StatelessWidget {
               printDebug("locationState ${locationState}");
 
               printDebug(
-                  "locationBloc.location?.city != null ${locationBloc.location?.city}");
+                  "locationBloc.location?.city != null ${locationBloc.state.userCurrentLocation?.city}");
               printDebug("locationBloc ${locationState}");
               printDebug("bloc ${bloc.state}");
               if (state.weatherStatus == WeatherStatus.initial &&
-                  locationState is LocationSuccess &&
                   (locationState).userCurrentLocation != null) {
-                var long = locationBloc.location?.lon ?? "";
-                var lat = locationBloc.location?.lat ?? "";
+                var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+                var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
                 var getCurrentLangCode =
                     LocalizationImpl().getCurrentLangCode(context);
                 languageBloc.add(SelectLanguage(
@@ -68,8 +67,7 @@ class MyHomePage extends StatelessWidget {
                     bloc,
                     long,
                     lat,
-                    (locationState as LocationSuccess)
-                            .userCurrentLocation
+                    locationBloc.state.userCurrentLocation
                             ?.city ??
                         "",
                     getCurrentLangCode,
@@ -103,8 +101,8 @@ class MyHomePage extends StatelessWidget {
                   backgroundColor: Theme.of(context).backgroundColor,
                   body: RefreshIndicator(
                     onRefresh: () async {
-                      var long = locationBloc.location?.lon ?? "";
-                      var lat = locationBloc.location?.lat ?? "";
+                      var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+                      var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
                       var getCurrentLangCode =
                           LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
@@ -126,7 +124,7 @@ class MyHomePage extends StatelessWidget {
                                     : loadingShimmer(screenSize: screenSize))
                                 : loadingLogo()
                             : LoadedContent(
-                                city: locationBloc.location?.city ?? "",
+                                city: locationBloc.state.userCurrentLocation?.city ?? "",
                                 weatherBloc: bloc,
                                 screenSize: screenSize,
                                 isPortrait: isPortrait,

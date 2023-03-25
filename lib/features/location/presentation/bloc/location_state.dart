@@ -1,58 +1,23 @@
 part of 'location_bloc.dart';
 
-abstract class LocationState extends Equatable {
-  const LocationState();
-}
-
-class LocationInitial extends LocationState {
-  @override
-  List<Object> get props => [];
-}
-
-class LocationLoading extends LocationState {
-  final LocationEvent event;
-
-  LocationLoading(this.event);
-
-  @override
-  List<Object> get props => [event];
-}
-
-class LocationSuccess extends LocationState {
-  final LocationEvent event;
-  final List<LocationEntity>? autoCompleteSearchLocation;
-  final LocationEntity? locationFromCoordinates;
+enum LocationStatus {initial , loading , success, failure}
+class LocationState extends Equatable {
+  final LocationStatus status;
+  final List<LocationEntity>? autoCompleteList;
   final LocationEntity? userCurrentLocation;
+  final Failure? failure;
 
-  LocationSuccess(this.event,
-      {this.autoCompleteSearchLocation,
-      this.locationFromCoordinates,
-      this.userCurrentLocation});
-
-  @override
-  List<Object?> get props => [
-        event,
-        autoCompleteSearchLocation,
-        locationFromCoordinates,
-        userCurrentLocation
-      ];
-}
-
-class LocationFailure extends LocationState {
-  final LocationEvent event;
-  final Failure failure;
-
-  LocationFailure(this.event, {required this.failure});
+  const LocationState({
+    required this.status,
+    this.autoCompleteList,
+    this.userCurrentLocation,
+    this.failure,
+  });
 
   @override
-  List<Object> get props => [event, failure];
-}
+  List<Object?> get props => [this.status,
+    this.autoCompleteList,
+    this.userCurrentLocation,
+    this.failure,];
 
-class SetLocationState extends LocationState {
-  final LocationEntity? location;
-
-  SetLocationState({this.location});
-
-  @override
-  List<Object?> get props => [location];
 }
