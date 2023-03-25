@@ -26,6 +26,7 @@ class DayWeatherParams extends Equatable {
   final String feelsLike;
   final bool isImageNetwork;
   final DateTime date;
+  final List<DayWeatherParams>? details;
 
   const DayWeatherParams({
     required this.iconPath,
@@ -44,6 +45,7 @@ class DayWeatherParams extends Equatable {
     required this.feelsLike,
     required this.isImageNetwork,
     required this.date,
+    this.details,
   });
 
   @override
@@ -63,7 +65,9 @@ class DayWeatherParams extends Equatable {
     this.detailedDescription,
     this.feelsLike,
     this.isImageNetwork,
-    this.date];
+    this.date,
+    this.details
+  ];
 
 
 }

@@ -96,7 +96,42 @@ class WeatherState extends Equatable {
             isImageNetwork: true,
             date: unixSecondsToDateTimezone(presentFutureWeather!.daily
                 .tryElementAt(index)
-                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt())));
+                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
+            ///TODO WRONG
+            details: List.generate(presentFutureWeather?.hourly?.length ?? 0, (index) =>  DayWeatherParams(
+                iconPath: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.weather
+                    .tryFirst
+                    ?.iconPath ??
+                    "",
+                currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
+                minTemp:"minTemp",
+                maxTemp:"maxTemp",
+                rain: "rain",
+                windSpeed: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.windSpeed
+                    ?.toString() ??
+                    "",
+                windDeg: presentFutureWeather?.hourly
+                    .tryElementAt(index)
+                    ?.windDeg
+                    ?.toString() ??
+                    "",
+                pressure: presentFutureWeather?.hourly.tryElementAt(index)?.pressure?.toString() ?? "",
+                clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
+                uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
+                humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
+                visibility: "visibility",
+                detailedDescription: presentFutureWeather!.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
+                feelsLike: presentFutureWeather!.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
+                isImageNetwork: true,
+                date: unixSecondsToDateTimezone(presentFutureWeather!.hourly
+                    .tryElementAt(index)
+                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
+            ))
+        ));
 
     return _presentFutureWeatherDays;
   }

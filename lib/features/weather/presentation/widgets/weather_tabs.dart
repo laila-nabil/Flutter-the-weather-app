@@ -111,9 +111,10 @@ class WeatherTabs extends StatelessWidget {
                 decoration: BoxDecoration(
                     border: Border(
                         top: BorderSide(color: Colors.grey, width: 0.5))),
-                child: TabBarView(children: <Widget>[
-                  WeatherList(days)
-                ]))
+                child: TabBarView(
+                    children: days
+                        .map((e) => WeatherList(e.details ?? []))
+                        .toList()))
           ]));
     });
   }

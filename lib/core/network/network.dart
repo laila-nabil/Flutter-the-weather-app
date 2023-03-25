@@ -8,9 +8,7 @@ class Network{
 
   static Future<http.Response> post({required String url,Map<String, String>? header,Map? body}) async {
     Uri uri = Uri.parse(url);
-    printDebug("[url] "+url,);
-    printDebug("[header] "+"${header??""}",);
-    printDebug("[body] "+"${body??""}",);
+    printDebug("[url] start"+url,);
     http.Response response;
     try{
       response = await http.post(uri, headers: header, body: body);
@@ -24,15 +22,17 @@ class Network{
         throw ServerException(message: exception.toString());
       }
     }
-    printDebug("[body] "+"${response.body}",);
+    printDebug("[url] "+url,);
+    printDebug("[header] "+"${header??""}",);
+    printDebug("[body] "+"${body??""}",);
+    printDebug("[response body] "+"${response.body}",);
     printDebug("[statusCode] "+"${response.statusCode}",);
     return response;
   }
 
   static Future<http.Response> get({required String url,Map<String, String>? header}) async {
     Uri uri = Uri.parse(url);
-    printDebug("[url] "+url,);
-    printDebug("[header] "+"$header");
+    printDebug("[url] start"+url,);
     http.Response response;
     try{
       response = await http.get(uri, headers: header,);
@@ -46,7 +46,9 @@ class Network{
         throw ServerException(message: exception.toString());
       }
     }
-    printDebug("[body] ${response.body}",);
+    printDebug("[url] "+url,);
+    printDebug("[header] "+"$header");
+    printDebug("[response body] ${response.body}",);
     printDebug("[statusCode] ${response.statusCode}");
     return response;
   }
