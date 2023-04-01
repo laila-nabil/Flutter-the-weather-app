@@ -12,15 +12,17 @@ import 'compact_day_weather.dart';
 
 class WeatherTabs extends StatelessWidget {
   final List<DayWeatherParams> days;
-
+  final int numOfHistoryDays;
   const WeatherTabs(
       {Key? key,
-      required this.days,})
+      required this.days,
+      required this.numOfHistoryDays,
+      })
       : super(key: key);
   @override
   Widget build(BuildContext context) {
 
-    const todayIndex = 4;
+    final todayIndex = numOfHistoryDays;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
           length: (days.length ?? 0), // length of tabs
@@ -35,16 +37,16 @@ class WeatherTabs extends StatelessWidget {
                   ...days.asMap().entries.map((e) {
                     String day;
                     switch(e.key) {
-                      case todayIndex:
-                        day = 'today'.tr().toString();
-                        break;
-                      case todayIndex + 1:
-                        day = 'tomorrow'.tr().toString();
-                        break;
-                      case todayIndex - 1:
-                        // day = 'Yesterday';
-                        day = 'yesterday'.tr().toString();
-                        break;
+                      // case todayIndex:
+                      //   day = 'today'.tr().toString();
+                      //   break;
+                      // case todayIndex + 1:
+                      //   day = 'tomorrow'.tr().toString();
+                      //   break;
+                      // case todayIndex - 1:
+                      //   // day = 'Yesterday';
+                      //   day = 'yesterday'.tr().toString();
+                      //   break;
                       default:
                         day =  DateFormat.MMMEd('locale'.tr().toString()).format(e.value.date);
                     }

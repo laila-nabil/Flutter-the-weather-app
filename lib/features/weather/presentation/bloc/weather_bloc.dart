@@ -29,7 +29,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetHistoryListWeatherUseCase _getHistoryListWeatherUseCase;
   final GetPresentFutureWeatherUseCase _getPresentFutureWeatherUseCase;
   final GetTodayWeatherOverviewUseCase _getTodayWeatherOverviewUseCase;
-
+  final int numOfHistoryDays = 5;
   WeatherBloc(this._getTodayWeatherOverviewUseCase,
       this._getHistoryListWeatherUseCase, this._getPresentFutureWeatherUseCase)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
