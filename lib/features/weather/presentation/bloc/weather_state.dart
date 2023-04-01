@@ -55,7 +55,12 @@ class WeatherState extends Equatable {
   List<DayWeatherParams> get days{
     List<DayWeatherParams> _presentFutureWeatherDays = List.generate(
         (presentFutureWeather?.daily?.length ?? 0),
-        (index) => DayWeatherParams(
+        (index) {
+          var date = unixSecondsToDateTimezone(presentFutureWeather!.daily
+                .tryElementAt(index)
+                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt());
+          printDebug("date is $date");
+          return DayWeatherParams(
             iconPath: presentFutureWeather?.daily
                     .tryElementAt(index)
                     ?.weather
@@ -75,7 +80,7 @@ class WeatherState extends Equatable {
                     ?.max
                     .toString() ??
                 "",
-            rain: "rain",
+            rain: "",
             windSpeed: presentFutureWeather?.daily
                     .tryElementAt(index)
                     ?.windSpeed
@@ -90,9 +95,9 @@ class WeatherState extends Equatable {
             clouds: presentFutureWeather?.daily.tryElementAt(index)?.clouds?.toString() ?? "",
             uvi: presentFutureWeather?.daily.tryElementAt(index)?.uvi?.toString() ?? "",
             humidity: presentFutureWeather?.daily.tryElementAt(index)?.humidity?.toString() ?? "",
-            visibility: "visibility",
+            visibility: "",
             detailedDescription: presentFutureWeather!.daily.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-            feelsLike: "feelsLike",
+            feelsLike: "",
             isImageNetwork: true,
             date: unixSecondsToDateTimezone(presentFutureWeather!.daily
                 .tryElementAt(index)
@@ -106,9 +111,12 @@ class WeatherState extends Equatable {
                     ?.iconPath ??
                     "",
                 currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
-                minTemp:"minTemp",
-                maxTemp:"maxTemp",
-                rain: "rain",
+                minTemp:"",
+                maxTemp:"",
+                rain: presentFutureWeather?.hourly
+                    .tryElementAt(index)?.pop
+                    ?.toString() ??
+                    "",
                 windSpeed: presentFutureWeather?.hourly
                     .tryElementAt(index)
                     ?.windSpeed
@@ -123,15 +131,16 @@ class WeatherState extends Equatable {
                 clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
                 uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
                 humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
-                visibility: "visibility",
+                visibility: "",
                 detailedDescription: presentFutureWeather?.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
                 feelsLike: presentFutureWeather?.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
                 isImageNetwork: true,
-                date: unixSecondsToDateTimezone(presentFutureWeather!.hourly
+                date: unixSecondsToDateTimezone(presentFutureWeather?.hourly
                     .tryElementAt(index)
                 ?.dt?.toInt() ??0, presentFutureWeather?.timezoneOffset?.toInt() ??0),
             ))
-        ));
+        );
+        });
     List<DayWeatherParams> _historyWeatherDays = List.generate(
         (historyListWeather?.length ?? 0),
         (index) {
@@ -169,7 +178,6 @@ class WeatherState extends Equatable {
             details: []
         );
         });
-
 
     return _historyWeatherDays + _presentFutureWeatherDays;
   }

@@ -23,7 +23,7 @@ class WeatherDetailed extends StatelessWidget {
     //printDebug("detailed weather for ${params.date} ${params.rain} ${double.tryParse(params.rain)} ${(double.tryParse(params.rain) * 100).toStringAsFixed(2)}%");
     return LayoutBuilder(builder: (ctx, constraints) {
       final dashboard = [
-        DashboardWeather(
+        if(params.rain!="")DashboardWeather(
           isStatusCentered: false,
           svgIcon: AppAssets.IconRain,
           status: '${(double.tryParse(params.rain)! * 100).toStringAsFixed(2)}%',
@@ -55,7 +55,7 @@ class WeatherDetailed extends StatelessWidget {
           title: 'humidity'.tr().toString(),
           status: '${double.tryParse(params.humidity)}%',
         ),
-        DashboardWeather(
+        if(params.visibility!="")DashboardWeather(
           isStatusCentered: false,
           title: 'visibility'.tr().toString(),
           status: double.tryParse(params.visibility)! > 1000

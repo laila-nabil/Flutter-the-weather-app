@@ -49,6 +49,11 @@ class DayWeatherParams extends Equatable {
   });
 
   @override
+  String toString() {
+    return 'DayWeatherParams{iconPath: $iconPath, currentTemp: $currentTemp, minTemp: $minTemp, maxTemp: $maxTemp, rain: $rain, windSpeed: $windSpeed, windDeg: $windDeg, pressure: $pressure, clouds: $clouds, uvi: $uvi, humidity: $humidity, visibility: $visibility, detailedDescription: $detailedDescription, feelsLike: $feelsLike, isImageNetwork: $isImageNetwork, date: $date, details: $details}';
+  }
+
+  @override
   List<Object?> get props =>[
     this.iconPath,
     this.currentTemp,
@@ -152,7 +157,7 @@ class _CompactDay extends StatelessWidget {
                   ),
                   minFontSize: 14,
                   maxFontSize: 30)),
-          false
+          params.isImageNetwork
               ? Image.network(
                   params.iconPath,
                   // width: constraints.maxHeight * 0.5,
@@ -167,19 +172,19 @@ class _CompactDay extends StatelessWidget {
                   width: width,
                   fit: BoxFit.contain,
                 ),
-          Container(
+         Container(
               height: constraints.maxHeight * 0.2,
               width: width * 0.6,
               alignment: Alignment.center,
               child: AutoSizeText(
-                "${double.tryParse(params.currentTemp)!.toStringAsFixed(1)}°" +
+                "${double.tryParse(params.currentTemp)?.toStringAsFixed(0)}°" +
                     'deg'.tr().toString(),
                 style: TextStyle(fontSize: 18),
                 minFontSize: 10,
                 maxFontSize: 18,
                 maxLines: 1,
               )),
-          if (params.rain != "")
+           if (params.rain != "")
             Container(
               height: constraints.maxHeight * 0.12,
               width: isPortrait
