@@ -102,7 +102,6 @@ class WeatherState extends Equatable {
             date: unixSecondsToDateTimezone(presentFutureWeather!.daily
                 .tryElementAt(index)
                 !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
-            ///TODO WRONG
             details: List.generate(presentFutureWeather?.hourly?.length ?? 0, (index) =>  DayWeatherParams(
                 iconPath: presentFutureWeather?.hourly
                     .tryElementAt(index)
@@ -131,7 +130,7 @@ class WeatherState extends Equatable {
                 clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
                 uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
                 humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
-                visibility: "",
+                visibility:  presentFutureWeather?.hourly.tryElementAt(index)?.visibility?.toString() ?? "",
                 detailedDescription: presentFutureWeather?.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
                 feelsLike: presentFutureWeather?.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
                 isImageNetwork: true,
