@@ -107,10 +107,14 @@ class WeatherRepoImpl extends WeatherRepo {
       GetHistoryListWeatherParams params) async {
     List<HistoryWeatherModel> result = List.empty(growable: true);
     try {
-      final now =
+      DateTime now =
           DateTime.now().toUtc();
+      now = DateTime(now.year,now.month,now.day);
       final dates =
-          List.generate(params.numOfDays, (index) => now.subtract(Duration(days: index)));
+          List.generate(params.numOfDays, (index) {
+            printDebug("index $index");
+            return now.subtract(Duration(days: index + 1));
+          });
       printDebug("now $now");
       printDebug("dates $dates");
       for (final date in dates) {
@@ -119,6 +123,7 @@ class WeatherRepoImpl extends WeatherRepo {
         result.add(await weatherRemoteDataSource.getHistoryWeather(
             params: params, dt: dt));
       }
+      result = result.reversed.toList();
       printDebug("getHistoryListWeather $result");
       return Right(result);
     } catch (exception) {
