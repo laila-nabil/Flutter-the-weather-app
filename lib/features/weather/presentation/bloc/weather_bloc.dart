@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
+import 'package:the_weather_app/features/weather/data/models/history_weather_model.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';

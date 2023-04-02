@@ -59,8 +59,14 @@ class WeatherState extends Equatable {
           var date = unixSecondsToDateTimezone(presentFutureWeather!.daily
                 .tryElementAt(index)
                 !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt());
-          printDebug("date is $date");
-          return DayWeatherParams(
+      var hourlyList = presentFutureWeather?.hourly
+          ?.where((element) =>
+              unixSecondsToDateTimezone(
+                      (element.dt ?? 0).toInt(), (presentFutureWeather?.timezoneOffset ?? 0).toInt())
+                  .isSameDay(date) ==
+              true)
+          .toList();
+      return DayWeatherParams(
             iconPath: presentFutureWeather?.daily
                     .tryElementAt(index)
                     ?.weather
@@ -99,11 +105,11 @@ class WeatherState extends Equatable {
             detailedDescription: presentFutureWeather!.daily.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
             feelsLike: "",
             isImageNetwork: true,
-            date: unixSecondsToDateTimezone(presentFutureWeather!.daily
-                .tryElementAt(index)
-                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt()),
-            details: List.generate(presentFutureWeather?.hourly?.length ?? 0, (index) =>  DayWeatherParams(
-                iconPath: presentFutureWeather?.hourly
+            date: date,
+          details: List.generate(
+              hourlyList?.length ?? 0,
+              (index) => DayWeatherParams(
+                    iconPath: hourlyList
                     .tryElementAt(index)
                     ?.weather
                     .tryFirst
@@ -112,29 +118,29 @@ class WeatherState extends Equatable {
                 currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
                 minTemp:"",
                 maxTemp:"",
-                rain: presentFutureWeather?.hourly
+                rain: hourlyList
                     .tryElementAt(index)?.pop
                     ?.toString() ??
                     "",
-                windSpeed: presentFutureWeather?.hourly
+                windSpeed: hourlyList
                     .tryElementAt(index)
                     ?.windSpeed
                     ?.toString() ??
                     "",
-                windDeg: presentFutureWeather?.hourly
+                windDeg: hourlyList
                     .tryElementAt(index)
                     ?.windDeg
                     ?.toString() ??
                     "",
-                pressure: presentFutureWeather?.hourly.tryElementAt(index)?.pressure?.toString() ?? "",
-                clouds: presentFutureWeather?.hourly.tryElementAt(index)?.clouds?.toString() ?? "",
-                uvi: presentFutureWeather?.hourly.tryElementAt(index)?.uvi?.toString() ?? "",
-                humidity: presentFutureWeather?.hourly.tryElementAt(index)?.humidity?.toString() ?? "",
-                visibility:  presentFutureWeather?.hourly.tryElementAt(index)?.visibility?.toString() ?? "",
-                detailedDescription: presentFutureWeather?.hourly.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-                feelsLike: presentFutureWeather?.hourly.tryElementAt(index)?.feelsLike.toString() ?? "",
+                pressure: hourlyList.tryElementAt(index)?.pressure?.toString() ?? "",
+                clouds: hourlyList.tryElementAt(index)?.clouds?.toString() ?? "",
+                uvi: hourlyList.tryElementAt(index)?.uvi?.toString() ?? "",
+                humidity: hourlyList.tryElementAt(index)?.humidity?.toString() ?? "",
+                visibility:  hourlyList.tryElementAt(index)?.visibility?.toString() ?? "",
+                detailedDescription: hourlyList.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
+                feelsLike: hourlyList.tryElementAt(index)?.feelsLike.toString() ?? "",
                 isImageNetwork: true,
-                date: unixSecondsToDateTimezone(presentFutureWeather?.hourly
+                date: unixSecondsToDateTimezone(hourlyList
                     .tryElementAt(index)
                 ?.dt?.toInt() ??0, presentFutureWeather?.timezoneOffset?.toInt() ??0),
             ))
@@ -144,12 +150,21 @@ class WeatherState extends Equatable {
         (historyListWeather?.length ?? 0),
         (index) {
           var element = historyListWeather?.tryElementAt(index);
+          printDebug("element ${element}");
+          element?.hourly?.forEach((historyHourly) {
+        printDebug(
+            "hourly history ${historyHourly.dt} ${unixSecondsToDateTimezone(historyHourly.dt?.toInt() ?? 0, element.timezoneOffset?.toInt() ?? 0)}");
+      });
           List<double> temps = [];
           element?.hourly?.forEach((element) {
             if(element.temp!=null) {
               temps.add(element.temp!);
             }});
           temps.sort();
+          var date = unixSecondsToDateTimezone(
+              historyListWeather.tryElementAt(index)?.current?.dt?.toInt() ?? 0,
+              historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0);
+          printDebug("history date ${date}");
           return DayWeatherParams(
             iconPath: element
                     ?.current?.weather
@@ -158,23 +173,22 @@ class WeatherState extends Equatable {
                 "",
             currentTemp:  element?.current?.temp.toString() ?? "",
             minTemp:
-            temps.tryFirst.toString() ?? "minTemp",
-            maxTemp:  temps.tryElementAt(temps.length - 1).toString() ?? "maxTemp",
-            rain: "rain",
+            temps.tryFirst.toString(),
+            maxTemp:  temps.tryElementAt(temps.length - 1).toString(),
+            rain: "",
             windSpeed:
-                "windSpeed",
+                "",
             windDeg:
-                "windDeg",
-            pressure: "pressure",
-            clouds: "clouds",
-            uvi: "uvi",
-            humidity: "humidity",
-            visibility: "visibility",
-            detailedDescription: "detailedDescription",
-            feelsLike: "feelsLike",
+                "",
+            pressure: "",
+            clouds: "",
+            uvi: "",
+            humidity: "",
+            visibility: "",
+            detailedDescription: "",
+            feelsLike: "",
             isImageNetwork: true,
-            date: unixSecondsToDateTimezone(historyListWeather.tryElementAt(index)!.current!.dt!.toInt(), historyListWeather.tryElementAt(index)!.timezoneOffset!.toInt()),
-            details: []
+          date: date,
         );
         });
 

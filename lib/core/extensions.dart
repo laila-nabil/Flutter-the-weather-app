@@ -25,3 +25,11 @@ extension toStringNull on Object?{
     }
   }
 }
+
+extension isSameDayE on DateTime{
+  bool isSameDay(DateTime otherDate){
+    return otherDate.year == this.year &&
+        otherDate.month == this.month &&
+        otherDate.day == this.day;
+  }
+}

@@ -10,8 +10,6 @@ class WeatherList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final weatherList =
-    //     Provider.of<WeatherProvider>(context).allWeather;
     return Container(
       // height: 150,
       width: double.infinity,
