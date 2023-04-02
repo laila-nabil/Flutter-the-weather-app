@@ -80,12 +80,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                   emit(state.copyWith(
                 weatherStatus: WeatherStatus.historySuccess,
                 historyListWeather: r,
-                // compareTodayYesterday:
-                //     'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°' +
-                //         'deg'.tr().toString() +
-                //         ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°' +
-                //         'deg'.tr().toString() +
-                //         ' at night'
                     compareTodayYesterday: LocalizationImpl()
                     .translate("compareWeather", namedArguments: {
                   "diffDay": "$diffDay",
