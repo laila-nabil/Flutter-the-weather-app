@@ -151,9 +151,10 @@ class WeatherState extends Equatable {
         (index) {
           var element = historyListWeather?.tryElementAt(index);
           printDebug("element ${element}");
+          printDebug("element.hourly.length ?? 0 ${element?.hourly?.length ?? 0}");
           element?.hourly?.forEach((historyHourly) {
         printDebug(
-            "hourly history ${historyHourly.dt} ${unixSecondsToDateTimezone(historyHourly.dt?.toInt() ?? 0, element.timezoneOffset?.toInt() ?? 0)}");
+            "hourly history ${historyHourly.dt} ${unixSecondsToDate(historyHourly.dt?.toInt() ?? 0,)}");
       });
           List<double> temps = [];
           element?.hourly?.forEach((element) {
@@ -189,6 +190,30 @@ class WeatherState extends Equatable {
             feelsLike: "",
             isImageNetwork: true,
           date: date,
+            details: List.generate(element?.hourly?.length ?? 0, (index) => DayWeatherParams(
+                    iconPath: element?.hourly?[index].weather.tryFirst?.iconPath
+                            .toString() ??
+                        "",
+                    currentTemp:  element?.current?.temp.toString() ?? "",
+                minTemp: "",
+                maxTemp:  "",
+                rain: element?.hourly?[index].pop.toString() ?? "",
+                windSpeed:element?.hourly?[index].windSpeed.toString() ?? "",
+                windDeg:element?.hourly?[index].windDeg.toString() ?? "",
+                pressure: element?.hourly?[index].pressure.toString() ?? "",
+                clouds: element?.hourly?[index].visibility.toString() ?? "",
+                uvi: element?.hourly?[index].uvi.toString() ?? "",
+                humidity: element?.hourly?[index].humidity.toString() ?? "",
+                visibility:element?.hourly?[index].visibility.toString() ?? "",
+                detailedDescription:element?.hourly?[index].weather.tryFirst?.description
+                    .toString() ??
+                    "",
+                feelsLike: element?.hourly?[index].feelsLike.toString() ?? "",
+                isImageNetwork: true,
+                date: unixSecondsToDateTimezone(
+                    element?.hourly?[index].dt?.toInt() ?? 0,
+                    historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0),
+            ))
         );
         });
 

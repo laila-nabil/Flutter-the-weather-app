@@ -109,7 +109,6 @@ class WeatherRepoImpl extends WeatherRepo {
     try {
       DateTime now =
           DateTime.now().toUtc();
-      now = DateTime(now.year,now.month,now.day);
       final dates =
           List.generate(params.numOfDays, (index) {
             printDebug("index $index");
