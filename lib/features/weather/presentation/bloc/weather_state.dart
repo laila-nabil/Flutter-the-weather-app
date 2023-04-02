@@ -194,7 +194,7 @@ class WeatherState extends Equatable {
                     iconPath: element?.hourly?[index].weather.tryFirst?.iconPath
                             .toString() ??
                         "",
-                    currentTemp:  element?.current?.temp.toString() ?? "",
+                currentTemp:  element?.hourly?[index].temp.toString() ?? "",
                 minTemp: "",
                 maxTemp:  "",
                 rain: element?.hourly?[index].pop.toString() ?? "",

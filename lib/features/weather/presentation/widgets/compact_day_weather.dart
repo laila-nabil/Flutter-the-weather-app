@@ -184,7 +184,7 @@ class _CompactDay extends StatelessWidget {
                 maxFontSize: 18,
                 maxLines: 1,
               )),
-           if (params.rain != "")
+           if (params.rain != "" && params.rain!="null")
             Container(
               height: constraints.maxHeight * 0.12,
               width: isPortrait
