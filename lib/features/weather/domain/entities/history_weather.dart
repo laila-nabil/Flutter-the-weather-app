@@ -26,7 +26,6 @@ class HistoryWeather extends Equatable {
   Current? current;
   List<Hourly>? hourly;
 
-  ///TODO??
   double? get getTempMax {
     List<double?> temps = _getTemps();
     return temps.tryFirst;

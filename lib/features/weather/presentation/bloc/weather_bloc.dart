@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/models/history_weather_model.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
@@ -63,9 +64,36 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 (l) => emit(state.copyWith(
                 weatherStatus: WeatherStatus.historyFailure,
                 historyListFailure: l)),
-                (r) => emit(state.copyWith(
+                (r) {
+                  final diffDay = ((state.todayOverview?.main?.tempMax ?? 0) >
+                      (r.tryFirst?.getTempMax ?? 0)) == true
+                      ? "warmer"
+                      : "colder";
+                  final diffNight = ((state.todayOverview?.main?.tempMin ?? 0) >
+                      (r.tryFirst?.getTempMin ?? 0)) == true
+                      ? "warmer"
+                      : "colder";
+                  final diffMax = ((state.todayOverview?.main?.tempMax ?? 0) -
+                      (r.tryFirst?.getTempMax ?? 0));
+                  final diffMin = ((state.todayOverview?.main?.tempMin ?? 0) -
+                      (r.tryFirst?.getTempMin ?? 0));
+                  emit(state.copyWith(
                 weatherStatus: WeatherStatus.historySuccess,
-                historyListWeather: r)));
+                historyListWeather: r,
+                // compareTodayYesterday:
+                //     'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)}°' +
+                //         'deg'.tr().toString() +
+                //         ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)}°' +
+                //         'deg'.tr().toString() +
+                //         ' at night'
+                    compareTodayYesterday: LocalizationImpl()
+                    .translate("compareWeather", namedArguments: {
+                  "diffDay": "$diffDay",
+                  "diffNight": "$diffNight",
+                  "diffMax": "${diffMax.toStringAsFixed(0)}",
+                  "diffMin": "${diffMin.toStringAsFixed(0)}",
+                })));
+                });
       }
     });
   }
