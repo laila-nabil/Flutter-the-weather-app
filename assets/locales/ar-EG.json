@@ -24,5 +24,9 @@
   "m_s":"م/ث",
   "hpa": "م. بار",
   "km":"كم",
+  "madeWith":"تم تطويره باستخدام",
+  "flutter":"فلاتر",
+  "by":"بواسطة",
+  "lailaNabil":"ليلي نبيل",
   "compareWeather": "اليوم {diffDay} عن أمس بمقدار {diffMax} في النهار و{diffNight} عن أمس بمقدار {diffMin} في الليل"
 }

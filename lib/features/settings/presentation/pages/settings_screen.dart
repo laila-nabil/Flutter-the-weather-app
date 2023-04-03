@@ -6,6 +6,7 @@ import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/main.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../weather/presentation/pages/home_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
@@ -51,16 +52,40 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             backgroundColor: theme.backgroundColor,
-            body: SingleChildScrollView(
-                child: Container(
-                    padding: const EdgeInsets.all(25.0),
-                    width: screenSize.width,
-                    child: Column(
-                      crossAxisAlignment: 'lang'.tr().contains('En') ? CrossAxisAlignment.end:CrossAxisAlignment.start,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
+            body: Container(
+                padding: const EdgeInsets.all(25.0),
+                width: screenSize.width,
+                height: screenSize.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: 'lang'.tr().contains('En') ? CrossAxisAlignment.end:CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                        onPressed: () => _toggleLanguage(),
+                        icon: Icon(Icons.language),
+                        label: Text('change_lang'.tr().toString())),
+                    Row(
                       children: [
-                        ElevatedButton.icon(onPressed: ()=>_toggleLanguage(), icon: Icon(Icons.language), label: Text('change_lang'.tr().toString()))
+                        Text(LocalizationImpl().translate("madeWith") +
+                            " " +
+                            LocalizationImpl().translate("flutter") +
+                            " " +
+                            LocalizationImpl().translate("by") +
+                            " ",style: TextStyle(color: Colors.white),),
+                        TextButton(
+                            onPressed: () async {
+                              analytics.logEvent(name: "launchGithub");
+                              await launchUrl(
+                                Uri.parse( "https://github.com/laila-nabil/"),
+                              );
+                            },
+                            child: Text(
+                                LocalizationImpl().translate("lailaNabil"),style: TextStyle(color: Colors.white)))
                       ],
-                    )))));
+                    )
+                  ],
+                ))));
   }
 }
