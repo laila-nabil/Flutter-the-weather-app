@@ -82,8 +82,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 historyListWeather: r,
                     compareTodayYesterday: LocalizationImpl()
                     .translate("compareWeather", namedArguments: {
-                  "diffDay": "$diffDay",
-                  "diffNight": "$diffNight",
+                  "diffDay": "${LocalizationImpl().translate(diffDay)}",
+                  "diffNight": "${LocalizationImpl().translate(diffNight)}",
                   "diffMax": "${diffMax.toStringAsFixed(0)}",
                   "diffMin": "${diffMin.toStringAsFixed(0)}",
                 })));

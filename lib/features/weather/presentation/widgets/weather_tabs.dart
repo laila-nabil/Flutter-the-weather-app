@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -78,23 +79,25 @@ class WeatherTabs extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(
+                                AutoSizeText(
                                   day,
                                   style: TextStyle(color: AppColors.white),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                  Text(
-                                      double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          color: AppColors.white)),
-                                  SizedBox(width: 10,),
-                                  Text(
-                                      double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
-                                      style: TextStyle(color: AppColors.white))
-                                ],),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                    Text(
+                                        double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            color: AppColors.white)),
+                                    SizedBox(width: 10,),
+                                    Text(
+                                        double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
+                                        style: TextStyle(color: AppColors.white))
+                                  ],),
+                                ),
                               ],
                             ),
                           ],
