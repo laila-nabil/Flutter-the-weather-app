@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/weather/domain/entities/today_overview.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
@@ -77,7 +78,7 @@ class MyHomePage extends StatelessWidget {
               if (state.weatherStatus == WeatherStatus.loading) {
                 return Scaffold(
                   backgroundColor: Theme.of(context).backgroundColor,
-                  body: CircularProgressIndicator(),
+                  body: Center(child: CircularProgressIndicator()),
                 );
               }
               final mediaQuery = MediaQuery.of(context);
@@ -402,13 +403,10 @@ class LoadedContent extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
                     Expanded(
                         flex: 6,
                         child: WeatherTodayWidget(
@@ -422,10 +420,6 @@ class LoadedContent extends StatelessWidget {
                           compareWeather:
                               weatherBloc.state.compareTodayYesterday ?? ""),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
                   ],
                 ),
               ),
@@ -436,7 +430,7 @@ class LoadedContent extends StatelessWidget {
               child: Padding(
                 padding: isPortrait
                     ? const EdgeInsets.only(top: 8.0)
-                    : const EdgeInsets.only(top: 16.0),
+                    : const EdgeInsets.only(top: 30.0),
                 child: WeatherTabs(
                   days: weatherBloc.state.days,
                   numOfHistoryDays: weatherBloc.numOfHistoryDays,

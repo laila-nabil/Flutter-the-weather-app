@@ -76,26 +76,25 @@ class WeatherTabs extends StatelessWidget {
                                 height: 35,
                               ),
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
                                   day,
                                   style: TextStyle(color: AppColors.white),
                                 ),
-                                RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(
-                                        text:
-                                        e.value.maxTemp,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.white)),
-                                    TextSpan(
-                                        text:
-                                        e.value.minTemp,
-                                        style: TextStyle(color: AppColors.white)),
-
-                                  ]),
-                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                  Text(
+                                      double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          color: AppColors.white)),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                      double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
+                                      style: TextStyle(color: AppColors.white))
+                                ],),
                               ],
                             ),
                           ],

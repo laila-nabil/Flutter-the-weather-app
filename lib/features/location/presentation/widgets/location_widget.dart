@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +27,7 @@ class LocationWidget extends StatelessWidget {
                 onPressed: (){
                   Navigator.of(context).pushNamed(SettingsScreen.routeName);
                 },
-                iconSize: constraints.maxHeight*0.7 > 20 ? constraints.maxHeight*0.7 : 20,
+                iconSize: min(constraints.maxHeight*0.7,30),
                 icon: Icon(
                   Icons.settings,
                   color: AppColors.white,
@@ -47,7 +49,7 @@ class LocationWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(LocationScreen.routeName);
                 },
-                iconSize: constraints.maxHeight*0.7 > 20 ? constraints.maxHeight*0.7 : 20,
+                iconSize: min(constraints.maxHeight*0.7,30),
                 alignment: Alignment.center,
                 constraints: const BoxConstraints(
                   minWidth: kMinInteractiveDimension,

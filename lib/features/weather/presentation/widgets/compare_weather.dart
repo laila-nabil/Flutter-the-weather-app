@@ -16,26 +16,21 @@ class CompareWeather extends StatelessWidget {
   Widget build(BuildContext context) {
        printDebug("compare $compareWeather");
     return LayoutBuilder(builder: (ctx, constraints) {
-      return Card(
-        // color: Color(0xff272F3A),
-        color: AppColors.backgroundDarkColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppDesign.mainBorderRadius)),
-        child: Container(
-          height: constraints.maxHeight * 0.9,
-          width: constraints.maxWidth * 0.9,
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(
-              // horizontal: constraints.maxWidth * 0.05,
-              vertical: constraints.maxHeight * 0.05),
-          child: AutoSizeText(
-            compareWeather,
-            minFontSize: 15,
-            maxFontSize: 35,
-            // softWrap: true,
-            // maxLines: 3,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-            textAlign: TextAlign.center,
-          ),
+      return Container(
+        height: constraints.maxHeight * 0.9,
+        width: constraints.maxWidth,
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(
+            horizontal: constraints.maxWidth * 0.05,
+            vertical: constraints.maxHeight * 0.05),
+        child: AutoSizeText(
+          compareWeather,
+          minFontSize: 15,
+          maxFontSize: 35,
+          // softWrap: true,
+          // maxLines: 3,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+          textAlign: TextAlign.center,
         ),
       );
     });

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
@@ -137,11 +139,12 @@ class _CompactDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double imageHeight = min(constraints.maxHeight * 0.27,30);
     return Container(
       padding: EdgeInsets.all(constraints.maxHeight * 0.07),
       width: width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Text(day),
@@ -153,22 +156,20 @@ class _CompactDay extends StatelessWidget {
                   DateFormat('h a', 'locale'.tr().toString())
                       .format(params.date),
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
-                  minFontSize: 14,
-                  maxFontSize: 30)),
+                  minFontSize: 10,
+                  maxFontSize: 20)),
           params.isImageNetwork
               ? Image.network(
                   params.iconPath,
-                  // width: constraints.maxHeight * 0.5,
-                  height: constraints.maxHeight * 0.27,
+                  height: imageHeight,
                   width: width,
                   fit: BoxFit.contain,
                 )
               : Image.asset(
                   params.iconPath,
-                  // width: constraints.maxHeight * 0.4,
-                  height: constraints.maxHeight * 0.2,
+                  height: imageHeight,
                   width: width,
                   fit: BoxFit.contain,
                 ),
