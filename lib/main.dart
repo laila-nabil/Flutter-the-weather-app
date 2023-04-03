@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/presentation/bloc/location_bloc.dart';
 import 'features/weather/presentation/pages/home_page.dart';
+import 'firebase_options.dart';
 import 'injection_container.dart';
 import 'injection_container.dart' as di;
 
@@ -21,9 +23,11 @@ Future main() async {
   //order is important
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await di.init();
   Bloc.observer = AppBlocObserver();
-  analytics.logAppOpen();
   runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 
