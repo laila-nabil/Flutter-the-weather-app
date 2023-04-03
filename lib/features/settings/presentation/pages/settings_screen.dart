@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/main.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../weather/presentation/pages/home_page.dart';
 
@@ -27,6 +28,7 @@ class SettingsScreen extends StatelessWidget {
       if(currentLanguagesEnum!=null){
         languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
+      analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
     return SafeArea(

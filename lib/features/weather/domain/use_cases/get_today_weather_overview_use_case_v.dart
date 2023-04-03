@@ -5,6 +5,7 @@ import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 
+import '../../../../main.dart';
 import '../entities/unit.dart';
 
 class GetTodayWeatherOverviewUseCaseV
@@ -14,6 +15,7 @@ class GetTodayWeatherOverviewUseCaseV
   GetTodayWeatherOverviewUseCaseV(this.repo);
   @override
   Future<Either<Failure, TodayOverviewV>> call(GetTodayOverviewParamsV params) async{
+    analytics.logEvent(name: "GetTodayWeatherOverviewUseCaseV",);
     return await repo.getTodayOverviewV(params);
   }
 }

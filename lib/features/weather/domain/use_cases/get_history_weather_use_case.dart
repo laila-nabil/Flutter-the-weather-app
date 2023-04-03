@@ -6,6 +6,8 @@ import 'package:the_weather_app/features/weather/domain/entities/history_weather
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 
+import '../../../../main.dart';
+
 class GetHistoryListWeatherUseCase
     implements UseCase<List<HistoryWeather>, GetHistoryListWeatherParams> {
   final WeatherRepo repo;
@@ -15,6 +17,7 @@ class GetHistoryListWeatherUseCase
   @override
   Future<Either<Failure, List<HistoryWeather>>> call(
       GetHistoryListWeatherParams params) async{
+    analytics.logEvent(name: "GetHistoryListWeatherUseCase",);
     return await repo.getHistoryListWeather(params);
   }
 }

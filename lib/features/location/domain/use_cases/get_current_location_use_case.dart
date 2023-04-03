@@ -4,6 +4,8 @@ import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
+import '../../../../main.dart';
+
 class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
   @override
   Future<Either<Failure, LocationEntity>> call(NoParams params) async {
@@ -46,6 +48,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     var position = await Geolocator.getCurrentPosition();
+    analytics.logEvent(name: "GetCurrentLocationUseCase");
     return Right(LocationEntity(
         lon: position.longitude.toString(), lat: position.latitude.toString(),));
   }

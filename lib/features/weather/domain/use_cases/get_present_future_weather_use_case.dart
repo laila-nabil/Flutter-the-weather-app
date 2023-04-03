@@ -4,6 +4,7 @@ import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
+import 'package:the_weather_app/main.dart';
 
 class GetPresentFutureWeatherUseCase
     implements UseCase<PresentFutureWeather, GetPresentFutureWeatherParams> {
@@ -14,6 +15,7 @@ class GetPresentFutureWeatherUseCase
   @override
   Future<Either<Failure, PresentFutureWeather>> call(
       GetPresentFutureWeatherParams params) async{
+    analytics.logEvent(name: "GetPresentFutureWeatherUseCase",);
     return await repo.getPresentFutureWeather(params);
   }
 }

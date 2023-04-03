@@ -5,6 +5,8 @@ import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
 
+import '../../../../main.dart';
+
 class GetLocationFromCoordinatesUseCase
     implements UseCase<LocationEntity, GetLocationFromCoordinatesParams> {
   final LocationRepo locationRepo;
@@ -14,6 +16,7 @@ class GetLocationFromCoordinatesUseCase
   @override
   Future<Either<Failure,LocationEntity>> call(
       GetLocationFromCoordinatesParams params) async {
+    analytics.logEvent(name: "GetLocationFromCoordinatesUseCase");
     return await locationRepo.getLocationFromCoordinates(params: params);
   }
 }
