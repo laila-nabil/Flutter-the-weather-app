@@ -16,6 +16,8 @@ import 'firebase_options.dart';
 import 'injection_container.dart';
 import 'injection_container.dart' as di;
 
+//flutter build web --dart-define api_key=KEY
+//firebase deploy --only hosting
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
