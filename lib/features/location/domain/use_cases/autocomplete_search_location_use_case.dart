@@ -12,7 +12,7 @@ class AutoCompleteSearchLocationUseCase implements UseCase<List<LocationEntity>,
   AutoCompleteSearchLocationUseCase(this.locationRepo);
   @override
   Future<Either<Failure, List<LocationEntity>>> call(String params) async {
-    analytics.logEvent(name: "AutoCompleteSearchLocationUseCase");
+    analytics.logEvent(name: "AutoCompleteSearchLocationUseCase",);
     if(params.length > 3){
       return await locationRepo.autoCompleteSearchLocation(params);
     }else {

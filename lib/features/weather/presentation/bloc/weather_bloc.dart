@@ -65,28 +65,37 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 weatherStatus: WeatherStatus.historyFailure,
                 historyListFailure: l)),
                 (r) {
-                  final diffDay = ((state.todayOverview?.main?.tempMax ?? 0) >
+                  printDebug("state.presentFutureWeather?.daily.tryFirst?.temp?.max ${state.presentFutureWeather?.daily.tryFirst?.temp?.max}");
+                  printDebug("state.presentFutureWeather?.daily.tryFirst?.temp?.min ${state.presentFutureWeather?.daily.tryFirst?.temp?.min}");
+                  printDebug("r.tryFirst ${r.tryFirst}");
+                  printDebug("r.tryFirst?.getTempMax ${r.tryFirst?.getTempMax}");
+                  printDebug("r.tryFirst?.getTempMin ${r.tryFirst?.getTempMin}");
+                  final diffDay = ((state.presentFutureWeather?.daily.tryFirst?.temp?.max ?? 0) >
                       (r.tryFirst?.getTempMax ?? 0)) == true
                       ? "warmer"
                       : "colder";
-                  final diffNight = ((state.todayOverview?.main?.tempMin ?? 0) >
+                  final diffNight = ((state.presentFutureWeather?.daily.tryFirst?.temp?.min?? 0) >
                       (r.tryFirst?.getTempMin ?? 0)) == true
                       ? "warmer"
                       : "colder";
-                  final diffMax = ((state.todayOverview?.main?.tempMax ?? 0) -
+                  final diffMax = ((state.presentFutureWeather?.daily.tryFirst?.temp?.max ?? 0) -
                       (r.tryFirst?.getTempMax ?? 0));
-                  final diffMin = ((state.todayOverview?.main?.tempMin ?? 0) -
+                  final diffMin = ((state.presentFutureWeather?.daily.tryFirst?.temp?.min?? 0) -
                       (r.tryFirst?.getTempMin ?? 0));
-                  emit(state.copyWith(
-                weatherStatus: WeatherStatus.historySuccess,
-                historyListWeather: r,
-                    compareTodayYesterday: LocalizationImpl()
+                  var compare = LocalizationImpl()
                     .translate("compareWeather", namedArguments: {
                   "diffDay": "${LocalizationImpl().translate(diffDay)}",
                   "diffNight": "${LocalizationImpl().translate(diffNight)}",
-                  "diffMax": "${diffMax.toStringAsFixed(0)}",
-                  "diffMin": "${diffMin.toStringAsFixed(0)}",
-                })));
+                  "diffMax": "${diffMax.toStringAsFixed(1)}",
+                  "diffMin": "${diffMin.toStringAsFixed(1)}",
+                });
+                  printDebug("diffMax ${diffMax}");
+                  printDebug("diffMin ${diffMin}");
+                  printDebug("compare $compare");
+                  emit(state.copyWith(
+                weatherStatus: WeatherStatus.historySuccess,
+                historyListWeather: r,
+                    compareTodayYesterday: compare));
                 });
       }
     });
