@@ -427,7 +427,7 @@ class LoadedContent extends StatelessWidget {
                         child: WeatherTodayWidget(
                           weatherToday: weatherBloc.state.todayOverview,
                           weatherToday_: weatherBloc
-                              .state.presentFutureWeather!.daily.tryFirst!,
+                              .state.presentFutureWeather?.daily.tryFirst,
                         )),
                     Expanded(
                       flex: 6,

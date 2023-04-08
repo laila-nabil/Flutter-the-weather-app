@@ -15,7 +15,7 @@ import 'dashboard_weather.dart';
 
 class WeatherTodayWidget extends StatelessWidget {
   final TodayOverview? weatherToday;
-  final Daily weatherToday_;
+  final Daily? weatherToday_;
   const WeatherTodayWidget(
       {Key? key,
       required this.weatherToday, required this.weatherToday_,})
@@ -32,7 +32,7 @@ class WeatherTodayWidget extends StatelessWidget {
                   weatherToday_: weatherToday_ ,
                   weatherToday: weatherToday,
                   isPortrait: isPortrait,
-                  rain: (weatherToday_.pop).toString() ,
+                  rain: (weatherToday_?.pop ?? "").toString() ,
                   constraints: constraints,
                 );
         return isPortrait
@@ -188,13 +188,13 @@ class todayDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              if(double.tryParse(weatherTodayRain) != null)Container(
                 width: width,
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
                   svgIcon: AppAssets.IconRain,
-                  status: '${double.parse(weatherTodayRain) * 100.0}%',
+                  status: '${double.tryParse(weatherTodayRain) !* 100.0}%',
                 ),
               ),
               Container(
