@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meta_seo/meta_seo.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
@@ -30,6 +32,11 @@ Future main() async {
   );
   await di.init();
   Bloc.observer = AppBlocObserver();
+  // It is required to add the following to run the meta_seo package correctly
+  // before the running of the Flutter app
+  if (kIsWeb) {
+    MetaSEO().config();
+  }
   runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 
