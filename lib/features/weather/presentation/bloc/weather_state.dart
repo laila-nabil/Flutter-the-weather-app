@@ -197,7 +197,7 @@ class WeatherState extends Equatable {
                 currentTemp:  element?.hourly?[index].temp.toString() ?? "",
                 minTemp: "",
                 maxTemp:  "",
-                rain: element?.hourly?[index].pop.toString() ?? "",
+                rain: (element?.hourly?[index].pop ?? "").toString(),
                 windSpeed:element?.hourly?[index].windSpeed.toString() ?? "",
                 windDeg:element?.hourly?[index].windDeg.toString() ?? "",
                 pressure: element?.hourly?[index].pressure.toString() ?? "",
