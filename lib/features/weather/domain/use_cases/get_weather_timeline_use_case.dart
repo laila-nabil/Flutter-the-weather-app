@@ -6,6 +6,7 @@ import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_timeline.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 
+import '../../../../core/constants.dart';
 import '../../../../main.dart';
 import '../entities/unit.dart';
 
@@ -17,7 +18,9 @@ class GetWeatherTimelineUseCase
 
   @override
   Future<Either<Failure, WeatherTimelineV>> call(WeatherTimelineParams params) async {
-    analytics.logEvent(name: "GetWeatherTimelineUseCase",);
+    if (enableAnalytics) {
+      analytics.logEvent(name: "GetWeatherTimelineUseCase",);
+    }
     return await repo.getWeatherTimeline(params);
   }
 }

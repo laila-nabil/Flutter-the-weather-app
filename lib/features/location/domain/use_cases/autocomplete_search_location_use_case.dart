@@ -3,6 +3,7 @@ import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
+import '../../../../core/constants.dart';
 import '../../../../main.dart';
 import '../repositories/location_repo.dart';
 
@@ -12,7 +13,9 @@ class AutoCompleteSearchLocationUseCase implements UseCase<List<LocationEntity>,
   AutoCompleteSearchLocationUseCase(this.locationRepo);
   @override
   Future<Either<Failure, List<LocationEntity>>> call(String params) async {
-    analytics.logEvent(name: "AutoCompleteSearchLocationUseCase",);
+    if (enableAnalytics) {
+      analytics.logEvent(name: "AutoCompleteSearchLocationUseCase",);
+    }
     if(params.length > 3){
       return await locationRepo.autoCompleteSearchLocation(params);
     }else {

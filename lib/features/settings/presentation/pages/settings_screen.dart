@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/main.dart';
+import '../../../../core/constants.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../weather/presentation/pages/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,7 +30,9 @@ class SettingsScreen extends StatelessWidget {
       if(currentLanguagesEnum!=null){
         languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
-      analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
+      if (enableAnalytics) {
+        analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
+      }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
     return SafeArea(
@@ -76,7 +79,9 @@ class SettingsScreen extends StatelessWidget {
                             " ",style: TextStyle(color: Colors.white),),
                         TextButton(
                             onPressed: () async {
-                              analytics.logEvent(name: "launchGithub");
+                              if (enableAnalytics) {
+                                analytics.logEvent(name: "launchGithub");
+                              }
                               await launchUrl(
                                 Uri.parse( "https://github.com/laila-nabil/"),
                               );
