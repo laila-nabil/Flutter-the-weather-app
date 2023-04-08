@@ -46,7 +46,6 @@ app.*.map.json
 /android/app/release
 .firebase/hosting.YnVpbGRcd2Vi.cache
 pubspec.lock
-pubspec.lock
 
 # Firebase
 /android/app/google-services.json
