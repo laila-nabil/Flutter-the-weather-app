@@ -194,7 +194,7 @@ class _CompactDay extends StatelessWidget {
               alignment: Alignment.center,
               child: DashboardWeather(
                 isStatusCentered: true,
-                svgIcon: AppAssets.IconRain,
+                svgIcon: AppAssets.iconRain,
                 status:
                     '${(double.tryParse(params.rain)! * 100).toStringAsFixed(0)}%',
               ),

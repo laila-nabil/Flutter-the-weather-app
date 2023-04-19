@@ -194,7 +194,7 @@ class todayDetails extends StatelessWidget {
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: AppAssets.IconRain,
+                  svgIcon: AppAssets.iconRain,
                   status: '${double.tryParse(weatherTodayRain) !* 100.0}%',
                 ),
               ),
@@ -203,7 +203,7 @@ class todayDetails extends StatelessWidget {
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: AppAssets.IconSunrise,
+                  svgIcon: AppAssets.iconSunrise,
                   status:
                       '${weatherToday?.sys?.getSunrise}',
                 ),
@@ -228,7 +228,7 @@ class todayDetails extends StatelessWidget {
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: AppAssets.IconWind2,
+                  svgIcon: AppAssets.iconWind2,
                   status:
                       '${weatherToday?.wind?.speed} ${'m_s'.tr()} ${weatherToday?.wind?.windDirection}',
                 ),
@@ -238,7 +238,7 @@ class todayDetails extends StatelessWidget {
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
-                  svgIcon: AppAssets.IconSunset,
+                  svgIcon: AppAssets.iconSunset,
                   status:
                       '${weatherToday?.sys?.getSunset}',
                 ),

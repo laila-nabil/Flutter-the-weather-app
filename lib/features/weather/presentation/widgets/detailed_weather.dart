@@ -25,13 +25,13 @@ class WeatherDetailed extends StatelessWidget {
       final dashboard = [
         if(params.rain!="")DashboardWeather(
           isStatusCentered: false,
-          svgIcon: AppAssets.IconRain,
+          svgIcon: AppAssets.iconRain,
           status: '${(double.tryParse(params.rain)! * 100).toStringAsFixed(2)}%',
         ),
 
         DashboardWeather(
           isStatusCentered: false,
-          svgIcon: AppAssets.IconWind2,
+          svgIcon: AppAssets.iconWind2,
           status:
       params.windSpeed.isNotEmpty&&params.windDeg.isNotEmpty ? '${params.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(params.windDeg) ?? 0)}' : '_',
         ),
