@@ -7,6 +7,7 @@ import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
+import '../../../../core/resources/assets_paths.dart';
 import '../../../../core/utils.dart';
 import '../../domain/entities/present_future_weather.dart';
 import '../../domain/entities/weather.dart';
@@ -54,56 +55,54 @@ class WeatherTabs extends StatelessWidget {
                     }
                     printDebug("Tab ${e.value.iconPath}");
                     final tab = Tab(
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            if (e.value.isImageNetwork &&
-                                (e.value.iconPath != null &&
-                                    e.value.iconPath != "" &&
-                                    e.value.iconPath !=
-                                        'assets/weather_status/clear.png'))
-                              Image.network(
-                                e.value.iconPath,
-                                width: 50,
-                                height: 50,
-                              ),
-                            if (!e.value.isImageNetwork &&
-                                (e.value.iconPath != null &&
-                                    e.value.iconPath != "" &&
-                                    e.value.iconPath !=
-                                        'assets/weather_status/clear.png'))
-                              Image.asset(
-                                e.value.iconPath,
-                                width: 35,
-                                height: 35,
-                              ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                AutoSizeText(
-                                  day,
-                                  style: TextStyle(color: AppColors.white),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                    Text(
-                                        double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            color: AppColors.white)),
-                                    SizedBox(width: 10,),
-                                    Text(
-                                        double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
-                                        style: TextStyle(color: AppColors.white))
-                                  ],),
-                                ),
-                              ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (e.value.isImageNetwork &&
+                              (e.value.iconPath != null &&
+                                  e.value.iconPath != "" &&
+                                  e.value.iconPath !=
+                                      'assets/weather_status/clear.png'))
+                            Image.network(
+                              e.value.iconPath,
+                              height: 30,
+                              fit: BoxFit.contain,
                             ),
-                          ],
-                        ),
+                          if (!e.value.isImageNetwork &&
+                              (e.value.iconPath != null &&
+                                  e.value.iconPath != "" &&
+                                  e.value.iconPath !=
+                                      'assets/weather_status/clear.png'))
+                            Image.asset(
+                              e.value.iconPath,
+                              height: 30,
+                              fit: BoxFit.contain,
+                            ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              AutoSizeText(
+                                day,
+                                style: TextStyle(color: AppColors.white),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                  Text(
+                                      double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          color: AppColors.white)),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                      double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
+                                      style: TextStyle(color: AppColors.white))
+                                ],),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                     return tab;

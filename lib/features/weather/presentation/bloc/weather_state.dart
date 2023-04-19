@@ -104,7 +104,7 @@ class WeatherState extends Equatable {
             visibility: "",
             detailedDescription: presentFutureWeather!.daily.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
             feelsLike: "",
-            isImageNetwork: true,
+            isImageNetwork: Config.isImageNetwork,
             date: date,
           details: List.generate(
               hourlyList?.length ?? 0,
@@ -139,7 +139,7 @@ class WeatherState extends Equatable {
                 visibility:  hourlyList.tryElementAt(index)?.visibility?.toString() ?? "",
                 detailedDescription: hourlyList.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
                 feelsLike: hourlyList.tryElementAt(index)?.feelsLike.toString() ?? "",
-                isImageNetwork: true,
+                isImageNetwork: Config.isImageNetwork,
                 date: unixSecondsToDateTimezone(hourlyList
                     .tryElementAt(index)
                 ?.dt?.toInt() ??0, presentFutureWeather?.timezoneOffset?.toInt() ??0),
@@ -188,7 +188,7 @@ class WeatherState extends Equatable {
             visibility: "",
             detailedDescription: "",
             feelsLike: "",
-            isImageNetwork: true,
+            isImageNetwork: Config.isImageNetwork,
           date: date,
             details: List.generate(element?.hourly?.length ?? 0, (index) => DayWeatherParams(
                     iconPath: element?.hourly?[index].weather.tryFirst?.iconPath
@@ -209,7 +209,7 @@ class WeatherState extends Equatable {
                     .toString() ??
                     "",
                 feelsLike: element?.hourly?[index].feelsLike.toString() ?? "",
-                isImageNetwork: true,
+                isImageNetwork: Config.isImageNetwork,
                 date: unixSecondsToDateTimezone(
                     element?.hourly?[index].dt?.toInt() ?? 0,
                     historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0),
