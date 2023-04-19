@@ -8,7 +8,7 @@ class AppAssets {
   static const String IconWind = 'assets/dashboard_icons/wind.svg';
   static const String IconWind2 = 'assets/dashboard_icons/wind_2.svg';
 
-  static const String Icon3dPath = 'assets/3d';
+  static const String Icon3dPath = 'assets/weather_3d';
 
   static const String localeAr = 'assets/locales/ar-EG.json';
   static const String localeEn = 'assets/locales/en-UK.json';

@@ -71,7 +71,7 @@ class WeatherState extends Equatable {
                     .tryElementAt(index)
                     ?.weather
                     .tryFirst
-                    ?.iconPath ??
+                    ?.iconPath(Config.isImageNetwork) ??
                 "",
             currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
             minTemp: presentFutureWeather?.daily
@@ -113,7 +113,7 @@ class WeatherState extends Equatable {
                     .tryElementAt(index)
                     ?.weather
                     .tryFirst
-                    ?.iconPath ??
+                    ?.iconPath(Config.isImageNetwork) ??
                     "",
                 currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
                 minTemp:"",
@@ -170,7 +170,7 @@ class WeatherState extends Equatable {
             iconPath: element
                     ?.current?.weather
                     .tryFirst
-                    ?.iconPath ??
+                    ?.iconPath(Config.isImageNetwork) ??
                 "",
             currentTemp:  element?.current?.temp.toString() ?? "",
             minTemp:

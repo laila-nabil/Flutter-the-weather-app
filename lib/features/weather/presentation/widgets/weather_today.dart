@@ -9,6 +9,7 @@ import 'package:the_weather_app/features/weather/domain/entities/today_overview_
 
 import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 
+import '../../../../core/config.dart';
 import '../../domain/entities/today_overview.dart';
 import '../../domain/entities/weather.dart';
 import 'dashboard_weather.dart';
@@ -76,7 +77,7 @@ class _WeatherToday extends StatelessWidget {
                 ? Expanded(
                     flex: 1,
                     child: Image.asset(
-                      weatherToday?.weather.tryFirst?.iconPath ?? "",
+                      weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? "",
                       // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
                       // width: isPortrait
                       //     ? constraints.maxWidth * 0.65
@@ -92,7 +93,7 @@ class _WeatherToday extends StatelessWidget {
                 : Expanded(
                     flex: 1,
                     child: Image.network(
-                      weatherToday?.weather.tryFirst?.iconPath ?? "",
+                      weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? "",
                       // width: constraints.maxWidth * 0.5,
                       // width: constraints.maxWidth * 0.325,
                       height: isPortrait

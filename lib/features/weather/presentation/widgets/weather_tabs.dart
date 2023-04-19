@@ -26,7 +26,7 @@ class WeatherTabs extends StatelessWidget {
     final todayIndex = numOfHistoryDays;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
-          length: (days.length ?? 0), // length of tabs
+          length: (days.length), // length of tabs
           initialIndex: todayIndex,
           child: Column(children: <Widget>[
             Container(

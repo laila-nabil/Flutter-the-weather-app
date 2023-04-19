@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/core/resources/assets_paths.dart';
 
 /// id : 800
 /// main : "Clear"
@@ -23,11 +24,13 @@ class Weather extends Equatable{
   String? main;
   String? description;
   String? icon;
-  String get iconPath => "assets/3d/"+(icon??"")+".png";
+
+  String iconPath(bool isNetwork) =>
+      isNetwork ? "${AppAssets.Icon3dPath}/${icon ?? ""}.png" : icon.toString();
   @override
-  List<Object?> get props => [this.id,
-    this.main,
-    this.description,
-    this.icon,];
+  List<Object?> get props => [id,
+    main,
+    description,
+    icon,];
 
 }
