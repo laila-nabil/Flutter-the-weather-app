@@ -172,7 +172,7 @@ class CurrentConditionsModelV extends CurrentConditionsV {
     solarenergy = json['solarenergy'];
     uvindex = json['uvindex'];
     conditions = json['conditions'];
-    iconPath = AppAssets.VisualCrossingFolder +"/${json['icon']}.png";
+    iconPath = "${AppAssets.iconsPath}/${json['icon']}.png";
     stations = json['stations'] != null ? json['stations'].cast<String>() : [];
     source = json['source'];
     sunrise = json['sunrise'];

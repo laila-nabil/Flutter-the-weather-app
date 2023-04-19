@@ -26,7 +26,7 @@ class Weather extends Equatable{
   String? icon;
 
   String iconPath(bool isNetwork) =>
-      isNetwork ? "${AppAssets.icon3dPath}/${icon ?? ""}.png" : icon.toString();
+      isNetwork ? "${AppAssets.iconsPath}/${icon ?? ""}.png" : icon.toString();
   @override
   List<Object?> get props => [id,
     main,

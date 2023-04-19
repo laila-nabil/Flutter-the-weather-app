@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 
@@ -66,6 +67,7 @@ class _WeatherToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    printDebug("_WeatherToday ${weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? ""}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,

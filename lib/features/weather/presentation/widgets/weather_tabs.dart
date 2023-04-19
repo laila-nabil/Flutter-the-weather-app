@@ -7,6 +7,7 @@ import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
+import '../../../../core/utils.dart';
 import '../../domain/entities/present_future_weather.dart';
 import '../../domain/entities/weather.dart';
 import 'compact_day_weather.dart';
@@ -51,6 +52,7 @@ class WeatherTabs extends StatelessWidget {
                       default:
                         day =  DateFormat.MMMEd('locale'.tr().toString()).format(e.value.date);
                     }
+                    printDebug("Tab ${e.value.iconPath}");
                     final tab = Tab(
                       child: Container(
                         child: Row(
