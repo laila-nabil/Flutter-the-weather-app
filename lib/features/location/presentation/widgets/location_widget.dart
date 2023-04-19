@@ -51,8 +51,7 @@ class LocationWidget extends StatelessWidget {
             ),
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(LocationScreen.routeName,
-                      arguments: {"locationBloc": locationBloc});
+                  Navigator.of(context).pushNamed(LocationScreen.routeName,);
                 },
                 iconSize: min(constraints.maxHeight * 0.7, 30),
                 alignment: Alignment.center,

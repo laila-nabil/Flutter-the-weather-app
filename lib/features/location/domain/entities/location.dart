@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class LocationEntity extends Equatable {
-  String? lon;
-  String? lat;
+  double? lon;
+  double? lat;
   String? city;
   String? country;
   String? countryCode;

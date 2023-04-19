@@ -20,10 +20,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   // LocationEntity? location = LocationEntity(lat: '30.0444', lon: '31.2357');
 
-  LocationEntity defaultLocation = LocationEntity(lat: '30.0444', lon: '31.2357',city: "Cairo",country: "Egypt",countryCode: "EG");
+  LocationEntity defaultLocation = LocationEntity(lat: 30.0444, lon: 31.2357,city: "Cairo",country: "Egypt",countryCode: "EG");
   LocationBloc(this._autoCompleteSearchLocationUseCase,
       this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
-      : super(LocationState(status: LocationStatus.initial,userCurrentLocation:  LocationEntity(lat: '30.0444', lon: '31.2357',city: "Cairo",country: "Egypt",countryCode: "EG"))) {
+      : super(LocationState(status: LocationStatus.initial,userCurrentLocation:  LocationEntity(lat: 30.0444, lon: 31.2357,city: "Cairo",country: "Egypt",countryCode: "EG"))) {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
         add(GetCurrentLocation());
@@ -35,7 +35,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
             (success) {
           emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
           add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
-              lat: success.lat ?? "", lon: success.lon ?? "")));
+              lat: success.lat.toString(), lon: success.lon.toString())));
         });
       } else if (event is SetLocation) {
         if (event.location == null) {
@@ -47,6 +47,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           userCurrentLocation: state.userCurrentLocation,
         ));
         final result = await _autoCompleteSearchLocationUseCase(event.input);
+        printDebug("result use case $result");
         result.fold((failure) => emit(LocationState(status: LocationStatus.failure,failure: failure)),
             (autoCompleteList) {
               emit(LocationState(

@@ -150,12 +150,6 @@ class WeatherState extends Equatable {
         (historyListWeather?.length ?? 0),
         (index) {
           var element = historyListWeather?.tryElementAt(index);
-          printDebug("element ${element}");
-          printDebug("element.hourly.length ?? 0 ${element?.hourly?.length ?? 0}");
-          element?.hourly?.forEach((historyHourly) {
-        printDebug(
-            "hourly history ${historyHourly.dt} ${unixSecondsToDate(historyHourly.dt?.toInt() ?? 0,)}");
-      });
           List<double> temps = [];
           element?.hourly?.forEach((element) {
             if(element.temp!=null) {
@@ -165,7 +159,6 @@ class WeatherState extends Equatable {
           var date = unixSecondsToDateTimezone(
               historyListWeather.tryElementAt(index)?.current?.dt?.toInt() ?? 0,
               historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0);
-          printDebug("history date ${date}");
           return DayWeatherParams(
             iconPath: element
                     ?.current?.weather

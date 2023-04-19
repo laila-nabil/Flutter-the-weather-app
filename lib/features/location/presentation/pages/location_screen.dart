@@ -8,6 +8,7 @@ import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
+import '../../../../injection_container.dart';
 import '../bloc/location_bloc.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -17,12 +18,11 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
     return BlocProvider(
-    create: (context) => args["locationBloc"] as LocationBloc,
+    create: (context) => sl<LocationBloc>(),
     child: BlocConsumer<LocationBloc, LocationState>(
     listener: (context, state) {
       if (state.status == LocationStatus.failure) {
@@ -142,7 +142,7 @@ class LocationScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '${locationBloc.state.autoCompleteList.tryElementAt(i)?.city}${locationBloc.state.autoCompleteList.tryElementAt(i)?.country}',
+                                  '${locationBloc.state.autoCompleteList.tryElementAt(i)?.city}, ${locationBloc.state.autoCompleteList.tryElementAt(i)?.country}',
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ));

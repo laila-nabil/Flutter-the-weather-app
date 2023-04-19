@@ -53,7 +53,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
       analytics.logEvent(name: "GetCurrentLocationUseCase");
     }
     return Right(LocationEntity(
-        lon: position.longitude.toString(), lat: position.latitude.toString(),));
+        lon: position.longitude, lat: position.latitude,));
   }
 
 }

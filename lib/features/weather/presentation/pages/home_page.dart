@@ -81,8 +81,8 @@ class MyHomePage extends StatelessWidget {
                 var unit = UnitGroup.metric;
                 getWeatherData(
                     bloc,
-                    long,
-                    lat,
+                    long.toString(),
+                    lat.toString(),
                     locationBloc.state.userCurrentLocation
                             ?.city ??
                         "",
@@ -124,8 +124,8 @@ class MyHomePage extends StatelessWidget {
                       var unit = UnitGroup.metric;
                       bloc.add(GetTodayOverviewV(
                           params: GetTodayOverviewParamsV(
-                              longitude: long,
-                              latitude: lat,
+                              longitude: long.toString(),
+                              latitude: lat.toString(),
                               language: getCurrentLangCode,
                               unit: unit)));
                     },

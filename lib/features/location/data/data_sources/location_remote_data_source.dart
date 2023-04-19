@@ -39,6 +39,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
       result.add(LocationModel.fromJson(element));
 
     });
+    printDebug("result $result");
     return result;
   }
 /*

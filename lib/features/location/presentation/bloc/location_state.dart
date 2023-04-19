@@ -15,9 +15,9 @@ class LocationState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [this.status,
-    this.autoCompleteList,
-    this.userCurrentLocation,
-    this.failure,];
+  List<Object?> get props => [status,
+    autoCompleteList,
+    userCurrentLocation,
+    failure,];
 
 }

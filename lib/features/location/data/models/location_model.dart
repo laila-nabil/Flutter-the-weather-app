@@ -10,8 +10,8 @@ class LocationModel extends LocationEntity {
     country = json['properties']['country'];
   }
   LocationModel.bigDataCloudFromJson(Map<String,dynamic> json) {
-    lon =json['longitude'].toString();
-    lat = json['latitude'].toString();
+    lon =json['longitude'];
+    lat = json['latitude'];
     city = json['city'].toString();
     country = json['countryName'].toString();
     countryCode = json['countryCode'].toString();

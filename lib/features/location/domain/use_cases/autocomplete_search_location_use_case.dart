@@ -16,7 +16,7 @@ class AutoCompleteSearchLocationUseCase implements UseCase<List<LocationEntity>,
     if (enableAnalytics) {
       analytics.logEvent(name: "AutoCompleteSearchLocationUseCase",);
     }
-    if(params.length > 3){
+    if(params.length > 1){
       return await locationRepo.autoCompleteSearchLocation(params);
     }else {
       return Right(List<LocationEntity>.empty());

@@ -53,7 +53,6 @@ class WeatherTabs extends StatelessWidget {
                       default:
                         day =  DateFormat.MMMEd('locale'.tr().toString()).format(e.value.date);
                     }
-                    printDebug("Tab ${e.value.iconPath}");
                     final tab = Tab(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
