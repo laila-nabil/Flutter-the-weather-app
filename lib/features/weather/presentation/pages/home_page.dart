@@ -141,6 +141,7 @@ class MyHomePage extends StatelessWidget {
                                 : loadingLogo()
                             : LoadedContent(
                                 city: locationBloc.state.userCurrentLocation?.city ?? "",
+                                locationBloc: locationBloc,
                                 weatherBloc: bloc,
                                 screenSize: screenSize,
                                 isPortrait: isPortrait,
@@ -350,6 +351,7 @@ class LoadedContent extends StatelessWidget {
     required this.isPortrait,
     required this.minimalView,
     required this.weatherBloc,
+    required this.locationBloc,
     required this.city,
   }) : super(key: key);
 
@@ -358,7 +360,7 @@ class LoadedContent extends StatelessWidget {
   final bool minimalView;
   final WeatherBloc weatherBloc;
   final String city;
-
+  final LocationBloc locationBloc;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -370,6 +372,7 @@ class LoadedContent extends StatelessWidget {
               flex: 1,
               child: LocationWidget(
                 city: city,
+                locationBloc: locationBloc,
               )),
           if (isPortrait && minimalView)
             Expanded(
