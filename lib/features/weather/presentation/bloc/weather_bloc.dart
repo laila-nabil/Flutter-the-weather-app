@@ -99,6 +99,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                     compareTodayYesterday: compare));
                 });
       }
+      else if(event is GetTodayOverview){
+       await _getTodayOverview(emit,event.params);
+      }
     });
   }
 

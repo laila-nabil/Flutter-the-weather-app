@@ -122,8 +122,8 @@ class MyHomePage extends StatelessWidget {
                       var getCurrentLangCode =
                           LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
-                      bloc.add(GetTodayOverviewV(
-                          params: GetTodayOverviewParamsV(
+                      bloc.add(GetTodayOverview(
+                          params: GetTodayOverviewParams(
                               longitude: long.toString(),
                               latitude: lat.toString(),
                               language: getCurrentLangCode,
