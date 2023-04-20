@@ -14,7 +14,6 @@ class CompareWeather extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       printDebug("compare $compareWeather");
     return LayoutBuilder(builder: (ctx, constraints) {
       return Container(
         height: constraints.maxHeight * 0.9,

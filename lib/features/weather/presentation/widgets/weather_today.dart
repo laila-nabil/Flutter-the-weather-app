@@ -67,7 +67,6 @@ class _WeatherToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    printDebug("_WeatherToday ${weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? ""}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,

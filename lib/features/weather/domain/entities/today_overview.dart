@@ -131,7 +131,6 @@ class Wind extends Equatable{
     final directionsAr = ["ش","ش","ش ق","ق","ق","ق","ج ق","ج","ج","ج","ج غ","غ","غ","غ","ش غ","ش","ش"];
     var deg_ = deg ?? 0;
     final result = 'lang'.tr().contains('EN')? '${directionsEn[(deg_/22.5).round()]}' : '${directionsAr[(deg_/22.5).round()]}';
-    printDebug("windDirection $result");
     return  result;
   }
 
