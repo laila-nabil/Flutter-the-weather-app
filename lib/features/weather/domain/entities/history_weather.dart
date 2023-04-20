@@ -27,19 +27,19 @@ class HistoryWeather extends Equatable {
   Current? current;
   List<Hourly>? hourly;
 
-  double? get getTempMin {
-    List<double?> temps = _getTempsMinToMax();
+  num? get getTempMin {
+    List<num?> temps = _getTempsMinToMax();
     return temps.tryFirst;
   }
 
-  double? get getTempMax {
-    List<double?> temps = _getTempsMinToMax();
+  num? get getTempMax {
+    List<num?> temps = _getTempsMinToMax();
     printDebug("temps are $temps");
     return temps.tryElementAt(temps.length - 1);
   }
 
-  List<double?> _getTempsMinToMax() {
-    List<double?> temps = [];
+  List<num?> _getTempsMinToMax() {
+    List<num?> temps = [];
     hourly?.forEach((element) {temps.add(element.temp??0);});
     temps.sort();
     return temps;

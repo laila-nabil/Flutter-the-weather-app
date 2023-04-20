@@ -150,7 +150,7 @@ class WeatherState extends Equatable {
         (historyListWeather?.length ?? 0),
         (index) {
           var element = historyListWeather?.tryElementAt(index);
-          List<double> temps = [];
+          List<num> temps = [];
           element?.hourly?.forEach((element) {
             if(element.temp!=null) {
               temps.add(element.temp!);

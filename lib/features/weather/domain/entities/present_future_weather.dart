@@ -21,8 +21,8 @@ class PresentFutureWeather extends Equatable{
       this.hourly, 
       this.daily,});
 
-  double? lat;
-  double? lon;
+  num? lat;
+  num? lon;
   String? timezone;
   num? timezoneOffset;
   Current? current;
@@ -87,19 +87,19 @@ class Daily extends Equatable{
   num? sunset;
   num? moonrise;
   num? moonset;
-  double? moonPhase;
+  num? moonPhase;
   Temp? temp;
   FeelsLike? feelsLike;
   num? pressure;
   num? humidity;
-  double? dewPoint;
-  double? windSpeed;
+  num? dewPoint;
+  num? windSpeed;
   num? windDeg;
-  double? windGust;
+  num? windGust;
   List<Weather>? weather;
   num? clouds;
-  double? pop;
-  double? uvi;
+  num? pop;
+  num? uvi;
 
 
   @override
@@ -137,10 +137,10 @@ class FeelsLike extends Equatable {
       this.eve, 
       this.morn,});
 
-  double? day;
-  double? night;
-  double? eve;
-  double? morn;
+  num? day;
+  num? night;
+  num? eve;
+  num? morn;
 
   @override
   List<Object?> get props => [this.day,
@@ -167,12 +167,12 @@ class Temp extends Equatable{
       this.eve, 
       this.morn,});
 
-  double? day;
-  double? min;
-  double? max;
-  double? night;
-  double? eve;
-  double? morn;
+  num? day;
+  num? min;
+  num? max;
+  num? night;
+  num? eve;
+  num? morn;
 
   @override
   List<Object?> get props => [this.day,
@@ -218,19 +218,19 @@ class Hourly extends Equatable{
       this.pop,});
 
   num? dt;
-  double? temp;
-  double? feelsLike;
+  num? temp;
+  num? feelsLike;
   num? pressure;
   num? humidity;
-  double? dewPoint;
+  num? dewPoint;
   num? uvi;
   num? clouds;
   num? visibility;
-  double? windSpeed;
+  num? windSpeed;
   num? windDeg;
-  double? windGust;
+  num? windGust;
   List<Weather>? weather;
-  double? pop;
+  num? pop;
 
 
   @override
@@ -287,15 +287,15 @@ class Current extends Equatable {
   num? dt;
   num? sunrise;
   num? sunset;
-  double? temp;
-  double? feelsLike;
+  num? temp;
+  num? feelsLike;
   num? pressure;
   num? humidity;
-  double? dewPoint;
-  double? uvi;
+  num? dewPoint;
+  num? uvi;
   num? clouds;
   num? visibility;
-  double? windSpeed;
+  num? windSpeed;
   num? windDeg;
   List<Weather>? weather;
 
