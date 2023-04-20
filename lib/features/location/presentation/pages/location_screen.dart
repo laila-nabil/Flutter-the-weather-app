@@ -9,6 +9,7 @@ import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
 import '../../../../injection_container.dart';
+import '../../../weather/presentation/pages/home_page.dart';
 import '../bloc/location_bloc.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -21,9 +22,7 @@ class LocationScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
-    return BlocProvider.value(
-    value: sl<LocationBloc>(),
-    child: BlocConsumer<LocationBloc, LocationState>(
+    return BlocConsumer<LocationBloc, LocationState>(
     listener: (context, state) {
       if (state.status == LocationStatus.failure) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -131,7 +130,7 @@ class LocationScreen extends StatelessWidget {
                                     location: locationBloc
                                         .state.autoCompleteList
                                         .tryElementAt(i)));
-                                Navigator.of(context).pop();
+                                Navigator.of(context).popAndPushNamed(MyHomePage.routeName);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -151,7 +150,6 @@ class LocationScreen extends StatelessWidget {
             ),
           ));
     },
-    ),
-);
+    );
   }
 }
