@@ -40,6 +40,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       } else if (event is SetLocation) {
         if (event.location == null) {
           add(GetCurrentLocation());
+        }else {
+          emit(LocationState(
+            status: LocationStatus.success,
+            userCurrentLocation: event.location
+          ));
         }
       } else if (event is AutoCompleteSearchLocation) {
         emit(LocationState(

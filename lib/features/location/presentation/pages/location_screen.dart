@@ -21,8 +21,8 @@ class LocationScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
-    return BlocProvider(
-    create: (context) => sl<LocationBloc>(),
+    return BlocProvider.value(
+    value: sl<LocationBloc>(),
     child: BlocConsumer<LocationBloc, LocationState>(
     listener: (context, state) {
       if (state.status == LocationStatus.failure) {
@@ -128,15 +128,9 @@ class LocationScreen extends StatelessWidget {
                           return InkWell(
                               onTap: () async {
                                 locationBloc.add(SetLocation(
-                                    location: LocationEntity(
-                                        lat: locationBloc
-                                            .state.autoCompleteList
-                                            .tryElementAt(i)
-                                            ?.lat,
-                                        lon: locationBloc
-                                            .state.autoCompleteList
-                                            .tryElementAt(i)
-                                            ?.lon)));
+                                    location: locationBloc
+                                        .state.autoCompleteList
+                                        .tryElementAt(i)));
                                 Navigator.of(context).pop();
                               },
                               child: Padding(
