@@ -44,30 +44,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      scrollBehavior: MyCustomScrollBehavior(),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'Weather app',
-      theme: theme,
-      home: MultiBlocProvider(
+    return MultiBlocProvider(
         providers: [
           BlocProvider<LanguageBloc>(
             create: (context) => sl<LanguageBloc>(),
           ),
           BlocProvider<LocationBloc>(
-            create: (context) => sl<LocationBloc>(),
+            create: (context) =>  sl<LocationBloc>(),
           ),
         ],
-        child: MyHomePage(),
+      child: MaterialApp(
+        scrollBehavior: MyCustomScrollBehavior(),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        title: 'Weather app',
+        theme: theme,
+        home: MyHomePage(),
+        routes: {
+          MyHomePage.routeName: (ctx) => MyHomePage(),
+          LocationScreen.routeName: (ctx) => LocationScreen(),
+          SettingsScreen.routeName: (ctx) => SettingsScreen(),
+        },
       ),
-      routes: {
-        MyHomePage.routeName: (ctx) => MyHomePage(),
-        LocationScreen.routeName: (ctx) => LocationScreen(),
-        SettingsScreen.routeName: (ctx) => SettingsScreen(),
-      },
     );
   }
 }
@@ -78,7 +78,8 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // specified PointerDeviceKinds. ScrollBehavior.dragDevices, by default,
   // allows scrolling widgets to be dragged by all PointerDeviceKinds except for PointerDeviceKind.mouse.
   @override
-  Set<PointerDeviceKind> get dragDevices => {
+  Set<PointerDeviceKind> get dragDevices =>
+      {
         PointerDeviceKind.touch,
         PointerDeviceKind.mouse,
       };

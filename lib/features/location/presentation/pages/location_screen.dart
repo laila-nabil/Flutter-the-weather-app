@@ -22,7 +22,9 @@ class LocationScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
     return BlocConsumer<LocationBloc, LocationState>(
+      // bloc: locationBloc,
     listener: (context, state) {
       if (state.status == LocationStatus.failure) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -31,7 +33,7 @@ class LocationScreen extends StatelessWidget {
       }
     },
     builder: (context, state) {
-      final locationBloc = BlocProvider.of<LocationBloc>(context);
+      // final locationBloc = BlocProvider.of<LocationBloc>(context);
       if (state.status == LocationStatus.initial) {
         locationBloc.add(LocationInitialEvent());
       }
