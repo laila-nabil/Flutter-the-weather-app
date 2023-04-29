@@ -37,6 +37,8 @@ Future main() async {
   if (kIsWeb) {
     MetaSEO().config();
   }
+  //https://twitter.com/luke_pighetti/status/1651585533481566211?s=12&t=9UwYk3rxsHZqVkQxNhVW3g
+  Paint.enableDithering = true;
   runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 
