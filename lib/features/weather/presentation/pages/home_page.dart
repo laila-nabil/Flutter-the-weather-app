@@ -37,25 +37,45 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Add MetaSEO just into Web platform condition
-    if(kIsWeb) {
+    if (kIsWeb) {
       // Define MetaSEO object
       MetaSEO meta = MetaSEO();
       // add meta seo data for web app as you want
       meta.ogTitle(ogTitle: 'Compare weather app');
-      meta.twitterTitle(twitterTitle:  'Compare weather app');
-      meta.description(description: 'Weather app with forecasting and history data');
-      meta.ogDescription(ogDescription: 'Weather app with forecasting and history data');
-      meta.twitterDescription(twitterDescription: 'Weather app with forecasting and history data');
-      meta.keywords(keywords: 'Weather, History weather, Future weather, Compare weather,Flutter');
+      meta.twitterTitle(twitterTitle: 'Compare weather app');
+      meta.description(
+          description: 'Weather app with forecasting and history data');
+      meta.ogDescription(
+          ogDescription: 'Weather app with forecasting and history data');
+      meta.twitterDescription(
+          twitterDescription: 'Weather app with forecasting and history data');
+      meta.keywords(
+          keywords:
+              'Weather, History weather, Future weather, Compare weather,Flutter');
     }
 
     return BlocProvider<WeatherBloc>(
       create: (context) => sl<WeatherBloc>(),
       child: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, locationState) {
+          final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+          final locationBloc = BlocProvider.of<LocationBloc>(context);
           if (locationState.status == LocationStatus.initial) {
-            final locationBloc = BlocProvider.of<LocationBloc>(context);
             locationBloc.add(LocationInitialEvent());
+          } else if (locationState.status == LocationStatus.success &&
+              locationState.userCurrentLocation != null) {
+            var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+            var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+            var getCurrentLangCode =
+            LocalizationImpl().getCurrentLangCode(context);
+            var unit = UnitGroup.metric;
+            getWeatherData(
+                weatherBloc,
+                long.toString(),
+                lat.toString(),
+                locationBloc.state.userCurrentLocation?.city ?? "",
+                getCurrentLangCode,
+                unit);
           }
           return BlocConsumer<WeatherBloc, WeatherState>(
             listener: (context, state) {},
@@ -83,9 +103,7 @@ class MyHomePage extends StatelessWidget {
                     bloc,
                     long.toString(),
                     lat.toString(),
-                    locationBloc.state.userCurrentLocation
-                            ?.city ??
-                        "",
+                    locationBloc.state.userCurrentLocation?.city ?? "",
                     getCurrentLangCode,
                     unit);
               }
@@ -117,8 +135,10 @@ class MyHomePage extends StatelessWidget {
                   backgroundColor: Theme.of(context).backgroundColor,
                   body: RefreshIndicator(
                     onRefresh: () async {
-                      var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-                      var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+                      var long =
+                          locationBloc.state.userCurrentLocation?.lon ?? "";
+                      var lat =
+                          locationBloc.state.userCurrentLocation?.lat ?? "";
                       var getCurrentLangCode =
                           LocalizationImpl().getCurrentLangCode(context);
                       var unit = UnitGroup.metric;
@@ -140,7 +160,9 @@ class MyHomePage extends StatelessWidget {
                                     : loadingShimmer(screenSize: screenSize))
                                 : loadingLogo()
                             : LoadedContent(
-                                city: locationBloc.state.userCurrentLocation?.city ?? "",
+                                city: locationBloc
+                                        .state.userCurrentLocation?.city ??
+                                    "",
                                 locationBloc: locationBloc,
                                 weatherBloc: bloc,
                                 screenSize: screenSize,
@@ -361,6 +383,7 @@ class LoadedContent extends StatelessWidget {
   final WeatherBloc weatherBloc;
   final String city;
   final LocationBloc locationBloc;
+
   @override
   Widget build(BuildContext context) {
     return Container(
