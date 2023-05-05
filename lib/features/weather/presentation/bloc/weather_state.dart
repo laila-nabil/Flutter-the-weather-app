@@ -53,7 +53,7 @@ class WeatherState extends Equatable {
       this.presentFutureFailure});
 
   List<DayWeatherParams> get days{
-    List<DayWeatherParams> _presentFutureWeatherDays = List.generate(
+    List<DayWeatherParams> presentFutureWeatherDays = List.generate(
         (presentFutureWeather?.daily?.length ?? 0),
         (index) {
           var date = unixSecondsToDateTimezone(presentFutureWeather!.daily
@@ -115,7 +115,8 @@ class WeatherState extends Equatable {
                     .tryFirst
                     ?.iconPath(Config.isImageNetwork) ??
                     "",
-                currentTemp: presentFutureWeather?.current?.temp.toString() ?? "",
+                currentTemp: hourlyList
+                    .tryElementAt(index)?.temp.toString() ?? "",
                 minTemp:"",
                 maxTemp:"",
                 rain: hourlyList
@@ -146,7 +147,7 @@ class WeatherState extends Equatable {
             ))
         );
         });
-    List<DayWeatherParams> _historyWeatherDays = List.generate(
+    List<DayWeatherParams> historyWeatherDays = List.generate(
         (historyListWeather?.length ?? 0),
         (index) {
           var element = historyListWeather?.tryElementAt(index);
@@ -210,7 +211,7 @@ class WeatherState extends Equatable {
         );
         });
 
-    return _historyWeatherDays + _presentFutureWeatherDays;
+    return historyWeatherDays + presentFutureWeatherDays;
   }
   @override
   List<Object?> get props => [
