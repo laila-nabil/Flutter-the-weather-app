@@ -185,7 +185,8 @@ class WeatherState extends Equatable {
             isImageNetwork: Config.isImageNetwork,
           date: date,
             details: List.generate(element?.hourly?.length ?? 0, (index) => DayWeatherParams(
-                    iconPath: element?.hourly?[index].weather.tryFirst?.iconPath
+                    iconPath: element?.hourly?[index].weather.tryFirst
+                            ?.iconPath(Config.isImageNetwork)
                             .toString() ??
                         "",
                 currentTemp:  element?.hourly?[index].temp.toString() ?? "",
