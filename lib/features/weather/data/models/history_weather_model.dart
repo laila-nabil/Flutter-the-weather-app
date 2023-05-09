@@ -17,26 +17,32 @@ class HistoryWeatherModel extends HistoryWeather {
     int? timezoneOffset,
     CurrentModel? current,
     List<HourlyModel>? hourly,
-  }):super(lat:lat,
-    lon:lon,
-    timezone:timezone,
-    timezoneOffset:timezoneOffset,
-    current:current,
-    hourly:hourly,
-  );
+  }) : super(
+          timezoneOffset,
+          lat: lat,
+          lon: lon,
+          timezone: timezone,
+          current: current,
+          hourly: hourly,
+        );
 
-  HistoryWeatherModel.fromJson(dynamic json) {
-    lat = json['lat'];
-    lon = json['lon'];
-    timezone = json['timezone'];
-    timezoneOffset = json['timezone_offset'];
-    current = json['current'] != null ? CurrentModel.fromJson(json['current']) : null;
+  factory HistoryWeatherModel.fromJson(dynamic json) {
+    CurrentModel? current =
+        json['current'] != null ? CurrentModel.fromJson(json['current']) : null;
+    List<HourlyModel>? hourly;
     if (json['hourly'] != null) {
       hourly = [];
       json['hourly'].forEach((v) {
         hourly?.add(HourlyModel.fromJson(v));
       });
     }
-  }
 
+    return HistoryWeatherModel(
+        lat: json['lat'],
+        lon: json['lon'],
+        timezone: json['timezone'],
+        timezoneOffset: json['timezone_offset'],
+        hourly: hourly,
+        current: current);
+  }
 }

@@ -17,6 +17,7 @@ import 'features/weather/presentation/pages/home_page.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart';
 import 'injection_container.dart' as di;
+import 'package:timezone/data/latest.dart' as tz;
 
 //flutter build web --dart-define api_key=KEY
 //firebase deploy --only hosting
@@ -39,6 +40,7 @@ Future main() async {
   }
   //https://twitter.com/luke_pighetti/status/1651585533481566211?s=12&t=9UwYk3rxsHZqVkQxNhVW3g
   Paint.enableDithering = true;
+  tz.initializeTimeZones();
   runApp(LocalizationImpl().localizationSetup(MyApp()));
 }
 

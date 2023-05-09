@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
+import 'package:the_weather_app/core/utils.dart';
 
 DateTime unixSecondsToDate(int unixTimeStamp) {
   //If [isUtc] is false then the date is in the local time zone.
@@ -13,6 +14,11 @@ String unixSecondsToDateFormat(int unixTimeStamp) {
 
 DateTime unixSecondsToDateTimezone(int unixTimeStamp, int timezoneOffset) {
   //If [isUtc] is false then the date is in the local time zone.
+  printDebug("unixSecondsToDateTimezone ${DateTime.fromMillisecondsSinceEpoch(
+      (unixTimeStamp + timezoneOffset) * 1000,
+      isUtc: true)} ${DateTime.fromMillisecondsSinceEpoch(
+      (unixTimeStamp + timezoneOffset) * 1000,
+      isUtc: false)} for dt $unixTimeStamp");
   return DateTime.fromMillisecondsSinceEpoch(
       (unixTimeStamp + timezoneOffset) * 1000,
       isUtc: true);

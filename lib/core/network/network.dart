@@ -25,7 +25,7 @@ class Network{
     printDebug("[url] "+url,);
     printDebug("[header] "+"${header??""}",);
     printDebug("[body] "+"${body??""}",);
-    printDebug("[response body] "+"${response.body}",);
+    printDebug("[response body] ${response.body}",);
     printDebug("[statusCode] "+"${response.statusCode}",);
     return response;
   }

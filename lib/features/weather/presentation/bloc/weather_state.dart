@@ -56,14 +56,14 @@ class WeatherState extends Equatable {
     List<DayWeatherParams> presentFutureWeatherDays = List.generate(
         (presentFutureWeather?.daily?.length ?? 0),
         (index) {
-          var date = unixSecondsToDateTimezone(presentFutureWeather!.daily
-                .tryElementAt(index)
-                !.dt!.toInt(), presentFutureWeather!.timezoneOffset!.toInt());
+          var date = presentFutureWeather!.daily
+          .tryElementAt(index)
+              ?.date(presentFutureWeather!.actualTimezoneOffset!.toInt()) ??
+          DateTime.now();
       var hourlyList = presentFutureWeather?.hourly
           ?.where((element) =>
-              unixSecondsToDateTimezone(
-                      (element.dt ?? 0).toInt(), (presentFutureWeather?.timezoneOffset ?? 0).toInt())
-                  .isSameDay(date) ==
+              element.date((presentFutureWeather?.actualTimezoneOffset ?? 0).toInt())
+                  ?.isSameDay(date) ==
               true)
           .toList();
       return DayWeatherParams(
@@ -141,10 +141,13 @@ class WeatherState extends Equatable {
                 detailedDescription: hourlyList.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
                 feelsLike: hourlyList.tryElementAt(index)?.feelsLike.toString() ?? "",
                 isImageNetwork: Config.isImageNetwork,
-                date: unixSecondsToDateTimezone(hourlyList
-                    .tryElementAt(index)
-                ?.dt?.toInt() ??0, presentFutureWeather?.timezoneOffset?.toInt() ??0),
-            ))
+                date: hourlyList
+                    .tryElementAt(index)?.date(
+                            presentFutureWeather?.actualTimezoneOffset
+                                    ?.toInt() ??
+                                0) ??
+                        DateTime.now(),
+                  ))
         );
         });
     List<DayWeatherParams> historyWeatherDays = List.generate(
@@ -159,7 +162,7 @@ class WeatherState extends Equatable {
           temps.sort();
           var date = unixSecondsToDateTimezone(
               historyListWeather.tryElementAt(index)?.current?.dt?.toInt() ?? 0,
-              historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0);
+              historyListWeather.tryElementAt(index)?.actualTimezoneOffset?.toInt() ?? 0);
           return DayWeatherParams(
             iconPath: element
                     ?.current?.weather
@@ -183,7 +186,7 @@ class WeatherState extends Equatable {
             detailedDescription: "",
             feelsLike: "",
             isImageNetwork: Config.isImageNetwork,
-          date: date,
+          date: date!,
             details: List.generate(element?.hourly?.length ?? 0, (index) => DayWeatherParams(
                     iconPath: element?.hourly?[index].weather.tryFirst
                             ?.iconPath(Config.isImageNetwork)
@@ -207,8 +210,12 @@ class WeatherState extends Equatable {
                 isImageNetwork: Config.isImageNetwork,
                 date: unixSecondsToDateTimezone(
                     element?.hourly?[index].dt?.toInt() ?? 0,
-                    historyListWeather.tryElementAt(index)?.timezoneOffset?.toInt() ?? 0),
-            ))
+                        historyListWeather
+                                .tryElementAt(index)
+                                ?.actualTimezoneOffset
+                                ?.toInt() ??
+                            0),
+                  ))
         );
         });
 
