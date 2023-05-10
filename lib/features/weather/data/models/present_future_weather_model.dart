@@ -55,6 +55,7 @@ class PresentFutureWeatherModel extends PresentFutureWeather {
         lon: lon,
         timezone: timezone,
         timezoneOffset: timezoneOffset,
+        hourly: hourly,
         current: current,
         daily: daily);
   }
