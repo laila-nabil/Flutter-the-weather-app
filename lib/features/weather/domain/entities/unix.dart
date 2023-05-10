@@ -12,6 +12,7 @@ String unixSecondsToDateFormat(int unixTimeStamp) {
   return DateFormat('hh:mm a','locale'.tr().toString()).format(date);
 }
 
+///TODO BETTER NAMES
 DateTime unixSecondsToDateTimezone(int unixTimeStamp, int timezoneOffset) {
   //If [isUtc] is false then the date is in the local time zone.
   printDebug("unixSecondsToDateTimezone ${DateTime.fromMillisecondsSinceEpoch(
