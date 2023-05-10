@@ -18,7 +18,7 @@ class GetPresentFutureWeatherUseCase
   Future<Either<Failure, PresentFutureWeather>> call(
       GetPresentFutureWeatherParams params) async{
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetPresentFutureWeatherUseCase",);
+      // analytics.logEvent(name: "GetPresentFutureWeatherUseCase",);
     }
     return await repo.getPresentFutureWeather(params);
   }

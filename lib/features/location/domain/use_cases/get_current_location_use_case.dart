@@ -50,7 +50,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
     // continue accessing the position of the device.
     var position = await Geolocator.getCurrentPosition();
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetCurrentLocationUseCase");
+      // analytics.logEvent(name: "GetCurrentLocationUseCase");
     }
     return Right(LocationEntity(
         lon: position.longitude, lat: position.latitude,));

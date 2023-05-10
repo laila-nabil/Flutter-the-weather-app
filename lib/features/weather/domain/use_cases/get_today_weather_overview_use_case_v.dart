@@ -17,7 +17,7 @@ class GetTodayWeatherOverviewUseCaseV
   @override
   Future<Either<Failure, TodayOverviewV>> call(GetTodayOverviewParamsV params) async{
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetTodayWeatherOverviewUseCaseV",);
+      // analytics.logEvent(name: "GetTodayWeatherOverviewUseCaseV",);
     }
     return await repo.getTodayOverviewV(params);
   }

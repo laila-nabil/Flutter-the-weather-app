@@ -7,7 +7,7 @@ import 'package:the_weather_app/main.dart';
 import '../../../../core/constants.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../weather/presentation/pages/home_page.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
         languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
       if (enableAnalytics) {
-        analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
+        // analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
@@ -80,11 +80,11 @@ class SettingsScreen extends StatelessWidget {
                         TextButton(
                             onPressed: () async {
                               if (enableAnalytics) {
-                                analytics.logEvent(name: "launchGithub");
+                                // analytics.logEvent(name: "launchGithub");
                               }
-                              await launchUrl(
-                                Uri.parse( "https://github.com/laila-nabil/"),
-                              );
+                              // await launchUrl(
+                              //   Uri.parse( "https://github.com/laila-nabil/"),
+                              // );
                             },
                             child: Text(
                                 LocalizationImpl().translate("lailaNabil"),style: TextStyle(color: Colors.white)))

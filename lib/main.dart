@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta_seo/meta_seo.dart';
+// import 'package:meta_seo/meta_seo.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'core/bloc_observer.dart';
 import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
@@ -22,21 +22,21 @@ import 'package:timezone/data/latest.dart' as tz;
 //flutter build web --dart-define api_key=KEY
 //firebase deploy --only hosting
 
-FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+// FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
 Future main() async {
   //order is important
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   await di.init();
   Bloc.observer = AppBlocObserver();
   // It is required to add the following to run the meta_seo package correctly
   // before the running of the Flutter app
   if (kIsWeb) {
-    MetaSEO().config();
+    // MetaSEO().config();
   }
   //https://twitter.com/luke_pighetti/status/1651585533481566211?s=12&t=9UwYk3rxsHZqVkQxNhVW3g
   Paint.enableDithering = true;

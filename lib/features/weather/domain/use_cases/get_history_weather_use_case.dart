@@ -20,7 +20,7 @@ class GetHistoryListWeatherUseCase
       GetHistoryListWeatherParams params) async{
     if (enableAnalytics) {
       if (enableAnalytics) {
-        analytics.logEvent(name: "GetHistoryListWeatherUseCase",);
+        // analytics.logEvent(name: "GetHistoryListWeatherUseCase",);
       }
     }
     return await repo.getHistoryListWeather(params);

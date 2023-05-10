@@ -18,7 +18,7 @@ class GetLocationFromCoordinatesUseCase
   Future<Either<Failure,LocationEntity>> call(
       GetLocationFromCoordinatesParams params) async {
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetLocationFromCoordinatesUseCase");
+      // analytics.logEvent(name: "GetLocationFromCoordinatesUseCase");
     }
     return await locationRepo.getLocationFromCoordinates(params: params);
   }

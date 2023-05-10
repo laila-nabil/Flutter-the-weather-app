@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta_seo/meta_seo.dart';
+// import 'package:meta_seo/meta_seo.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
@@ -39,19 +39,19 @@ class MyHomePage extends StatelessWidget {
     // Add MetaSEO just into Web platform condition
     if (kIsWeb) {
       // Define MetaSEO object
-      MetaSEO meta = MetaSEO();
+      // MetaSEO meta = MetaSEO();
       // add meta seo data for web app as you want
-      meta.ogTitle(ogTitle: 'Compare weather app');
-      meta.twitterTitle(twitterTitle: 'Compare weather app');
-      meta.description(
-          description: 'Weather app with forecasting and history data');
-      meta.ogDescription(
-          ogDescription: 'Weather app with forecasting and history data');
-      meta.twitterDescription(
-          twitterDescription: 'Weather app with forecasting and history data');
-      meta.keywords(
-          keywords:
-              'Weather, History weather, Future weather, Compare weather,Flutter');
+      // meta.ogTitle(ogTitle: 'Compare weather app');
+      // meta.twitterTitle(twitterTitle: 'Compare weather app');
+      // meta.description(
+      //     description: 'Weather app with forecasting and history data');
+      // meta.ogDescription(
+      //     ogDescription: 'Weather app with forecasting and history data');
+      // meta.twitterDescription(
+      //     twitterDescription: 'Weather app with forecasting and history data');
+      // meta.keywords(
+      //     keywords:
+      //         'Weather, History weather, Future weather, Compare weather,Flutter');
     }
 
     return BlocProvider<WeatherBloc>(

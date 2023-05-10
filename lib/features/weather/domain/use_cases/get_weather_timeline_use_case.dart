@@ -19,7 +19,7 @@ class GetWeatherTimelineUseCase
   @override
   Future<Either<Failure, WeatherTimelineV>> call(WeatherTimelineParams params) async {
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetWeatherTimelineUseCase",);
+      // analytics.logEvent(name: "GetWeatherTimelineUseCase",);
     }
     return await repo.getWeatherTimeline(params);
   }
