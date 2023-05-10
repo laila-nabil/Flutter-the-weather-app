@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:the_weather_app/core/error/failures.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/today_overview_model_v.dart';
+import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 
 
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
@@ -109,16 +111,19 @@ class WeatherRepoImpl extends WeatherRepo {
     try {
       DateTime now =
           DateTime.now().toUtc();
+      now = unixSecondsToDateTimezone(now.millisecondsSinceEpoch  ~/ 1000, -10800);
+      now = DateTime(now.year,now.month,now.day);
+
       final dates =
           List.generate(params.numOfDays, (index) {
             printDebug("index $index");
-            return now.subtract(Duration(days: index + 1));
+            return now.subDays(index + 1);
           });
       printDebug("now $now");
       printDebug("dates $dates");
       for (final date in dates) {
         final dt = date.millisecondsSinceEpoch ~/ 1000;
-        printDebug("date $date $dt");
+        printDebug("date dt $date $dt");
         result.add(await weatherRemoteDataSource.getHistoryWeather(
             params: params, dt: dt));
       }

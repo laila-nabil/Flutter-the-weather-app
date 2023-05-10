@@ -33,3 +33,31 @@ extension isSameDayE on DateTime{
         otherDate.day == this.day;
   }
 }
+
+extension DateTimeExtensions on DateTime {
+  DateTime addDays(int daysToAdd) {
+    return DateTime(
+      this.year,
+      this.month,
+      this.day + daysToAdd,
+      this.hour,
+      this.minute,
+      this.second,
+      this.millisecond,
+      this.microsecond,
+    );
+  }
+
+  DateTime subDays(int daysToSubtract) {
+    return DateTime(
+      this.year,
+      this.month,
+      this.day - daysToSubtract,
+      this.hour,
+      this.minute,
+      this.second,
+      this.millisecond,
+      this.microsecond,
+    );
+  }
+}
