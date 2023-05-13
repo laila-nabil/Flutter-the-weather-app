@@ -190,7 +190,7 @@ class MyHomePage extends StatelessWidget {
             latitude: latitude,
             longitude: longitude,
             language: getCurrentLangCode,
-            numOfDays: bloc.numOfHistoryDays),
+            actualNumOfDays: bloc.numOfHistoryDays),
         getTodayOverviewParams: GetTodayOverviewParams(
             latitude: latitude,
             longitude: longitude,

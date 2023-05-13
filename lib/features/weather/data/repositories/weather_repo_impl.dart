@@ -14,12 +14,15 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_present_fu
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../domain/entities/present_future_weather.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../models/history_weather_model.dart';
 import '../models/present_future_weather_model.dart';
 import '../models/today_overview_model.dart';
 import '../models/weather_timeline_model_v.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:the_weather_app/core/extensions.dart';
 
 class WeatherRepoImpl extends WeatherRepo {
   final WeatherRemoteDataSource weatherRemoteDataSource;
@@ -107,15 +110,17 @@ class WeatherRepoImpl extends WeatherRepo {
   @override
   Future<Either<Failure, List<HistoryWeatherModel>>> getHistoryListWeather(
       GetHistoryListWeatherParams params) async {
-    List<HistoryWeatherModel> result = List.empty(growable: true);
+    List<HistoryWeatherModel> resultFromApi = List.empty(growable: true);
+    List<HistoryWeatherModel> resultAdjustedForUI = List.empty(growable: true);
+    List<Hourly> resultAdjustedForUIHourly = List.empty(growable: true);
+    Map<DateTime,List<Hourly>> mapDaysHourly = {};
     try {
       DateTime now =
           DateTime.now().toUtc();
-      now = unixSecondsToDateTimezone(now.millisecondsSinceEpoch  ~/ 1000, -10800);
-      now = DateTime(now.year,now.month,now.day);
-
+      var utcNumOfDays =
+          params.actualNumOfDays >= 4 ? 4 : params.actualNumOfDays;
       final dates =
-          List.generate(params.numOfDays, (index) {
+          List.generate(utcNumOfDays, (index) {
             printDebug("index $index");
             return now.subDays(index + 1);
           });
@@ -124,12 +129,27 @@ class WeatherRepoImpl extends WeatherRepo {
       for (final date in dates) {
         final dt = date.millisecondsSinceEpoch ~/ 1000;
         printDebug("date dt $date $dt");
-        result.add(await weatherRemoteDataSource.getHistoryWeather(
+        resultFromApi.add(await weatherRemoteDataSource.getHistoryWeather(
             params: params, dt: dt));
       }
-      result = result.reversed.toList();
-      printDebug("getHistoryListWeather $result");
-      return Right(result);
+      resultFromApi = resultFromApi.reversed.toList();
+      for (var element in resultFromApi) {
+        resultAdjustedForUIHourly =
+            resultAdjustedForUIHourly + (element.hourly ?? []);
+      }
+      ///TODO FIX
+
+      for (var element in resultAdjustedForUIHourly) {
+        DateTime hourlyDate =
+            element.date(resultFromApi.first.actualTimezoneOffset!)!;
+        if(hourlyDate.isSameDay(
+
+        )){
+
+        }
+      }
+      printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
+      return Right(resultAdjustedForUI);
     } catch (exception) {
       String message = exception.toString();
       if (exception is EmptyCacheException) {
@@ -140,4 +160,20 @@ class WeatherRepoImpl extends WeatherRepo {
       return Left(ServerFailure(message: message));
     }
   }
+}
+
+int? _actualTimezoneOffset(String timezone){
+  // Set the timezone to your desired location
+  final location = tz.getLocation(timezone ?? "");
+
+  // Get the current UTC time
+  final utcTime = DateTime.now().toUtc();
+
+  // Convert UTC time to local time
+  final localTime = tz.TZDateTime.from(utcTime, location);
+
+  var timezoneOffset = (localTime.hour -utcTime.hour)*3600;
+  printDebug(
+      "localTime-utc $timezoneOffset $localTime $timezone");
+  return timezoneOffset;
 }

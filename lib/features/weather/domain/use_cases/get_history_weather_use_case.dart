@@ -31,16 +31,16 @@ class GetHistoryListWeatherParams extends Equatable {
   final String latitude;
   final String longitude;
   final String language;
-  final int numOfDays;
+  final int actualNumOfDays;
 
   GetHistoryListWeatherParams({
     required this.latitude,
     required this.longitude,
     required this.language,
-    required this.numOfDays,
+    required this.actualNumOfDays,
   });
 
   @override
   List<Object?> get props =>
-      [this.latitude, this.longitude, language, numOfDays];
+      [this.latitude, this.longitude, language, actualNumOfDays];
 }
