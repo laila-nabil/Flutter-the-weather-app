@@ -33,7 +33,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetHistoryListWeatherUseCase _getHistoryListWeatherUseCase;
   final GetPresentFutureWeatherUseCase _getPresentFutureWeatherUseCase;
   final GetTodayWeatherOverviewUseCase _getTodayWeatherOverviewUseCase;
-  final int numOfHistoryDays = 4;//max days back is 4
+  final int numOfHistoryDays = 3;//max days back is 4 and because it is in UTC so real is 3 days
   WeatherBloc(this._getTodayWeatherOverviewUseCase,
       this._getHistoryListWeatherUseCase, this._getPresentFutureWeatherUseCase)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
