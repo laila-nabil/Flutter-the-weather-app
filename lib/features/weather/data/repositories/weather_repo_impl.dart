@@ -138,16 +138,25 @@ class WeatherRepoImpl extends WeatherRepo {
             resultAdjustedForUIHourly + (element.hourly ?? []);
       }
       ///TODO FIX
+      for (int i = 0; i < params.actualNumOfDays; i++) {
+        mapDaysHourly[unixSecondsToDateTimezone(DateTime.now().subDays(-i).millisecondsSinceEpoch,
+            resultFromApi.first.actualTimezoneOffset!)] = [];
 
+      }
+      int i = 0;
       for (var element in resultAdjustedForUIHourly) {
         DateTime hourlyDate =
             element.date(resultFromApi.first.actualTimezoneOffset!)!;
-        if(hourlyDate.isSameDay(
-
-        )){
-
+        if(hourlyDate.isSameDay(mapDaysHourly.entries.elementAt(i).key)){
+         (mapDaysHourly.entries
+              .elementAt(i)
+              .value ?? []).add(element);
         }
+        i++;
       }
+      resultAdjustedForUI = resultFromApi;
+      resultAdjustedForUI.forEach((element) {
+        element.hourly = mapDaysHourly.entries.elementAt(resultAdjustedForUI.indexOf(element)).value;});
       printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
       return Right(resultAdjustedForUI);
     } catch (exception) {
