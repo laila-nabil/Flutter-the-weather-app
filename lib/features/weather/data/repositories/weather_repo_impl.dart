@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
@@ -112,8 +113,6 @@ class WeatherRepoImpl extends WeatherRepo {
       GetHistoryListWeatherParams params) async {
     List<HistoryWeatherModel> resultFromApi = List.empty(growable: true);
     List<HistoryWeatherModel> resultAdjustedForUI = List.empty(growable: true);
-    List<Hourly> resultAdjustedForUIHourly = List.empty(growable: true);
-    Map<DateTime,List<Hourly>> mapDaysHourly = {};
     try {
       DateTime now =
           DateTime.now().toUtc();
@@ -132,32 +131,8 @@ class WeatherRepoImpl extends WeatherRepo {
         resultFromApi.add(await weatherRemoteDataSource.getHistoryWeather(
             params: params, dt: dt));
       }
-      resultFromApi = resultFromApi.reversed.toList();
-      for (var element in resultFromApi) {
-        resultAdjustedForUIHourly =
-            resultAdjustedForUIHourly + (element.hourly ?? []);
-      }
-      ///TODO FIX
-      for (int i = 0; i < params.actualNumOfDays; i++) {
-        mapDaysHourly[unixSecondsToDateTimezone(DateTime.now().subDays(-i).millisecondsSinceEpoch,
-            resultFromApi.first.actualTimezoneOffset!)] = [];
-
-      }
-      int i = 0;
-      for (var element in resultAdjustedForUIHourly) {
-        DateTime hourlyDate =
-            element.date(resultFromApi.first.actualTimezoneOffset!)!;
-        if(hourlyDate.isSameDay(mapDaysHourly.entries.elementAt(i).key)){
-         (mapDaysHourly.entries
-              .elementAt(i)
-              .value ?? []).add(element);
-        }
-        i++;
-      }
-      resultAdjustedForUI = resultFromApi;
-      resultAdjustedForUI.forEach((element) {
-        element.hourly = mapDaysHourly.entries.elementAt(resultAdjustedForUI.indexOf(element)).value;});
-      printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
+      resultAdjustedForUI =
+          _mapHistoryUtcToTimezone(resultFromApi, params.actualNumOfDays);
       return Right(resultAdjustedForUI);
     } catch (exception) {
       String message = exception.toString();
@@ -169,6 +144,56 @@ class WeatherRepoImpl extends WeatherRepo {
       return Left(ServerFailure(message: message));
     }
   }
+
+}
+
+@visibleForTesting
+List<HistoryWeatherModel> mapHistoryUtcToTimezone(
+  List<HistoryWeatherModel> resultFromApi,
+  int actualNumOfDays,
+) =>
+    _mapHistoryUtcToTimezone(resultFromApi, actualNumOfDays);
+
+List<HistoryWeatherModel> _mapHistoryUtcToTimezone(
+  List<HistoryWeatherModel> resultFromApi,
+  int actualNumOfDays,
+) {
+  List<HistoryWeatherModel> resultAdjustedForUI = List.empty(growable: true);
+  List<Hourly> resultAdjustedForUIHourly = List.empty(growable: true);
+  Map<DateTime, List<Hourly>> mapDaysHourly = {};
+  resultFromApi = resultFromApi.reversed.toList();
+  for (var element in resultFromApi) {
+    resultAdjustedForUIHourly =
+        resultAdjustedForUIHourly + (element.hourly ?? []);
+  }
+
+  ///TODO FIX
+  for (int i = 0; i < actualNumOfDays; i++) {
+    mapDaysHourly[unixSecondsToDateTimezone(
+        DateTime.now().subtract(Duration(days: i)).millisecondsSinceEpoch,
+        resultFromApi.first.actualTimezoneOffset!)] = [];
+    printDebug("mapDaysHourly now $mapDaysHourly");
+
+  }
+  int i = 0;
+  for (var element in resultAdjustedForUIHourly) {
+    DateTime hourlyDate =
+        element.date(resultFromApi.first.actualTimezoneOffset!)!;
+    if (hourlyDate.isSameDay(mapDaysHourly.entries.elementAt(i).key)) {
+      (mapDaysHourly.entries.elementAt(i).value ?? []).add(element);
+    }
+    printDebug("resultAdjustedForUIHourly now $resultAdjustedForUIHourly");
+
+    i++;
+  }
+  resultAdjustedForUI = resultFromApi;
+  for (var element in resultAdjustedForUI) {
+    element.hourly = mapDaysHourly.entries
+        .elementAt(resultAdjustedForUI.indexOf(element))
+        .value;
+  }
+  printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
+  return resultAdjustedForUI;
 }
 
 int? _actualTimezoneOffset(String timezone){
