@@ -6,17 +6,17 @@ class GoogleGrid extends StatelessWidget {
     this.columnCount = 2,
     this.gap,
     this.padding,
-    @required this.children,
+    required this.children,
   });
 
   /// Number of column.
   final int columnCount;
 
   /// Gap to separate each cell.
-  final double gap;
+  final double? gap;
 
   /// An empty space.
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// The widgets below this widget in the tree.
   final List<Widget> children;
