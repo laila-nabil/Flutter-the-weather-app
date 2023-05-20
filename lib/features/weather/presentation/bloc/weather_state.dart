@@ -161,7 +161,7 @@ class WeatherState extends Equatable {
             }});
           temps.sort();
           var date = unixSecondsToDateTimezone(
-              historyListWeather.tryElementAt(index)?.current?.dt?.toInt() ?? 0,
+              historyListWeather.tryElementAt(index)?.hourly?.first.dt?.toInt() ?? 0,
               historyListWeather.tryElementAt(index)?.actualTimezoneOffset?.toInt() ?? 0);
           // printDebug("*** date $date");
           return DayWeatherParams(

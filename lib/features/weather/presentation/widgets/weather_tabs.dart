@@ -38,21 +38,8 @@ class WeatherTabs extends StatelessWidget {
                 unselectedLabelColor: Colors.grey,
                 tabs: [
                   ...days.asMap().entries.map((e) {
-                    String day;
-                    switch(e.key) {
-                      // case todayIndex:
-                      //   day = 'today'.tr().toString();
-                      //   break;
-                      // case todayIndex + 1:
-                      //   day = 'tomorrow'.tr().toString();
-                      //   break;
-                      // case todayIndex - 1:
-                      //   // day = 'Yesterday';
-                      //   day = 'yesterday'.tr().toString();
-                      //   break;
-                      default:
-                        day =  DateFormat.MMMEd('locale'.tr().toString()).format(e.value.date);
-                    }
+                    String day = DateFormat.MMMEd('locale'.tr().toString())
+                        .format(e.value.date);
                     final tab = Tab(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
