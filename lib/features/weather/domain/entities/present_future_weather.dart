@@ -44,10 +44,7 @@ class PresentFutureWeather extends Equatable {
 
     // Convert UTC time to local time
     final localTime = tz.TZDateTime.from(utcTime, location);
-    printDebug("localTime $localTime $utcTime $timezone in present_weather");
     var timezoneOffset = (localTime.hour -utcTime.hour)*3600;
-    printDebug(
-        "localTime-utc $timezoneOffset in present_weather");
     return timezoneOffset;
   }
 

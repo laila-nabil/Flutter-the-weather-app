@@ -189,10 +189,7 @@ class WeatherState extends Equatable {
             isImageNetwork: Config.isImageNetwork,
           date: date,
             details: List.generate(element?.hourly?.length ?? 0, (index) {
-              // printDebug("*** 2 ${element?.hourly?.length} ${element?.hourly}");
-              printDebug(
-                "*** 3 date ${element?.hourly?[index].dt} ${historyListWeather.tryElementAt(index)?.actualTimezoneOffset?.toInt() ?? 0} ${unixSecondsToDateTimezone(element?.hourly?[index].dt?.toInt() ?? 0, historyListWeather.tryElementAt(index)?.actualTimezoneOffset?.toInt() ?? 0)} ${element?.hourly?[index].date(historyListWeather.tryElementAt(index)?.actualTimezoneOffset ?? 0)}");
-            return DayWeatherParams(
+              return DayWeatherParams(
                 iconPath: element?.hourly?[index].weather.tryFirst
                     ?.iconPath(Config.isImageNetwork)
                     .toString() ??

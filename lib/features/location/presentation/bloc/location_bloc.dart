@@ -41,11 +41,12 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
             (success) {
           emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
           add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
-              lat: success.lat.toString(), lon: success.lon.toString())));
+                  lat: success.lat.toString(), lon: success.lon.toString()),
+              afterSuccess: event.afterSuccess));
         });
       } else if (event is SetLocation) {
         if (event.location == null) {
-          add(GetCurrentLocation());
+          add(GetCurrentLocation(afterSuccess: event.afterSuccess));
         }else {
           emit(LocationState(
             status: LocationStatus.success,
@@ -68,13 +69,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
               ));
         });
       } else if (event is GetLocationFromCoordinates) {
-        await _getLocationFromCoordinates(emit, event);
+        await _getLocationFromCoordinates(emit, event,event.afterSuccess);
       }
     });
   }
 
-  Future<void> _getLocationFromCoordinates(
-      Emitter<LocationState> emit, GetLocationFromCoordinates event) async {
+  Future<void> _getLocationFromCoordinates(Emitter<LocationState> emit,
+      GetLocationFromCoordinates event, void Function()? afterSuccess) async {
     emit(LocationState(
       status: LocationStatus.loading,
       userCurrentLocation: state.userCurrentLocation,
@@ -89,6 +90,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
               userCurrentLocation: success,
               autoCompleteList: state.autoCompleteList
           ));
+          if(afterSuccess!=null){
+            afterSuccess();
+          }
     });
   }
 }

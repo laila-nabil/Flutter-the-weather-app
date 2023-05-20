@@ -100,8 +100,10 @@ class LocationScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        locationBloc.add(SetLocation());
-                      },
+                        locationBloc.add(SetLocation(
+                              afterSuccess: () => Navigator.of(context)
+                                  .popAndPushNamed(MyHomePage.routeName)));
+                        },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

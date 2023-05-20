@@ -15,11 +15,6 @@ String unixSecondsToDateFormat(int unixTimeStamp) {
 ///TODO BETTER NAMES
 DateTime unixSecondsToDateTimezone(int unixTimeStamp, int timezoneOffset) {
   //If [isUtc] is false then the date is in the local time zone.
-  printDebug("unixSecondsToDateTimezone ${DateTime.fromMillisecondsSinceEpoch(
-      (unixTimeStamp + timezoneOffset) * 1000,
-      isUtc: true)} ${DateTime.fromMillisecondsSinceEpoch(
-      (unixTimeStamp + timezoneOffset) * 1000,
-      isUtc: false)} for dt $unixTimeStamp");
   return DateTime.fromMillisecondsSinceEpoch(
       (unixTimeStamp + timezoneOffset) * 1000,
       isUtc: true);

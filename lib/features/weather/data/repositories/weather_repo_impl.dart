@@ -206,7 +206,5 @@ int? _actualTimezoneOffset(String timezone){
   final localTime = tz.TZDateTime.from(utcTime, location);
 
   var timezoneOffset = (localTime.hour -utcTime.hour)*3600;
-  printDebug(
-      "localTime-utc $timezoneOffset $localTime $timezone");
   return timezoneOffset;
 }
