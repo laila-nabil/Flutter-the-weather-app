@@ -192,7 +192,7 @@ List<HistoryWeatherModel> _mapHistoryUtcToTimezone(
     printDebug("resultAdjustedForUI element ${element.hourly?.length} ${element.hourly}");
   }
   printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
-  return resultAdjustedForUI;
+  return resultAdjustedForUI.reversed.toList();
 }
 
 int? _actualTimezoneOffset(String timezone){
