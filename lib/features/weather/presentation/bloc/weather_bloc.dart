@@ -66,29 +66,25 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 weatherStatus: WeatherStatus.historyFailure,
                 historyListFailure: l)),
                 (r) {
-                  printDebug("state.presentFutureWeather?.daily.tryFirst?.temp?.max ${state.presentFutureWeather?.daily.tryFirst?.temp?.max}");
-                  printDebug("state.presentFutureWeather?.daily.tryFirst?.temp?.min ${state.presentFutureWeather?.daily.tryFirst?.temp?.min}");
-                  printDebug("r.tryFirst ${r.tryFirst}");
-                  printDebug("r.tryFirst?.getTempMax ${r.tryFirst?.getTempMax}");
-                  printDebug("r.tryFirst?.getTempMin ${r.tryFirst?.getTempMin}");
+                  var yesterday = r.tryElementAt(r.length-1);
                   final diffDay = ((state.presentFutureWeather?.daily.tryFirst?.temp?.max ?? 0) >
-                      (r.tryFirst?.getTempMax ?? 0)) == true
+                      (yesterday?.getTempMax ?? 0)) == true
                       ? "warmer"
                       : "colder";
                   final diffNight = ((state.presentFutureWeather?.daily.tryFirst?.temp?.min?? 0) >
-                      (r.tryFirst?.getTempMin ?? 0)) == true
+                      (yesterday?.getTempMin ?? 0)) == true
                       ? "warmer"
                       : "colder";
                   final diffMax = ((state.presentFutureWeather?.daily.tryFirst?.temp?.max ?? 0) -
-                      (r.tryFirst?.getTempMax ?? 0));
+                      (yesterday?.getTempMax ?? 0));
                   final diffMin = ((state.presentFutureWeather?.daily.tryFirst?.temp?.min?? 0) -
-                      (r.tryFirst?.getTempMin ?? 0));
+                      (yesterday?.getTempMin ?? 0));
                   var compare = LocalizationImpl()
                     .translate("compareWeather", namedArguments: {
-                  "diffDay": "${LocalizationImpl().translate(diffDay)}",
-                  "diffNight": "${LocalizationImpl().translate(diffNight)}",
-                  "diffMax": "${diffMax.toStringAsFixed(1)}",
-                  "diffMin": "${diffMin.toStringAsFixed(1)}",
+                  "diffDay": LocalizationImpl().translate(diffDay),
+                  "diffNight": LocalizationImpl().translate(diffNight),
+                  "diffMax": diffMax.toStringAsFixed(1),
+                  "diffMin": diffMin.toStringAsFixed(1),
                 });
                   printDebug("diffMax ${diffMax}");
                   printDebug("diffMin ${diffMin}");
