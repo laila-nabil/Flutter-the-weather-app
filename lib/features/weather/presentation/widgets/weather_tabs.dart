@@ -31,70 +31,64 @@ class WeatherTabs extends StatelessWidget {
           length: (days.length), // length of tabs
           initialIndex: todayIndex,
           child: Column(children: <Widget>[
-            Container(
-              child: TabBar(
-                isScrollable: true,
-                labelColor: AppColors.white,
-                unselectedLabelColor: Colors.grey,
-                tabs: [
-                  ...days.asMap().entries.map((e) {
-                    String day = DateFormat.MMMEd('locale'.tr().toString())
-                        .format(e.value.date);
-                    final tab = Tab(
-                      child: Row(
+            TabBar(
+              isScrollable: true,
+              labelColor: AppColors.white,
+              unselectedLabelColor: Colors.grey,
+              tabs: days.asMap().entries.map((e) {
+                String day = DateFormat.MMMEd('locale'.tr().toString())
+                    .format(e.value.date);
+                final tab = Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if (e.value.isImageNetwork &&
+                          (e.value.iconPath != "" &&
+                              e.value.iconPath !=
+                                  'assets/weather_status/clear.png'))
+                        Image.network(
+                          e.value.iconPath,
+                          height: 30,
+                          fit: BoxFit.contain,
+                        ),
+                      if (!e.value.isImageNetwork &&
+                          (e.value.iconPath != "" &&
+                              e.value.iconPath !=
+                                  'assets/weather_status/clear.png'))
+                        Image.asset(
+                          e.value.iconPath,
+                          height: 30,
+                          fit: BoxFit.contain,
+                        ),
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          if (e.value.isImageNetwork &&
-                              (e.value.iconPath != null &&
-                                  e.value.iconPath != "" &&
-                                  e.value.iconPath !=
-                                      'assets/weather_status/clear.png'))
-                            Image.network(
-                              e.value.iconPath,
-                              height: 30,
-                              fit: BoxFit.contain,
-                            ),
-                          if (!e.value.isImageNetwork &&
-                              (e.value.iconPath != null &&
-                                  e.value.iconPath != "" &&
-                                  e.value.iconPath !=
-                                      'assets/weather_status/clear.png'))
-                            Image.asset(
-                              e.value.iconPath,
-                              height: 30,
-                              fit: BoxFit.contain,
-                            ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              AutoSizeText(
-                                day,
-                                style: TextStyle(color: AppColors.white),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                  Text(
-                                      double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          color: AppColors.white)),
-                                  SizedBox(width: 10,),
-                                  Text(
-                                      double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
-                                      style: TextStyle(color: AppColors.white))
-                                ],),
-                              ),
-                            ],
+                          AutoSizeText(
+                            day,
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                    double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: AppColors.white)),
+                                SizedBox(width: 10,),
+                                Text(
+                                    double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
+                                    style: TextStyle(color: AppColors.white))
+                              ],),
                           ),
                         ],
                       ),
-                    );
-                    return tab;
-                  })
-                ],
-              ),
+                    ],
+                  ),
+                );
+                return tab;
+              }).toList(),
             ),
             Container(
                 height: constraints.maxHeight - 49,
