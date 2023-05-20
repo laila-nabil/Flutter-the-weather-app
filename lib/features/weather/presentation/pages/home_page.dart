@@ -190,7 +190,7 @@ class MyHomePage extends StatelessWidget {
             latitude: latitude,
             longitude: longitude,
             language: getCurrentLangCode,
-            actualNumOfDays: bloc.numOfHistoryDays),
+            numOfDays: bloc.numOfHistoryDays),
         getTodayOverviewParams: GetTodayOverviewParams(
             latitude: latitude,
             longitude: longitude,
@@ -474,7 +474,8 @@ class LoadedContent extends StatelessWidget {
                     : const EdgeInsets.only(top: 30.0),
                 child: WeatherTabs(
                   days: weatherBloc.state.days,
-                  numOfHistoryDays: weatherBloc.numOfHistoryDays,
+                  numOfHistoryDays:
+                      weatherBloc.state.historyListWeather?.length ?? 0,
                 ),
               )),
           if (isPortrait)

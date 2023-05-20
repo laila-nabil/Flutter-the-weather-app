@@ -187,7 +187,7 @@ class WeatherState extends Equatable {
             detailedDescription: "",
             feelsLike: "",
             isImageNetwork: Config.isImageNetwork,
-          date: date!,
+          date: date,
             details: List.generate(element?.hourly?.length ?? 0, (index) {
               // printDebug("*** 2 ${element?.hourly?.length} ${element?.hourly}");
               printDebug(

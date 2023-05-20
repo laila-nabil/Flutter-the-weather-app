@@ -117,7 +117,7 @@ class WeatherRepoImpl extends WeatherRepo {
       DateTime now =
           DateTime.now().toUtc();
       var utcNumOfDays =
-          params.actualNumOfDays >= 4 ? 4 : params.actualNumOfDays;
+          params.numOfDays >= 4 ? 4 : params.numOfDays;
       final dates =
           List.generate(utcNumOfDays, (index) {
             printDebug("index $index");
@@ -132,7 +132,7 @@ class WeatherRepoImpl extends WeatherRepo {
             params: params, dt: dt));
       }
       resultAdjustedForUI =
-          _mapHistoryUtcToTimezone(resultFromApi, params.actualNumOfDays);
+          _mapHistoryUtcToTimezone(resultFromApi,);
       return Right(resultAdjustedForUI);
     } catch (exception) {
       String message = exception.toString();
@@ -150,47 +150,46 @@ class WeatherRepoImpl extends WeatherRepo {
 @visibleForTesting
 List<HistoryWeatherModel> mapHistoryUtcToTimezone(
   List<HistoryWeatherModel> resultFromApi,
-  int actualNumOfDays,
 ) =>
-    _mapHistoryUtcToTimezone(resultFromApi, actualNumOfDays);
+    _mapHistoryUtcToTimezone(resultFromApi,);
 
 List<HistoryWeatherModel> _mapHistoryUtcToTimezone(
   List<HistoryWeatherModel> resultFromApi,
-  int actualNumOfDays,
 ) {
-  List<HistoryWeatherModel> resultAdjustedForUI = List.empty(growable: true);
+  Map<DateTime,List<Hourly>> hourlyByDate = {};
   List<Hourly> resultAdjustedForUIHourly = List.empty(growable: true);
-  Map<DateTime, List<Hourly>> mapDaysHourly = {};
-  resultFromApi = resultFromApi.reversed.toList();
   for (var element in resultFromApi) {
     resultAdjustedForUIHourly =
         resultAdjustedForUIHourly + (element.hourly ?? []);
-  }
-
-  ///TODO FIX
-  for (int i = 0; i < actualNumOfDays; i++) {
-    mapDaysHourly[unixSecondsToDateTimezone(
-        DateTime.now().subtract(Duration(days: i)).millisecondsSinceEpoch,
-        resultFromApi.first.actualTimezoneOffset!)] = [];
-    printDebug("mapDaysHourly now $mapDaysHourly");
 
   }
-  int i = 0;
+
   for (var element in resultAdjustedForUIHourly) {
-    DateTime hourlyDate =
-        element.date(resultFromApi.first.actualTimezoneOffset!)!;
-    if (hourlyDate.isSameDay(mapDaysHourly.entries.elementAt(i).key)) {
-      (mapDaysHourly.entries.elementAt(i).value ?? []).add(element);
-    }
-    printDebug("resultAdjustedForUIHourly now $resultAdjustedForUIHourly");
-
-    i++;
+    var date = unixSecondsToDateTimezone(
+        element.dt!.toInt(), resultFromApi.first.actualTimezoneOffset!);
+    date = DateTime(date.year,date.month,date.day);
+    hourlyByDate[date] = (hourlyByDate[date] ?? []) + [element];
   }
-  resultAdjustedForUI = resultFromApi;
+  printDebug("hourlyByDate $hourlyByDate");
+  hourlyByDate.removeWhere((key, value) => value.length < 24);
+  hourlyByDate.forEach((key, value) {
+    printDebug("key $key");
+    printDebug("value ${value.length} $value");
+    value.sort((a, b) =>  a.dt?.compareTo(b.dt ??0) ?? 0);
+  });
+
+  List<HistoryWeatherModel> resultAdjustedForUI =
+      List.generate(hourlyByDate.length, (index) =>
+          HistoryWeatherModel(
+            lon: resultFromApi[index].lon,
+            lat: resultFromApi[index].lat,
+            timezone: resultFromApi[index].timezone,
+            timezoneOffset: resultFromApi[index].actualTimezoneOffset,
+            hourly: hourlyByDate.values.elementAt(index).map((e) => e as HourlyModel).toList()
+          ));
+
   for (var element in resultAdjustedForUI) {
-    element.hourly = mapDaysHourly.entries
-        .elementAt(resultAdjustedForUI.indexOf(element))
-        .value;
+    printDebug("resultAdjustedForUI element ${element.hourly?.length} ${element.hourly}");
   }
   printDebug("getHistoryListWeather $resultFromApi $resultAdjustedForUI");
   return resultAdjustedForUI;
@@ -198,7 +197,7 @@ List<HistoryWeatherModel> _mapHistoryUtcToTimezone(
 
 int? _actualTimezoneOffset(String timezone){
   // Set the timezone to your desired location
-  final location = tz.getLocation(timezone ?? "");
+  final location = tz.getLocation(timezone );
 
   // Get the current UTC time
   final utcTime = DateTime.now().toUtc();

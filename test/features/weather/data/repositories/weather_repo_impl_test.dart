@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/models/history_weather_model.dart';
+import 'package:the_weather_app/features/weather/data/models/present_future_weather_model.dart';
 import 'package:the_weather_app/features/weather/data/repositories/weather_repo_impl.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
@@ -11,36 +12,7 @@ void main() {
   test("get History List Weather (map history from API to actual history)", () {
     tz.initializeTimeZones();
 
-    List<HistoryWeatherModel> resultFromApi = [
-      HistoryWeatherModel.fromJson({
-        "lat": 30.0444,
-        "lon": 31.2357,
-        "timezone": "Africa/Cairo",
-        "timezone_offset": 7200,
-        "current": {
-          "dt": 1684256944,
-          "sunrise": 1684206083,
-          "sunset": 1684255298,
-          "temp": 32.33,
-          "feels_like": 31.89,
-          "pressure": 1007,
-          "humidity": 35,
-          "dew_point": 14.92,
-          "uvi": 0,
-          "clouds": 100,
-          "visibility": 6000,
-          "wind_speed": 4.63,
-          "wind_deg": 360,
-          "weather": [
-            {
-              "id": 804,
-              "main": "Clouds",
-              "description": "overcast clouds",
-              "icon": "04n"
-            }
-          ]
-        },
-        "hourly": [
+    var hourlyJson1 = [
           {
             "dt": 1684195200,
             "temp": 20.33,
@@ -540,37 +512,38 @@ void main() {
               }
             ]
           }
-        ]
-      }),
-      HistoryWeatherModel.fromJson({
+        ];
+    var historyWeatherModel1 = HistoryWeatherModel.fromJson({
         "lat": 30.0444,
         "lon": 31.2357,
         "timezone": "Africa/Cairo",
         "timezone_offset": 7200,
         "current": {
-          "dt": 1684170544,
-          "sunrise": 1684119719,
-          "sunset": 1684168859,
-          "temp": 27.33,
-          "feels_like": 26.9,
-          "pressure": 1009,
-          "humidity": 36,
-          "dew_point": 10.96,
+          "dt": 1684256944,
+          "sunrise": 1684206083,
+          "sunset": 1684255298,
+          "temp": 32.33,
+          "feels_like": 31.89,
+          "pressure": 1007,
+          "humidity": 35,
+          "dew_point": 14.92,
           "uvi": 0,
-          "clouds": 0,
-          "visibility": 10000,
-          "wind_speed": 7.72,
-          "wind_deg": 30,
+          "clouds": 100,
+          "visibility": 6000,
+          "wind_speed": 4.63,
+          "wind_deg": 360,
           "weather": [
             {
-              "id": 800,
-              "main": "Clear",
-              "description": "clear sky",
-              "icon": "01n"
+              "id": 804,
+              "main": "Clouds",
+              "description": "overcast clouds",
+              "icon": "04n"
             }
           ]
         },
-        "hourly": [
+        "hourly": hourlyJson1
+      });
+    var hourlyJson2 = [
           {
             "dt": 1684108800,
             "temp": 19.33,
@@ -1075,27 +1048,26 @@ void main() {
               }
             ]
           }
-        ]
-      }),
-      HistoryWeatherModel.fromJson({
+        ];
+    var historyWeatherModel2 = HistoryWeatherModel.fromJson({
         "lat": 30.0444,
         "lon": 31.2357,
         "timezone": "Africa/Cairo",
         "timezone_offset": 7200,
         "current": {
-          "dt": 1684084144,
-          "sunrise": 1684033357,
-          "sunset": 1684082419,
+          "dt": 1684170544,
+          "sunrise": 1684119719,
+          "sunset": 1684168859,
           "temp": 27.33,
-          "feels_like": 27.53,
-          "pressure": 1014,
-          "humidity": 47,
-          "dew_point": 15.04,
+          "feels_like": 26.9,
+          "pressure": 1009,
+          "humidity": 36,
+          "dew_point": 10.96,
           "uvi": 0,
           "clouds": 0,
           "visibility": 10000,
-          "wind_speed": 7.2,
-          "wind_deg": 10,
+          "wind_speed": 7.72,
+          "wind_deg": 30,
           "weather": [
             {
               "id": 800,
@@ -1105,7 +1077,9 @@ void main() {
             }
           ]
         },
-        "hourly": [
+        "hourly": hourlyJson2
+      });
+    var hourlyJson3 = [
           {
             "dt": 1684022400,
             "temp": 18.33,
@@ -1610,10 +1584,47 @@ void main() {
               }
             ]
           }
-        ]
-      }),
+        ];
+    var historyWeatherModel3 = HistoryWeatherModel.fromJson({
+        "lat": 30.0444,
+        "lon": 31.2357,
+        "timezone": "Africa/Cairo",
+        "timezone_offset": 7200,
+        "current": {
+          "dt": 1684084144,
+          "sunrise": 1684033357,
+          "sunset": 1684082419,
+          "temp": 27.33,
+          "feels_like": 27.53,
+          "pressure": 1014,
+          "humidity": 47,
+          "dew_point": 15.04,
+          "uvi": 0,
+          "clouds": 0,
+          "visibility": 10000,
+          "wind_speed": 7.2,
+          "wind_deg": 10,
+          "weather": [
+            {
+              "id": 800,
+              "main": "Clear",
+              "description": "clear sky",
+              "icon": "01n"
+            }
+          ]
+        },
+        "hourly": hourlyJson3
+      });
+    List<HistoryWeatherModel> resultFromApi = [
+      historyWeatherModel1,
+      historyWeatherModel2,
+      historyWeatherModel3,
     ];
-    final result = mapHistoryUtcToTimezone(resultFromApi,2);
+
+    final result = mapHistoryUtcToTimezone(resultFromApi,);
+    final hourlyJsons = hourlyJson1+hourlyJson2+hourlyJson3;
+    List<Hourly> hourlyLists = hourlyJsons.map((e) => HourlyModel.fromJson(e)).toList();
+    // expect(result,resultFromApi.map((e) => e.hou),reason: ">>> hourlyLists" );
     printDebug("getHistoryListWeather $resultFromApi $result");
   });
 }
