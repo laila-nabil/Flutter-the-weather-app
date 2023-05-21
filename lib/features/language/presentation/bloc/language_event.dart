@@ -5,9 +5,9 @@ abstract class LanguageEvent extends Equatable {
 }
 
 class SelectLanguage extends LanguageEvent{
-  final languagesEnum language;
+  final LanguagesEnum language;
 
-  SelectLanguage(this.language);
+  const SelectLanguage(this.language);
   @override
   List<Object?> get props => [language];
 

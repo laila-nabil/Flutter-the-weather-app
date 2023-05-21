@@ -1,18 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/core/utils.dart';
+import 'package:the_weather_app/core/widgets/frosted_glass_effect_card.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
-
-import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 
 import '../../../../core/config.dart';
 import '../../domain/entities/today_overview.dart';
-import '../../domain/entities/weather.dart';
 import 'dashboard_weather.dart';
 
 class WeatherTodayWidget extends StatelessWidget {
@@ -39,7 +34,7 @@ class WeatherTodayWidget extends StatelessWidget {
                 );
         return isPortrait
             ? weather
-            : frostedGlassEffect(
+            : FrostedGlassEffect(
                 context: context,
                 width: constraints.maxWidth,
                 height: constraints.maxHeight,
@@ -74,49 +69,28 @@ class _WeatherToday extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            true
-                ? Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? "",
-                      // width: isPortrait ? constraints.maxWidth * 0.65 : constraints.maxWidth * 0.5 ,
-                      // width: isPortrait
-                      //     ? constraints.maxWidth * 0.65
-                      //     : constraints.maxWidth * 0.325,
-                      height: isPortrait
-                          ? constraints.maxHeight * 0.5
-                          : constraints.maxHeight * 0.4,
-                      fit: BoxFit.contain,
-                      alignment:
-                          isPortrait ? Alignment.center : Alignment.centerLeft,
-                    ),
-                  )
-                : Expanded(
-                    flex: 1,
-                    child: Image.network(
-                      weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? "",
-                      // width: constraints.maxWidth * 0.5,
-                      // width: constraints.maxWidth * 0.325,
-                      height: isPortrait
-                          ? constraints.maxHeight * 0.5
-                          : constraints.maxHeight * 0.4,
-                      fit: BoxFit.contain,
-                      alignment:
-                          isPortrait ? Alignment.center : Alignment.centerLeft,
-                    ),
-                  ),
+            Expanded(
+              flex: 1,
+              child: Image.asset(
+                weatherToday?.weather.tryFirst?.iconPath(Config.isImageNetwork) ?? "",
+                height: isPortrait
+                    ? constraints.maxHeight * 0.5
+                    : constraints.maxHeight * 0.4,
+                fit: BoxFit.contain,
+                alignment:
+                isPortrait ? Alignment.center : Alignment.centerLeft,
+              ),
+            ),
             Expanded(
               flex: 1,
               child: Container(
-                // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.5 ,
-                // width:  isPortrait ? constraints.maxWidth * 0.25 : constraints.maxWidth * 0.325,
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(constraints.maxWidth * 0.02),
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
-                    '${weatherToday?.main?.temp } °' + 'deg'.tr().toString(),
-                    style: TextStyle(fontSize: 40),
+                    '${weatherToday?.main?.temp } °${'deg'.tr()}',
+                    style: const TextStyle(fontSize: 40),
                     maxFontSize: 55,
                   ),
                 ),
@@ -131,28 +105,26 @@ class _WeatherToday extends StatelessWidget {
           child: AutoSizeText.rich(
             TextSpan(text: 'feels_like'.tr().toString(), children: [
               TextSpan(
-                  text: '${weatherToday?.main?.feelsLike} °' +
-                      'deg'.tr().toString() +
-                      ', ',
-                  style: TextStyle(
+                  text: '${weatherToday?.main?.feelsLike} °${'deg'.tr()}, ',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   )),
               TextSpan(
-                text:"${weatherToday?.weather.tryFirst?.description ?? ""}",
+                text:weatherToday?.weather.tryFirst?.description ?? "",
               )
             ]),
-            style: TextStyle(fontSize: 25),
+            style: const TextStyle(fontSize: 25),
             minFontSize: 12,
             maxFontSize: 50,
             maxLines: 2,
             textAlign: TextAlign.center,
           ),
         ),
-        Divider(),
-        Container(
+        const Divider(),
+        SizedBox(
             // width: constraints.maxWidth * 0.8,
             height: constraints.maxHeight * 0.25,
-            child: todayDetails(
+            child: TodayDetails(
               weatherToday: weatherToday,
               weatherTodayRain: rain,
               weatherTodayTempMax: weatherToday_?.temp?.max.nullableToString() ??"",
@@ -163,8 +135,8 @@ class _WeatherToday extends StatelessWidget {
   }
 }
 
-class todayDetails extends StatelessWidget {
-  const todayDetails(
+class TodayDetails extends StatelessWidget {
+  const TodayDetails(
       {Key? key,
       required this.weatherToday,
       required this.weatherTodayRain,
@@ -190,7 +162,7 @@ class todayDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              if(double.tryParse(weatherTodayRain) != null)Container(
+              if(double.tryParse(weatherTodayRain) != null)SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
@@ -199,7 +171,7 @@ class todayDetails extends StatelessWidget {
                   status: '${double.tryParse(weatherTodayRain) !* 100.0}%',
                 ),
               ),
-              Container(
+              SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
@@ -209,13 +181,13 @@ class todayDetails extends StatelessWidget {
                       '${weatherToday?.sys?.getSunrise}',
                 ),
               ),
-              Container(
+              SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
                   title: 'max'.tr().toString(),
-                  status: "${weatherTodayTempMax} °" + 'deg'.tr().toString(),
+                  status: "$weatherTodayTempMax °${'deg'.tr()}",
                 ),
               ),
             ],
@@ -224,7 +196,7 @@ class todayDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
@@ -234,7 +206,7 @@ class todayDetails extends StatelessWidget {
                       '${weatherToday?.wind?.speed} ${'m_s'.tr()} ${weatherToday?.wind?.windDirection}',
                 ),
               ),
-              Container(
+              SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
@@ -244,13 +216,13 @@ class todayDetails extends StatelessWidget {
                       '${weatherToday?.sys?.getSunset}',
                 ),
               ),
-              Container(
+              SizedBox(
                 width: width,
                 height: height,
                 child: DashboardWeather(
                   isStatusCentered: false,
                   title: 'min'.tr().toString(),
-                  status: "${weatherTodayTempMin} °" + 'deg'.tr().toString(),
+                  status: "$weatherTodayTempMin °${'deg'.tr()}",
                 ),
               )
             ],

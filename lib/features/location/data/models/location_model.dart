@@ -1,5 +1,3 @@
-import 'package:the_weather_app/core/utils.dart';
-
 import '../../domain/entities/location.dart';
 
 class LocationModel extends LocationEntity {

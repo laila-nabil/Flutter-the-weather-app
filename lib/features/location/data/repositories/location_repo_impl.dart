@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:the_weather_app/core/error/exceptions.dart';
 import 'package:the_weather_app/core/error/failures.dart';
-import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/data/data_sources/location_remote_data_source.dart';
 import 'package:the_weather_app/features/location/data/models/location_model.dart';
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
@@ -24,7 +23,7 @@ class LocationRepoImpl implements LocationRepo {
         return Left(
             ServerFailure(message: error.message ?? "An error occurred"));
       }
-      return Left(ServerFailure(message: "An error occurred"));
+      return const Left(ServerFailure(message: "An error occurred"));
     }
   }
 
@@ -40,7 +39,7 @@ class LocationRepoImpl implements LocationRepo {
         return Left(
             ServerFailure(message: error.message ?? "An error occurred"));
       }
-      return Left(ServerFailure(message: "An error occurred"));
+      return const Left(ServerFailure(message: "An error occurred"));
     }
   }
 }

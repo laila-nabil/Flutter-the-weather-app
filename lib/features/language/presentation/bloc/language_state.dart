@@ -9,9 +9,9 @@ class LanguageInitial extends LanguageState {
   List<Object> get props => [];
 }
 class SelectLanguageState extends LanguageState{
-  final languagesEnum language;
+  final LanguagesEnum language;
 
-  SelectLanguageState(this.language);
+  const SelectLanguageState(this.language);
   @override
   List<Object?> get props => [language];
 

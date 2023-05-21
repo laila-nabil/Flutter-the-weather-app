@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -8,16 +9,16 @@ import 'package:meta_seo/meta_seo.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:timezone/data/latest.dart' as tz;
+
 import 'core/bloc_observer.dart';
+import 'core/firebase_options.dart';
+import 'core/injection_container.dart';
+import 'core/injection_container.dart' as di;
 import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/presentation/bloc/location_bloc.dart';
 import 'features/weather/presentation/pages/home_page.dart';
-import 'firebase_options.dart';
-import 'injection_container.dart';
-import 'injection_container.dart' as di;
-import 'package:timezone/data/latest.dart' as tz;
 
 //flutter build web --dart-define api_key=KEY
 //firebase deploy --only hosting
@@ -41,10 +42,12 @@ Future main() async {
   //https://twitter.com/luke_pighetti/status/1651585533481566211?s=12&t=9UwYk3rxsHZqVkQxNhVW3g
   Paint.enableDithering = true;
   tz.initializeTimeZones();
-  runApp(LocalizationImpl().localizationSetup(MyApp()));
+  runApp(LocalizationImpl().localizationSetup(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -65,11 +68,11 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         title: 'Weather app',
         theme: theme,
-        home: MyHomePage(),
+        home: const MyHomePage(),
         routes: {
-          MyHomePage.routeName: (ctx) => MyHomePage(),
-          LocationScreen.routeName: (ctx) => LocationScreen(),
-          SettingsScreen.routeName: (ctx) => SettingsScreen(),
+          MyHomePage.routeName: (ctx) => const MyHomePage(),
+          LocationScreen.routeName: (ctx) => const LocationScreen(),
+          SettingsScreen.routeName: (ctx) => const SettingsScreen(),
         },
       ),
     );

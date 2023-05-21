@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/utils.dart';
 
 class AppBlocObserver extends BlocObserver {

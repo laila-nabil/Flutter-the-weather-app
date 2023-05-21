@@ -5,8 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
-import 'package:the_weather_app/features/weather/domain/entities/weather.dart';
-import 'package:the_weather_app/widgets/frosted_glass_effect_card.dart';
 
 import 'dashboard_weather.dart';
 import 'detailed_weather.dart';
@@ -57,23 +55,23 @@ class DayWeatherParams extends Equatable {
 
   @override
   List<Object?> get props =>[
-    this.iconPath,
-    this.currentTemp,
-    this.minTemp,
-    this.maxTemp,
-    this.rain,
-    this.windSpeed,
-    this.windDeg,
-    this.pressure,
-    this.clouds,
-    this.uvi,
-    this.humidity,
-    this.visibility,
-    this.detailedDescription,
-    this.feelsLike,
-    this.isImageNetwork,
-    this.date,
-    this.details
+    iconPath,
+    currentTemp,
+    minTemp,
+    maxTemp,
+    rain,
+    windSpeed,
+    windDeg,
+    pressure,
+    clouds,
+    uvi,
+    humidity,
+    visibility,
+    detailedDescription,
+    feelsLike,
+    isImageNetwork,
+    date,
+    details
   ];
 
 
@@ -82,7 +80,7 @@ class DayWeatherParams extends Equatable {
 class CompactDayWeather extends StatelessWidget {
   final DayWeatherParams params;
 
-  CompactDayWeather(this.params);
+  const CompactDayWeather(this.params, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,14 +106,7 @@ class CompactDayWeather extends StatelessWidget {
                 return WeatherDetailed(params);
               });
         },
-        child: true
-            ? compactDay
-            : frostedGlassEffect(
-                context: context,
-                width: 200,
-                height: 200,
-                widget: compactDay,
-              ),
+        child: compactDay,
       );
     });
   }
@@ -155,7 +146,7 @@ class _CompactDay extends StatelessWidget {
               child: AutoSizeText(
                   DateFormat('h a', 'locale'.tr().toString())
                       .format(params.date),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                   minFontSize: 10,
@@ -178,9 +169,8 @@ class _CompactDay extends StatelessWidget {
               width: width * 0.6,
               alignment: Alignment.center,
               child: AutoSizeText(
-                "${double.tryParse(params.currentTemp)?.toStringAsFixed(0)}°" +
-                    'deg'.tr().toString(),
-                style: TextStyle(fontSize: 18),
+                "${double.tryParse(params.currentTemp)?.toStringAsFixed(0)}°${'deg'.tr()}",
+                style: const TextStyle(fontSize: 18),
                 minFontSize: 10,
                 maxFontSize: 18,
                 maxLines: 1,

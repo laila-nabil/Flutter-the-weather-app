@@ -29,9 +29,9 @@ class GetPresentFutureWeatherParams extends Equatable {
   final String longitude;
   final String language;
 
-  GetPresentFutureWeatherParams(this.language,
+  const GetPresentFutureWeatherParams(this.language,
       {required this.latitude, required this.longitude});
 
   @override
-  List<Object?> get props => [this.latitude, this.longitude,language];
+  List<Object?> get props => [latitude, longitude,language];
 }

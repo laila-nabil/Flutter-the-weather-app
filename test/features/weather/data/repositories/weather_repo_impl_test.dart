@@ -1,11 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/models/history_weather_model.dart';
-import 'package:the_weather_app/features/weather/data/models/present_future_weather_model.dart';
 import 'package:the_weather_app/features/weather/data/repositories/weather_repo_impl.dart';
-import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
@@ -518,7 +514,7 @@ void main() {
         "lon": 31.2357,
         "timezone": "Africa/Cairo",
         "timezone_offset": 7200,
-        "current": {
+        "current": const {
           "dt": 1684256944,
           "sunrise": 1684206083,
           "sunset": 1684255298,
@@ -1054,7 +1050,7 @@ void main() {
         "lon": 31.2357,
         "timezone": "Africa/Cairo",
         "timezone_offset": 7200,
-        "current": {
+        "current": const {
           "dt": 1684170544,
           "sunrise": 1684119719,
           "sunset": 1684168859,
@@ -1590,7 +1586,7 @@ void main() {
         "lon": 31.2357,
         "timezone": "Africa/Cairo",
         "timezone_offset": 7200,
-        "current": {
+        "current": const {
           "dt": 1684084144,
           "sunrise": 1684033357,
           "sunset": 1684082419,
@@ -1622,9 +1618,6 @@ void main() {
     ];
 
     final result = mapHistoryUtcToTimezone(resultFromApi,);
-    final hourlyJsons = hourlyJson1+hourlyJson2+hourlyJson3;
-    List<Hourly> hourlyLists = hourlyJsons.map((e) => HourlyModel.fromJson(e)).toList();
-    // expect(result,resultFromApi.map((e) => e.hou),reason: ">>> hourlyLists" );
     printDebug("getHistoryListWeather $resultFromApi $result");
   });
 }

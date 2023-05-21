@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-
-
-///TODO not used
 class AppTextStyleCore {
   TextStyle titleTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (24 ),
+      fontSize: (24),
       inherit: true,
       fontWeight: FontWeight.w700,
       color: textColor,
@@ -16,8 +12,7 @@ class AppTextStyleCore {
 
   TextStyle subtitleTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (17 ),
+      fontSize: (17),
       inherit: true,
       fontWeight: FontWeight.w400,
       color: textColor,
@@ -26,8 +21,7 @@ class AppTextStyleCore {
 
   TextStyle subtitleTextStyleBold(Color textColor) {
     return TextStyle(
-      
-      fontSize: (17 ),
+      fontSize: (17),
       inherit: true,
       fontWeight: FontWeight.w700,
       color: textColor,
@@ -36,16 +30,16 @@ class AppTextStyleCore {
 
   TextStyle bodyTextStyleBold(Color textColor) {
     return TextStyle(
-      
-      fontSize: (19 ),
+      fontSize: (19),
       inherit: true,
       fontWeight: FontWeight.w600,
       color: textColor,
     );
   }
-  TextStyle bodyTextStyle(Color textColor,{String? langCode}) {
+
+  TextStyle bodyTextStyle(Color textColor, {String? langCode}) {
     return TextStyle(
-      fontSize: (19 ),
+      fontSize: (19),
       inherit: true,
       height: 1.2,
       fontWeight: FontWeight.w400,
@@ -55,18 +49,15 @@ class AppTextStyleCore {
 
   TextStyle buttonNavigationTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (10 ),
-      inherit: true,
-      fontWeight: FontWeight.w300,
-      color: textColor
-    );
+        fontSize: (10),
+        inherit: true,
+        fontWeight: FontWeight.w300,
+        color: textColor);
   }
 
   TextStyle bodySmallTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (12 ),
+      fontSize: (12),
       inherit: true,
       fontWeight: FontWeight.w300,
       color: textColor,
@@ -75,17 +66,16 @@ class AppTextStyleCore {
 
   TextStyle popupTitleTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (22 ),
+      fontSize: (22),
       inherit: true,
       fontWeight: FontWeight.w600,
       color: textColor,
     );
   }
+
   TextStyle popupTextFieldStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (14 ),
+      fontSize: (14),
       inherit: true,
       fontWeight: FontWeight.w400,
       color: textColor,
@@ -94,8 +84,7 @@ class AppTextStyleCore {
 
   TextStyle popupTextStyle(Color textColor) {
     return TextStyle(
-      
-      fontSize: (24 ),
+      fontSize: (24),
       inherit: true,
       fontWeight: FontWeight.w400,
       color: textColor,

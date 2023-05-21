@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 /// Create a grid.
 class GoogleGrid extends StatelessWidget {
-  const GoogleGrid({
+  const GoogleGrid({Key? key,
     this.columnCount = 2,
     this.gap,
     this.padding,
     required this.children,
-  });
+  }) : super(key: key);
 
   /// Number of column.
   final int columnCount;

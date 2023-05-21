@@ -1,32 +1,24 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/config.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/weather/data/models/history_weather_model.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
-import 'package:the_weather_app/features/weather/domain/entities/today_overview_v.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/compact_day_weather.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../domain/entities/day_weather.dart';
 import '../../domain/entities/today_overview.dart';
 import '../../domain/entities/unix.dart';
-import '../../domain/entities/weather_timeline.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
-import '../../domain/use_cases/get_weather_timeline_use_case.dart';
 
 part 'weather_event.dart';
-
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
@@ -86,8 +78,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                   "diffMax": diffMax.toStringAsFixed(1),
                   "diffMin": diffMin.toStringAsFixed(1),
                 });
-                  printDebug("diffMax ${diffMax}");
-                  printDebug("diffMin ${diffMin}");
+                  printDebug("diffMax $diffMax");
+                  printDebug("diffMin $diffMin");
                   printDebug("compare $compare");
                   emit(state.copyWith(
                 weatherStatus: WeatherStatus.historySuccess,
@@ -129,14 +121,6 @@ String? compareTodayYesterday(
   final diffMax = todayOverview.main!.tempMax! - yesterday.getTempMax!;
   final diffMin = todayOverview.main!.tempMin! - yesterday.getTempMin!;
   return 'lang'.tr().toString().contains('EN')
-      ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °' +
-          'deg'.tr().toString() +
-          ' at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °' +
-          'deg'.tr().toString() +
-          ' at night'
-      : 'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °' +
-          'deg'.tr().toString() +
-          ' في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °' +
-          'deg'.tr().toString() +
-          ' في الليل';
+      ? 'Today is $diffDay than yesterday by ${diffMax.toStringAsFixed(2)} °${'deg'.tr()} at day and is $diffNight by ${diffMin.toStringAsFixed(2)} °${'deg'.tr()} at night'
+      : 'اليوم $diffDay من الأمس ب${diffMax.toStringAsFixed(2)} °${'deg'.tr()} في النهار و$diffNight ب${diffMin.toStringAsFixed(2)} °${'deg'.tr()} في الليل';
 }

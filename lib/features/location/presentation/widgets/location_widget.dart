@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
@@ -32,7 +31,7 @@ class LocationWidget extends StatelessWidget {
                   Navigator.of(context).pushNamed(SettingsScreen.routeName);
                 },
                 iconSize: min(constraints.maxHeight * 0.7, 30),
-                icon: Icon(
+                icon: const Icon(
                   Icons.settings,
                   color: AppColors.white,
                   // size: constraints.maxHeight * 0.7,
@@ -43,7 +42,7 @@ class LocationWidget extends StatelessWidget {
               // alignment: Alignment.center,
               child: AutoSizeText(
                 city,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 minFontSize: 10.0,
                 maxFontSize: 20.0,
                 textAlign: TextAlign.center,
@@ -59,7 +58,7 @@ class LocationWidget extends StatelessWidget {
                   minWidth: kMinInteractiveDimension,
                   minHeight: kMinInteractiveDimension,
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   color: AppColors.white,
 

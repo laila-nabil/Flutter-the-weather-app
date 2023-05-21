@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
-import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 
 import 'weather.dart';
@@ -19,7 +18,6 @@ import 'weather.dart';
 /// name : "Al ‘Atabah"
 /// cod : 200
 
-///TODO MODEL AND ENTITY
 class TodayOverview extends Equatable{
   TodayOverview({
       this.coord, 
@@ -52,19 +50,19 @@ class TodayOverview extends Equatable{
 
 
   @override
-  List<Object?> get props => [this.coord,
-    this.weather,
-    this.base,
-    this.main,
-    this.visibility,
-    this.wind,
-    this.clouds,
-    this.dt,
-    this.sys,
-    this.timezone,
-    this.id,
-    this.name,
-    this.cod,];
+  List<Object?> get props => [coord,
+    weather,
+    base,
+    main,
+    visibility,
+    wind,
+    clouds,
+    dt,
+    sys,
+    timezone,
+    id,
+    name,
+    cod,];
 
 }
 
@@ -92,11 +90,11 @@ class Sys extends Equatable{
   String? get getSunset => sunset == null ? null : unixSecondsToDateFormat(sunset!);
   String? get getSunrise => sunrise == null ? null : unixSecondsToDateFormat(sunrise!);
   @override
-  List<Object?> get props => [this.type,
-    this.id,
-    this.country,
-    this.sunrise,
-    this.sunset,];
+  List<Object?> get props => [type,
+    id,
+    country,
+    sunrise,
+    sunset,];
 
 }
 
@@ -130,7 +128,7 @@ class Wind extends Equatable{
     // final directionsAr = ["شمال","شمال","شمال شرق","شرق","شرق","شرق","جنوب شرق","جنوب","جنوب","جنوب","جنوب غرب","غرب","غرب","غرب","شمال غرب","شمال","شمال"];
     final directionsAr = ["ش","ش","ش ق","ق","ق","ق","ج ق","ج","ج","ج","ج غ","غ","غ","غ","ش غ","ش","ش"];
     var deg_ = deg ?? 0;
-    final result = 'lang'.tr().contains('EN')? '${directionsEn[(deg_/22.5).round()]}' : '${directionsAr[(deg_/22.5).round()]}';
+    final result = 'lang'.tr().contains('EN')? directionsEn[(deg_/22.5).round()] : directionsAr[(deg_/22.5).round()];
     return  result;
   }
 
@@ -194,12 +192,12 @@ Main copyWith({  double? temp,
   }
 
   @override
-  List<Object?> get props => [this.temp,
-    this.feelsLike,
-    this.tempMin,
-    this.tempMax,
-    this.pressure,
-    this.humidity,];
+  List<Object?> get props => [temp,
+    feelsLike,
+    tempMin,
+    tempMax,
+    pressure,
+    humidity,];
 
 }
 

@@ -11,13 +11,13 @@ import '../../../../main.dart';
 import '../entities/unit.dart';
 
 class GetWeatherTimelineUseCase
-    implements UseCase<WeatherTimelineV, WeatherTimelineParams> {
+    implements UseCase<WeatherTimeline, WeatherTimelineParams> {
   final WeatherRepo repo;
 
   GetWeatherTimelineUseCase(this.repo);
 
   @override
-  Future<Either<Failure, WeatherTimelineV>> call(WeatherTimelineParams params) async {
+  Future<Either<Failure, WeatherTimeline>> call(WeatherTimelineParams params) async {
     if (enableAnalytics) {
       analytics.logEvent(name: "GetWeatherTimelineUseCase",);
     }
@@ -34,11 +34,9 @@ class WeatherTimelineParams extends Equatable {
   final int daysBeforeToday;
   final int daysAfterToday;
 
-  WeatherTimelineParams({
+  const WeatherTimelineParams({
     this.unit = UnitGroup.metric,
     required this.city,
-    // required this.latitude,
-    // required this.longitude,
     required this.language,
     required this.daysBeforeToday,
     required this.daysAfterToday,

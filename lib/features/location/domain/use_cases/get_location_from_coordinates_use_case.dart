@@ -28,7 +28,7 @@ class GetLocationFromCoordinatesParams extends Equatable{
   final String lat;
   final String lon;
 
-  GetLocationFromCoordinatesParams({required this.lat, required this.lon});
+  const GetLocationFromCoordinatesParams({required this.lat, required this.lon});
 
   @override
   List<Object?> get props => [lat,lon];

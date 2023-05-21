@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/location/domain/entities/location.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'present_future_weather.dart';
@@ -60,11 +59,11 @@ class HistoryWeather extends Equatable {
     temps.sort();
     return temps;
   }@override
-  List<Object?> get props => [this.lat,
-    this.lon,
-    this.timezone,
-    this._timezoneOffset,
-    this.current,
-    this.hourly,];
+  List<Object?> get props => [lat,
+    lon,
+    timezone,
+    _timezoneOffset,
+    current,
+    hourly,];
 
 }

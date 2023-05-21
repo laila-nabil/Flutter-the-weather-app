@@ -6,9 +6,7 @@ import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/app_design.dart';
 import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/location/domain/entities/location.dart';
 
-import '../../../../injection_container.dart';
 import '../../../weather/presentation/pages/home_page.dart';
 import '../bloc/location_bloc.dart';
 
@@ -50,7 +48,7 @@ class LocationScreen extends StatelessWidget {
               elevation: 0,
               title: Text(
                 'location'.tr().toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 34,
                     color: AppColors.white,
                     fontWeight: FontWeight.w700),
@@ -72,9 +70,9 @@ class LocationScreen extends StatelessWidget {
                               width: 1.0),
                           borderRadius: BorderRadius.circular(
                               AppDesign.mainBorderRadius),
-                          color: Color(0xff2d3647)),
+                          color: const Color(0xff2d3647)),
                       child: TextField(
-                        style: TextStyle(color: AppColors.white),
+                        style: const TextStyle(color: AppColors.white),
                         onChanged: (input) {
                           printDebug('input $input');
                           locationBloc.add(AutoCompleteSearchLocation(input));
@@ -82,20 +80,20 @@ class LocationScreen extends StatelessWidget {
                         decoration: InputDecoration(
                             label: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.search,
                                   color: AppColors.white,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text('search_location'.tr().toString()),
                               ],
                             ),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: AppColors.white,
                             ),
-                            fillColor: Colors.purple),
+                            fillColor: AppColors.purple),
                       ),
                     ),
                     InkWell(
@@ -108,22 +106,22 @@ class LocationScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.my_location,
                               color: AppColors.white,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               'current_location'.tr(),
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: screenSize.width * 0.9,
                       height: screenSize.height * 0.7,
                       child: ListView.builder(
@@ -140,7 +138,7 @@ class LocationScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   '${locationBloc.state.autoCompleteList.tryElementAt(i)?.city}, ${locationBloc.state.autoCompleteList.tryElementAt(i)?.country}',
-                                  style: TextStyle(fontSize: 20),
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ));
                         },

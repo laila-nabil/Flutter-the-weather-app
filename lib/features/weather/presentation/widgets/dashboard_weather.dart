@@ -9,8 +9,13 @@ class DashboardWeather extends StatelessWidget {
   final String status;
   final bool isStatusCentered;
 
-  DashboardWeather(
-      {this.svgIcon, this.title, required this.status, required this.isStatusCentered});
+  const DashboardWeather(
+      {Key? key,
+      this.svgIcon,
+      this.title,
+      required this.status,
+      required this.isStatusCentered})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class DashboardWeather extends StatelessWidget {
                 title!,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.w800, fontStyle: FontStyle.italic),
               ),
             ),

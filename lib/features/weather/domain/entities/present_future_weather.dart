@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../../../core/utils.dart';
 import 'weather.dart';
 
 /// lat : 30.0444
@@ -33,9 +32,6 @@ class PresentFutureWeather extends Equatable {
   List<Daily>? daily;
 
   num? get actualTimezoneOffset {
-    /// Get current UTC time
-    final now = DateTime.now().toUtc();
-
     // Set the timezone to your desired location
     final location = tz.getLocation(timezone ?? "");
 
@@ -50,13 +46,13 @@ class PresentFutureWeather extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.lat,
-        this.lon,
-        this.timezone,
-        this._timezoneOffset,
-        this.current,
-        this.hourly,
-        this.daily,
+        lat,
+        lon,
+        timezone,
+        _timezoneOffset,
+        current,
+        hourly,
+        daily,
       ];
 }
 
@@ -129,24 +125,24 @@ class Daily extends Equatable {
   }
   @override
   List<Object?> get props => [
-        this.dt,
-        this.sunrise,
-        this.sunset,
-        this.moonrise,
-        this.moonset,
-        this.moonPhase,
-        this.temp,
-        this.feelsLike,
-        this.pressure,
-        this.humidity,
-        this.dewPoint,
-        this.windSpeed,
-        this.windDeg,
-        this.windGust,
-        this.weather,
-        this.clouds,
-        this.pop,
-        this.uvi,
+        dt,
+        sunrise,
+        sunset,
+        moonrise,
+        moonset,
+        moonPhase,
+        temp,
+        feelsLike,
+        pressure,
+        humidity,
+        dewPoint,
+        windSpeed,
+        windDeg,
+        windGust,
+        weather,
+        clouds,
+        pop,
+        uvi,
       ];
 }
 
@@ -170,10 +166,10 @@ class FeelsLike extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.day,
-        this.night,
-        this.eve,
-        this.morn,
+        day,
+        night,
+        eve,
+        morn,
       ];
 }
 
@@ -203,12 +199,12 @@ class Temp extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.day,
-        this.min,
-        this.max,
-        this.night,
-        this.eve,
-        this.morn,
+        day,
+        min,
+        max,
+        night,
+        eve,
+        morn,
       ];
 }
 
@@ -270,20 +266,20 @@ class Hourly extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.dt,
-        this.temp,
-        this.feelsLike,
-        this.pressure,
-        this.humidity,
-        this.dewPoint,
-        this.uvi,
-        this.clouds,
-        this.visibility,
-        this.windSpeed,
-        this.windDeg,
-        this.windGust,
-        this.weather,
-        this.pop,
+        dt,
+        temp,
+        feelsLike,
+        pressure,
+        humidity,
+        dewPoint,
+        uvi,
+        clouds,
+        visibility,
+        windSpeed,
+        windDeg,
+        windGust,
+        weather,
+        pop,
       ];
 }
 
@@ -344,19 +340,19 @@ class Current extends Equatable {
 
   @override
   List<Object?> get props => [
-        this.dt,
-        this.sunrise,
-        this.sunset,
-        this.temp,
-        this.feelsLike,
-        this.pressure,
-        this.humidity,
-        this.dewPoint,
-        this.uvi,
-        this.clouds,
-        this.visibility,
-        this.windSpeed,
-        this.windDeg,
-        this.weather,
+        dt,
+        sunrise,
+        sunset,
+        temp,
+        feelsLike,
+        pressure,
+        humidity,
+        dewPoint,
+        uvi,
+        clouds,
+        visibility,
+        windSpeed,
+        windDeg,
+        weather,
       ];
 }

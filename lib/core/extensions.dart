@@ -16,48 +16,48 @@ extension ElementAtNullableOrEmpty<T> on List<T>?{
   }
 }
 
-extension toStringNull on Object?{
+extension ToStringNull on Object?{
   String? nullableToString(){
     if(this == null){
       return null;
     }else{
-      return this.toString();
+      return toString();
     }
   }
 }
 
-extension isSameDayE on DateTime{
+extension IsSameDayE on DateTime{
   bool isSameDay(DateTime otherDate){
-    return otherDate.year == this.year &&
-        otherDate.month == this.month &&
-        otherDate.day == this.day;
+    return otherDate.year == year &&
+        otherDate.month == month &&
+        otherDate.day == day;
   }
 }
 
 extension DateTimeExtensions on DateTime {
   DateTime addDays(int daysToAdd) {
     return DateTime(
-      this.year,
-      this.month,
-      this.day + daysToAdd,
-      this.hour,
-      this.minute,
-      this.second,
-      this.millisecond,
-      this.microsecond,
+      year,
+      month,
+      day + daysToAdd,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
     );
   }
 
   DateTime subDays(int daysToSubtract) {
     return DateTime(
-      this.year,
-      this.month,
-      this.day - daysToSubtract,
-      this.hour,
-      this.minute,
-      this.second,
-      this.millisecond,
-      this.microsecond,
+      year,
+      month,
+      day - daysToSubtract,
+      hour,
+      minute,
+      second,
+      millisecond,
+      microsecond,
     );
   }
 }

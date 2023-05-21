@@ -8,15 +8,12 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_ti
 import '../../../../core/Network/network.dart';
 import '../../../../core/utils.dart';
 import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case_v.dart';
 import '../models/history_weather_model.dart';
 import '../models/present_future_weather_model.dart';
 import '../models/today_overview_model.dart';
-import '../models/today_overview_model_v.dart';
 import '../models/weather_timeline_model_v.dart';
 
 abstract class WeatherRemoteDataSource {
-  Future<TodayOverviewModelV> getTodayOverviewV(GetTodayOverviewParamsV params);
 
   Future<WeatherTimelineModelV> getWeatherTimeline(
       WeatherTimelineParams params);
@@ -31,24 +28,6 @@ abstract class WeatherRemoteDataSource {
 }
 
 class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
-  @override
-  Future<TodayOverviewModelV> getTodayOverviewV(
-      GetTodayOverviewParamsV params) async {
-    String url =
-        'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' +
-            '${params.latitude},${params.longitude}' +
-            '/today?' +
-            'unitGroup=${params.unit.name}' +
-            '&include=current' +
-            '&key=$API_KEY' +
-            '&contentType=json&lang=${params.language}&iconSet=icons2';
-    final result = await Network.get(url: url);
-
-    final responseBody = json.decode(result.body);
-    final todayOverview = TodayOverviewModelV.fromJson(responseBody);
-    printDebug("todayOverview ${todayOverview}");
-    return todayOverview;
-  }
 
   @override
   Future<WeatherTimelineModelV> getWeatherTimeline(
@@ -68,37 +47,33 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
 
     final responseBody = json.decode(result.body);
     final weatherTimeline = WeatherTimelineModelV.fromJson(responseBody);
-    printDebug("weatherTimeline ${WeatherTimelineModelV}");
+    printDebug("weatherTimeline $WeatherTimelineModelV");
     return weatherTimeline;
   }
 
   @override
   Future<TodayOverviewModel> getTodayOverview(
       GetTodayOverviewParams params) async {
-    String url = "https://api.openweathermap.org/data/2.5/weather?" +
-        "lat=${params.latitude}&lon=${params.longitude}" +
-        "&appid=$API_KEY&units=metric&lang=${params.language}";
+    String url = "https://api.openweathermap.org/data/2.5/weather?lat=${params.latitude}&lon=${params.longitude}&appid=$API_KEY&units=metric&lang=${params.language}";
 
     final result = await Network.get(url: url);
 
     final responseBody = json.decode(result.body);
     final todayOverview = TodayOverviewModel.fromJson(responseBody);
-    printDebug("todayOverview ${todayOverview}");
+    printDebug("todayOverview $todayOverview");
     return todayOverview;
   }
 
   @override
   Future<PresentFutureWeatherModel> getPresentFutureWeather(
       GetPresentFutureWeatherParams params) async {
-    String url = "https://api.openweathermap.org/data/2.5/onecall?" +
-        "lat=${params.latitude}&lon=${params.longitude}" +
-        "&exclude=minutely&lang=${params.language}&units=metric" +
-        "&appid=$API_KEY";
+    String url =
+        "https://api.openweathermap.org/data/2.5/onecall?lat=${params.latitude}&lon=${params.longitude}&exclude=minutely&lang=${params.language}&units=metric&appid=$API_KEY";
 
     final response = await Network.get(url: url);
     final responseBody = json.decode(response.body);
     final result = PresentFutureWeatherModel.fromJson(responseBody);
-    printDebug("getPresentFutureWeatherModel ${result}");
+    printDebug("getPresentFutureWeatherModel $result");
     return result;
   }
 
@@ -106,16 +81,12 @@ class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
   Future<HistoryWeatherModel> getHistoryWeather(
       {required GetHistoryListWeatherParams params,required int dt}) async {
     String url =
-        "https://api.openweathermap.org/data/2.5/onecall/timemachine?" +
-            "lat=${params.latitude}&lon=${params.longitude}" +
-            "&dt=$dt&exclude=current,minutely" +
-            "&units=metric" +
-            "&lang=${params.language}&appid=$API_KEY";
+        "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${params.latitude}&lon=${params.longitude}&dt=$dt&exclude=current,minutely&units=metric&lang=${params.language}&appid=$API_KEY";
 
     final response = await Network.get(url: url);
     final responseBody = json.decode(response.body);
     final result = HistoryWeatherModel.fromJson(responseBody);
-    printDebug("getHistoryWeather ${result}");
+    printDebug("getHistoryWeather $result");
     return result;
   }
 }

@@ -1,16 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/src/public_ext.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
-import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
-import '../../../../core/resources/assets_paths.dart';
-import '../../../../core/utils.dart';
-import '../../domain/entities/present_future_weather.dart';
-import '../../domain/entities/weather.dart';
 import 'compact_day_weather.dart';
 
 class WeatherTabs extends StatelessWidget {
@@ -34,7 +27,7 @@ class WeatherTabs extends StatelessWidget {
             TabBar(
               isScrollable: true,
               labelColor: AppColors.white,
-              unselectedLabelColor: Colors.grey,
+              unselectedLabelColor: AppColors.grey,
               tabs: days.asMap().entries.map((e) {
                 String day = DateFormat.MMMEd('locale'.tr().toString())
                     .format(e.value.date);
@@ -65,7 +58,7 @@ class WeatherTabs extends StatelessWidget {
                         children: [
                           AutoSizeText(
                             day,
-                            style: TextStyle(color: AppColors.white),
+                            style: const TextStyle(color: AppColors.white),
                           ),
                           Expanded(
                             child: Row(
@@ -73,13 +66,13 @@ class WeatherTabs extends StatelessWidget {
                               children: [
                                 Text(
                                     double.tryParse(e.value.maxTemp)?.round().toStringAsFixed(0) ?? "",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w900,
                                         color: AppColors.white)),
-                                SizedBox(width: 10,),
+                                const SizedBox(width: 10,),
                                 Text(
                                     double.tryParse(e.value.minTemp)?.round().toStringAsFixed(0) ?? "",
-                                    style: TextStyle(color: AppColors.white))
+                                    style: const TextStyle(color: AppColors.white))
                               ],),
                           ),
                         ],
@@ -93,9 +86,9 @@ class WeatherTabs extends StatelessWidget {
             Container(
                 height: constraints.maxHeight - 49,
                 alignment: Alignment.topRight,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
-                        top: BorderSide(color: Colors.grey, width: 0.5))),
+                        top: BorderSide(color: AppColors.grey, width: 0.5))),
                 child: TabBarView(
                     children: days
                         .map((e) => WeatherList(e.details ?? []))

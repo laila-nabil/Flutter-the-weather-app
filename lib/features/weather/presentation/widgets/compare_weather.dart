@@ -1,11 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import 'package:the_weather_app/core/resources/app_colors.dart';
-import 'package:the_weather_app/core/resources/app_design.dart';
-import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class CompareWeather extends StatelessWidget {
   final String compareWeather;
@@ -26,9 +20,7 @@ class CompareWeather extends StatelessWidget {
           compareWeather,
           minFontSize: 15,
           maxFontSize: 35,
-          // softWrap: true,
-          // maxLines: 3,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
           textAlign: TextAlign.center,
         ),
       );

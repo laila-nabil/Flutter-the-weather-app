@@ -4,19 +4,11 @@ abstract class WeatherEvent extends Equatable {
   const WeatherEvent();
 }
 
-class GetTodayOverviewV extends WeatherEvent {
-  final GetTodayOverviewParamsV params;
-
-  GetTodayOverviewV({required this.params});
-
-  @override
-  List<Object?> get props => [params];
-}
 
 class GetTodayOverview extends WeatherEvent {
   final GetTodayOverviewParams params;
 
-  GetTodayOverview({required this.params});
+  const GetTodayOverview({required this.params});
 
   @override
   List<Object?> get props => [params];
@@ -28,7 +20,7 @@ class InitialWeatherEvent extends WeatherEvent {
   final GetPresentFutureWeatherParams getPresentFutureWeatherParams;
   final GetTodayOverviewParams getTodayOverviewParams;
 
-  InitialWeatherEvent(
+  const InitialWeatherEvent(
       {required this.getHistoryListWeatherParams,
       required this.getPresentFutureWeatherParams,
       required this.getTodayOverviewParams});

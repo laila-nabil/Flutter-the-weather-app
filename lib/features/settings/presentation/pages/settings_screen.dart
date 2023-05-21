@@ -4,27 +4,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/main.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../../../core/constants.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../weather/presentation/pages/home_page.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
+
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
-    final orientation = mediaQuery.orientation;
-    final isPortrait = screenSize.width < screenSize.height;
-    void _toggleLanguage() async{
+    void toggleLanguage() async{
       // setState(() {
       //   //printDebug('_toggleLanguage');
       // });
-      context.setLocale( context.locale == Locale('en', 'UK') ? Locale('ar', 'EG') : Locale(
-          'en', 'UK'));
+      context.setLocale(context.locale == const Locale('en', 'UK')
+          ? const Locale('ar', 'EG')
+          : const Locale('en', 'UK'));
       final languageBloc = BlocProvider.of<LanguageBloc>(context);
       var currentLanguagesEnum = LocalizationImpl().getCurrentLanguagesEnum(context);
       if(currentLanguagesEnum!=null){
@@ -48,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
               elevation: 0,
               title: Text(
                 'settings'.tr().toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 34,
                     color: AppColors.white,
                     fontWeight: FontWeight.w700),
@@ -66,17 +68,15 @@ class SettingsScreen extends StatelessWidget {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () => _toggleLanguage(),
-                        icon: Icon(Icons.language),
+                        onPressed: () => toggleLanguage(),
+                        icon: const Icon(Icons.language),
                         label: Text('change_lang'.tr().toString())),
                     Row(
                       children: [
-                        Text(LocalizationImpl().translate("madeWith") +
-                            " " +
-                            LocalizationImpl().translate("flutter") +
-                            " " +
-                            LocalizationImpl().translate("by") +
-                            " ",style: TextStyle(color: Colors.white),),
+                        Text(
+                          "${LocalizationImpl().translate("madeWith")} ${LocalizationImpl().translate("flutter")} ${LocalizationImpl().translate("by")} ",
+                          style: const TextStyle(color: AppColors.white),
+                        ),
                         TextButton(
                             onPressed: () async {
                               if (enableAnalytics) {
@@ -87,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
                               );
                             },
                             child: Text(
-                                LocalizationImpl().translate("lailaNabil"),style: TextStyle(color: Colors.white)))
+                                LocalizationImpl().translate("lailaNabil"),style: const TextStyle(color: AppColors.white)))
                       ],
                     )
                   ],
