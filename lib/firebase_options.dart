@@ -51,17 +51,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyALRKLjTuBlVGSHi6q12f0TV8kSzUizCdc',
-    appId: '1:139996546585:web:804a011d61734325d98c88',
+    appId: '1:139996546585:web:1397e635511974a4d98c88',
     messagingSenderId: '139996546585',
     projectId: 'weather-app-d1c77',
     authDomain: 'weather-app-d1c77.firebaseapp.com',
     storageBucket: 'weather-app-d1c77.appspot.com',
-    measurementId: 'G-LJMLFSKD16',
+    measurementId: 'G-F7MM2Y7D5W',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDfPWP-p4vn1CVcuHQZEnqUiV0ij33dZ2U',
-    appId: '1:139996546585:android:40554b093fce7f26d98c88',
+    appId: '1:139996546585:android:de6331375e3fe0aad98c88',
     messagingSenderId: '139996546585',
     projectId: 'weather-app-d1c77',
     storageBucket: 'weather-app-d1c77.appspot.com',

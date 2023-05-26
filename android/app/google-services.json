@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:139996546585:android:40554b093fce7f26d98c88",
+        "mobilesdk_app_id": "1:139996546585:android:de6331375e3fe0aad98c88",
         "android_client_info": {
           "package_name": "com.example.the_weather_app"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "139996546585-14t21u0ofv9et9jec5224vf4vdlqq50v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "139996546585-8fm9ac8dvkfn7ngr93ktv9e0u6n4hjqj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.theWeatherApp"
+              }
             }
           ]
         }

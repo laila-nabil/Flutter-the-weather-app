@@ -12,13 +12,13 @@ import 'package:the_weather_app/features/settings/presentation/pages/settings_sc
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'core/bloc_observer.dart';
-import 'core/firebase_options.dart';
 import 'core/injection_container.dart';
 import 'core/injection_container.dart' as di;
 import 'core/resources/app_theme.dart';
 import 'features/language/presentation/bloc/language_bloc.dart';
 import 'features/location/presentation/bloc/location_bloc.dart';
 import 'features/weather/presentation/pages/home_page.dart';
+import 'firebase_options.dart';
 
 //flutter build web --dart-define api_key=KEY
 //firebase deploy --only hosting
