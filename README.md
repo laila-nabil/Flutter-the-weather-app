@@ -1,77 +1,46 @@
 
+# The Compare weather app
 
-# The weather app
+![image](readme_assets\image1.jpeg)
 
-A new Flutter application.
+Weather app that shows past weather and future weather with a comparing feature to be able to better understand the meaning of the temperature.
 
-## SETUP
+It is built using Flutter framework. The website provides users with real-time weather information for any location in the world. It includes features such as:
 
-### web setup
+- Comparing today’s weather to yesterday
+- Location-based Weather Information
+- Hourly and Daily Forecast
 
-#### a) using FVM
+The project is implemented based on [Clean Architecture mothod by reso coder](https://resocoder.com/flutter-clean-architecture-tdd/)
 
-##### first time setup
-1. fvm use stable in windows powershell as admin    2. a .fvm folder is added with shortcut
-    3. get full path of shortcut and add to project as flutter path instead of original path
-    4. fvm flutter config --enable-web in terminal/windows powershell as admin
-    5. fvm flutter create .
-    6. fvm flutter run -d chrome/edge
-    7. firebase init hosting
-    8. build/web, single web page, not overwrite
-    9. firebase deploy --only hosting
-10. fvm flutter build web --dart-define api_key=key
-##### run on web
-fvm flutter run -d edge --dart-define api_key=key
-##### reupload
-fvm flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or*   firebase deploy --only hosting:flutter-weather-app
-#### b) using Flutter version with web support
-##### first time setup
-1. flutter config --enable-web in terminal/windows powershell as admin    2. flutter create .
-    3. flutter run -d chrome/edge
-    4. firebase init hosting
-    5. build/web, single web page, not overwrite
-    6. firebase deploy --only hosting
-7. flutter build web --dart-define api_key=key
-##### run on web
-flutter run -d edge --dart-define api_key=key
-##### reupload
-flutter build web --dart-define api_key=keyfirebase deploy --only hosting  *or*   firebase deploy --only hosting:flutter-weather-app
-### general notes
+## Use
 
-- to add arguments but to android studio
+- Web version: <https://flutter-weather-app.web.app/>
+- Google play : soon
 
-> from main.dart menu > edit configuration > which is better than terminal for web
+## Packages used
 
-
-### TODO list
-- [x] adjust UI: responsiveness
-- [x] add settings screen
-- [x] in settings screen: change city by location search with autocomplete
-- [x] in settings screen: change language + localization
-- [x] is timing correct or not?==>correct since  DateTime.fromMillisecondsSinceEpoch returns in local time
-- [x] max &min sometimes disappear==> fixed
-- [x] maybe make all weather one class or use inheritance
-- [x] add shimmer instead of loading circle
-- [x]  splash screen
-- [x] icon
-- [ ] Refactoring
-    - [ ] Basic refactoring
-        - [ ] use lib/domain/resources
-            - [x] assets
-            - [ ] colors
-            - [ ] design parameters
-            - [ ] text styles
-        - [ ] Riverpod instead of provider
-        - [ ] fix TODOs in WeatherProvider
-        - [ ] splash screen instead of shimmer
-    - [ ] full refactoring
-        - [ ] UI from online designs
-        - [ ] refactor WeatherProvider
-- [ ] Next steps
-    - [ ]  in settings screen: add multiple cities
-    - [ ]  in settings screen: add multiple cities + locally store them
-    - [ ] in settings screen: change unit
-    - [ ] padding fixed but everything else is not
-    - [ ] is history correct?!
-    - [ ] Tests
-    - [ ] on play store
+- http
+- scrollable_positioned_list
+- cron
+- flutter_svg
+- auto_size_text
+- carousel_slider
+- geolocator
+- flutter_mapbox_autocomplete
+- shimmer
+- easy_localization
+- shared_preferences
+- dartz
+- equatable
+- flutter_bloc
+- get_it
+- firebase_analytics
+- firebase_core
+- url_launcher
+- meta_seo
+- timezone
+- mocktail
+- flutter_native_splash
+- flutter_launcher_icons
+- change_app_package_name
