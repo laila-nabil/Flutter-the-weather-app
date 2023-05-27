@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
@@ -14,7 +15,9 @@ class AutoCompleteSearchLocationUseCase implements UseCase<List<LocationEntity>,
   @override
   Future<Either<Failure, List<LocationEntity>>> call(String params) async {
     if (enableAnalytics) {
-      analytics.logEvent(name: "AutoCompleteSearchLocationUseCase",);
+      analytics.logEvent(
+          name: "AutoCompleteSearchLocationUseCase",
+          parameters: {"release": kReleaseMode.toString()});
     }
     if(params.length > 1){
       return await locationRepo.autoCompleteSearchLocation(params);

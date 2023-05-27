@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
@@ -17,7 +18,9 @@ class GetTodayWeatherOverviewUseCase
   @override
   Future<Either<Failure, TodayOverview>> call(GetTodayOverviewParams params) async{
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetTodayWeatherOverviewUseCase",);
+      analytics.logEvent(
+          name: "GetTodayWeatherOverviewUseCase",
+          parameters: {"release": kReleaseMode.toString()});
     }
     return await repo.getTodayOverview(params);
   }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
@@ -48,9 +49,14 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    var position = await Geolocator.getCurrentPosition();
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.lowest);
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetCurrentLocationUseCase");
+      analytics.logEvent(name: "GetCurrentLocationUseCase", parameters: {
+        "release": kReleaseMode.toString(),
+        "latitude": position.latitude.toString(),
+        "longitude": position.longitude.toString()
+      });
     }
     return Right(LocationEntity(
         lon: position.longitude, lat: position.latitude,));

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/entities/present_future_weather.dart';
@@ -18,7 +19,12 @@ class GetPresentFutureWeatherUseCase
   Future<Either<Failure, PresentFutureWeather>> call(
       GetPresentFutureWeatherParams params) async{
     if (enableAnalytics) {
-      analytics.logEvent(name: "GetPresentFutureWeatherUseCase",);
+      analytics.logEvent(
+          name: "GetPresentFutureWeatherUseCase", parameters: {
+        "release": kReleaseMode.toString(),
+        "latitude": params.latitude.toString(),
+        "longitude": params.longitude.toString()
+      });
     }
     return await repo.getPresentFutureWeather(params);
   }

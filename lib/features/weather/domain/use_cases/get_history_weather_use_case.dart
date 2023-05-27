@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/weather/domain/entities/history_weather.dart';
@@ -19,7 +20,9 @@ class GetHistoryListWeatherUseCase
       GetHistoryListWeatherParams params) async{
     if (enableAnalytics) {
       if (enableAnalytics) {
-        analytics.logEvent(name: "GetHistoryListWeatherUseCase",);
+        analytics.logEvent(
+            name: "GetHistoryListWeatherUseCase",
+            parameters: {"release": kReleaseMode.toString(),});
       }
     }
     return await repo.getHistoryListWeather(params);

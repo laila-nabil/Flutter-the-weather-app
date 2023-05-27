@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
@@ -33,7 +34,9 @@ class SettingsScreen extends StatelessWidget {
         languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
       if (enableAnalytics) {
-        analytics.logEvent(name: "ChangeLanguage" ,parameters: {"lang" : context.locale});
+        analytics.logEvent(
+            name: "ChangeLanguage",
+            parameters: {"lang": context.locale, "release": kReleaseMode.toString()});
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
@@ -80,7 +83,9 @@ class SettingsScreen extends StatelessWidget {
                         TextButton(
                             onPressed: () async {
                               if (enableAnalytics) {
-                                analytics.logEvent(name: "launchGithub");
+                                analytics.logEvent(
+                                    name: "launchGithub",
+                                    parameters: {"release": kReleaseMode.toString()});
                               }
                               await launchUrl(
                                 Uri.parse( "https://github.com/laila-nabil/"),
