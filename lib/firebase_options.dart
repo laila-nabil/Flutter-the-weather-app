@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDfPWP-p4vn1CVcuHQZEnqUiV0ij33dZ2U',
-    appId: '1:139996546585:android:de6331375e3fe0aad98c88',
+    appId: '1:139996546585:android:fcce0ab6492fed91d98c88',
     messagingSenderId: '139996546585',
     projectId: 'weather-app-d1c77',
     storageBucket: 'weather-app-d1c77.appspot.com',
