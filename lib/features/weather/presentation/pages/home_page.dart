@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -128,18 +130,17 @@ class MyHomePage extends StatelessWidget {
                               language: getCurrentLangCode,
                               unit: unit)));
                     },
-                    child: SingleChildScrollView(
-                        child: state.weatherStatus == WeatherStatus.loading
-                            ? const LoadingLogo()
-                            : HomeLoadedContent(
-                                city: locationBloc
-                                        .state.userCurrentLocation?.city ??
-                                    "",
-                                locationBloc: locationBloc,
-                                weatherBloc: bloc,
-                                screenSize: screenSize,
-                                isPortrait: isPortrait,
-                                minimalView: minimalView)),
+                    child: state.weatherStatus == WeatherStatus.loading
+                        ? const LoadingLogo()
+                        : HomeLoadedContent(
+                            city: locationBloc
+                                    .state.userCurrentLocation?.city ??
+                                "",
+                            locationBloc: locationBloc,
+                            weatherBloc: bloc,
+                            screenSize: screenSize,
+                            isPortrait: isPortrait,
+                            minimalView: minimalView),
                   ),
                 ),
               );
@@ -325,12 +326,9 @@ class HomeLoadedContent extends StatelessWidget {
                 ),
               )),
           if (isPortrait)
-            Expanded(
-              flex: 1,
-              child: Text(
-                '${'last_update'.tr().toString()} ${DateFormat('dd MMM - hh:mm a', 'locale'.tr().toString()).format(DateTime.now())}',
-                style: const TextStyle(fontSize: 11, color: AppColors.white),
-              ),
+            Text(
+              '${'last_update'.tr().toString()} ${DateFormat('dd MMM - hh:mm a', 'locale'.tr().toString()).format(DateTime.now())}',
+              style: const TextStyle(fontSize: 11, color: AppColors.white),
             )
         ],
       ),
