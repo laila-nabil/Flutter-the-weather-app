@@ -35,8 +35,10 @@ class SettingsScreen extends StatelessWidget {
       }
       if (enableAnalytics) {
         analytics.logEvent(
-            name: "ChangeLanguage",
-            parameters: {"lang": context.locale, "release": kReleaseMode.toString()});
+            name: "ChangeLanguage", parameters: {
+          "lang": context.locale.toString(),
+          "release": kReleaseMode.toString()
+        });
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
