@@ -59,7 +59,7 @@ class MyHomePage extends StatelessWidget {
           var long = locationBloc.state.userCurrentLocation?.lon ?? "";
           var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
           var getCurrentLangCode =
-          LocalizationImpl().getCurrentLangCode(context);
+              LocalizationImpl().getCurrentLangCode(context);
           var unit = UnitGroup.metric;
           getWeatherData(
               weatherBloc,
@@ -68,7 +68,7 @@ class MyHomePage extends StatelessWidget {
               locationBloc.state.userCurrentLocation?.city ?? "",
               getCurrentLangCode,
               unit);
-          },
+        },
         child: BlocBuilder<LocationBloc, LocationState>(
           builder: (context, locationState) {
             final weatherBloc = BlocProvider.of<WeatherBloc>(context);
@@ -151,16 +151,18 @@ class MyHomePage extends StatelessWidget {
                       },
                       child: state.weatherStatus == WeatherStatus.loading
                           ? const LoadingLogo()
-                          : HomeLoadedContent(
-                              city: locationBloc
-                                      .state.userCurrentLocation?.city ??
-                                  "",
-                              locationBloc: locationBloc,
-                              weatherBloc: bloc,
-                              screenSize: screenSize,
-                              isPortrait: isPortrait,
-                              minimalView: minimalView),
-                    ),
+                          : state.weatherStatus == WeatherStatus.historySuccess
+                              ? HomeLoadedContent(
+                                  city: locationBloc
+                                          .state.userCurrentLocation?.city ??
+                                      "",
+                                  locationBloc: locationBloc,
+                                  weatherBloc: bloc,
+                                  screenSize: screenSize,
+                                  isPortrait: isPortrait,
+                                  minimalView: minimalView)
+                              : Container(),
+                    ) ,
                   ),
                 );
               },
@@ -253,6 +255,15 @@ class HomeLoadedContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int todayIndex = weatherBloc.state.days.indexWhere((element) {
+      printDebug("element.date ${element.date}");
+      printDebug("element.date ${element.date.isSameDay(DateTime.now())}");
+      return element.date.isSameDay(DateTime.now());
+    });
+    if (todayIndex < 0) {
+      todayIndex = 3;
+    }
+    printDebug("todayIndex $todayIndex");
     return SizedBox(
       height: screenSize.height,
       child: Column(
@@ -339,10 +350,12 @@ class HomeLoadedContent extends StatelessWidget {
                 padding: isPortrait
                     ? const EdgeInsets.only(top: 8.0)
                     : const EdgeInsets.only(top: 30.0),
-                child: WeatherTabs(
-                  days: weatherBloc.state.days,
-                  numOfHistoryDays:
-                      weatherBloc.state.historyListWeather?.length ?? 0,
+                child: BlocBuilder<WeatherBloc, WeatherState>(
+                  builder: (context, state) {
+                    return WeatherTabs(
+                      days: state.days,
+                    );
+                  },
                 ),
               )),
           if (isPortrait)
