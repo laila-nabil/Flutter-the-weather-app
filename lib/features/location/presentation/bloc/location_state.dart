@@ -1,16 +1,23 @@
 part of 'location_bloc.dart';
 
 enum LocationStatus {initial , loading , success, failure}
+
+const defaultLocation =  LocationEntity(
+    lat: 30.0444,
+    lon: 31.2357,
+    city: "Cairo",
+    country: "Egypt",
+    countryCode: "EG");
 class LocationState extends Equatable {
   final LocationStatus status;
   final List<LocationEntity>? autoCompleteList;
-  final LocationEntity? userCurrentLocation;
+  final LocationEntity userCurrentLocation;
   final Failure? failure;
 
   const LocationState({
     required this.status,
     this.autoCompleteList,
-    this.userCurrentLocation,
+    this.userCurrentLocation = defaultLocation,
     this.failure,
   });
 

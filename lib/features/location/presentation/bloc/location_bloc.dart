@@ -22,13 +22,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationBloc(this._autoCompleteSearchLocationUseCase,
       this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
       : super(LocationState(
-            status: LocationStatus.initial,
-            userCurrentLocation: LocationEntity(
-                lat: 30.0444,
-                lon: 31.2357,
-                city: "Cairo",
-                country: "Egypt",
-                countryCode: "EG"))) {
+            status: LocationStatus.initial,)) {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
         add(const GetCurrentLocation());
@@ -49,7 +43,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         }else {
           emit(LocationState(
             status: LocationStatus.success,
-            userCurrentLocation: event.location
+            userCurrentLocation: event.location ?? defaultLocation
           ));
         }
       } else if (event is AutoCompleteSearchLocation) {

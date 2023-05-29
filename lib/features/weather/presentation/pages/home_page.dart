@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta_seo/meta_seo.dart';
 import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
@@ -50,103 +51,122 @@ class MyHomePage extends StatelessWidget {
 
     return BlocProvider<WeatherBloc>(
       create: (context) => sl<WeatherBloc>(),
-      child: BlocBuilder<LocationBloc, LocationState>(
-        builder: (context, locationState) {
+      child: BlocListener<LanguageBloc, LanguageState>(
+        listener: (context, state) {
           final weatherBloc = BlocProvider.of<WeatherBloc>(context);
           final locationBloc = BlocProvider.of<LocationBloc>(context);
-          if (locationState.status == LocationStatus.initial) {
-            locationBloc.add(LocationInitialEvent());
-          } else if (locationState.status == LocationStatus.success &&
-              locationState.userCurrentLocation != null) {
-            var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-            var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
-            var getCurrentLangCode =
-            LocalizationImpl().getCurrentLangCode(context);
-            var unit = UnitGroup.metric;
-            getWeatherData(
-                weatherBloc,
-                long.toString(),
-                lat.toString(),
-                locationBloc.state.userCurrentLocation?.city ?? "",
-                getCurrentLangCode,
-                unit);
-          }
-          return BlocConsumer<WeatherBloc, WeatherState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              final bloc = BlocProvider.of<WeatherBloc>(context);
-              final locationBloc = BlocProvider.of<LocationBloc>(context);
-              final languageBloc = BlocProvider.of<LanguageBloc>(context);
-              if (state.weatherStatus == WeatherStatus.initial &&
-                  (locationState).userCurrentLocation != null) {
-                var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-                var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
-                var getCurrentLangCode =
-                    LocalizationImpl().getCurrentLangCode(context);
-                languageBloc.add(SelectLanguage(
-                    LocalizationImpl().getCurrentLanguagesEnum(context)!));
-                var unit = UnitGroup.metric;
-                getWeatherData(
-                    bloc,
-                    long.toString(),
-                    lat.toString(),
-                    locationBloc.state.userCurrentLocation?.city ?? "",
-                    getCurrentLangCode,
-                    unit);
-              }
+          printDebug("locationBloc.state ${locationBloc.state}");
+          var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+          var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+          var getCurrentLangCode =
+          LocalizationImpl().getCurrentLangCode(context);
+          var unit = UnitGroup.metric;
+          getWeatherData(
+              weatherBloc,
+              long.toString(),
+              lat.toString(),
+              locationBloc.state.userCurrentLocation?.city ?? "",
+              getCurrentLangCode,
+              unit);
+          },
+        child: BlocBuilder<LocationBloc, LocationState>(
+          builder: (context, locationState) {
+            final weatherBloc = BlocProvider.of<WeatherBloc>(context);
+            final locationBloc = BlocProvider.of<LocationBloc>(context);
+            if (locationState.status == LocationStatus.initial) {
+              locationBloc.add(LocationInitialEvent());
+            } else if (locationState.status == LocationStatus.success &&
+                locationState.userCurrentLocation != null) {
+              var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+              var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+              var getCurrentLangCode =
+                  LocalizationImpl().getCurrentLangCode(context);
+              var unit = UnitGroup.metric;
+              getWeatherData(
+                  weatherBloc,
+                  long.toString(),
+                  lat.toString(),
+                  locationBloc.state.userCurrentLocation?.city ?? "",
+                  getCurrentLangCode,
+                  unit);
+            }
+            return BlocConsumer<WeatherBloc, WeatherState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                final bloc = BlocProvider.of<WeatherBloc>(context);
+                final locationBloc = BlocProvider.of<LocationBloc>(context);
+                final languageBloc = BlocProvider.of<LanguageBloc>(context);
+                if (state.weatherStatus == WeatherStatus.initial &&
+                    (locationState).userCurrentLocation != null) {
+                  var long = locationBloc.state.userCurrentLocation?.lon ?? "";
+                  var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+                  var getCurrentLangCode =
+                      LocalizationImpl().getCurrentLangCode(context);
+                  languageBloc.add(SelectLanguage(
+                      LocalizationImpl().getCurrentLanguagesEnum(context)!));
+                  var unit = UnitGroup.metric;
+                  getWeatherData(
+                      bloc,
+                      long.toString(),
+                      lat.toString(),
+                      locationBloc.state.userCurrentLocation?.city ?? "",
+                      getCurrentLangCode,
+                      unit);
+                }
 
-              if (state.weatherStatus == WeatherStatus.loading) {
-                return Scaffold(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  body: const Center(child: CircularProgressIndicator()),
-                );
-              }
-              final mediaQuery = MediaQuery.of(context);
-              final screenSize = mediaQuery.size;
-              final isPortrait = screenSize.width < screenSize.height;
-              const minimalView = true;
-              return SafeArea(
-                bottom: true,
-                left: true,
-                top: true,
-                right: true,
-                maintainBottomViewPadding: true,
-                minimum: EdgeInsets.zero,
-                child: Scaffold(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  body: RefreshIndicator(
-                    onRefresh: () async {
-                      var long =
-                          locationBloc.state.userCurrentLocation?.lon ?? "";
-                      var lat =
-                          locationBloc.state.userCurrentLocation?.lat ?? "";
-                      var getCurrentLangCode =
-                          LocalizationImpl().getCurrentLangCode(context);
-                      var unit = UnitGroup.metric;
-                      bloc.add(GetTodayOverview(
-                          params: GetTodayOverviewParams(
-                              longitude: long.toString(),
-                              latitude: lat.toString(),
-                              language: getCurrentLangCode,
-                              unit: unit)));
-                    },
-                    child: state.weatherStatus == WeatherStatus.loading
-                        ? const LoadingLogo()
-                        : HomeLoadedContent(
-                            city: locationBloc
-                                    .state.userCurrentLocation?.city ??
-                                "",
-                            locationBloc: locationBloc,
-                            weatherBloc: bloc,
-                            screenSize: screenSize,
-                            isPortrait: isPortrait,
-                            minimalView: minimalView),
+                if (state.weatherStatus == WeatherStatus.loading) {
+                  return Scaffold(
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    body: const Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final mediaQuery = MediaQuery.of(context);
+                final screenSize = mediaQuery.size;
+                final isPortrait = screenSize.width < screenSize.height;
+                const minimalView = true;
+                return SafeArea(
+                  bottom: true,
+                  left: true,
+                  top: true,
+                  right: true,
+                  maintainBottomViewPadding: true,
+                  minimum: EdgeInsets.zero,
+                  child: Scaffold(
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    body: RefreshIndicator(
+                      onRefresh: () async {
+                        var long =
+                            locationBloc.state.userCurrentLocation?.lon ?? "";
+                        var lat =
+                            locationBloc.state.userCurrentLocation?.lat ?? "";
+                        var getCurrentLangCode =
+                            LocalizationImpl().getCurrentLangCode(context);
+                        var unit = UnitGroup.metric;
+                        bloc.add(GetTodayOverview(
+                            params: GetTodayOverviewParams(
+                                longitude: long.toString(),
+                                latitude: lat.toString(),
+                                language: getCurrentLangCode,
+                                unit: unit)));
+                      },
+                      child: state.weatherStatus == WeatherStatus.loading
+                          ? const LoadingLogo()
+                          : HomeLoadedContent(
+                              city: locationBloc
+                                      .state.userCurrentLocation?.city ??
+                                  "",
+                              locationBloc: locationBloc,
+                              weatherBloc: bloc,
+                              screenSize: screenSize,
+                              isPortrait: isPortrait,
+                              minimalView: minimalView),
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
