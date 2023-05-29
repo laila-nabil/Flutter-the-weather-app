@@ -1,28 +1,41 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
+import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_list.dart';
 
 import 'compact_day_weather.dart';
 
+int todayIndex(List<DayWeatherParams> days){
+  int todayIndex =
+  days.indexWhere((element) {
+    printDebug("element.date ${element.date}");
+    printDebug("element.date ${element.date.isSameDay(DateTime.now())}");
+    return element.date.isSameDay(DateTime.now());
+  });
+  if(todayIndex < 0){
+    todayIndex = 3;
+  }
+  printDebug("todayIndex is $todayIndex");
+  return todayIndex;
+}
+
 class WeatherTabs extends StatelessWidget {
   final List<DayWeatherParams> days;
-  final int numOfHistoryDays;
   const WeatherTabs(
       {Key? key,
       required this.days,
-      required this.numOfHistoryDays,
       })
       : super(key: key);
   @override
   Widget build(BuildContext context) {
 
-    final todayIndex = numOfHistoryDays;
     return LayoutBuilder(builder: (ctx, constraints) {
       return DefaultTabController(
           length: (days.length), // length of tabs
-          initialIndex: todayIndex,
+          initialIndex: todayIndex(days),
           child: Column(children: <Widget>[
             TabBar(
               isScrollable: true,
