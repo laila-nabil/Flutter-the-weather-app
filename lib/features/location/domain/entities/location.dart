@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class LocationEntity extends Equatable {
-  double? lon;
-  double? lat;
-  String? city;
-  String? country;
-  String? countryCode;
-  LocationEntity(
+  final double? lon;
+  final double? lat;
+  final String? city;
+  final String? country;
+  final String? countryCode;
+
+  const LocationEntity(
       {this.lon,
       this.lat,
       this.city,
