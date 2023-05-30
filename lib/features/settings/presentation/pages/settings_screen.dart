@@ -37,7 +37,8 @@ class SettingsScreen extends StatelessWidget {
         analytics.logEvent(
             name: "ChangeLanguage", parameters: {
           "lang": context.locale.toString(),
-          "release": kReleaseMode.toString()
+          "release": kReleaseMode.toString(),
+          "isWeb": kIsWeb.toString(),
         });
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
@@ -87,7 +88,8 @@ class SettingsScreen extends StatelessWidget {
                               if (enableAnalytics) {
                                 analytics.logEvent(
                                     name: "launchGithub",
-                                    parameters: {"release": kReleaseMode.toString()});
+                                    parameters: {"release": kReleaseMode.toString(),
+                                      "isWeb": kIsWeb.toString(),});
                               }
                               await launchUrl(
                                 Uri.parse( "https://github.com/laila-nabil/"),

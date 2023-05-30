@@ -22,7 +22,8 @@ class GetWeatherTimelineUseCase
     if (enableAnalytics) {
       analytics.logEvent(
           name: "GetWeatherTimelineUseCase",
-          parameters: {"release": kReleaseMode.toString()});
+          parameters: {"release": kReleaseMode.toString(),
+            "isWeb": kIsWeb.toString(),});
     }
     return await repo.getWeatherTimeline(params);
   }

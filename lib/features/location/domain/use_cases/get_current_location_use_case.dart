@@ -55,7 +55,8 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
       analytics.logEvent(name: "GetCurrentLocationUseCase", parameters: {
         "release": kReleaseMode.toString(),
         "latitude": position.latitude.toString(),
-        "longitude": position.longitude.toString()
+        "longitude": position.longitude.toString(),
+        "isWeb": kIsWeb.toString(),
       });
     }
     return Right(LocationEntity(

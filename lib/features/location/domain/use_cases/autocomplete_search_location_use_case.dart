@@ -17,7 +17,10 @@ class AutoCompleteSearchLocationUseCase implements UseCase<List<LocationEntity>,
     if (enableAnalytics) {
       analytics.logEvent(
           name: "AutoCompleteSearchLocationUseCase",
-          parameters: {"release": kReleaseMode.toString()});
+          parameters: {
+            "release": kReleaseMode.toString(),
+            "isWeb": kIsWeb.toString(),
+          });
     }
     if(params.length > 1){
       return await locationRepo.autoCompleteSearchLocation(params);

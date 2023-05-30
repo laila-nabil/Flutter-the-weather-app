@@ -20,8 +20,6 @@ import 'features/location/presentation/bloc/location_bloc.dart';
 import 'features/weather/presentation/pages/home_page.dart';
 import 'firebase_options.dart';
 
-//flutter build web --dart-define api_key=KEY
-//firebase deploy --only hosting
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 

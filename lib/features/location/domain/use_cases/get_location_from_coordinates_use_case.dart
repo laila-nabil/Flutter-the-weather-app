@@ -23,7 +23,8 @@ class GetLocationFromCoordinatesUseCase
           name: "GetLocationFromCoordinatesUseCase", parameters: {
         "release": kReleaseMode.toString(),
         "latitude": params.lat.toString(),
-        "longitude": params.lon.toString()
+        "longitude": params.lon.toString(),
+        "isWeb": kIsWeb.toString(),
       });
     }
     return await locationRepo.getLocationFromCoordinates(params: params);

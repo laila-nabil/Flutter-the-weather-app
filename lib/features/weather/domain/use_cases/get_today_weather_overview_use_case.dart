@@ -20,7 +20,8 @@ class GetTodayWeatherOverviewUseCase
     if (enableAnalytics) {
       analytics.logEvent(
           name: "GetTodayWeatherOverviewUseCase",
-          parameters: {"release": kReleaseMode.toString()});
+          parameters: {"release": kReleaseMode.toString(),
+            "isWeb": kIsWeb.toString(),});
     }
     return await repo.getTodayOverview(params);
   }

@@ -23,7 +23,8 @@ class GetPresentFutureWeatherUseCase
           name: "GetPresentFutureWeatherUseCase", parameters: {
         "release": kReleaseMode.toString(),
         "latitude": params.latitude.toString(),
-        "longitude": params.longitude.toString()
+        "longitude": params.longitude.toString(),
+        "isWeb": kIsWeb.toString(),
       });
     }
     return await repo.getPresentFutureWeather(params);

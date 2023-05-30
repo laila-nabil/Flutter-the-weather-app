@@ -22,7 +22,8 @@ class GetHistoryListWeatherUseCase
       if (enableAnalytics) {
         analytics.logEvent(
             name: "GetHistoryListWeatherUseCase",
-            parameters: {"release": kReleaseMode.toString(),});
+            parameters: {"release": kReleaseMode.toString(),
+              "isWeb": kIsWeb.toString(),});
       }
     }
     return await repo.getHistoryListWeather(params);
