@@ -44,7 +44,7 @@ class WeatherState extends Equatable {
             iconPath: "",///TODO
             currentTemp: "",
             minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
-            maxTemp: (day?.dailyEntity.temperature2mMin
+            maxTemp: (day?.dailyEntity.temperature2mMax
                     ?? "" ).toString(),
             rain: "",
             windSpeed:"",///TODO
