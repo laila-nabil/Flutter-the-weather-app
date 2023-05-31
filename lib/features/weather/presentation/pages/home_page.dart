@@ -171,12 +171,12 @@ class MyHomePage extends StatelessWidget {
 
   void getWeatherData(WeatherBloc bloc, String longitude, String latitude,
       String city, String getCurrentLangCode, UnitGroup unit) {
-    bloc.add(InitialWeatherEvent(
+    bloc.add(GetWeatherEvent(
         getPresentFutureWeatherParams: GetPresentFutureWeatherParams(
             getCurrentLangCode,
             latitude: latitude,
             longitude: longitude),
-        getHistoryListWeatherParams: GetHistoryListWeatherParams(
+        getWeatherParams: GetHistoryListWeatherParams(
             latitude: latitude,
             longitude: longitude,
             language: getCurrentLangCode,
@@ -260,7 +260,7 @@ class HomeLoadedContent extends StatelessWidget {
     printDebug("todayIndex $todayIndex");
     final weatherTodayWidget = WeatherTodayWidget(
       weatherToday_: weatherBloc
-          .state.presentFutureWeather?.daily.tryFirst,
+          .state.weather?.daily.tryFirst,
       weatherToday: weatherBloc.state.todayOverview,
     );
     final compareWeather = CompareWeather(

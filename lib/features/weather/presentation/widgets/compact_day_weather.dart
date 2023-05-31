@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
+import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 
 import 'dashboard_weather.dart';
 import 'detailed_weather.dart';
