@@ -7,7 +7,9 @@ const defaultLocation =  LocationEntity(
     lon: 31.2357,
     city: "Cairo",
     country: "Egypt",
-    countryCode: "EG");
+    countryCode: "EG",
+    timezone: "Africa/Cairo"///Africa and Cairo must start with capital letter
+);
 class LocationState extends Equatable {
   final LocationStatus status;
   final List<LocationEntity>? autoCompleteList;

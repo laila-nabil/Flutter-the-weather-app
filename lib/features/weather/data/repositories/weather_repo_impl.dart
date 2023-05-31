@@ -25,8 +25,7 @@ class WeatherRepoImpl extends WeatherRepo {
   Future<Either<Failure, WeatherModel>> getWeather(GetWeatherParams params) async {
     WeatherModel result;
     try {
-      final oldResult = await weatherLocalDataSource.getWeatherTimeline(params);
-
+      // final oldResult = await weatherLocalDataSource.getWeatherTimeline(params);
       result = await weatherRemoteDataSource.getWeather(params);
       await weatherLocalDataSource.saveWeatherTimeline(result);
 

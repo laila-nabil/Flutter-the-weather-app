@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+///timezone example: Africa/Cairo where Africa and Cairo must start with capital letter
 class LocationEntity extends Equatable {
   final double? lon;
   final double? lat;
