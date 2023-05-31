@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 
+import '../../../../core/utils.dart';
+
 /// latitude : 30.0625
 /// longitude : 31.25
 /// generationtime_ms : 0.4749298095703125
@@ -24,17 +26,13 @@ required HourlyModel? hourly,
           (index) => mapDailyListsEntityToDailyEntity(
           dailyListsEntity: daily, index: index));
   final hourlyList = List.generate(
-      daily?.time?.length ?? 0,
+        24,
           (index) => mapHourlyListsEntityToHourlyEntity(
           hourlyListsEntity: hourly, index: index));
-
   List<DailyHourlyEntity> result = List.generate(dailyList.length, (index) {
     var dailyEntity = dailyList.elementAt(index);
     return DailyHourlyEntity(
-        hourlyList: hourlyList
-            .where((element) =>
-                element.time?.contains(dailyEntity.time ?? "") == true)
-            .toList(),
+        hourlyList: hourlyList,
         dailyEntity: dailyEntity
     );
   });
