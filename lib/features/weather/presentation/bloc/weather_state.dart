@@ -33,6 +33,7 @@ class WeatherState extends Equatable {
       this.compareTodayYesterday,});
 
   List<DayWeatherParams> get days{
+    printDebug("weather?.dailyHourlyList?.length ${weather?.dailyHourlyList?.length}");
     List<DayWeatherParams> weatherUiData = List.generate(
         (weather?.dailyHourlyList?.length ?? 0),
         (index) {

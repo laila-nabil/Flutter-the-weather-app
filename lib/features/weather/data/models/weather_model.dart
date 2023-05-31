@@ -25,14 +25,16 @@ required HourlyModel? hourly,
       daily?.time?.length ?? 0,
           (index) => mapDailyListsEntityToDailyEntity(
           dailyListsEntity: daily, index: index));
-  final hourlyList = List.generate(
+  List<HourlyEntity>  hourlyList(index) => List.generate(
         24,
-          (index) => mapHourlyListsEntityToHourlyEntity(
-          hourlyListsEntity: hourly, index: index));
+          (i) => mapHourlyListsEntityToHourlyEntity(
+          hourlyListsEntity: hourly, index: (i + ((index?? 0)*24)).toInt()));
   List<DailyHourlyEntity> result = List.generate(dailyList.length, (index) {
     var dailyEntity = dailyList.elementAt(index);
+    printDebug("mapToDailyHourlyEntityList $dailyEntity");
+    printDebug("mapToDailyHourlyEntityList ${hourlyList(index).length} ${hourlyList(index)}");
     return DailyHourlyEntity(
-        hourlyList: hourlyList,
+        hourlyList: hourlyList(index),
         dailyEntity: dailyEntity
     );
   });
