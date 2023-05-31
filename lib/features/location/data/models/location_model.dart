@@ -1,3 +1,5 @@
+import 'package:the_weather_app/core/utils.dart';
+
 import '../../domain/entities/location.dart';
 
 class LocationModel extends LocationEntity {
@@ -30,14 +32,19 @@ class LocationModel extends LocationEntity {
 
   factory LocationModel.bigDataCloudFromJson(Map<String, dynamic> json) {
     String timezone = "Africa/Cairo";
-    if(json['localityInfo']!=null){
-      if(json['localityInfo']["informative"]!=null){
-        timezone =
-            (json['localityInfo']["informative"] as List<Map<String, String>>)
-                .firstWhere((element) => element["description"] == "time zone")
-                .toString();
+    try{
+      if (json['localityInfo'] != null) {
+        if (json['localityInfo']["informative"] != null) {
+          timezone = (json['localityInfo']["informative"]
+                  as List<dynamic>)
+              .firstWhere((element) => element["description"] == "time zone")["name"]
+              .toString();
+        }
       }
+    }catch(e){
+      printDebug("bigDataCloudFromJson error $e");
     }
+    printDebug("timezone bigDataCloudFromJson $timezone");
     return LocationModel(
         lon: json['longitude'],
         lat: json['latitude'],
