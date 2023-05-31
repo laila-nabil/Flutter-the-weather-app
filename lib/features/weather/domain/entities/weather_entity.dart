@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/core/extensions.dart';
 /// latitude : 30.0625
 /// longitude : 31.25
 /// generationtime_ms : 0.4749298095703125
@@ -23,9 +24,13 @@ class WeatherEntity extends Equatable{
       this.timezoneAbbreviation, 
       this.elevation, 
       this.hourlyUnits, 
-      this.hourly, 
-      this.dailyUnits, 
-      this.daily,});
+      this.hourlyList,
+      this.dailyUnits,
+      this.dailyList,
+      this.daily,
+      this.hourly,
+      this.dailyHourlyList
+  });
 
   final num? latitude;
   final num? longitude;
@@ -35,10 +40,12 @@ class WeatherEntity extends Equatable{
   final String? timezoneAbbreviation;
   final num? elevation;
   final HourlyUnitsEntity? hourlyUnits;
-  final HourlyEntity? hourly;
+  final HourlyListsEntity? hourlyList;
+  final List<HourlyEntity>? hourly;
   final DailyUnitsEntity? dailyUnits;
-  final DailyEntity? daily;
-
+  final DailyListsEntity? dailyList;
+  final List<DailyEntity>? daily;
+  final List<DailyHourlyEntity>? dailyHourlyList;
 
   @override
   List<Object?> get props => [latitude,
@@ -49,9 +56,12 @@ class WeatherEntity extends Equatable{
     timezoneAbbreviation,
     elevation,
     hourlyUnits,
+    hourlyList,
     hourly,
     dailyUnits,
-    daily,];
+    dailyList,
+    daily,
+  ];
 
 }
 
@@ -62,8 +72,8 @@ class WeatherEntity extends Equatable{
 /// sunset : ["2023-05-30T18:51","2023-05-31T18:52","2023-06-01T18:52","2023-06-02T18:53","2023-06-03T18:53","2023-06-04T18:54","2023-06-05T18:54","2023-06-06T18:55"]
 /// precipitation_probability_max : [0,0,10,13,13,0,0,0]
 
-class DailyEntity extends Equatable{
-  const DailyEntity({
+class DailyListsEntity extends Equatable{
+  const DailyListsEntity({
       this.time, 
       this.temperature2mMax, 
       this.temperature2mMin, 
@@ -77,6 +87,33 @@ class DailyEntity extends Equatable{
   final List<String>? sunrise;
   final List<String>? sunset;
   final List<num>? precipitationProbabilityMax;
+
+  @override
+  List<Object?> get props => [time,
+    temperature2mMax,
+    temperature2mMin,
+    sunrise,
+    sunset,
+    precipitationProbabilityMax,];
+
+
+}
+
+class DailyEntity extends Equatable{
+  const DailyEntity({
+    this.time,
+    this.temperature2mMax,
+    this.temperature2mMin,
+    this.sunrise,
+    this.sunset,
+    this.precipitationProbabilityMax,});
+
+  final String? time;
+  final num? temperature2mMax;
+  final num? temperature2mMin;
+  final String? sunrise;
+  final String? sunset;
+  final num? precipitationProbabilityMax;
 
   @override
   List<Object?> get props => [time,
@@ -130,8 +167,8 @@ class DailyUnitsEntity extends Equatable{
 /// precipitation_probability : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,6,5,4,3,5,8,10,7,3,0,1,2,3,5,8,10,9,7,6,5,4,3,2,1,0,1,2,3,3,3,3,6,10,13,10,6,3,3,3,3,3,3,3,6,10,13,11,8,6,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 
-class HourlyEntity extends Equatable{
-  const HourlyEntity({
+class HourlyListsEntity extends Equatable{
+  const HourlyListsEntity({
       this.time, 
       this.temperature2m, 
       this.precipitationProbability,});
@@ -148,6 +185,24 @@ class HourlyEntity extends Equatable{
 
 }
 
+class HourlyEntity extends Equatable{
+  const HourlyEntity({
+    this.time,
+    this.temperature2m,
+    this.precipitationProbability,});
+
+  final String? time;
+  final num? temperature2m;
+  final num? precipitationProbability;
+
+
+
+  @override
+  List<Object?> get props => [ time,
+    temperature2m,
+    precipitationProbability,];
+
+}
 /// time : "iso8601"
 /// temperature_2m : "°C"
 /// precipitation_probability : "%"
@@ -169,4 +224,14 @@ class HourlyUnitsEntity extends Equatable{
     temperature2m,
     precipitationProbability,];
 
+}
+
+class DailyHourlyEntity extends Equatable{
+  final DailyEntity dailyEntity;
+  final List<HourlyEntity> hourlyList;
+
+  const DailyHourlyEntity({required this.dailyEntity, required this.hourlyList});
+
+  @override
+  List<Object?> get props => [dailyEntity,hourlyList];
 }

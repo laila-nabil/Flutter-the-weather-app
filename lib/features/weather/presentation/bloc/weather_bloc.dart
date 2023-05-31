@@ -33,10 +33,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                 weatherStatus: WeatherStatus.historyFailure,
                 getWeatherFailure: l)),
                 (r) {
-                  final diffMax = ((state.weather?.daily?.temperature2mMax.tryElementAt(0) ?? 0) -
-                      (state.weather?.daily?.temperature2mMax.tryElementAt(1) ?? 0));
-                  final diffMin = ((state.weather?.daily?.temperature2mMin.tryElementAt(0) ?? 0) -
-                      (state.weather?.daily?.temperature2mMin.tryElementAt(1) ?? 0));
+                  final diffMax = ((state.weather?.dailyList?.temperature2mMax.tryElementAt(0) ?? 0) -
+                      (state.weather?.dailyList?.temperature2mMax.tryElementAt(1) ?? 0));
+                  final diffMin = ((state.weather?.dailyList?.temperature2mMin.tryElementAt(0) ?? 0) -
+                      (state.weather?.dailyList?.temperature2mMin.tryElementAt(1) ?? 0));
                   final diffDay = (diffMax > 0) == true
                       ? "warmer"
                       : "colder";

@@ -13,14 +13,14 @@ void main() {
           HistoryWeatherModel.fromJson(fixtureJson("history_weather_1.json"))
         ]);
     widgetTester.printToConsole(
-        "historyListWeather ${weatherState.historyListWeather.tryFirst?.hourly?.length}");
+        "historyListWeather ${weatherState.historyListWeather.tryFirst?.hourlyList?.length}");
     int i = 0;
-    weatherState.historyListWeather.tryFirst?.hourly?.forEach((e) {
+    weatherState.historyListWeather.tryFirst?.hourlyList?.forEach((e) {
       widgetTester.printToConsole(
             "$i: dt ${e.dt}, ${e.date(10800)}");
       i++;
     });
     widgetTester.printToConsole(
-        "historyListWeather ${weatherState.historyListWeather.tryFirst?.hourly}");
+        "historyListWeather ${weatherState.historyListWeather.tryFirst?.hourlyList}");
   });
 }

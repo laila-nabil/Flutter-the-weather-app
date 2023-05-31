@@ -260,7 +260,7 @@ class HomeLoadedContent extends StatelessWidget {
     printDebug("todayIndex $todayIndex");
     final weatherTodayWidget = WeatherTodayWidget(
       weatherToday_: weatherBloc
-          .state.weather?.daily.tryFirst,
+          .state.weather?.dailyList.tryFirst,
       weatherToday: weatherBloc.state.todayOverview,
     );
     final compareWeather = CompareWeather(
