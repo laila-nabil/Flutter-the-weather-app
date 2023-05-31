@@ -1,92 +1,27 @@
 import 'dart:convert';
 
-import 'package:the_weather_app/core/constants.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
+import 'package:the_weather_app/features/weather/data/models/weather_model.dart';
 
 import '../../../../core/Network/network.dart';
 import '../../../../core/utils.dart';
-import '../../domain/use_cases/get_today_weather_overview_use_case.dart';
-import '../models/history_weather_model.dart';
-import '../models/present_future_weather_model.dart';
-import '../models/today_overview_model.dart';
-import '../models/weather_timeline_model_v.dart';
+import '../../domain/use_cases/get_weather_use_case.dart';
+
 
 abstract class WeatherRemoteDataSource {
-
-  Future<WeatherTimelineModelV> getWeatherTimeline(
-      WeatherTimelineParams params);
-
-  Future<TodayOverviewModel> getTodayOverview(GetTodayOverviewParams params);
-
-  Future<PresentFutureWeatherModel> getPresentFutureWeather(
-      GetPresentFutureWeatherParams params);
-
-  Future<HistoryWeatherModel> getHistoryWeather(
-      {required GetHistoryListWeatherParams params,required int dt});
+  Future<WeatherModel> getWeather(GetWeatherParams params);
 }
 
 class WeatherRemoteDatSourceImpl implements WeatherRemoteDataSource {
-
   @override
-  Future<WeatherTimelineModelV> getWeatherTimeline(
-      WeatherTimelineParams params) async {
+  Future<WeatherModel> getWeather(GetWeatherParams params) async {
     String url =
-        'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/'
-        // '${params.latitude},${params.longitude}'
-        '${params.city}'
-        '/${params.startDate}'
-        '/${params.endDate}'
-        '?unitGroup=metric'
-        '&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp'
-        '&key=$API_KEY'
-        '&contentType=json&lang=${params.language}&iconSet=icons2';
-
+        // 'https://api.open-meteo.com/v1/forecast?latitude=${params.lat}&longitude=${params.lon}&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max&past_days=1&timezone=${params.timezone}';
+      'https://api.open-meteo.com/v1/forecast?latitude=${params.lat}&longitude=${params.lon}&hourly=weathercode,temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability,windspeed_10m,winddirection_10m,uv_index,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max&current_weather=true&past_days=1&timezone=${params.timezone}';
     final result = await Network.get(url: url);
 
     final responseBody = json.decode(result.body);
-    final weatherTimeline = WeatherTimelineModelV.fromJson(responseBody);
-    printDebug("weatherTimeline $WeatherTimelineModelV");
-    return weatherTimeline;
-  }
-
-  @override
-  Future<TodayOverviewModel> getTodayOverview(
-      GetTodayOverviewParams params) async {
-    String url = "https://api.openweathermap.org/data/2.5/weather?lat=${params.latitude}&lon=${params.longitude}&appid=$API_KEY&units=metric&lang=${params.language}";
-
-    final result = await Network.get(url: url);
-
-    final responseBody = json.decode(result.body);
-    final todayOverview = TodayOverviewModel.fromJson(responseBody);
-    printDebug("todayOverview $todayOverview");
-    return todayOverview;
-  }
-
-  @override
-  Future<PresentFutureWeatherModel> getPresentFutureWeather(
-      GetPresentFutureWeatherParams params) async {
-    String url =
-        "https://api.openweathermap.org/data/2.5/onecall?lat=${params.latitude}&lon=${params.longitude}&exclude=minutely&lang=${params.language}&units=metric&appid=$API_KEY";
-
-    final response = await Network.get(url: url);
-    final responseBody = json.decode(response.body);
-    final result = PresentFutureWeatherModel.fromJson(responseBody);
-    printDebug("getPresentFutureWeatherModel $result");
-    return result;
-  }
-
-  @override
-  Future<HistoryWeatherModel> getHistoryWeather(
-      {required GetHistoryListWeatherParams params,required int dt}) async {
-    String url =
-        "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${params.latitude}&lon=${params.longitude}&dt=$dt&exclude=current,minutely&units=metric&lang=${params.language}&appid=$API_KEY";
-
-    final response = await Network.get(url: url);
-    final responseBody = json.decode(response.body);
-    final result = HistoryWeatherModel.fromJson(responseBody);
-    printDebug("getHistoryWeather $result");
-    return result;
+    final weather = WeatherModel.fromJson(responseBody);
+    printDebug("weather $WeatherModel");
+    return weather;
   }
 }

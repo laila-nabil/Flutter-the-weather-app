@@ -34,15 +34,15 @@ class WeatherDetailed extends StatelessWidget {
               ? '${params.windSpeed} ${'m_s'.tr()} ${windDirection(int.tryParse(params.windDeg) ?? 0)}'
               : '_',
         ),
-        DashboardWeather(
+        if(params.pressure.isNotEmpty)DashboardWeather(
           isStatusCentered: false,
           title: 'pressure'.tr().toString(),
           status: '${double.tryParse(params.pressure)}  ${'hpa'.tr()}',
         ),
-        DashboardWeather(
+        if(params.clouds.isNotEmpty)DashboardWeather(
           isStatusCentered: false,
           title: 'clouds'.tr().toString(),
-          status: '${double.tryParse(params.clouds)}%',
+          status: '${double.tryParse(params.clouds)} %',
         ),
         DashboardWeather(
           isStatusCentered: false,
