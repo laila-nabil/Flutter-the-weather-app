@@ -6,13 +6,17 @@ class LocationModel extends LocationEntity {
       double? lat,
       String? city,
       String? countryCode,
-      String? country})
+      String? country,
+      String? timezone,
+      })
       : super(
             lon: lon,
             lat: lat,
             city: city,
             country: country,
-            countryCode: countryCode);
+            countryCode: countryCode,
+            timezone: timezone,
+  );
 
   factory LocationModel.fromJson(dynamic json) {
     return LocationModel(
@@ -24,11 +28,22 @@ class LocationModel extends LocationEntity {
   }
 
   factory LocationModel.bigDataCloudFromJson(Map<String, dynamic> json) {
+    String timezone = "Africa/Cairo";
+    if(json['localityInfo']!=null){
+      if(json['localityInfo']["informative"]!=null){
+        timezone =
+            (json['localityInfo']["informative"] as List<Map<String, String>>)
+                .firstWhere((element) => element["description"] == "time zone")
+                .toString();
+      }
+    }
     return LocationModel(
         lon: json['longitude'],
         lat: json['latitude'],
         city: json['city'].toString(),
         country: json['countryName'].toString(),
-        countryCode: json['countryCode'].toString());
+        countryCode: json['countryCode'].toString(),
+        timezone: timezone
+    );
   }
 }
