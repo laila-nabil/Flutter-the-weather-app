@@ -29,7 +29,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         printDebug("result in bloc $result");
         result.fold(
                 (l) => emit(state.copyWith(
-                weatherStatus: WeatherStatus.historyFailure,
+                weatherStatus: WeatherStatus.failure,
                 getWeatherFailure: l)),
                 (r) {
                   final diffMax = ((state.weather?.dailyList?.temperature2mMax.tryElementAt(0) ?? 0) -
@@ -53,7 +53,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
                   printDebug("diffMin $diffMin");
                   printDebug("compare $compare");
                   emit(state.copyWith(
-                weatherStatus: WeatherStatus.historySuccess,
+                weatherStatus: WeatherStatus.success,
                 weather: r,
                     compareTodayYesterday: compare));
                 });

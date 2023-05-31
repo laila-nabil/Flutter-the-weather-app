@@ -3,12 +3,8 @@ part of 'weather_bloc.dart';
 enum WeatherStatus {
   initial,
   loading,
-  todayOverviewSuccess,
-  todayOverviewFailure,
-  presentFutureSuccess,
-  presentFutureFailure,
-  historySuccess,
-  historyFailure
+  success,
+  failure
 }
 
 class WeatherState extends Equatable {

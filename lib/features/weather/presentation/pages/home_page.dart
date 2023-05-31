@@ -123,7 +123,7 @@ class MyHomePage extends StatelessWidget {
                       },
                       child: state.weatherStatus == WeatherStatus.loading
                           ? const LoadingLogo()
-                          : state.weatherStatus == WeatherStatus.historySuccess
+                          : state.weatherStatus == WeatherStatus.success
                               ? HomeLoadedContent(
                                   city: locationBloc
                                           .state.userCurrentLocation?.city ??
