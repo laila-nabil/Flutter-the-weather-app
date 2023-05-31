@@ -4,13 +4,22 @@ import 'package:geolocator/geolocator.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/use_case/use_case.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
+import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
+import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
+import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 
 import '../../../../core/constants.dart';
 import '../../../../main.dart';
 
 class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
+
+  final LocationRepo locationRepo;
+
+  GetCurrentLocationUseCase(this.locationRepo);
+
   @override
   Future<Either<Failure, LocationEntity>> call(NoParams params) async {
+    GetLocationFromCoordinates getLocationFromCoordinates;
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -59,8 +68,9 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
         "isWeb": kIsWeb.toString(),
       });
     }
-    return Right(LocationEntity(
-        lon: position.longitude, lat: position.latitude,));
+
+    return await locationRepo.getLocationFromCoordinates(
+        params: GetLocationFromCoordinatesParams(lat: position.latitude.toString(),lon: position.longitude.toString()));
   }
 
 }

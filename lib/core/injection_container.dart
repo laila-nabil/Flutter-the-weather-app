@@ -34,7 +34,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetWeatherUseCase(sl()));
   sl.registerLazySingleton(() => GetLocationFromCoordinatesUseCase(sl()));
   sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
-  sl.registerLazySingleton(() => GetCurrentLocationUseCase());
+  sl.registerLazySingleton(() => GetCurrentLocationUseCase(sl()));
 
 
 // Repository

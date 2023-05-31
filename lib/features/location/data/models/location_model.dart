@@ -2,12 +2,12 @@ import '../../domain/entities/location.dart';
 
 class LocationModel extends LocationEntity {
   const LocationModel(
-      {double? lon,
-      double? lat,
-      String? city,
-      String? countryCode,
-      String? country,
-      String? timezone,
+      {required double? lon,
+        required double? lat,
+        required String? city,
+        String? countryCode,
+        required String? country,
+        required String? timezone,
       })
       : super(
             lon: lon,
@@ -24,6 +24,7 @@ class LocationModel extends LocationEntity {
       lat: json['properties']['lat'],
       city: json['properties']['city'],
       country: json['properties']['country'],
+      timezone: json['timezone']['name'],
     );
   }
 

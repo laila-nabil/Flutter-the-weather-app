@@ -9,14 +9,14 @@ class LocationEntity extends Equatable {
   final String? countryCode;
   final String? timezone;
 
-  const LocationEntity(
-      {this.lon,
-      this.lat,
-      this.city,
-      this.countryCode,
-      this.country,
-      this.timezone,
-      });
+  const LocationEntity({
+    required this.lon,
+    required this.lat,
+    required this.city,
+    required this.countryCode,
+    required this.country,
+    required this.timezone,
+  });
 
   @override
   List<Object?> get props => [lat, lon, city, country,countryCode,timezone];
