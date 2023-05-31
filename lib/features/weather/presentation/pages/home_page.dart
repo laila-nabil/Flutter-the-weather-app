@@ -235,7 +235,16 @@ class HomeLoadedContent extends StatelessWidget {
               ?.dailyEntity
               .sunset,
           iconPath: "",///TODO
-          currentTemp: "",///TODO
+          currentTemp:
+              (weatherBloc.state.weather?.currentWeatherEntity?.temperature ?? "")
+                  .toString(),
+          windDirection:
+              (weatherBloc.state.weather?.currentWeatherEntity?.windDirection ?? "")
+                  .toString(),
+          windSpeed:
+              (weatherBloc.state.weather?.currentWeatherEntity?.windSpeed ??
+                      "")
+                  .toString(),
           description: "",///TODO
           feelsLike: "",///TODO
           rain: (weatherBloc.state.weather?.dailyHourlyList

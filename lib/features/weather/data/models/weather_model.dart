@@ -55,6 +55,7 @@ class WeatherModel extends WeatherEntity {
     HourlyModel? hourly,
     DailyUnitsModel? dailyUnits,
     DailyModel? daily,
+    CurrentWeatherModel? currentWeatherModel,
   }) : super(
           latitude: latitude,
           longitude: longitude,
@@ -67,7 +68,8 @@ class WeatherModel extends WeatherEntity {
           hourlyList: hourly,
           dailyUnits: dailyUnits,
           dailyList: daily,
-          dailyHourlyList: mapToDailyHourlyEntityList(daily: daily, hourly: hourly)
+          dailyHourlyList: mapToDailyHourlyEntityList(daily: daily, hourly: hourly),
+          currentWeatherEntity: currentWeatherModel
   );
 
   factory WeatherModel.fromJson(dynamic json) {
@@ -88,6 +90,7 @@ class WeatherModel extends WeatherEntity {
           ? DailyUnitsModel.fromJson(json['daily_units'])
           : null,
       daily: json['daily'] != null ? DailyModel.fromJson(json['daily']) : null,
+      currentWeatherModel: CurrentWeatherModel.fromJson(json['current_weather'])
     );
   }
 
@@ -111,6 +114,9 @@ class WeatherModel extends WeatherEntity {
     }
     if (dailyList != null) {
       map['daily'] = (dailyList as DailyModel).toJson();
+    }
+    if (currentWeatherEntity != null) {
+      map['current_weather'] = (currentWeatherEntity as CurrentWeatherModel).toJson();
     }
     return map;
   }
@@ -307,4 +313,49 @@ class HourlyUnitsModel extends HourlyUnitsEntity {
     map['precipitation_probability'] = precipitationProbability;
     return map;
   }
+}
+
+/// temperature : 32.8
+/// windspeed : 5.1
+/// winddirection : 188
+/// weathercode : 0
+/// is_day : 1
+/// time : "2023-05-31T10:00"
+
+class CurrentWeatherModel extends CurrentWeatherEntity {
+  CurrentWeatherModel({
+    num? temperature,
+    num? windspeed,
+    num? winddirection,
+    num? weathercode,
+    num? isDay,
+    String? time,}):super(
+    temperature:temperature,
+    windSpeed: windspeed,
+    windDirection: winddirection,
+    weatherCode: weathercode,time: time
+  );
+
+  factory CurrentWeatherModel.fromJson(dynamic json) {
+    return CurrentWeatherModel(
+        temperature : json['temperature'],
+        windspeed : json['windspeed'],
+    winddirection : json['winddirection'],
+    weathercode : json['weathercode'],
+    isDay : json['is_day'],
+    time : json['time'],
+    );
+  }
+  
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['temperature'] = temperature;
+    map['windspeed'] = windSpeed;
+    map['winddirection'] = windDirection;
+    map['weathercode'] = weatherCode;
+    map['time'] = time;
+    return map;
+  }
+
 }
