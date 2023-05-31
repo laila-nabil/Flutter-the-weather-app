@@ -5,8 +5,7 @@ import 'package:the_weather_app/features/location/data/repositories/location_rep
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
 
 import '../features/language/presentation/bloc/language_bloc.dart';
 import '../features/location/domain/use_cases/autocomplete_search_location_use_case.dart';
@@ -15,8 +14,7 @@ import '../features/location/domain/use_cases/get_location_from_coordinates_use_
 import '../features/weather/data/data_sources/weather_remote_data_source.dart';
 import '../features/weather/data/repositories/weather_repo_impl.dart';
 import '../features/weather/domain/repositories/weather_repo.dart';
-import '../features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
-import '../features/weather/domain/use_cases/get_weather_timeline_use_case.dart';
+
 import '../features/weather/presentation/bloc/weather_bloc.dart';
 
 
@@ -28,18 +26,15 @@ Future<void> init() async {
 // Bloc
 
   sl.registerFactory(() => LanguageBloc());
-  sl.registerFactory(() => WeatherBloc(sl(),sl(),sl()));
+  sl.registerFactory(() => WeatherBloc(sl()));
   sl.registerFactory(() => LocationBloc(sl(),sl(),sl()));
 
 // UseCases
 
-  sl.registerLazySingleton(() => GetWeatherTimelineUseCase(sl()));
+  sl.registerLazySingleton(() => GetWeatherUseCase(sl()));
   sl.registerLazySingleton(() => GetLocationFromCoordinatesUseCase(sl()));
   sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
   sl.registerLazySingleton(() => GetCurrentLocationUseCase());
-  sl.registerLazySingleton(() => GetHistoryListWeatherUseCase(sl()));
-  sl.registerLazySingleton(() => GetPresentFutureWeatherUseCase(sl()));
-  sl.registerLazySingleton(() => GetTodayWeatherOverviewUseCase(sl()));
 
 
 // Repository

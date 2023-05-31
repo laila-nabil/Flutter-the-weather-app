@@ -29,9 +29,13 @@ required HourlyModel? hourly,
           hourlyListsEntity: hourly, index: index));
 
   List<DailyHourlyEntity> result = List.generate(dailyList.length, (index) {
+    var dailyEntity = dailyList.elementAt(index);
     return DailyHourlyEntity(
-      hourlyList: ,
-      dailyEntity: dailyList.elementAt(index)
+        hourlyList: hourlyList
+            .where((element) =>
+                element.time?.contains(dailyEntity.time ?? "") == true)
+            .toList(),
+        dailyEntity: dailyEntity
     );
   });
 
@@ -63,15 +67,8 @@ class WeatherModel extends WeatherEntity {
           hourlyList: hourly,
           dailyUnits: dailyUnits,
           dailyList: daily,
-          daily: List.generate(
-              daily?.time?.length ?? 0,
-              (index) => mapDailyListsEntityToDailyEntity(
-                  dailyListsEntity: daily, index: index)),
-          hourly: List.generate(
-              daily?.time?.length ?? 0,
-              (index) => mapHourlyListsEntityToHourlyEntity(
-                  hourlyListsEntity: hourly, index: index)),
-        );
+          dailyHourlyList: mapToDailyHourlyEntityList(daily: daily, hourly: hourly)
+  );
 
   factory WeatherModel.fromJson(dynamic json) {
     return WeatherModel(

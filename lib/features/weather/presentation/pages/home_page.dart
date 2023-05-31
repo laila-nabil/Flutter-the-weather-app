@@ -7,9 +7,7 @@ import 'package:meta_seo/meta_seo.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_history_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_present_future_weather_use_case.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_today_weather_overview_use_case.dart';
+import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_today.dart';
 
 import '../../../../core/injection_container.dart';
@@ -56,16 +54,11 @@ class MyHomePage extends StatelessWidget {
           printDebug("locationBloc.state ${locationBloc.state}");
           var long = locationBloc.state.userCurrentLocation?.lon ?? "";
           var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
-          var getCurrentLangCode =
-              LocalizationImpl().getCurrentLangCode(context);
-          var unit = UnitGroup.metric;
           getWeatherData(
-              weatherBloc,
-              long.toString(),
-              lat.toString(),
-              locationBloc.state.userCurrentLocation?.city ?? "",
-              getCurrentLangCode,
-              unit);
+              bloc: weatherBloc,
+              longitude: long.toString(),
+              latitude: lat.toString(),
+              timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
         },
         child: BlocBuilder<LocationBloc, LocationState>(
           builder: (context, locationState) {
@@ -73,20 +66,14 @@ class MyHomePage extends StatelessWidget {
             final locationBloc = BlocProvider.of<LocationBloc>(context);
             if (locationState.status == LocationStatus.initial) {
               locationBloc.add(LocationInitialEvent());
-            } else if (locationState.status == LocationStatus.success &&
-                locationState.userCurrentLocation != null) {
-              var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-              var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
-              var getCurrentLangCode =
-                  LocalizationImpl().getCurrentLangCode(context);
-              var unit = UnitGroup.metric;
+            } else if (locationState.status == LocationStatus.success) {
+              var long = locationBloc.state.userCurrentLocation.lon ?? "";
+              var lat = locationBloc.state.userCurrentLocation.lat ?? "";
               getWeatherData(
-                  weatherBloc,
-                  long.toString(),
-                  lat.toString(),
-                  locationBloc.state.userCurrentLocation?.city ?? "",
-                  getCurrentLangCode,
-                  unit);
+                bloc: weatherBloc,
+                longitude: long.toString(),
+                latitude: lat.toString(),
+                timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
             }
             return BlocConsumer<WeatherBloc, WeatherState>(
               listener: (context, state) {},
@@ -94,22 +81,16 @@ class MyHomePage extends StatelessWidget {
                 final bloc = BlocProvider.of<WeatherBloc>(context);
                 final locationBloc = BlocProvider.of<LocationBloc>(context);
                 final languageBloc = BlocProvider.of<LanguageBloc>(context);
-                if (state.weatherStatus == WeatherStatus.initial &&
-                    (locationState).userCurrentLocation != null) {
-                  var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-                  var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
-                  var getCurrentLangCode =
-                      LocalizationImpl().getCurrentLangCode(context);
+                if (state.weatherStatus == WeatherStatus.initial) {
                   languageBloc.add(SelectLanguage(
                       LocalizationImpl().getCurrentLanguagesEnum(context)!));
-                  var unit = UnitGroup.metric;
+                  var long = locationBloc.state.userCurrentLocation.lon ?? "";
+                  var lat = locationBloc.state.userCurrentLocation.lat ?? "";
                   getWeatherData(
-                      bloc,
-                      long.toString(),
-                      lat.toString(),
-                      locationBloc.state.userCurrentLocation?.city ?? "",
-                      getCurrentLangCode,
-                      unit);
+                    bloc: weatherBloc,
+                    longitude: long.toString(),
+                    latitude: lat.toString(),
+                    timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
                 }
 
                 if (state.weatherStatus == WeatherStatus.loading) {
@@ -132,19 +113,13 @@ class MyHomePage extends StatelessWidget {
                     backgroundColor: Theme.of(context).backgroundColor,
                     body: RefreshIndicator(
                       onRefresh: () async {
-                        var long =
-                            locationBloc.state.userCurrentLocation?.lon ?? "";
-                        var lat =
-                            locationBloc.state.userCurrentLocation?.lat ?? "";
-                        var getCurrentLangCode =
-                            LocalizationImpl().getCurrentLangCode(context);
-                        var unit = UnitGroup.metric;
-                        bloc.add(GetTodayOverview(
-                            params: GetTodayOverviewParams(
-                                longitude: long.toString(),
-                                latitude: lat.toString(),
-                                language: getCurrentLangCode,
-                                unit: unit)));
+                        var long = locationBloc.state.userCurrentLocation.lon ?? "";
+                        var lat = locationBloc.state.userCurrentLocation.lat ?? "";
+                        getWeatherData(
+                          bloc: weatherBloc,
+                          longitude: long.toString(),
+                          latitude: lat.toString(),
+                          timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
                       },
                       child: state.weatherStatus == WeatherStatus.loading
                           ? const LoadingLogo()
@@ -169,22 +144,13 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  void getWeatherData(WeatherBloc bloc, String longitude, String latitude,
-      String city, String getCurrentLangCode, UnitGroup unit) {
+  void getWeatherData({required WeatherBloc bloc, required String longitude, required String latitude,
+     required String timezone}) {
     bloc.add(GetWeatherEvent(
-        getPresentFutureWeatherParams: GetPresentFutureWeatherParams(
-            getCurrentLangCode,
-            latitude: latitude,
-            longitude: longitude),
-        getWeatherParams: GetHistoryListWeatherParams(
-            latitude: latitude,
-            longitude: longitude,
-            language: getCurrentLangCode,
-            numOfDays: bloc.numOfHistoryDays),
-        getTodayOverviewParams: GetTodayOverviewParams(
-            latitude: latitude,
-            longitude: longitude,
-            language: getCurrentLangCode)));
+        getWeatherParams: GetWeatherParams(
+            lat: latitude,
+            lon: longitude,
+        timezone: timezone),));
   }
 }
 
@@ -259,9 +225,37 @@ class HomeLoadedContent extends StatelessWidget {
     }
     printDebug("todayIndex $todayIndex");
     final weatherTodayWidget = WeatherTodayWidget(
-      weatherToday_: weatherBloc
-          .state.weather?.dailyList.tryFirst,
-      weatherToday: weatherBloc.state.todayOverview,
+      weatherTodayDetails: WeatherTodayDetails(
+          sunrise: weatherBloc.state.weather?.dailyHourlyList
+              .tryElementAt(0)
+              ?.dailyEntity
+              .sunrise,
+          sunset: weatherBloc.state.weather?.dailyHourlyList
+              .tryElementAt(0)
+              ?.dailyEntity
+              .sunset,
+          iconPath: "",///TODO
+          currentTemp: "",///TODO
+          description: "",///TODO
+          feelsLike: "",///TODO
+          rain: (weatherBloc.state.weather?.dailyHourlyList
+                      .tryElementAt(0)
+                      ?.dailyEntity
+                      .precipitationProbabilityMax ??
+                  "")
+              .toString(),
+          todayMax: (weatherBloc.state.weather?.dailyHourlyList
+                      .tryElementAt(0)
+                      ?.dailyEntity
+                      .temperature2mMax ??
+                  "")
+              .toString(),
+          todayMin: (weatherBloc.state.weather?.dailyHourlyList
+                      .tryElementAt(0)
+                      ?.dailyEntity
+                      .temperature2mMin ??
+                  "")
+              .toString()),
     );
     final compareWeather = CompareWeather(
         compareWeather:

@@ -38,96 +38,46 @@ class WeatherState extends Equatable {
 
   List<DayWeatherParams> get days{
     List<DayWeatherParams> weatherUiData = List.generate(
-        (weather?.dailyList?.time?.length ?? 0),
+        (weather?.dailyHourlyList?.length ?? 0),
         (index) {
-          var date = weather?.dailyList?.time
-          .tryElementAt(index) ??
-          DateTime.now();
-      var hourlyList = weather?.hourly
-          ?.where((element) =>
-              element.time.contains(other))
-          .toList();
+      var day = weather?.dailyHourlyList.tryElementAt(index);
       return DayWeatherParams(
-            iconPath: weather?.dailyList
-                    .tryElementAt(index)
-                    ?.weather
-                    .tryFirst
-                    ?.iconPath(Config.isImageNetwork) ??
-                "",
-            currentTemp: weather?.current?.temp.toString() ?? "",
-            minTemp: weather?.dailyList
-                    .tryElementAt(index)
-                    ?.temp
-                    ?.min
-                    .toString() ??
-                "",
-            maxTemp: weather?.dailyList
-                    .tryElementAt(index)
-                    ?.temp
-                    ?.max
-                    .toString() ??
-                "",
+            iconPath: "",///TODO
+            currentTemp: "",
+            minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
+            maxTemp: (day?.dailyEntity.temperature2mMin
+                    ?? "" ).toString(),
             rain: "",
-            windSpeed: weather?.dailyList
-                    .tryElementAt(index)
-                    ?.windSpeed
-                    ?.toString() ??
-                "",
-            windDeg: weather?.dailyList
-                    .tryElementAt(index)
-                    ?.windDeg
-                    ?.toString() ??
-                "",
-            pressure: weather?.dailyList.tryElementAt(index)?.pressure?.toString() ?? "",
-            clouds: weather?.dailyList.tryElementAt(index)?.clouds?.toString() ?? "",
-            uvi: weather?.dailyList.tryElementAt(index)?.uvi?.toString() ?? "",
-            humidity: weather?.dailyList.tryElementAt(index)?.humidity?.toString() ?? "",
-            visibility: "",
-            detailedDescription: weather!.dailyList.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-            feelsLike: "",
+            windSpeed:"",///TODO
+            windDeg: "",///TODO
+            pressure: "",///TODO
+            clouds:"",///TODO
+            uvi: "",///TODO
+            humidity: "",///TODO
+            visibility:"",///TODO
+            detailedDescription: "",///TODO
+            feelsLike: "",///TODO
             isImageNetwork: Config.isImageNetwork,
-            date: date,
+            date: DateTime.parse(day?.dailyEntity.time ?? ""),
           details: List.generate(
-              hourlyList?.length ?? 0,
+              day?.hourlyList.length ?? 0,
               (index) => DayWeatherParams(
-                    iconPath: hourlyList
-                    .tryElementAt(index)
-                    ?.weather
-                    .tryFirst
-                    ?.iconPath(Config.isImageNetwork) ??
-                    "",
-                currentTemp: hourlyList
-                    .tryElementAt(index)?.temp.toString() ?? "",
+                    iconPath: "",//TODO
+                currentTemp: (day?.hourlyList.elementAt(index).temperature2m ?? "").toString(),
                 minTemp:"",
                 maxTemp:"",
-                rain: hourlyList
-                    .tryElementAt(index)?.pop
-                    ?.toString() ??
-                    "",
-                windSpeed: hourlyList
-                    .tryElementAt(index)
-                    ?.windSpeed
-                    ?.toString() ??
-                    "",
-                windDeg: hourlyList
-                    .tryElementAt(index)
-                    ?.windDeg
-                    ?.toString() ??
-                    "",
-                pressure: hourlyList.tryElementAt(index)?.pressure?.toString() ?? "",
-                clouds: hourlyList.tryElementAt(index)?.clouds?.toString() ?? "",
-                uvi: hourlyList.tryElementAt(index)?.uvi?.toString() ?? "",
-                humidity: hourlyList.tryElementAt(index)?.humidity?.toString() ?? "",
-                visibility:  hourlyList.tryElementAt(index)?.visibility?.toString() ?? "",
-                detailedDescription: hourlyList.tryElementAt(index)?.weather.tryFirst?.description.toString() ?? "",
-                feelsLike: hourlyList.tryElementAt(index)?.feelsLike.toString() ?? "",
+                rain: (day?.hourlyList.elementAt(index).precipitationProbability ?? "").toString(),
+                windSpeed:"",//TODO
+                windDeg: "",//TODO
+                pressure: "",//TODO
+                clouds: "",//TODO
+                uvi: "",//TODO
+                humidity: "",//TODO
+                visibility:  "",//TODO
+                detailedDescription: "",//TODO
+                feelsLike: "",//TODO
                 isImageNetwork: Config.isImageNetwork,
-                date: hourlyList
-                    .tryElementAt(index)?.date(
-                            weather?.actualTimezoneOffset
-                                    ?.toInt() ??
-                                0) ??
-                        DateTime.now(),
+                date: DateTime.parse(day?.hourlyList.elementAt(index).time ?? ""),
                   ))
         );
         });

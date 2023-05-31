@@ -19,7 +19,6 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetWeatherUseCase getWeatherUseCase;
-  final int numOfHistoryDays = 4;//max days back is 4
   WeatherBloc(this.getWeatherUseCase,)
       : super(WeatherState(weatherStatus: WeatherStatus.initial)) {
     on<WeatherEvent>((event, emit) async {

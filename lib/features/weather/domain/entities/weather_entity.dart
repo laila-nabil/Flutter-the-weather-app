@@ -27,8 +27,6 @@ class WeatherEntity extends Equatable{
       this.hourlyList,
       this.dailyUnits,
       this.dailyList,
-      this.daily,
-      this.hourly,
       this.dailyHourlyList
   });
 
@@ -41,10 +39,8 @@ class WeatherEntity extends Equatable{
   final num? elevation;
   final HourlyUnitsEntity? hourlyUnits;
   final HourlyListsEntity? hourlyList;
-  final List<HourlyEntity>? hourly;
   final DailyUnitsEntity? dailyUnits;
   final DailyListsEntity? dailyList;
-  final List<DailyEntity>? daily;
   final List<DailyHourlyEntity>? dailyHourlyList;
 
   @override
@@ -57,10 +53,8 @@ class WeatherEntity extends Equatable{
     elevation,
     hourlyUnits,
     hourlyList,
-    hourly,
     dailyUnits,
     dailyList,
-    daily,
   ];
 
 }
