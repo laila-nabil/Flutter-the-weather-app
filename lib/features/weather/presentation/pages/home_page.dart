@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -123,7 +121,6 @@ class MyHomePage extends StatelessWidget {
                 final mediaQuery = MediaQuery.of(context);
                 final screenSize = mediaQuery.size;
                 final isPortrait = screenSize.width < screenSize.height;
-                const minimalView = true;
                 return SafeArea(
                   bottom: true,
                   left: true,
@@ -159,8 +156,7 @@ class MyHomePage extends StatelessWidget {
                                   locationBloc: locationBloc,
                                   weatherBloc: bloc,
                                   screenSize: screenSize,
-                                  isPortrait: isPortrait,
-                                  minimalView: minimalView)
+                                  isPortrait: isPortrait,)
                               : Container(),
                     ) ,
                   ),
@@ -240,7 +236,6 @@ class HomeLoadedContent extends StatelessWidget {
     Key? key,
     required this.screenSize,
     required this.isPortrait,
-    required this.minimalView,
     required this.weatherBloc,
     required this.locationBloc,
     required this.city,
@@ -248,7 +243,6 @@ class HomeLoadedContent extends StatelessWidget {
 
   final Size screenSize;
   final bool isPortrait;
-  final bool minimalView;
   final WeatherBloc weatherBloc;
   final String city;
   final LocationBloc locationBloc;
@@ -264,6 +258,14 @@ class HomeLoadedContent extends StatelessWidget {
       todayIndex = 3;
     }
     printDebug("todayIndex $todayIndex");
+    final weatherTodayWidget = WeatherTodayWidget(
+      weatherToday_: weatherBloc
+          .state.presentFutureWeather?.daily.tryFirst,
+      weatherToday: weatherBloc.state.todayOverview,
+    );
+    final compareWeather = CompareWeather(
+        compareWeather:
+        weatherBloc.state.compareTodayYesterday ?? "");
     return SizedBox(
       height: screenSize.height,
       child: Column(
@@ -275,7 +277,7 @@ class HomeLoadedContent extends StatelessWidget {
                 city: city,
                 locationBloc: locationBloc,
               )),
-          if (isPortrait && minimalView)
+          if (isPortrait)
             Expanded(
                 flex: 9,
                 child: LayoutBuilder(builder: (ctx, constraints) {
@@ -283,14 +285,8 @@ class HomeLoadedContent extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CarouselSlider(
                         items: [
-                          WeatherTodayWidget(
-                            weatherToday_: weatherBloc
-                                .state.presentFutureWeather?.daily.tryFirst,
-                            weatherToday: weatherBloc.state.todayOverview,
-                          ),
-                          CompareWeather(
-                              compareWeather:
-                                  weatherBloc.state.compareTodayYesterday ?? "")
+                          weatherTodayWidget,
+                          compareWeather
                         ],
                         options: CarouselOptions(
                           height: constraints.maxHeight - 0.1,
@@ -300,25 +296,8 @@ class HomeLoadedContent extends StatelessWidget {
                           viewportFraction: 1,
                         )),
                   );
-                })),
-          if (isPortrait && !minimalView)
-            Expanded(
-                flex: 7,
-                child: WeatherTodayWidget(
-                  weatherToday_:
-                      weatherBloc.state.presentFutureWeather!.daily.tryFirst!,
-                  weatherToday: weatherBloc.state.todayOverview!,
-                )),
-          if (isPortrait && !minimalView)
-            Expanded(
-              flex: 2,
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CompareWeather(
-                      compareWeather:
-                          weatherBloc.state.compareTodayYesterday ?? "")),
-            ),
-          if (!isPortrait)
+                }))
+          else
             Expanded(
               flex: 7,
               child: Padding(
@@ -328,16 +307,10 @@ class HomeLoadedContent extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 6,
-                        child: WeatherTodayWidget(
-                          weatherToday: weatherBloc.state.todayOverview,
-                          weatherToday_: weatherBloc
-                              .state.presentFutureWeather?.daily.tryFirst,
-                        )),
+                        child: weatherTodayWidget),
                     Expanded(
                       flex: 6,
-                      child: CompareWeather(
-                          compareWeather:
-                              weatherBloc.state.compareTodayYesterday ?? ""),
+                      child: compareWeather,
                     ),
                   ],
                 ),
