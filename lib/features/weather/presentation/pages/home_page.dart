@@ -245,8 +245,19 @@ class HomeLoadedContent extends StatelessWidget {
               (weatherBloc.state.weather?.currentWeatherEntity?.windSpeed ??
                       "")
                   .toString(),
-          description: "",///TODO
-          feelsLike: "",///TODO
+          description: "",
+          feelsLike: (weatherBloc.state.weather?.dailyHourlyList
+                      ?.elementAt(1)
+                      .hourlyList
+                      .firstWhere((element) {
+                        printDebug("feels like * ${element.time}");
+                        printDebug("feels like - ${weatherBloc.state.weather?.currentWeatherEntity?.time}");
+                        return element.time ==
+                          weatherBloc.state.weather?.currentWeatherEntity?.time;
+                      })
+                      .temperatureFeelsLike ??
+                  "")
+              .toString(),
           rain: (weatherBloc.state.weather?.dailyHourlyList
                       .tryElementAt(0)
                       ?.dailyEntity

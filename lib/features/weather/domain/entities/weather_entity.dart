@@ -170,17 +170,20 @@ class HourlyListsEntity extends Equatable {
     this.time,
     this.temperature2m,
     this.precipitationProbability,
+    this.temperatureFeelsLike,
   });
 
   final List<String>? time;
   final List<num>? temperature2m;
   final List<num>? precipitationProbability;
+  final List<num>? temperatureFeelsLike;
 
   @override
   List<Object?> get props => [
         time,
         temperature2m,
         precipitationProbability,
+        temperatureFeelsLike
       ];
 }
 
@@ -188,18 +191,21 @@ class HourlyEntity extends Equatable {
   const HourlyEntity({
     this.time,
     this.temperature2m,
+    this.temperatureFeelsLike,
     this.precipitationProbability,
   });
 
   final String? time;
   final num? temperature2m;
   final num? precipitationProbability;
+  final num? temperatureFeelsLike;
 
   @override
   List<Object?> get props => [
         time,
         temperature2m,
         precipitationProbability,
+        temperatureFeelsLike
       ];
 }
 

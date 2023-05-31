@@ -240,11 +240,14 @@ class DailyUnitsModel extends DailyUnitsEntity {
 /// precipitation_probability : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,6,5,4,3,5,8,10,7,3,0,1,2,3,5,8,10,9,7,6,5,4,3,2,1,0,1,2,3,3,3,3,6,10,13,10,6,3,3,3,3,3,3,3,6,10,13,11,8,6,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 HourlyEntity mapHourlyListsEntityToHourlyEntity(
-    {required HourlyModel? hourlyListsEntity, required int index}){
+    {required HourlyModel? hourlyListsEntity, required int index}) {
   return HourlyEntity(
     time: hourlyListsEntity?.time.tryElementAt(index),
-    precipitationProbability: hourlyListsEntity?.precipitationProbability.tryElementAt(index),
-    temperature2m:  hourlyListsEntity?.temperature2m.tryElementAt(index),
+    precipitationProbability:
+        hourlyListsEntity?.precipitationProbability.tryElementAt(index),
+    temperature2m: hourlyListsEntity?.temperature2m.tryElementAt(index),
+    temperatureFeelsLike:
+        hourlyListsEntity?.temperatureFeelsLike.tryElementAt(index),
   );
 }
 
@@ -253,10 +256,12 @@ class HourlyModel extends HourlyListsEntity {
     List<String>? time,
     List<num>? temperature2m,
     List<num>? precipitationProbability,
+    List<num>? temperatureFeelsLike,
   }):super(
     time: time,
     temperature2m: temperature2m,
-    precipitationProbability: precipitationProbability
+    precipitationProbability: precipitationProbability,
+    temperatureFeelsLike: temperatureFeelsLike
   );
 
   factory HourlyModel.fromJson(dynamic json) {
@@ -265,6 +270,9 @@ class HourlyModel extends HourlyListsEntity {
         temperature2m : json['temperature_2m'] != null
         ? json['temperature_2m'].cast<num>()
         : [],
+      temperatureFeelsLike: json['apparent_temperature'] != null
+          ? json['apparent_temperature'].cast<num>()
+          : [],
     precipitationProbability : json['precipitation_probability'] != null
     ? json['precipitation_probability'].cast<num>()
         : [],
