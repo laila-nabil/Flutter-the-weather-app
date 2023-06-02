@@ -16,7 +16,7 @@ The project is implemented based on [Clean Architecture mothod by reso coder](ht
 ## Use
 
 - Web version: <https://flutter-weather-app.web.app/>
-- Google play : soon
+- Google play : [Android app](https://play.google.com/store/apps/details?id=com.lailanabil.the_weather_app)
 
 ## Packages used
 
