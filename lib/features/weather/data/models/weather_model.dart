@@ -31,8 +31,6 @@ required HourlyModel? hourly,
           hourlyListsEntity: hourly, index: (i + ((index?? 0)*24)).toInt()));
   List<DailyHourlyEntity> result = List.generate(dailyList.length, (index) {
     var dailyEntity = dailyList.elementAt(index);
-    printDebug("mapToDailyHourlyEntityList $dailyEntity");
-    printDebug("mapToDailyHourlyEntityList ${hourlyList(index).length} ${hourlyList(index)}");
     return DailyHourlyEntity(
         hourlyList: hourlyList(index),
         dailyEntity: dailyEntity

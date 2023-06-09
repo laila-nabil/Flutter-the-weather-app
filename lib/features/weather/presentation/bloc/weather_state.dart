@@ -38,8 +38,6 @@ class WeatherState extends Equatable {
         (weather?.dailyHourlyList?.length ?? 0),
         (index) {
       var day = weather?.dailyHourlyList.tryElementAt(index);
-      printDebug("** day is ${day?.dailyEntity}");
-      printDebug("** day is ${day?.hourlyList.length} ${day?.hourlyList}");
       return DayWeatherParams(
             iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, true),
             currentTemp: "",

@@ -11,8 +11,6 @@ import 'compact_day_weather.dart';
 int todayIndex(List<DayWeatherParams> days){
   int todayIndex =
   days.indexWhere((element) {
-    printDebug("element.date ${element.date}");
-    printDebug("element.date ${element.date.isSameDay(DateTime.now())}");
     return element.date.isSameDay(DateTime.now());
   });
   if(todayIndex < 0){

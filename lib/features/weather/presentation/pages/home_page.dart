@@ -216,8 +216,6 @@ class HomeLoadedContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int todayIndex = weatherBloc.state.days.indexWhere((element) {
-      printDebug("element.date ${element.date}");
-      printDebug("element.date ${element.date.isSameDay(DateTime.now())}");
       return element.date.isSameDay(DateTime.now());
     });
     if (todayIndex < 0) {
@@ -252,8 +250,6 @@ class HomeLoadedContent extends StatelessWidget {
                       ?.elementAt(1)
                       .hourlyList
                       .firstWhere((element) {
-                        printDebug("feels like * ${element.time}");
-                        printDebug("feels like - ${weatherBloc.state.weather?.currentWeatherEntity?.time}");
                         return element.time ==
                           weatherBloc.state.weather?.currentWeatherEntity?.time;
                       })
