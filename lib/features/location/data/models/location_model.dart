@@ -26,7 +26,7 @@ class LocationModel extends LocationEntity {
       lat: json['properties']['lat'],
       city: json['properties']['city'],
       country: json['properties']['country'],
-      timezone: json['timezone']['name'],
+      timezone: json['properties']['timezone']['name'],
     );
   }
 
