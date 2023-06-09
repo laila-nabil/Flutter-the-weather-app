@@ -58,8 +58,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
               emit(LocationState(
                 status: LocationStatus.success,
                 userCurrentLocation: state.userCurrentLocation,
-                autoCompleteList: autoCompleteList
-              ));
+              autoCompleteList: autoCompleteList
+                  .where((element) =>
+                      element.city?.isNotEmpty == true &&
+                      element.country?.isNotEmpty == true)
+                  .toList()));
         });
       } else if (event is GetLocationFromCoordinates) {
         await _getLocationFromCoordinates(emit, event,event.afterSuccess);
