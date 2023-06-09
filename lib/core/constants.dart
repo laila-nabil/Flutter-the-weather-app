@@ -1,3 +1,3 @@
-const API_KEY = String.fromEnvironment("api_key");
+import 'package:flutter/foundation.dart';
 
-bool enableAnalytics = true;
+bool enableAnalytics = kReleaseMode;
