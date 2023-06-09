@@ -41,7 +41,7 @@ class WeatherState extends Equatable {
       printDebug("** day is ${day?.dailyEntity}");
       printDebug("** day is ${day?.hourlyList.length} ${day?.hourlyList}");
       return DayWeatherParams(
-            iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, false),
+            iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, true),
             currentTemp: "",
             minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
             maxTemp: (day?.dailyEntity.temperature2mMax
