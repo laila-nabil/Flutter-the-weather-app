@@ -36,27 +36,9 @@ class WeatherState extends Equatable {
     printDebug("weather?.dailyHourlyList?.length ${weather?.dailyHourlyList?.length}");
     List<DayWeatherParams> weatherUiData = List.generate(
         (weather?.dailyHourlyList?.length ?? 0),
-        (index) {
-      var day = weather?.dailyHourlyList.tryElementAt(index);
-      return DayWeatherParams(
-            iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, true),
-            currentTemp: "",
-            minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
-            maxTemp: (day?.dailyEntity.temperature2mMax
-                    ?? "" ).toString(),
-            rain: "",
-            windSpeed:"",
-            windDeg: "",
-            pressure: "",
-            clouds:"",
-            uvi: "",
-            humidity: "",
-            visibility:"",
-            detailedDescription: "",
-            feelsLike: "",
-            isImageNetwork: Config.isImageNetwork,
-            date: DateTime.parse(day?.dailyEntity.time ?? ""),
-          details: List.generate(
+        (dayIndex) {
+      var day = weather?.dailyHourlyList.tryElementAt(dayIndex);
+      var dayDetails = List.generate(
               day?.hourlyList.length ?? 0,
               (index) => DayWeatherParams(
                     iconPath: AppAssets.getIconPath(
@@ -77,8 +59,36 @@ class WeatherState extends Equatable {
                 feelsLike: "",//TODO
                 isImageNetwork: Config.isImageNetwork,
                 date: DateTime.parse(day?.hourlyList.elementAt(index).time ?? ""),
-                  ))
-        );
+                  ));
+      return DayWeatherParams(
+            iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, true),
+            currentTemp: "",
+            minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
+            maxTemp: (day?.dailyEntity.temperature2mMax
+                    ?? "" ).toString(),
+            rain: "",
+            windSpeed:"",
+            windDeg: "",
+            pressure: "",
+            clouds:"",
+            uvi: "",
+            humidity: "",
+            visibility:"",
+            detailedDescription: "",
+            feelsLike: "",
+            isImageNetwork: Config.isImageNetwork,
+            date: DateTime.parse(day?.dailyEntity.time ?? ""),
+          details: dayIndex == 1
+              ? dayDetails
+                  .where((element) {
+                  var currentHour = DateTime.now().toUtc().add(
+                      Duration(
+                          seconds: weather?.utcOffsetSeconds?.toInt() ?? 0));
+                  currentHour = DateTime(currentHour.year,currentHour.month,currentHour.day,currentHour.hour);
+                  return !element.date.isBefore(currentHour);
+                })
+                  .toList()
+              : dayDetails);
         });
 
     return weatherUiData;
