@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/error/failures.dart';
@@ -5,7 +6,9 @@ import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_current_location_use_case.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 
+import '../../../../core/constants.dart';
 import '../../../../core/use_case/use_case.dart';
+import '../../../../main.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/use_cases/autocomplete_search_location_use_case.dart';
 
@@ -30,7 +33,17 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         emit(const LocationState(status: LocationStatus.loading));
         final result = await _getCurrentLocationUseCase(NoParams());
         printDebug("_getCurrentLocationUseCase $result");
-        result.fold((failure) => emit(LocationState(status: LocationStatus.failure,failure: failure)),
+        result.fold((failure) {
+          if(enableAnalytics){
+            analytics.logEvent(
+                name: "error in location bloc", parameters: {
+              "release": kReleaseMode.toString(),
+              "isWeb": kIsWeb.toString(),
+              "error": failure.message.toString(),
+            });
+          }
+          emit(LocationState(status: LocationStatus.failure,failure: failure));
+        },
             (success) {
           emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
           add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
@@ -53,7 +66,17 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         ));
         final result = await _autoCompleteSearchLocationUseCase(event.input);
         printDebug("result use case $result");
-        result.fold((failure) => emit(LocationState(status: LocationStatus.failure,failure: failure)),
+        result.fold((failure) {
+          if(enableAnalytics){
+            analytics.logEvent(
+                name: "error in location bloc", parameters: {
+              "release": kReleaseMode.toString(),
+              "isWeb": kIsWeb.toString(),
+              "error": failure.message.toString(),
+            });
+          }
+          emit(LocationState(status: LocationStatus.failure,failure: failure));
+        },
             (autoCompleteList) {
               emit(LocationState(
                 status: LocationStatus.success,
@@ -79,7 +102,17 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     ));
     final result = await _getLocationFromCoordinatesUseCase(event.params);
     printDebug("_getLocationFromCoordinatesUseCase $result");
-    result.fold((failure) => emit(const LocationState(status: LocationStatus.failure)),
+    result.fold((failure) {
+      if(enableAnalytics){
+        analytics.logEvent(
+            name: "error in location bloc", parameters: {
+          "release": kReleaseMode.toString(),
+          "isWeb": kIsWeb.toString(),
+          "error": failure.message.toString(),
+        });
+      }
+      emit(LocationState(status: LocationStatus.failure,failure: failure));
+    },
         (success) {
           emit(LocationState(
               status: LocationStatus.success,

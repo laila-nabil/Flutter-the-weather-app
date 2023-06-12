@@ -18,6 +18,14 @@ class WeatherState extends Equatable {
         WeatherEntity? weather,
         Failure? getWeatherFailure,
       String? compareTodayYesterday}) {
+    if(weatherStatus == WeatherStatus.failure && enableAnalytics){
+      analytics.logEvent(
+          name: "error in weather bloc", parameters: {
+        "release": kReleaseMode.toString(),
+        "isWeb": kIsWeb.toString(),
+        "error": getWeatherFailure?.message.toString(),
+      });
+    }
     return WeatherState(
         weatherStatus: weatherStatus,
         getWeatherFailure: getWeatherFailure ?? this.getWeatherFailure,

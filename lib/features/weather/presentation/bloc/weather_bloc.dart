@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_weather_app/core/config.dart';
+import 'package:the_weather_app/core/constants.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
@@ -11,6 +13,7 @@ import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/compact_day_weather.dart';
+import 'package:the_weather_app/main.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/unix.dart';
