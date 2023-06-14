@@ -13,8 +13,7 @@ abstract class LocationLocalDataSource {
   Future<Unit> saveLocation(LocationModel location);
 }
 
-const CACHED_LOCATION = "CACHED_WEATHER_TIMELINE";
-// const CACHED_CITY = "CACHED_CITY";
+const CACHED_LOCATION = "CACHED_LOCATION";
 
 class LocationLocalDataSourceImpl implements LocationLocalDataSource {
   final SharedPreferences sharedPreferences;
