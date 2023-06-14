@@ -32,7 +32,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
     final body = json.decode(response.body);
     final List listResults = body['features'];
     for (var element in listResults) {
-      result.add(LocationModel.fromJson(element));
+      result.add(LocationModel.fromJsonGeoapify(element));
 
     }
     printDebug("result $result");

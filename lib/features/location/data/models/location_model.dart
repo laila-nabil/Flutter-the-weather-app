@@ -20,7 +20,27 @@ class LocationModel extends LocationEntity {
             timezone: timezone,
   );
 
-  factory LocationModel.fromJson(dynamic json) {
+  factory LocationModel.fromJsonLocal(dynamic json) {
+    return LocationModel(
+      lon: json['lon'],
+      lat: json['lat'],
+      city: json['city'],
+      country: json['country'],
+      timezone: json['timezone'],
+    );
+  }
+
+  Map<String, dynamic> toJsonLocal() {
+    final map = <String, dynamic>{};
+    map['lon'] = lon;
+    map['lat'] = lat;
+    map['city'] = city;
+    map['country'] = country;
+    map['timezone'] = timezone;
+    return map;
+  }
+
+  factory LocationModel.fromJsonGeoapify(dynamic json) {
     return LocationModel(
       lon: json['properties']['lon'],
       lat: json['properties']['lat'],
