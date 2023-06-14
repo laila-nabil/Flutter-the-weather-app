@@ -9,7 +9,7 @@ import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_us
 import '../../../../core/error/exceptions.dart';
 
 abstract class LocationLocalDataSource {
-  Future<LocationModel> getLocation(GetWeatherParams params);
+  Future<LocationModel> getLocation();
   Future<Unit> saveLocation(LocationModel location);
 }
 
@@ -22,7 +22,7 @@ class LocationLocalDataSourceImpl implements LocationLocalDataSource {
   LocationLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<LocationModel> getLocation(GetWeatherParams params) async {
+  Future<LocationModel> getLocation() async {
     final jsonString = sharedPreferences.getString(CACHED_LOCATION);
     if (jsonString != null) {
       List decodeJsonData = json.decode(jsonString);

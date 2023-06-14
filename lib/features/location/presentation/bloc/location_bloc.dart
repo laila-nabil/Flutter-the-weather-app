@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/utils.dart';
+import 'package:the_weather_app/features/location/data/models/location_model.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_current_location_use_case.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 
@@ -11,6 +12,8 @@ import '../../../../core/use_case/use_case.dart';
 import '../../../../main.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/use_cases/autocomplete_search_location_use_case.dart';
+import '../../domain/use_cases/get_save_current_location_use_case.dart';
+import '../../domain/use_cases/save_current_location_use_case.dart';
 
 part 'location_event.dart';
 part 'location_state.dart';
@@ -19,16 +22,23 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final AutoCompleteSearchLocationUseCase _autoCompleteSearchLocationUseCase;
   final GetLocationFromCoordinatesUseCase _getLocationFromCoordinatesUseCase;
   final GetCurrentLocationUseCase _getCurrentLocationUseCase;
-
+  final SaveCurrentLocationUseCase _saveCurrentLocationUseCase;
+  final GetSavedCurrentLocationUseCase _getSavedCurrentLocationUseCase;
   // LocationEntity? location = LocationEntity(lat: '30.0444', lon: '31.2357');
 
   LocationBloc(this._autoCompleteSearchLocationUseCase,
-      this._getLocationFromCoordinatesUseCase, this._getCurrentLocationUseCase)
-      : super(LocationState(
+      this._getLocationFromCoordinatesUseCase,
+      this._getCurrentLocationUseCase,
+      this._saveCurrentLocationUseCase, this._getSavedCurrentLocationUseCase)
+      : super(const LocationState(
             status: LocationStatus.initial,)) {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
-        add(const GetCurrentLocation());
+        final result = await _getSavedCurrentLocationUseCase(NoParams());
+        result.fold(
+            (l) => add(const GetCurrentLocation()),
+            (r) => emit(LocationState(
+                status: LocationStatus.success, userCurrentLocation: r)));
       } else if (event is GetCurrentLocation) {
         emit(const LocationState(status: LocationStatus.loading));
         final result = await _getCurrentLocationUseCase(NoParams());
@@ -54,10 +64,12 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         if (event.location == null) {
           add(GetCurrentLocation(afterSuccess: event.afterSuccess));
         }else {
+          var userCurrentLocation = event.location ?? defaultLocation;
           emit(LocationState(
             status: LocationStatus.success,
-            userCurrentLocation: event.location ?? defaultLocation
+            userCurrentLocation: userCurrentLocation
           ));
+          await _saveCurrentLocationUseCase(userCurrentLocation as LocationModel);
         }
       } else if (event is AutoCompleteSearchLocation) {
         emit(LocationState(
@@ -102,7 +114,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     ));
     final result = await _getLocationFromCoordinatesUseCase(event.params);
     printDebug("_getLocationFromCoordinatesUseCase $result");
-    result.fold((failure) {
+    await result.fold((failure) async{
       if(enableAnalytics){
         analytics.logEvent(
             name: "error in location bloc", parameters: {
@@ -113,12 +125,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       }
       emit(LocationState(status: LocationStatus.failure,failure: failure));
     },
-        (success) {
+        (success) async {
           emit(LocationState(
               status: LocationStatus.success,
               userCurrentLocation: success,
               autoCompleteList: state.autoCompleteList
           ));
+          await _saveCurrentLocationUseCase(success as LocationModel);
           if(afterSuccess!=null){
             afterSuccess();
           }

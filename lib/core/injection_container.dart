@@ -8,9 +8,12 @@ import 'package:the_weather_app/features/weather/data/data_sources/weather_local
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
 
 import '../features/language/presentation/bloc/language_bloc.dart';
+import '../features/location/data/data_sources/location_local_data_source.dart';
 import '../features/location/domain/use_cases/autocomplete_search_location_use_case.dart';
 import '../features/location/domain/use_cases/get_current_location_use_case.dart';
 import '../features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
+import '../features/location/domain/use_cases/get_save_current_location_use_case.dart';
+import '../features/location/domain/use_cases/save_current_location_use_case.dart';
 import '../features/weather/data/data_sources/weather_remote_data_source.dart';
 import '../features/weather/data/repositories/weather_repo_impl.dart';
 import '../features/weather/domain/repositories/weather_repo.dart';
@@ -27,12 +30,14 @@ Future<void> init() async {
 
   sl.registerFactory(() => LanguageBloc());
   sl.registerFactory(() => WeatherBloc(sl()));
-  sl.registerFactory(() => LocationBloc(sl(),sl(),sl()));
+  sl.registerFactory(() => LocationBloc(sl(),sl(),sl(),sl(),sl()));
 
 // UseCases
 
   sl.registerLazySingleton(() => GetWeatherUseCase(sl()));
   sl.registerLazySingleton(() => GetLocationFromCoordinatesUseCase(sl()));
+  sl.registerLazySingleton(() => SaveCurrentLocationUseCase(sl()));
+  sl.registerLazySingleton(() => GetSavedCurrentLocationUseCase(sl()));
   sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
   sl.registerLazySingleton(() => GetCurrentLocationUseCase(sl()));
 
@@ -40,7 +45,7 @@ Future<void> init() async {
 // Repository
 
   sl.registerLazySingleton<WeatherRepo>(() => WeatherRepoImpl(sl(),sl()));
-  sl.registerLazySingleton<LocationRepo>(() => LocationRepoImpl(sl()));
+  sl.registerLazySingleton<LocationRepo>(() => LocationRepoImpl(sl(),sl()));
 
 // DataSources
 
@@ -50,7 +55,8 @@ Future<void> init() async {
           () => WeatherLocalDataSourceImpl(sharedPreferences: sl()));
   sl.registerLazySingleton<LocationRemoteDataSource>(
       () => LocationRemoteDataSourceImpl());
-
+  sl.registerLazySingleton<LocationLocalDataSource>(
+          () => LocationLocalDataSourceImpl(sharedPreferences: sl()));
 //! Core
 
 //! External

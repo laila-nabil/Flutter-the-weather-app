@@ -34,6 +34,7 @@ class SetLocation extends LocationEvent{
   @override
   List<Object?> get props => [location,afterSuccess];
 }
+
 class GetCurrentLocation extends LocationEvent{
   final void Function()? afterSuccess;
 
