@@ -42,7 +42,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       } else if (event is GetCurrentLocation) {
         emit(const LocationState(status: LocationStatus.loading));
         final result = await _getCurrentLocationUseCase(NoParams());
-        printDebug("_getCurrentLocationUseCase $result");
+        printDebug("/// _getCurrentLocationUseCase $result");
         result.fold((failure) {
           if(enableAnalytics){
             analytics.logEvent(
@@ -69,7 +69,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
             status: LocationStatus.success,
             userCurrentLocation: userCurrentLocation
           ));
-          await _saveCurrentLocationUseCase(userCurrentLocation as LocationModel);
+          final saveResult = await _saveCurrentLocationUseCase(userCurrentLocation as LocationModel);
+          printDebug("_saveCurrentLocationUseCase $saveResult");
         }
       } else if (event is AutoCompleteSearchLocation) {
         emit(LocationState(
@@ -100,7 +101,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
                   .toList()));
         });
       } else if (event is GetLocationFromCoordinates) {
-        await _getLocationFromCoordinates(emit, event,event.afterSuccess);
+        final result = await _getLocationFromCoordinates(emit, event,event.afterSuccess);
       }
     });
   }
@@ -131,7 +132,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
               userCurrentLocation: success,
               autoCompleteList: state.autoCompleteList
           ));
-          await _saveCurrentLocationUseCase(success as LocationModel);
+          final saveResult = await _saveCurrentLocationUseCase(success as LocationModel);
+          printDebug("_saveCurrentLocationUseCase $saveResult ");
           if(afterSuccess!=null){
             afterSuccess();
           }
