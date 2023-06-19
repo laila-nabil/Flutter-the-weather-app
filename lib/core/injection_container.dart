@@ -19,6 +19,7 @@ import '../features/weather/data/repositories/weather_repo_impl.dart';
 import '../features/weather/domain/repositories/weather_repo.dart';
 
 import '../features/weather/presentation/bloc/weather_bloc.dart';
+import 'package:location/location.dart';
 
 
 final sl = GetIt.instance;
@@ -39,7 +40,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SaveCurrentLocationUseCase(sl()));
   sl.registerLazySingleton(() => GetSavedCurrentLocationUseCase(sl()));
   sl.registerLazySingleton(() => AutoCompleteSearchLocationUseCase(sl()));
-  sl.registerLazySingleton(() => GetCurrentLocationUseCase(sl()));
+  sl.registerLazySingleton(() => GetCurrentLocationUseCase(sl(),sl()));
 
 
 // Repository
@@ -62,4 +63,6 @@ Future<void> init() async {
 //! External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+
+  sl.registerLazySingleton(() => Location());
 }
