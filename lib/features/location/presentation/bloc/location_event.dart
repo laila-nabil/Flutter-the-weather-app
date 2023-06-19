@@ -10,11 +10,10 @@ class LocationInitialEvent extends LocationEvent{
 
 class GetLocationFromCoordinates extends LocationEvent{
   final GetLocationFromCoordinatesParams params;
-  final void Function()? afterSuccess;
-  const GetLocationFromCoordinates(this.params,{this.afterSuccess});
+  const GetLocationFromCoordinates(this.params);
 
   @override
-  List<Object?> get props => [params,afterSuccess];
+  List<Object?> get props => [params];
 }
 
 class AutoCompleteSearchLocation extends LocationEvent{
@@ -28,17 +27,17 @@ class AutoCompleteSearchLocation extends LocationEvent{
 
 class SetLocation extends LocationEvent{
   final LocationEntity? location;
-  final void Function()? afterSuccess;
-  const SetLocation({this.location,this.afterSuccess});
+  final void Function()? goHomePage;
+  const SetLocation({this.location,this.goHomePage});
 
   @override
-  List<Object?> get props => [location,afterSuccess];
+  List<Object?> get props => [location,goHomePage];
 }
 
 class GetCurrentLocation extends LocationEvent{
-  final void Function()? afterSuccess;
+  final void Function()? goHomePage;
 
-  const GetCurrentLocation({this.afterSuccess});
+  const GetCurrentLocation({this.goHomePage});
   @override
-  List<Object?> get props => [afterSuccess];
+  List<Object?> get props => [goHomePage];
 }

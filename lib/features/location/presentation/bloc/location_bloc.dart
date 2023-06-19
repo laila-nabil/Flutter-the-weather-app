@@ -55,14 +55,16 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           emit(LocationState(status: LocationStatus.failure,failure: failure));
         },
             (success) {
-          emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
+          // emit(LocationState(status: LocationStatus.success,userCurrentLocation: success));
           add(GetLocationFromCoordinates(GetLocationFromCoordinatesParams(
-                  lat: success.lat.toString(), lon: success.lon.toString()),
-              afterSuccess: event.afterSuccess));
+                  lat: success.lat.toString(), lon: success.lon.toString()),));
         });
       } else if (event is SetLocation) {
+        if(event.goHomePage!=null){
+          event.goHomePage!();
+        }
         if (event.location == null) {
-          add(GetCurrentLocation(afterSuccess: event.afterSuccess));
+          add(GetCurrentLocation(goHomePage: event.goHomePage));
         }else {
           var userCurrentLocation = event.location ?? defaultLocation;
           emit(LocationState(
@@ -101,13 +103,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
                   .toList()));
         });
       } else if (event is GetLocationFromCoordinates) {
-        final result = await _getLocationFromCoordinates(emit, event,event.afterSuccess);
+        await _getLocationFromCoordinates(emit, event,);
       }
     });
   }
 
   Future<void> _getLocationFromCoordinates(Emitter<LocationState> emit,
-      GetLocationFromCoordinates event, void Function()? afterSuccess) async {
+      GetLocationFromCoordinates event,) async {
     emit(LocationState(
       status: LocationStatus.loading,
       userCurrentLocation: state.userCurrentLocation,
@@ -134,9 +136,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           ));
           final saveResult = await _saveCurrentLocationUseCase(success as LocationModel);
           printDebug("_saveCurrentLocationUseCase $saveResult ");
-          if(afterSuccess!=null){
-            afterSuccess();
-          }
     });
   }
 }

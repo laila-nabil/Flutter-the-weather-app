@@ -99,7 +99,7 @@ class LocationScreen extends StatelessWidget {
                     InkWell(
                       onTap: () async {
                         locationBloc.add(SetLocation(
-                              afterSuccess: () => Navigator.of(context)
+                              goHomePage: () => Navigator.of(context)
                                   .popAndPushNamed(MyHomePage.routeName)));
                         },
                       child: Padding(

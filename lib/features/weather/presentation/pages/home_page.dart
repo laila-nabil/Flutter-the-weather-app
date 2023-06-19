@@ -121,18 +121,24 @@ class MyHomePage extends StatelessWidget {
                           latitude: lat.toString(),
                           timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
                       },
-                      child: state.weatherStatus == WeatherStatus.loading
-                          ? const LoadingLogo()
-                          : state.weatherStatus == WeatherStatus.success
+                      child: BlocBuilder<LocationBloc, LocationState>(
+                        builder: (context, locationState) {
+                          return (state.weatherStatus ==
+                                      WeatherStatus.loading ||
+                                  locationState.status ==
+                                      LocationStatus.loading)
+                              ? const LoadingLogo()
+                              : state.weatherStatus == WeatherStatus.success
                               ? HomeLoadedContent(
-                                  city: locationBloc
-                                          .state.userCurrentLocation?.city ??
-                                      "",
-                                  locationBloc: locationBloc,
-                                  weatherBloc: bloc,
-                                  screenSize: screenSize,
-                                  isPortrait: isPortrait,)
-                              : Container(),
+                            city: locationState.userCurrentLocation.city ??
+                                "",
+                            locationBloc: locationBloc,
+                            weatherBloc: bloc,
+                            screenSize: screenSize,
+                            isPortrait: isPortrait,)
+                              : Container();
+                        },
+                      ),
                     ) ,
                   ),
                 );

@@ -17,7 +17,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    printDebug('BlocObserver onChange => (${bloc.runtimeType}, $change)');
+    printDebug('BlocObserver onChange => (${bloc.runtimeType}, \ncurrent: ${change.currentState},next: \n${change.nextState})');
   }
 
   @override
