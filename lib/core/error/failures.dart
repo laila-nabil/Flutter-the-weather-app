@@ -19,6 +19,12 @@ class EmptyCacheFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+class CacheFailure extends Failure {
+  const CacheFailure() : super(message: "");
+
+  @override
+  List<Object?> get props => [];
+}
 
 class LocationFailure extends Failure {
   const LocationFailure({required String message}) : super(message: message);

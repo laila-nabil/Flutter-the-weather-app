@@ -53,8 +53,9 @@ class LocationRepoImpl implements LocationRepo {
       var result = await locationLocalDataSource.saveLocation(location);
       return Right(result);
     }catch(e){
-      return const Left(EmptyCacheFailure());
+      return const Left(CacheFailure());
     }
+
   }
 
   @override
@@ -62,6 +63,8 @@ class LocationRepoImpl implements LocationRepo {
     try{
       var result = await locationLocalDataSource.getLocation();
       return Right(result);
+    }on EmptyCacheException{
+      return const Left(EmptyCacheFailure());
     }catch(e){
       return const Left(EmptyCacheFailure());
     }

@@ -35,6 +35,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     on<LocationEvent>((event, emit) async {
       if (event is LocationInitialEvent) {
         final result = await _getSavedCurrentLocationUseCase(NoParams());
+        printDebug("/// _getSavedCurrentLocationUseCase $result");
         result.fold(
             (l) => add(const GetCurrentLocation()),
             (r) => emit(LocationState(
