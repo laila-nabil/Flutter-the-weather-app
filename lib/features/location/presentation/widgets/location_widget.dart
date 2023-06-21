@@ -40,12 +40,31 @@ class LocationWidget extends StatelessWidget {
               // width: constraints.maxWidth *0.4,
               // height:constraints.maxHeight * 0.6 ,
               // alignment: Alignment.center,
-              child: AutoSizeText(
-                city,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                minFontSize: 10.0,
-                maxFontSize: 20.0,
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText(
+                    city,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    minFontSize: 10.0,
+                    maxFontSize: 20.0,
+                    textAlign: TextAlign.center,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        locationBloc.add(const SetLocation());
+                      },
+                      iconSize: constraints.maxHeight * 0.4,
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(
+                        minWidth: kMinInteractiveDimension,
+                        minHeight: kMinInteractiveDimension,
+                      ),
+                      icon: const Icon(
+                        Icons.my_location,
+                        color: AppColors.white,
+                      )),
+                ],
               ),
             ),
             IconButton(
