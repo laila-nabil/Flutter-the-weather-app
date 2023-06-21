@@ -50,4 +50,10 @@ class AppAssets {
 
     return 'assets/weather_3d/01$isDayString.png';
   }
+
+  static const String github = "assets/links_icons/github2.png";
+  static const String googlePlay = "assets/links_icons/google-play.png";
+  static const String link = "assets/links_icons/link.png";
+  static const String linkedin = "assets/links_icons/linkedin.png";
+  static const String twitter = "assets/links_icons/twitter.png";
 }
