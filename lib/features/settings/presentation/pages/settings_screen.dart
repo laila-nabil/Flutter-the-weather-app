@@ -22,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final theme = Theme.of(context);
-    void toggleLanguage() async{
+    void toggleLanguage() async {
       // setState(() {
       //   //printDebug('_toggleLanguage');
       // });
@@ -30,13 +30,13 @@ class SettingsScreen extends StatelessWidget {
           ? const Locale('ar', 'EG')
           : const Locale('en', 'UK'));
       final languageBloc = BlocProvider.of<LanguageBloc>(context);
-      var currentLanguagesEnum = LocalizationImpl().getCurrentLanguagesEnum(context);
-      if(currentLanguagesEnum!=null){
+      var currentLanguagesEnum =
+          LocalizationImpl().getCurrentLanguagesEnum(context);
+      if (currentLanguagesEnum != null) {
         languageBloc.add(SelectLanguage(currentLanguagesEnum));
       }
       if (enableAnalytics) {
-        analytics.logEvent(
-            name: "ChangeLanguage", parameters: {
+        analytics.logEvent(name: "ChangeLanguage", parameters: {
           "lang": context.locale.toString(),
           "release": kReleaseMode.toString(),
           "isWeb": kIsWeb.toString(),
@@ -44,6 +44,7 @@ class SettingsScreen extends StatelessWidget {
       }
       Navigator.of(context).pushReplacementNamed(MyHomePage.routeName);
     }
+
     return SafeArea(
         bottom: true,
         left: true,
@@ -71,7 +72,9 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: 'lang'.tr().contains('En') ? CrossAxisAlignment.end:CrossAxisAlignment.start,
+                  crossAxisAlignment: 'lang'.tr().contains('En')
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
@@ -84,40 +87,77 @@ class SettingsScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          if(kIsWeb)Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: InkWell(
-                              onTap: (){
-                                launchUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.lailanabil.the_weather_app"));
-                              },
-                              child: Image.asset(AppAssets.googlePlay,width: 18,height: 18,),
-                            ),
-                          )else
+                          if (kIsWeb)
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               child: InkWell(
-                                onTap: (){
-                                  launchUrl(Uri.parse("https://flutter-weather-app.web.app/"));
+                                onTap: () {
+                                  launchUrl(Uri.parse(
+                                      "https://play.google.com/store/apps/details?id=com.lailanabil.the_weather_app"));
                                 },
-                                child: Icon(Icons.link,size: 18,color: Colors.white,),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    AppAssets.googlePlay,
+                                    width: 18,
+                                    height: 18,
+                                  ),
+                                ),
+                              ),
+                            )
+                          else
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: InkWell(
+                                onTap: () {
+                                  launchUrl(Uri.parse(
+                                      "https://flutter-weather-app.web.app/"));
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.link,
+                                      size: 18,
+                                      color: Colors.white,
+                                    )),
                               ),
                             ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             child: InkWell(
-                              onTap: (){
-                                launchUrl(Uri.parse("https://twitter.com/laila_nabil_"));
-                              },
-                              child: Image.asset(AppAssets.twitter,width: 18,height: 18,),
+                              onTap: () {
+                                  launchUrl(Uri.parse(
+                                      "https://twitter.com/laila_nabil_"));
+                                },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                    AppAssets.twitter,
+                                    width: 18,
+                                    height: 18,
+                                  ),
+                              ),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             child: InkWell(
-                              onTap: (){
-                                launchUrl(Uri.parse("https://github.com/laila-nabil/Flutter-the-weather-app"));
-                              },
-                              child: Image.asset(AppAssets.github,width: 18,height: 18,),
+                              onTap: () {
+                                  launchUrl(Uri.parse(
+                                      "https://github.com/laila-nabil/Flutter-the-weather-app"));
+                                },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                    AppAssets.github,
+                                    width: 18,
+                                    height: 18,
+                                  ),
+                              ),
                             ),
                           ),
                         ],
@@ -129,7 +169,10 @@ class SettingsScreen extends StatelessWidget {
                           "${LocalizationImpl().translate("madeWith")} ${LocalizationImpl().translate("flutter")} ",
                           style: const TextStyle(color: AppColors.white),
                         ),
-                        const Icon(Icons.favorite,color: Colors.blue,),
+                        const Icon(
+                          Icons.favorite,
+                          color: Colors.blue,
+                        ),
                         Text(
                           " ${LocalizationImpl().translate("by")} ",
                           style: const TextStyle(color: AppColors.white),
@@ -139,18 +182,21 @@ class SettingsScreen extends StatelessWidget {
                               if (enableAnalytics) {
                                 analytics.logEvent(
                                     name: "launchGithub",
-                                    parameters: {"release": kReleaseMode.toString(),
-                                      "isWeb": kIsWeb.toString(),});
+                                    parameters: {
+                                      "release": kReleaseMode.toString(),
+                                      "isWeb": kIsWeb.toString(),
+                                    });
                               }
                               await launchUrl(
-                                Uri.parse( "https://github.com/laila-nabil/"),
+                                Uri.parse("https://github.com/laila-nabil/"),
                               );
                             },
                             child: Text(
-                                LocalizationImpl().translate("lailaNabil"),style: const TextStyle(color: AppColors.white)))
+                                LocalizationImpl().translate("lailaNabil"),
+                                style: const TextStyle(color: AppColors.white)))
                       ],
                     ),
-                    ],
+                  ],
                 ))));
   }
 }
