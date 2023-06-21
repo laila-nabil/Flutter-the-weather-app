@@ -127,7 +127,7 @@ class MyHomePage extends StatelessWidget {
                                       WeatherStatus.loading ||
                                   locationState.status ==
                                       LocationStatus.loading)
-                              ? const LoadingLogo()
+                              ? const Center(child: LoadingLogo())
                               : state.weatherStatus == WeatherStatus.success
                               ? HomeLoadedContent(
                             city: locationState.userCurrentLocation.city ??
