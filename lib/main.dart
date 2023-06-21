@@ -12,6 +12,7 @@ import 'package:the_weather_app/features/settings/presentation/pages/settings_sc
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'core/bloc_observer.dart';
+import 'core/constants.dart';
 import 'core/injection_container.dart';
 import 'core/injection_container.dart' as di;
 import 'core/resources/app_theme.dart';
@@ -30,6 +31,8 @@ Future main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  geoapifyApiKey = const String.fromEnvironment("geoapifyApiKey");
   await di.init();
   Bloc.observer = AppBlocObserver();
   // It is required to add the following to run the meta_seo package correctly

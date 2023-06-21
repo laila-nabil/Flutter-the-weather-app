@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:the_weather_app/core/Network/network.dart';
+import 'package:the_weather_app/core/constants.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 
@@ -27,7 +28,7 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource{
   Future<List<LocationModel>> autoCompleteSearchLocation(String input) async{
     List<LocationModel> result = [];
     var url =
-        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=2c66c649cf9042658a69266136c59284';
+        'https://api.geoapify.com/v1/geocode/autocomplete?text=$input&limit=20&apiKey=$geoapifyApiKey';
     final response = await Network.get(url: url);
     final body = json.decode(response.body);
     final List listResults = body['features'];
