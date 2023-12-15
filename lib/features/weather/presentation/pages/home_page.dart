@@ -253,13 +253,11 @@ class HomeLoadedContent extends StatelessWidget {
                   .toString(),
           description: "",
           feelsLike: (weatherBloc.state.weather?.dailyHourlyList
-                      ?.elementAt(1)
-                      .hourlyList
-                      .firstWhere((element) {
-                        return element.time ==
-                          weatherBloc.state.weather?.currentWeatherEntity?.time;
-                      })
-                      .apparent_temperature ??
+                      ?.tryElementAt(1)
+                      ?.hourlyList
+                      .where((element) => element.time ==
+                        weatherBloc.state.weather?.currentWeatherEntity?.time).tryFirst
+                      ?.apparent_temperature ??
                   "")
               .toString(),
           rain: (weatherBloc.state.weather?.dailyHourlyList

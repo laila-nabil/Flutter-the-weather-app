@@ -1,4 +1,4 @@
-extension ElementAtNullableOrEmpty<T> on List<T>?{
+extension ElementAtNullableOrEmpty<T> on Iterable<T>?{
   T? get tryFirst{
     if(this!=null && this?.isNotEmpty == true){
       return this?.first;
