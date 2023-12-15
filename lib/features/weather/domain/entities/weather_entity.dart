@@ -87,7 +87,7 @@ class DailyListsEntity extends Equatable {
   final List<num>? temperature2mMin;
   final List<String>? sunrise;
   final List<String>? sunset;
-  final List<num>? precipitationProbabilityMax;
+  final List<num?>? precipitationProbabilityMax;
   final List<num>? weatherCode;
 
   @override
@@ -191,16 +191,16 @@ class HourlyListsEntity extends Equatable {
   });
 
   final List<String>? time;
-  final List<num>? temperature2m;
-  final List<num>? precipitationProbability;
-  final List<num>? temperatureFeelsLike;
-  final List<num>? weatherCode;
-  final List<num>? relativehumidity_2m;
-  final List<num>? apparent_temperature;
-  final List<num>? windspeed_10m;
-  final List<num>? winddirection_10m;
-  final List<num>? uv_index;
-  final List<num>? is_day;
+  final List<num?>? temperature2m;
+  final List<num?>? precipitationProbability;
+  final List<num?>? temperatureFeelsLike;
+  final List<num?>? weatherCode;
+  final List<num?>? relativehumidity_2m;
+  final List<num?>? apparent_temperature;
+  final List<num?>? windspeed_10m;
+  final List<num?>? winddirection_10m;
+  final List<num?>? uv_index;
+  final List<num?>? is_day;
 
   @override
   List<Object?> get props => [

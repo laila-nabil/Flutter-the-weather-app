@@ -146,7 +146,7 @@ class DailyModel extends DailyListsEntity {
     List<num>? temperature2mMin,
     List<String>? sunrise,
     List<String>? sunset,
-    List<num>? precipitationProbabilityMax,
+    List<num?>? precipitationProbabilityMax,
     List<num>? weatherCode,
   }) : super(
             time: time,
@@ -170,9 +170,7 @@ class DailyModel extends DailyListsEntity {
         : [],
     sunrise : json['sunrise'] != null ? json['sunrise'].cast<String>() : [],
     sunset : json['sunset'] != null ? json['sunset'].cast<String>() : [],
-    precipitationProbabilityMax : json['precipitation_probability_max'] != null
-    ? json['precipitation_probability_max'].cast<num>()
-    : [],
+    precipitationProbabilityMax : json['precipitation_probability_max'] ?? [],
     );
   }
 
@@ -266,16 +264,16 @@ HourlyEntity mapHourlyListsEntityToHourlyEntity(
 class HourlyModel extends HourlyListsEntity {
   const HourlyModel({
     List<String>? time,
-    List<num>? temperature2m,
-    List<num>? precipitationProbability,
-    List<num>? temperatureFeelsLike,
-    List<num>? weatherCode,
-    List<num>? relativehumidity_2m,
-    List<num>? apparent_temperature,
-    List<num>? windspeed_10m,
-    List<num>? winddirection_10m,
-    List<num>? uv_index,
-    List<num>? is_day,
+    List<num?>? temperature2m,
+    List<num?>? precipitationProbability,
+    List<num?>? temperatureFeelsLike,
+    List<num?>? weatherCode,
+    List<num?>? relativehumidity_2m,
+    List<num?>? apparent_temperature,
+    List<num?>? windspeed_10m,
+    List<num?>? winddirection_10m,
+    List<num?>? uv_index,
+    List<num?>? is_day,
   }):super(
     time: time,
     temperature2m: temperature2m,
@@ -292,22 +290,22 @@ class HourlyModel extends HourlyListsEntity {
 
   factory HourlyModel.fromJson(dynamic json) {
     return HourlyModel(
-      is_day : json['is_day'] != null ? json['is_day'].cast<num>() : [],
-      windspeed_10m : json['windspeed_10m'] != null ? json['windspeed_10m'].cast<num>() : [],
-      relativehumidity_2m : json['relativehumidity_2m'] != null ? json['relativehumidity_2m'].cast<num>() : [],
-      winddirection_10m : json['winddirection_10m'] != null ? json['winddirection_10m'].cast<num>() : [],
-      uv_index : json['uv_index'] != null ? json['uv_index'].cast<num>() : [],
-      apparent_temperature : json['apparent_temperature'] != null ? json['apparent_temperature'].cast<num>() : [],
-        weatherCode : json['weathercode'] != null ? json['weathercode'].cast<num>() : [],
+      is_day : json['is_day'] != null ? json['is_day'].cast<num?>() : [],
+      windspeed_10m : json['windspeed_10m'] != null ? json['windspeed_10m'].cast<num?>() : [],
+      relativehumidity_2m : json['relativehumidity_2m'] != null ? json['relativehumidity_2m'].cast<num?>() : [],
+      winddirection_10m : json['winddirection_10m'] != null ? json['winddirection_10m'].cast<num?>() : [],
+      uv_index : json['uv_index'] != null ? json['uv_index'].cast<num?>() : [],
+      apparent_temperature : json['apparent_temperature'] != null ? json['apparent_temperature'].cast<num?>() : [],
+        weatherCode : json['weathercode'] != null ? json['weathercode'].cast<num?>() : [],
         time : json['time'] != null ? json['time'].cast<String>() : [],
         temperature2m : json['temperature_2m'] != null
-        ? json['temperature_2m'].cast<num>()
+        ? json['temperature_2m'].cast<num?>()
         : [],
       temperatureFeelsLike: json['apparent_temperature'] != null
-          ? json['apparent_temperature'].cast<num>()
+          ? json['apparent_temperature'].cast<num?>()
           : [],
     precipitationProbability : json['precipitation_probability'] != null
-    ? json['precipitation_probability'].cast<num>()
+    ? json['precipitation_probability'].cast<num?>()
         : [],
     );
   }
