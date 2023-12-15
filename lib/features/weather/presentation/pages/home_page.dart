@@ -259,7 +259,7 @@ class HomeLoadedContent extends StatelessWidget {
                         return element.time ==
                           weatherBloc.state.weather?.currentWeatherEntity?.time;
                       })
-                      .temperatureFeelsLike ??
+                      .apparent_temperature ??
                   "")
               .toString(),
           rain: (weatherBloc.state.weather?.dailyHourlyList

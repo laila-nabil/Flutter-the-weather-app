@@ -142,12 +142,12 @@ DailyEntity mapDailyListsEntityToDailyEntity(
 class DailyModel extends DailyListsEntity {
   const DailyModel({
     List<String>? time,
-    List<num>? temperature2mMax,
-    List<num>? temperature2mMin,
+    List<num?>? temperature2mMax,
+    List<num?>? temperature2mMin,
     List<String>? sunrise,
     List<String>? sunset,
     List<num?>? precipitationProbabilityMax,
-    List<num>? weatherCode,
+    List<num?>? weatherCode,
   }) : super(
             time: time,
             temperature2mMax: temperature2mMax,
@@ -160,17 +160,18 @@ class DailyModel extends DailyListsEntity {
 
   factory DailyModel.fromJson(dynamic json) {
     return DailyModel(
-        weatherCode : json['weathercode'] != null ? json['weathercode'].cast<num>() : [],
+        weatherCode : json['weathercode'] != null ? json['weathercode'].cast<num?>() : [],
         time : json['time'] != null ? json['time'].cast<String>() : [],
         temperature2mMax : json['temperature_2m_max'] != null
-        ? json['temperature_2m_max'].cast<num>()
+        ? json['temperature_2m_max'].cast<num?>()
         : [],
     temperature2mMin : json['temperature_2m_min'] != null
-    ? json['temperature_2m_min'].cast<num>()
+    ? json['temperature_2m_min'].cast<num?>()
         : [],
     sunrise : json['sunrise'] != null ? json['sunrise'].cast<String>() : [],
     sunset : json['sunset'] != null ? json['sunset'].cast<String>() : [],
-    precipitationProbabilityMax : json['precipitation_probability_max'] ?? [],
+    precipitationProbabilityMax: json['precipitation_probability_max'] != null
+        ? json['precipitation_probability_max'].cast<num?>()  : [],
     );
   }
 
@@ -249,8 +250,6 @@ HourlyEntity mapHourlyListsEntityToHourlyEntity(
     precipitationProbability:
         hourlyListsEntity?.precipitationProbability.tryElementAt(index),
     temperature2m: hourlyListsEntity?.temperature2m.tryElementAt(index),
-    temperatureFeelsLike:
-        hourlyListsEntity?.temperatureFeelsLike.tryElementAt(index),
     weatherCode: hourlyListsEntity?.weatherCode.tryElementAt(index),
     apparent_temperature: hourlyListsEntity?.apparent_temperature.tryElementAt(index),
     relativehumidity_2m: hourlyListsEntity?.relativehumidity_2m.tryElementAt(index),
@@ -266,7 +265,6 @@ class HourlyModel extends HourlyListsEntity {
     List<String>? time,
     List<num?>? temperature2m,
     List<num?>? precipitationProbability,
-    List<num?>? temperatureFeelsLike,
     List<num?>? weatherCode,
     List<num?>? relativehumidity_2m,
     List<num?>? apparent_temperature,
@@ -278,7 +276,6 @@ class HourlyModel extends HourlyListsEntity {
     time: time,
     temperature2m: temperature2m,
     precipitationProbability: precipitationProbability,
-    temperatureFeelsLike: temperatureFeelsLike,
     weatherCode: weatherCode,
     relativehumidity_2m: relativehumidity_2m,
     apparent_temperature: apparent_temperature,
@@ -301,9 +298,6 @@ class HourlyModel extends HourlyListsEntity {
         temperature2m : json['temperature_2m'] != null
         ? json['temperature_2m'].cast<num?>()
         : [],
-      temperatureFeelsLike: json['apparent_temperature'] != null
-          ? json['apparent_temperature'].cast<num?>()
-          : [],
     precipitationProbability : json['precipitation_probability'] != null
     ? json['precipitation_probability'].cast<num?>()
         : [],

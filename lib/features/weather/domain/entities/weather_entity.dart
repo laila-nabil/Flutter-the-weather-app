@@ -83,12 +83,12 @@ class DailyListsEntity extends Equatable {
   });
 
   final List<String>? time;
-  final List<num>? temperature2mMax;
-  final List<num>? temperature2mMin;
+  final List<num?>? temperature2mMax;
+  final List<num?>? temperature2mMin;
   final List<String>? sunrise;
   final List<String>? sunset;
   final List<num?>? precipitationProbabilityMax;
-  final List<num>? weatherCode;
+  final List<num?>? weatherCode;
 
   @override
   List<Object?> get props => [
@@ -180,7 +180,6 @@ class HourlyListsEntity extends Equatable {
     this.time,
     this.temperature2m,
     this.precipitationProbability,
-    this.temperatureFeelsLike,
     this.weatherCode,
     this.relativehumidity_2m,
     this.apparent_temperature,
@@ -193,7 +192,6 @@ class HourlyListsEntity extends Equatable {
   final List<String>? time;
   final List<num?>? temperature2m;
   final List<num?>? precipitationProbability;
-  final List<num?>? temperatureFeelsLike;
   final List<num?>? weatherCode;
   final List<num?>? relativehumidity_2m;
   final List<num?>? apparent_temperature;
@@ -207,7 +205,6 @@ class HourlyListsEntity extends Equatable {
         time,
         temperature2m,
         precipitationProbability,
-        temperatureFeelsLike,
         weatherCode,
         relativehumidity_2m,
         apparent_temperature,
@@ -222,7 +219,6 @@ class HourlyEntity extends Equatable {
   const HourlyEntity({
     this.time,
     this.temperature2m,
-    this.temperatureFeelsLike,
     this.precipitationProbability,
     this.weatherCode,
     this.relativehumidity_2m,
@@ -236,7 +232,6 @@ class HourlyEntity extends Equatable {
   final String? time;
   final num? temperature2m;
   final num? precipitationProbability;
-  final num? temperatureFeelsLike;
   final num? weatherCode;
   final num? relativehumidity_2m;
   final num? apparent_temperature;
@@ -250,7 +245,6 @@ class HourlyEntity extends Equatable {
         time,
         temperature2m,
         precipitationProbability,
-        temperatureFeelsLike,
         weatherCode,
         relativehumidity_2m,
         apparent_temperature,
