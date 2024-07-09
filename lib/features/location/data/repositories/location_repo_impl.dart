@@ -3,7 +3,6 @@ import 'package:the_weather_app/core/error/exceptions.dart';
 import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/features/location/data/data_sources/location_remote_data_source.dart';
 import 'package:the_weather_app/features/location/data/models/location_model.dart';
-import 'package:the_weather_app/features/location/domain/entities/location.dart';
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
 

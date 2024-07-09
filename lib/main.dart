@@ -41,7 +41,7 @@ Future main() async {
     MetaSEO().config();
   }
   //https://twitter.com/luke_pighetti/status/1651585533481566211?s=12&t=9UwYk3rxsHZqVkQxNhVW3g
-  Paint.enableDithering = true;
+  // Paint.enableDithering = true;
   tz.initializeTimeZones();
   runApp(LocalizationImpl().localizationSetup(const MyApp()));
 }

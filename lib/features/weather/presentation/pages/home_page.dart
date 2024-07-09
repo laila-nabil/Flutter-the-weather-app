@@ -16,7 +16,6 @@ import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/assets_paths.dart';
 import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../location/presentation/widgets/location_widget.dart';
-import '../../domain/entities/unit.dart';
 import '../bloc/weather_bloc.dart';
 import '../widgets/compare_weather.dart';
 import '../widgets/weather_tabs.dart';
@@ -52,8 +51,8 @@ class MyHomePage extends StatelessWidget {
           final weatherBloc = BlocProvider.of<WeatherBloc>(context);
           final locationBloc = BlocProvider.of<LocationBloc>(context);
           printDebug("locationBloc.state ${locationBloc.state}");
-          var long = locationBloc.state.userCurrentLocation?.lon ?? "";
-          var lat = locationBloc.state.userCurrentLocation?.lat ?? "";
+          var long = locationBloc.state.userCurrentLocation.lon ?? "";
+          var lat = locationBloc.state.userCurrentLocation.lat ?? "";
           getWeatherData(
               bloc: weatherBloc,
               longitude: long.toString(),
@@ -95,7 +94,7 @@ class MyHomePage extends StatelessWidget {
 
                 if (state.weatherStatus == WeatherStatus.loading) {
                   return Scaffold(
-                    backgroundColor: Theme.of(context).backgroundColor,
+                    // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     body: const Center(child: CircularProgressIndicator()),
                   );
                 }
@@ -110,7 +109,7 @@ class MyHomePage extends StatelessWidget {
                   maintainBottomViewPadding: true,
                   minimum: EdgeInsets.zero,
                   child: Scaffold(
-                    backgroundColor: Theme.of(context).backgroundColor,
+                    // backgroundColor: Theme.of(context).colorScheme.surface,
                     body: RefreshIndicator(
                       onRefresh: () async {
                         var long = locationBloc.state.userCurrentLocation.lon ?? "";

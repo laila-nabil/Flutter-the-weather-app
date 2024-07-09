@@ -19,7 +19,6 @@ class LocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
-    final theme = Theme.of(context);
     final locationBloc = BlocProvider.of<LocationBloc>(context);
     return BlocConsumer<LocationBloc, LocationState>(
       // bloc: locationBloc,
@@ -44,7 +43,7 @@ class LocationScreen extends StatelessWidget {
           minimum: EdgeInsets.zero,
           child: Scaffold(
             appBar: AppBar(
-              backgroundColor: theme.backgroundColor,
+              // backgroundColor: theme.colorScheme.surface,
               elevation: 0,
               title: Text(
                 'location'.tr().toString(),
@@ -54,7 +53,7 @@ class LocationScreen extends StatelessWidget {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            backgroundColor: theme.backgroundColor,
+            // backgroundColor: theme.colorScheme.surface,
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(25.0),

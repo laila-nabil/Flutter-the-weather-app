@@ -7,7 +7,6 @@ import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/domain/entities/location.dart';
 import 'package:the_weather_app/features/location/domain/repositories/location_repo.dart';
 import 'package:the_weather_app/features/location/domain/use_cases/get_location_from_coordinates_use_case.dart';
-import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
 
 import '../../../../core/constants.dart';
 import '../../../../main.dart';
@@ -20,7 +19,6 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
 
   @override
   Future<Either<Failure, LocationEntity>> call(NoParams params) async {
-    GetLocationFromCoordinates getLocationFromCoordinates;
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -31,7 +29,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
       // accessing the position and request users of the
       // App to enable the location services.
       //printDebug("location : error('Location services are disabled.')");
-      return Left(LocationFailure(message: 'Location services are disabled.'));
+      return const Left(LocationFailure(message: 'Location services are disabled.'));
     }
 
     permission = await Geolocator.checkPermission();
@@ -44,7 +42,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
         //printDebug("location : error('Location permissions are denied'')");
-        return Left(LocationFailure(message:'Location permissions are denied'));
+        return const Left(LocationFailure(message:'Location permissions are denied'));
       }
     }
 
@@ -52,7 +50,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
       // Permissions are denied forever, handle appropriately.
       //printDebug("location : error('Location permissions are permanently denied')");
 
-      return Left(LocationFailure(message:
+      return const Left(LocationFailure(message:
           'Location permissions are permanently denied, we cannot request permissions.'));
     }
     //printDebug("location : getting location");
@@ -64,7 +62,7 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
         position = await Geolocator.getCurrentPosition(
                   desiredAccuracy: LocationAccuracy.lowest,
                   forceAndroidLocationManager: true,
-                  timeLimit: Duration(seconds: 10));
+                  timeLimit: const Duration(seconds: 10));
       } catch (e) {
         try {
           position = await Geolocator.getLastKnownPosition(
@@ -77,8 +75,8 @@ class GetCurrentLocationUseCase implements UseCase<LocationEntity,NoParams>{
       if (enableAnalytics) {
         analytics.logEvent(name: "GetCurrentLocationUseCase", parameters: {
           "release": kReleaseMode.toString(),
-          "latitude": position?.latitude.toString(),
-          "longitude": position?.longitude.toString(),
+          "latitude": position?.latitude.toString() ?? "",
+          "longitude": position?.longitude.toString() ?? "",
           "isWeb": kIsWeb.toString(),
         });
       }

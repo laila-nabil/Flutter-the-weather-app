@@ -25,10 +25,10 @@ class DashboardWeather extends StatelessWidget {
           if (svgIcon != null)
             Expanded(
               child: SvgPicture.asset(
-                svgIcon!,
+                svgIcon ?? "",
                 // width: 22,
                 // height: 22,
-                color: AppColors.white,
+                colorFilter: ColorFilter.mode(AppColors.white, BlendMode.srcIn),
               ),
             ),
           if (title != null)

@@ -23,7 +23,7 @@ class WeatherState extends Equatable {
           name: "error in weather bloc", parameters: {
         "release": kReleaseMode.toString(),
         "isWeb": kIsWeb.toString(),
-        "error": getWeatherFailure?.message.toString(),
+        "error": getWeatherFailure?.message.toString() ?? "",
       });
     }
     return WeatherState(

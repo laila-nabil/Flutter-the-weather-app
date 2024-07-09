@@ -1,6 +1,4 @@
-import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +14,6 @@ import 'package:the_weather_app/features/weather/presentation/widgets/compact_da
 import 'package:the_weather_app/main.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../domain/entities/unix.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';

@@ -1,13 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:the_weather_app/core/error/failures.dart';
-import 'package:the_weather_app/core/extensions.dart';
-import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_local_data_source.dart';
 import 'package:the_weather_app/features/weather/data/data_sources/weather_remote_data_source.dart';
 import 'package:the_weather_app/features/weather/data/models/weather_model.dart';
-import 'package:the_weather_app/features/weather/domain/entities/unix.dart';
-import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 import 'package:the_weather_app/features/weather/domain/repositories/weather_repo.dart';
 
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';

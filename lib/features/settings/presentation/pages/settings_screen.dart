@@ -21,7 +21,6 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
-    final theme = Theme.of(context);
     void toggleLanguage() async {
       // setState(() {
       //   //printDebug('_toggleLanguage');
@@ -54,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
         minimum: EdgeInsets.zero,
         child: Scaffold(
             appBar: AppBar(
-              backgroundColor: theme.backgroundColor,
+              // backgroundColor: theme.scaffoldBackgroundColor,
               elevation: 0,
               title: Text(
                 'settings'.tr().toString(),
@@ -64,7 +63,7 @@ class SettingsScreen extends StatelessWidget {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            backgroundColor: theme.backgroundColor,
+            // backgroundColor: theme.scaffoldBackgroundColor,
             body: Container(
                 padding: const EdgeInsets.all(25.0),
                 width: screenSize.width,
@@ -115,8 +114,8 @@ class SettingsScreen extends StatelessWidget {
                                   launchUrl(Uri.parse(
                                       "https://flutter-weather-app.web.app/"));
                                 },
-                                child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Icon(
                                       Icons.link,
                                       size: 18,

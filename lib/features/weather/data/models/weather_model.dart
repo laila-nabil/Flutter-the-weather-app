@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 
-import '../../../../core/utils.dart';
 
 /// latitude : 30.0625
 /// longitude : 31.25
@@ -376,7 +374,7 @@ class HourlyUnitsModel extends HourlyUnitsEntity {
 /// time : "2023-05-31T10:00"
 
 class CurrentWeatherModel extends CurrentWeatherEntity {
-  CurrentWeatherModel({
+  const CurrentWeatherModel({
     num? temperature,
     num? windspeed,
     num? winddirection,

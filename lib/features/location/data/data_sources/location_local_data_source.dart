@@ -4,8 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_weather_app/core/utils.dart';
 import 'package:the_weather_app/features/location/data/models/location_model.dart';
-import 'package:the_weather_app/features/weather/data/models/weather_model.dart';
-import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
 
 import '../../../../core/error/exceptions.dart';
 

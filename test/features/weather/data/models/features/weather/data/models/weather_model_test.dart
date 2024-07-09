@@ -2056,7 +2056,7 @@ void main(){
           timezone: "Africa/Cairo",
           timezoneAbbreviation: "EET",
           elevation: 22.0,
-          currentWeatherModel: CurrentWeatherModel(
+          currentWeatherModel: const CurrentWeatherModel(
               time: "2023-12-15T16:45",
               temperature: 24.1,
               windspeed: 2.7,
@@ -6095,7 +6095,7 @@ void main(){
       expect(HourlyUnitsModel.fromJson(hourlyUnitJson), model);
     });
     test("weather model from json test", () {
-      final model = CurrentWeatherModel(
+      const model = CurrentWeatherModel(
           time: "2023-12-15T16:45",
           temperature: 24.1,
           windspeed: 2.7,
