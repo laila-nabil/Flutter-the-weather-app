@@ -76,9 +76,17 @@ class MyHomePage extends ConsumerWidget {
         timezone: current.value?.userCurrentLocation.timezone ?? "",
       );
     });
-    ref.listen(weatherNotifierProvider, (_, __) => {},
-        onError: (error, stacktrace) => ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text((error as Failure).message))));
+    ref.listen(weatherNotifierProvider, (prev, next) {
+      printDebug("weatherNotifierProvider $prev $next");
+      if (next is AsyncError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text((next.error as Failure).message)));
+      }
+    }, onError: (error, stacktrace) {
+      printDebug("weatherNotifierProvider onError $error");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
+    });
     return weatherWatch.maybeWhen(
         data: (weatherState) {
           final mediaQuery = MediaQuery.of(context);
@@ -94,8 +102,7 @@ class MyHomePage extends ConsumerWidget {
           return buildSafeArea(
               locationWatch, ref, weatherWatch.value, screenSize, isPortrait);
         },
-        loading: () => Scaffold(body: const LoadingLogo()),
-        skipError: true);
+        loading: () => Scaffold(body: const LoadingLogo()),);
   }
 
   SafeArea buildSafeArea(AsyncValue<LocationState?> locationWatch, WidgetRef ref,
