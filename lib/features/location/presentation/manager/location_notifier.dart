@@ -51,6 +51,7 @@ class LocationNotifier extends AutoDisposeAsyncNotifier<LocationState?> {
 
   @override
   FutureOr<LocationState?> build() async {
+    state = AsyncLoading();
     final result = await _getSavedCurrentLocationUseCase(NoParams());
     printDebug("/// _getSavedCurrentLocationUseCase $result");
     return result.fold((l) => getCurrentLocation(),
@@ -59,6 +60,7 @@ class LocationNotifier extends AutoDisposeAsyncNotifier<LocationState?> {
 
   FutureOr<LocationState?> getLocationFromCoordinates(
       {required GetLocationFromCoordinatesParams params}) async {
+    state = AsyncLoading();
     final result = await _getLocationFromCoordinatesUseCase(params);
     printDebug("_getLocationFromCoordinatesUseCase $result");
     return result.fold((failure) async {
@@ -85,6 +87,7 @@ class LocationNotifier extends AutoDisposeAsyncNotifier<LocationState?> {
 
   FutureOr<void> autoCompleteSearchLocation(
       {required String input}) async {
+    state = AsyncLoading();
     final result = await _autoCompleteSearchLocationUseCase(input);
     printDebug("result use case $result");
     return result.fold((failure) {
@@ -125,6 +128,7 @@ class LocationNotifier extends AutoDisposeAsyncNotifier<LocationState?> {
 
   FutureOr<LocationState?> getCurrentLocation(
       {void Function()? goHomePage}) async {
+    state = AsyncLoading();
     final result = await _getCurrentLocationUseCase(NoParams());
     printDebug("/// _getCurrentLocationUseCase $result");
     return result.fold((failure) {

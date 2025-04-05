@@ -25,6 +25,7 @@ class WeatherNotifier extends AutoDisposeAsyncNotifier<WeatherEntity?> {
 
   FutureOr<WeatherEntity?> getWeatherEvent(
       GetWeatherParams getWeatherParams) async {
+    state = AsyncLoading();
     final result = await _getWeatherUseCase(getWeatherParams);
     printDebug("result in notifier $result");
     result.fold((l) {
