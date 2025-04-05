@@ -25,19 +25,21 @@ class WeatherNotifier extends AutoDisposeAsyncNotifier<WeatherEntity?> {
 
   FutureOr<WeatherEntity?> getWeatherEvent(
       GetWeatherParams getWeatherParams) async {
-    state = AsyncLoading();
-    final result = await _getWeatherUseCase(getWeatherParams);
-    printDebug("result in notifier $result");
-    result.fold((l) {
-      analytics.logEvent(name: "error in weather notifier", parameters: {
-        "release": kReleaseMode.toString(),
-        "isWeb": kIsWeb.toString(),
-        "error": l.message.toString(),
+    if (getWeatherParams.lat != '' && getWeatherParams.lon != '') {
+      state = AsyncLoading();
+      final result = await _getWeatherUseCase(getWeatherParams);
+      printDebug("result in notifier $result");
+      result.fold((l) {
+        analytics.logEvent(name: "error in weather notifier", parameters: {
+          "release": kReleaseMode.toString(),
+          "isWeb": kIsWeb.toString(),
+          "error": l.message.toString(),
+        });
+        state = AsyncError(l, StackTrace.current);
+      }, (r) {
+        state = AsyncData(r);
       });
-      state = AsyncError(l, StackTrace.current);
-    }, (r) {
-      state = AsyncData(r);
-    });
+    }
     return null;
   }
 
