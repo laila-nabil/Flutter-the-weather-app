@@ -1,5 +1,12 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:the_weather_app/core/config.dart';
+import 'package:the_weather_app/core/extensions.dart';
+import 'package:the_weather_app/core/localization/localization.dart';
+
+import '../../../../core/resources/assets_paths.dart';
+import '../../../../core/utils.dart';
+import '../../presentation/widgets/compact_day_weather.dart';
 
 /// latitude : 30.0625
 /// longitude : 31.25
@@ -60,6 +67,85 @@ class WeatherEntity extends Equatable {
         dailyList,
         currentWeatherEntity
       ];
+
+  List<DayWeatherParams> get days {
+    printDebug("weather?.dailyHourlyList?.length ${dailyHourlyList?.length}");
+    List<DayWeatherParams> weatherUiData = List.generate(
+        (dailyHourlyList?.length ?? 0),
+            (dayIndex) {
+          var day = dailyHourlyList?.tryElementAt(dayIndex);
+          var dayDetails = List.generate(
+              day?.hourlyList.length ?? 0,
+                  (index) => DayWeatherParams(
+                iconPath: AppAssets.getIconPath(
+                    day?.hourlyList.elementAt(index).weatherCode,
+                    day?.hourlyList.elementAt(index).is_day == 1),
+                currentTemp: (day?.hourlyList.elementAt(index).temperature2m ?? "").toString(),
+                minTemp:"",
+                maxTemp:"",
+                rain: (day?.hourlyList.elementAt(index).precipitationProbability ?? "").toString(),
+                windSpeed:(day?.hourlyList.elementAt(index).windspeed_10m ?? "").toString(),
+                windDeg: (day?.hourlyList.elementAt(index).winddirection_10m ?? "").toString(),
+                pressure: "",//TODO
+                clouds: "",//TODO
+                uvi: (day?.hourlyList.elementAt(index).uv_index ?? "").toString(),
+                humidity: (day?.hourlyList.elementAt(index).relativehumidity_2m ?? "").toString(),
+                visibility:  "",//TODO
+                detailedDescription: "",//TODO
+                feelsLike: "",//TODO
+                isImageNetwork: Config.isImageNetwork,
+                date: DateTime.parse(day?.hourlyList.elementAt(index).time ?? ""),
+              ));
+          return DayWeatherParams(
+              iconPath: AppAssets.getIconPath(day?.dailyEntity.weatherCode, true),
+              currentTemp: "",
+              minTemp: (day?.dailyEntity.temperature2mMin ?? "").toString(),
+              maxTemp: (day?.dailyEntity.temperature2mMax
+                  ?? "" ).toString(),
+              rain: "",
+              windSpeed:"",
+              windDeg: "",
+              pressure: "",
+              clouds:"",
+              uvi: "",
+              humidity: "",
+              visibility:"",
+              detailedDescription: "",
+              feelsLike: "",
+              isImageNetwork: Config.isImageNetwork,
+              date: DateTime.parse(day?.dailyEntity.time ?? ""),
+              details: dayIndex == 1
+                  ? dayDetails
+                  .where((element) {
+                var currentHour = DateTime.now().toUtc().add(
+                    Duration(
+                        seconds: utcOffsetSeconds?.toInt() ?? 0));
+                currentHour = DateTime(currentHour.year,currentHour.month,currentHour.day,currentHour.hour);
+                return !element.date.isBefore(currentHour);
+              })
+                  .toList()
+                  : dayDetails);
+        });
+
+    return weatherUiData;
+  }
+
+  String get compareTodayYesterday {
+    final diffMax =
+    ((dailyList?.temperature2mMax?.tryElementAt(1) ?? 0) -
+        (dailyList?.temperature2mMax?.tryElementAt(0) ?? 0));
+    final diffMin =
+    ((dailyList?.temperature2mMin.tryElementAt(1) ?? 0) -
+        (dailyList?.temperature2mMin.tryElementAt(0) ?? 0));
+    final diffDay = (diffMax > 0) == true ? "warmer" : "colder";
+    final diffNight = (diffMin > 0) == true ? "warmer" : "colder";
+    return LocalizationImpl().translate("compareWeather", namedArguments: {
+      "diffDay": LocalizationImpl().translate(diffDay),
+      "diffNight": LocalizationImpl().translate(diffNight),
+      "diffMax": diffMax.toStringAsFixed(1),
+      "diffMin": diffMin.toStringAsFixed(1),
+    });
+  }
 }
 
 /// time : ["2023-05-30","2023-05-31","2023-06-01","2023-06-02","2023-06-03","2023-06-04","2023-06-05","2023-06-06"]

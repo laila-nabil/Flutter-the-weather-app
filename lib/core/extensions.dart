@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 extension ElementAtNullableOrEmpty<T> on Iterable<T>?{
   T? get tryFirst{
     if(this!=null && this?.isNotEmpty == true){
@@ -59,5 +61,15 @@ extension DateTimeExtensions on DateTime {
       millisecond,
       microsecond,
     );
+  }
+}
+
+extension EiterExt<L,R> on Either<L,R>{
+  R? get getOrNull{
+    return this.fold((l)=>null, (r)=>r);
+  }
+
+  L? get leftOrNull{
+    return this.fold((l)=>l, (r)=>null);
   }
 }

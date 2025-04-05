@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:the_weather_app/core/localization/localization.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
 import 'package:the_weather_app/core/resources/assets_paths.dart';
@@ -9,16 +10,16 @@ import 'package:the_weather_app/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants.dart';
-import '../../../language/presentation/bloc/language_bloc.dart';
+import '../../../language/presentation/manager/language_notifier.dart';
 import '../../../weather/presentation/pages/home_page.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   static const routeName = '/settings';
 
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     void toggleLanguage() async {
@@ -28,11 +29,12 @@ class SettingsScreen extends StatelessWidget {
       context.setLocale(context.locale == const Locale('en', 'UK')
           ? const Locale('ar', 'EG')
           : const Locale('en', 'UK'));
-      final languageBloc = BlocProvider.of<LanguageBloc>(context);
       var currentLanguagesEnum =
           LocalizationImpl().getCurrentLanguagesEnum(context);
       if (currentLanguagesEnum != null) {
-        languageBloc.add(SelectLanguage(currentLanguagesEnum));
+        ref
+            .read(languageNotifierProvider.notifier)
+            .selectLanguage(currentLanguagesEnum);
       }
       if (enableAnalytics) {
         analytics.logEvent(name: "ChangeLanguage", parameters: {

@@ -2,30 +2,32 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta_seo/meta_seo.dart';
+import 'package:the_weather_app/core/error/failures.dart';
 import 'package:the_weather_app/core/extensions.dart';
 import 'package:the_weather_app/core/utils.dart';
-import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/language/presentation/manager/language_notifier.dart';
+import 'package:the_weather_app/features/location/presentation/manager/location_notifier.dart';
+import 'package:the_weather_app/features/weather/domain/entities/weather_entity.dart';
 import 'package:the_weather_app/features/weather/domain/use_cases/get_weather_use_case.dart';
+import 'package:the_weather_app/features/weather/presentation/manager/weather_notifier.dart';
 import 'package:the_weather_app/features/weather/presentation/widgets/weather_today.dart';
 
-import '../../../../core/injection_container.dart';
 import '../../../../core/localization/localization.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/assets_paths.dart';
-import '../../../language/presentation/bloc/language_bloc.dart';
 import '../../../location/presentation/widgets/location_widget.dart';
-import '../bloc/weather_bloc.dart';
 import '../widgets/compare_weather.dart';
 import '../widgets/weather_tabs.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
   static const routeName = "/home";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Add MetaSEO just into Web platform condition
     if (kIsWeb) {
       // Define MetaSEO object
@@ -44,118 +46,98 @@ class MyHomePage extends StatelessWidget {
               'Weather, History weather, Future weather, Compare weather,Flutter');
     }
 
-    return BlocProvider<WeatherBloc>(
-      create: (context) => sl<WeatherBloc>(),
-      child: BlocListener<LanguageBloc, LanguageState>(
-        listener: (context, state) {
-          final weatherBloc = BlocProvider.of<WeatherBloc>(context);
-          final locationBloc = BlocProvider.of<LocationBloc>(context);
-          printDebug("locationBloc.state ${locationBloc.state}");
-          var long = locationBloc.state.userCurrentLocation.lon ?? "";
-          var lat = locationBloc.state.userCurrentLocation.lat ?? "";
-          getWeatherData(
-              bloc: weatherBloc,
+    // ignore: unused_local_variable
+    final languageWatch = ref.watch(languageNotifierProvider);
+    final locationWatch = ref.watch(locationNotifierProvider);
+    final locationRead = ref.read(locationNotifierProvider);
+    final weatherWatch = ref.watch(weatherNotifierProvider);
+    printDebug("locationWatch.value ${locationWatch.value}");
+
+    ref.listen(languageNotifierProvider, (prev, current) {
+      var long = locationRead.value?.userCurrentLocation.lon ?? "";
+      var lat = locationRead.value?.userCurrentLocation.lat ?? "";
+      getWeatherData(
+        ref: ref,
+        longitude: long.toString(),
+        latitude: lat.toString(),
+        timezone: locationRead.value?.userCurrentLocation.timezone ?? "",
+      );
+    });
+    ref.listen(locationNotifierProvider, (prev, current) {
+      var long = current.value?.userCurrentLocation.lon ?? "";
+      var lat = current.value?.userCurrentLocation.lat ?? "";
+      ref
+          .read(languageNotifierProvider.notifier)
+          .selectLanguage(LocalizationImpl().getCurrentLanguagesEnum(context)!);
+      getWeatherData(
+        ref: ref,
+        longitude: long.toString(),
+        latitude: lat.toString(),
+        timezone: current.value?.userCurrentLocation.timezone ?? "",
+      );
+    });
+    ref.listen(weatherNotifierProvider, (_, __) => {},
+        onError: (error, stacktrace) => ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text((error as Failure).message))));
+    return weatherWatch.maybeWhen(
+        data: (weatherState) {
+          final mediaQuery = MediaQuery.of(context);
+          final screenSize = mediaQuery.size;
+          final isPortrait = screenSize.width < screenSize.height;
+          return buildSafeArea(
+              locationWatch, ref, weatherState, screenSize, isPortrait);
+        },
+        orElse: () {
+          final mediaQuery = MediaQuery.of(context);
+          final screenSize = mediaQuery.size;
+          final isPortrait = screenSize.width < screenSize.height;
+          return buildSafeArea(
+              locationWatch, ref, weatherWatch.value, screenSize, isPortrait);
+        },
+        loading: () => Scaffold(body: const LoadingLogo()),
+        skipError: true);
+  }
+
+  SafeArea buildSafeArea(AsyncValue<LocationState?> locationWatch, WidgetRef ref,
+      WeatherEntity? weatherState, Size screenSize, bool isPortrait) {
+    return SafeArea(
+      bottom: true,
+      left: true,
+      top: true,
+      right: true,
+      maintainBottomViewPadding: true,
+      minimum: EdgeInsets.zero,
+      child: Scaffold(
+        // backgroundColor: Theme.of(context).colorScheme.surface,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            var long = locationWatch.value?.userCurrentLocation.lon ?? "";
+            var lat = locationWatch.value?.userCurrentLocation.lat ?? "";
+            getWeatherData(
+              ref: ref,
               longitude: long.toString(),
               latitude: lat.toString(),
-              timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
-        },
-        child: BlocBuilder<LocationBloc, LocationState>(
-          builder: (context, locationState) {
-            final weatherBloc = BlocProvider.of<WeatherBloc>(context);
-            final locationBloc = BlocProvider.of<LocationBloc>(context);
-            if (locationState.status == LocationStatus.initial) {
-              locationBloc.add(LocationInitialEvent());
-            } else if (locationState.status == LocationStatus.success) {
-              var long = locationBloc.state.userCurrentLocation.lon ?? "";
-              var lat = locationBloc.state.userCurrentLocation.lat ?? "";
-              getWeatherData(
-                bloc: weatherBloc,
-                longitude: long.toString(),
-                latitude: lat.toString(),
-                timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
-            }
-            return BlocConsumer<WeatherBloc, WeatherState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                final bloc = BlocProvider.of<WeatherBloc>(context);
-                final locationBloc = BlocProvider.of<LocationBloc>(context);
-                final languageBloc = BlocProvider.of<LanguageBloc>(context);
-                if (state.weatherStatus == WeatherStatus.initial) {
-                  languageBloc.add(SelectLanguage(
-                      LocalizationImpl().getCurrentLanguagesEnum(context)!));
-                  var long = locationBloc.state.userCurrentLocation.lon ?? "";
-                  var lat = locationBloc.state.userCurrentLocation.lat ?? "";
-                  getWeatherData(
-                    bloc: weatherBloc,
-                    longitude: long.toString(),
-                    latitude: lat.toString(),
-                    timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
-                }
-
-                if (state.weatherStatus == WeatherStatus.loading) {
-                  return Scaffold(
-                    // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    body: const Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final mediaQuery = MediaQuery.of(context);
-                final screenSize = mediaQuery.size;
-                final isPortrait = screenSize.width < screenSize.height;
-                return SafeArea(
-                  bottom: true,
-                  left: true,
-                  top: true,
-                  right: true,
-                  maintainBottomViewPadding: true,
-                  minimum: EdgeInsets.zero,
-                  child: Scaffold(
-                    // backgroundColor: Theme.of(context).colorScheme.surface,
-                    body: RefreshIndicator(
-                      onRefresh: () async {
-                        var long = locationBloc.state.userCurrentLocation.lon ?? "";
-                        var lat = locationBloc.state.userCurrentLocation.lat ?? "";
-                        getWeatherData(
-                          bloc: weatherBloc,
-                          longitude: long.toString(),
-                          latitude: lat.toString(),
-                          timezone: locationBloc.state.userCurrentLocation.timezone ?? "",);
-                      },
-                      child: BlocBuilder<LocationBloc, LocationState>(
-                        builder: (context, locationState) {
-                          return (state.weatherStatus ==
-                                      WeatherStatus.loading ||
-                                  locationState.status ==
-                                      LocationStatus.loading)
-                              ? const Center(child: LoadingLogo())
-                              : state.weatherStatus == WeatherStatus.success
-                              ? HomeLoadedContent(
-                            city: locationState.userCurrentLocation.city ??
-                                "",
-                            locationBloc: locationBloc,
-                            weatherBloc: bloc,
-                            screenSize: screenSize,
-                            isPortrait: isPortrait,)
-                              : Container();
-                        },
-                      ),
-                    ) ,
-                  ),
-                );
-              },
+              timezone: locationWatch.value?.userCurrentLocation.timezone ?? "",
             );
           },
+          child: HomeLoadedContent(
+            city: locationWatch.value?.userCurrentLocation.city ?? "",
+            weather: weatherState,
+            screenSize: screenSize,
+            isPortrait: isPortrait,
+          ),
         ),
       ),
     );
   }
 
-  void getWeatherData({required WeatherBloc bloc, required String longitude, required String latitude,
-     required String timezone}) {
-    bloc.add(GetWeatherEvent(
-        getWeatherParams: GetWeatherParams(
-            lat: latitude,
-            lon: longitude,
-        timezone: timezone),));
+  void getWeatherData(
+      {required WidgetRef ref,
+      required String longitude,
+      required String latitude,
+      required String timezone}) {
+    ref.read(weatherNotifierProvider.notifier).getWeatherEvent(
+        GetWeatherParams(lat: latitude, lon: longitude, timezone: timezone));
   }
 }
 
@@ -207,80 +189,68 @@ class HomeLoadedContent extends StatelessWidget {
     Key? key,
     required this.screenSize,
     required this.isPortrait,
-    required this.weatherBloc,
-    required this.locationBloc,
+    required this.weather,
     required this.city,
   }) : super(key: key);
 
   final Size screenSize;
   final bool isPortrait;
-  final WeatherBloc weatherBloc;
+  final WeatherEntity? weather;
   final String city;
-  final LocationBloc locationBloc;
 
   @override
   Widget build(BuildContext context) {
-    int todayIndex = weatherBloc.state.days.indexWhere((element) {
-      return element.date.isSameDay(DateTime.now());
-    });
+    int? todayIndex = weather?.days.indexWhere((element) {
+          return element.date.isSameDay(DateTime.now());
+        }) ??
+        3;
     if (todayIndex < 0) {
       todayIndex = 3;
     }
     printDebug("todayIndex $todayIndex");
+    var sunrise = DateTime.tryParse(
+        weather?.dailyHourlyList.tryElementAt(0)!.dailyEntity.sunrise ?? "");
+    var sunset = DateTime.tryParse(
+        weather?.dailyHourlyList.tryElementAt(0)!.dailyEntity.sunset ?? "");
     final weatherTodayWidget = WeatherTodayWidget(
       weatherTodayDetails: WeatherTodayDetails(
-          sunrise: DateFormat('hh mm aa').format(DateTime.parse(weatherBloc.state.weather?.dailyHourlyList
-              .tryElementAt(0)
-          !.dailyEntity
-              .sunrise??"")),
-          sunset: DateFormat('hh mm aa').format(DateTime.parse(weatherBloc.state.weather?.dailyHourlyList
-              .tryElementAt(0)
-          !.dailyEntity
-              .sunset??"")),
-          iconPath:  AppAssets.getIconPath(
-              weatherBloc.state.weather?.currentWeatherEntity?.weatherCode,
-              weatherBloc.state.weather?.currentWeatherEntity?.isDay),
+          sunrise:
+              sunrise == null ? "" : DateFormat('hh mm aa').format(sunrise),
+          sunset: sunset == null ? "" : DateFormat('hh mm aa').format(sunset),
+          iconPath: AppAssets.getIconPath(
+              weather?.currentWeatherEntity?.weatherCode,
+              weather?.currentWeatherEntity?.isDay),
           currentTemp:
-              (weatherBloc.state.weather?.currentWeatherEntity?.temperature ?? "")
-                  .toString(),
+              (weather?.currentWeatherEntity?.temperature ?? "").toString(),
           windDirection:
-              (weatherBloc.state.weather?.currentWeatherEntity?.windDirection ?? "")
-                  .toString(),
+              (weather?.currentWeatherEntity?.windDirection ?? "").toString(),
           windSpeed:
-              (weatherBloc.state.weather?.currentWeatherEntity?.windSpeed ??
-                      "")
-                  .toString(),
+              (weather?.currentWeatherEntity?.windSpeed ?? "").toString(),
           description: "",
-          feelsLike: (weatherBloc.state.weather?.dailyHourlyList
+          feelsLike: (weather?.dailyHourlyList
                       ?.tryElementAt(1)
                       ?.hourlyList
-                      .where((element) => element.time ==
-                        weatherBloc.state.weather?.currentWeatherEntity?.time).tryFirst
+                      .where((element) =>
+                          element.time == weather?.currentWeatherEntity?.time)
+                      .tryFirst
                       ?.apparent_temperature ??
                   "")
               .toString(),
-          rain: (weatherBloc.state.weather?.dailyHourlyList
+          rain: (weather?.dailyHourlyList
                       .tryElementAt(0)
                       ?.dailyEntity
                       .precipitationProbabilityMax ??
                   "")
               .toString(),
-          todayMax: (weatherBloc.state.weather?.dailyHourlyList
-                      .tryElementAt(0)
-                      ?.dailyEntity
-                      .temperature2mMax ??
-                  "")
-              .toString(),
-          todayMin: (weatherBloc.state.weather?.dailyHourlyList
-                      .tryElementAt(0)
-                      ?.dailyEntity
-                      .temperature2mMin ??
-                  "")
-              .toString()),
+          todayMax:
+              (weather?.dailyHourlyList.tryElementAt(0)?.dailyEntity.temperature2mMax ?? "")
+                  .toString(),
+          todayMin:
+              (weather?.dailyHourlyList.tryElementAt(0)?.dailyEntity.temperature2mMin ?? "")
+                  .toString()),
     );
-    final compareWeather = CompareWeather(
-        compareWeather:
-        weatherBloc.state.compareTodayYesterday ?? "");
+    final compareWeather =
+        CompareWeather(compareWeather: weather?.compareTodayYesterday ?? "");
     return SizedBox(
       height: screenSize.height,
       child: Column(
@@ -290,7 +260,6 @@ class HomeLoadedContent extends StatelessWidget {
               flex: 1,
               child: LocationWidget(
                 city: city,
-                locationBloc: locationBloc,
               )),
           if (isPortrait)
             Expanded(
@@ -299,10 +268,7 @@ class HomeLoadedContent extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CarouselSlider(
-                        items: [
-                          weatherTodayWidget,
-                          compareWeather
-                        ],
+                        items: [weatherTodayWidget, compareWeather],
                         options: CarouselOptions(
                           height: constraints.maxHeight - 0.1,
                           autoPlayInterval: const Duration(seconds: 10),
@@ -320,9 +286,7 @@ class HomeLoadedContent extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                        flex: 6,
-                        child: weatherTodayWidget),
+                    Expanded(flex: 6, child: weatherTodayWidget),
                     Expanded(
                       flex: 6,
                       child: compareWeather,
@@ -338,13 +302,11 @@ class HomeLoadedContent extends StatelessWidget {
                 padding: isPortrait
                     ? const EdgeInsets.only(top: 8.0)
                     : const EdgeInsets.only(top: 30.0),
-                child: BlocBuilder<WeatherBloc, WeatherState>(
-                  builder: (context, state) {
-                    return WeatherTabs(
-                      days: state.days,
-                    );
-                  },
-                ),
+                child: weather?.days == null
+                    ? Container()
+                    : WeatherTabs(
+                        days: weather!.days,
+                      ),
               )),
           if (isPortrait)
             Text(

@@ -2,21 +2,21 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:the_weather_app/core/resources/app_colors.dart';
-import 'package:the_weather_app/features/location/presentation/bloc/location_bloc.dart';
+import 'package:the_weather_app/features/location/presentation/manager/location_notifier.dart';
 import 'package:the_weather_app/features/location/presentation/pages/location_screen.dart';
 import 'package:the_weather_app/features/settings/presentation/pages/settings_screen.dart';
 
-class LocationWidget extends StatelessWidget {
+class LocationWidget extends ConsumerWidget {
   final String city;
-  final LocationBloc locationBloc;
 
   const LocationWidget(
-      {Key? key, required this.city, required this.locationBloc})
+      {Key? key, required this.city,})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(builder: (ctx, constraints) {
       return Padding(
         padding: const EdgeInsets.symmetric(
@@ -52,7 +52,7 @@ class LocationWidget extends StatelessWidget {
                   ),
                   IconButton(
                       onPressed: () {
-                        locationBloc.add(const SetLocation());
+                        ref.read(locationNotifierProvider.notifier).setLocation();
                       },
                       iconSize: constraints.maxHeight * 0.4,
                       alignment: Alignment.center,
